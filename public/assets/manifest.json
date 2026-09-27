@@ -1,0 +1,961 @@
+{
+  "player": {
+    "model": "models/characters/player.glb",
+    "height": 1.75,
+    "anims": {
+      "idle": "Idle",
+      "run": "Running_A",
+      "walk": "Walking_A",
+      "attack": "Throw",
+      "hit": "Hit_A",
+      "cast": "Spellcast_Shoot",
+      "faint": "Death_A",
+      "victory": "Cheer",
+      "interact": "Interact"
+    }
+  },
+  "npcs": [
+    {
+      "model": "models/characters/npc_barbarian.glb",
+      "height": 1.7,
+      "anims": {
+        "idle": "Idle",
+        "run": "Walking_A",
+        "cast": "Interact",
+        "victory": "Cheer"
+      }
+    },
+    {
+      "model": "models/characters/npc_knight.glb",
+      "height": 1.7,
+      "anims": {
+        "idle": "Idle",
+        "run": "Walking_A",
+        "cast": "Interact",
+        "victory": "Cheer"
+      }
+    },
+    {
+      "model": "models/characters/npc_rogue.glb",
+      "height": 1.7,
+      "anims": {
+        "idle": "Idle",
+        "run": "Walking_A",
+        "cast": "Interact",
+        "victory": "Cheer"
+      }
+    },
+    {
+      "model": "models/characters/npc_rogue_hooded.glb",
+      "height": 1.7,
+      "anims": {
+        "idle": "Idle",
+        "run": "Walking_A",
+        "cast": "Interact",
+        "victory": "Cheer"
+      }
+    }
+  ],
+  "creatures": {
+    "emberling": {
+      "model": "models/creatures/emberling.glb",
+      "height": 1.1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "pyrowyrm": {
+      "model": "models/creatures/pyrowyrm.glb",
+      "height": 2.2,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "finnik": {
+      "model": "models/creatures/finnik.glb",
+      "height": 1.1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "tidecaller": {
+      "model": "models/creatures/tidecaller.glb",
+      "height": 2,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "sporelet": {
+      "model": "models/creatures/sporelet.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "mycobloom": {
+      "model": "models/creatures/mycobloom.glb",
+      "height": 1.4,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "sporeking": {
+      "model": "models/creatures/sporeking.glb",
+      "height": 2.1,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "gloop": {
+      "model": "models/creatures/gloop.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "spikegloop": {
+      "model": "models/creatures/spikegloop.glb",
+      "height": 1.3,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "chirpling": {
+      "model": "models/creatures/chirpling.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "pecklet": {
+      "model": "models/creatures/pecklet.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "hopscotch": {
+      "model": "models/creatures/hopscotch.glb",
+      "height": 1.4,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "pricklet": {
+      "model": "models/creatures/pricklet.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "saguardian": {
+      "model": "models/creatures/saguardian.glb",
+      "height": 1.9,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "voltcat": {
+      "model": "models/creatures/voltcat.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "monkroose": {
+      "model": "models/creatures/monkroose.glb",
+      "height": 1.5,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "impling": {
+      "model": "models/creatures/impling.glb",
+      "height": 1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "hellion": {
+      "model": "models/creatures/hellion.glb",
+      "height": 1.9,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "gloomling": {
+      "model": "models/creatures/gloomling.glb",
+      "height": 1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "gloomlord": {
+      "model": "models/creatures/gloomlord.glb",
+      "height": 1.7,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "grunt": {
+      "model": "models/creatures/grunt.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "warlord": {
+      "model": "models/creatures/warlord.glb",
+      "height": 2,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "cinderquid": {
+      "model": "models/creatures/cinderquid.glb",
+      "height": 1.2,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "glub": {
+      "model": "models/creatures/glub.glb",
+      "height": 1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "glubbernaut": {
+      "model": "models/creatures/glubbernaut.glb",
+      "height": 1.7,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "croakus": {
+      "model": "models/creatures/croakus.glb",
+      "height": 1.4,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "bubblin": {
+      "model": "models/creatures/bubblin.glb",
+      "height": 0.8,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "alpuff": {
+      "model": "models/creatures/alpuff.glb",
+      "height": 1.1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "alpaqueen": {
+      "model": "models/creatures/alpaqueen.glb",
+      "height": 1.8,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "whirlie": {
+      "model": "models/creatures/whirlie.glb",
+      "height": 1.2,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "zapbee": {
+      "model": "models/creatures/zapbee.glb",
+      "height": 0.9,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "voltarmor": {
+      "model": "models/creatures/voltarmor.glb",
+      "height": 1.6,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "zorp": {
+      "model": "models/creatures/zorp.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "xenobolt": {
+      "model": "models/creatures/xenobolt.glb",
+      "height": 1.9,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "frostling": {
+      "model": "models/creatures/frostling.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "glaciator": {
+      "model": "models/creatures/glaciator.glb",
+      "height": 2.1,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "shadekin": {
+      "model": "models/creatures/shadekin.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "shinobi": {
+      "model": "models/creatures/shinobi.glb",
+      "height": 1.8,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "sparkmage": {
+      "model": "models/creatures/sparkmage.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "wisp": {
+      "model": "models/creatures/wisp.glb",
+      "height": 1.1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "thornjaw": {
+      "model": "models/creatures/thornjaw.glb",
+      "height": 6.5,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "ashen_totem": {
+      "model": "models/creatures/ashen_totem.glb",
+      "height": 6.8,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "abyssal_tyrant": {
+      "model": "models/creatures/abyssal_tyrant.glb",
+      "height": 6.8,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      }
+    },
+    "stormcrown": {
+      "model": "models/creatures/stormcrown.glb",
+      "height": 7.5,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    }
+  },
+  "environment": {
+    "tree_round": [
+      {
+        "model": "models/nature/CommonTree_1.glb",
+        "height": 7.5
+      },
+      {
+        "model": "models/nature/CommonTree_3.glb",
+        "height": 7.5
+      },
+      {
+        "model": "models/nature/CommonTree_5.glb",
+        "height": 7.5
+      }
+    ],
+    "tree_pine": [
+      {
+        "model": "models/nature/Pine_1.glb",
+        "height": 10
+      },
+      {
+        "model": "models/nature/Pine_3.glb",
+        "height": 10
+      },
+      {
+        "model": "models/nature/Pine_5.glb",
+        "height": 10
+      }
+    ],
+    "tree_dead": [
+      {
+        "model": "models/nature/DeadTree_1.glb",
+        "height": 6.5
+      },
+      {
+        "model": "models/nature/DeadTree_3.glb",
+        "height": 6.5
+      },
+      {
+        "model": "models/nature/DeadTree_5.glb",
+        "height": 6.5
+      }
+    ],
+    "tree_twisted": [
+      {
+        "model": "models/nature/TwistedTree_1.glb",
+        "height": 7
+      },
+      {
+        "model": "models/nature/TwistedTree_3.glb",
+        "height": 7
+      },
+      {
+        "model": "models/nature/TwistedTree_5.glb",
+        "height": 7
+      }
+    ],
+    "rock": [
+      {
+        "model": "models/nature/Rock_Medium_1.glb",
+        "height": 1.1
+      },
+      {
+        "model": "models/nature/Rock_Medium_2.glb",
+        "height": 1.1
+      },
+      {
+        "model": "models/nature/Rock_Medium_3.glb",
+        "height": 1.1
+      }
+    ],
+    "boulder": [
+      {
+        "model": "models/nature/Rock_Medium_2.glb",
+        "height": 2.6
+      },
+      {
+        "model": "models/nature/Rock_Medium_3.glb",
+        "height": 2.6
+      }
+    ],
+    "bush": [
+      {
+        "model": "models/nature/Bush_Common.glb",
+        "height": 1.3
+      },
+      {
+        "model": "models/nature/Bush_Common_Flowers.glb",
+        "height": 1.3
+      }
+    ],
+    "fern": [
+      {
+        "model": "models/nature/Fern_1.glb",
+        "height": 0.9
+      },
+      {
+        "model": "models/nature/Plant_1.glb",
+        "height": 0.9
+      },
+      {
+        "model": "models/nature/Plant_7.glb",
+        "height": 0.9
+      }
+    ],
+    "mushroom": [
+      {
+        "model": "models/nature/Mushroom_Common.glb",
+        "height": 0.55
+      },
+      {
+        "model": "models/nature/Mushroom_Laetiporus.glb",
+        "height": 0.55
+      }
+    ],
+    "flowers": [
+      {
+        "model": "models/nature/Flower_3_Group.glb",
+        "height": 0.45
+      },
+      {
+        "model": "models/nature/Flower_4_Group.glb",
+        "height": 0.45
+      },
+      {
+        "model": "models/nature/Clover_1.glb",
+        "height": 0.45
+      }
+    ],
+    "pebbles": [
+      {
+        "model": "models/nature/Pebble_Round_1.glb",
+        "height": 0.25
+      },
+      {
+        "model": "models/nature/Pebble_Square_2.glb",
+        "height": 0.25
+      },
+      {
+        "model": "models/nature/Pebble_Round_4.glb",
+        "height": 0.25
+      }
+    ],
+    "pathstone": [
+      {
+        "model": "models/nature/RockPath_Round_Small_1.glb",
+        "height": 0.12
+      },
+      {
+        "model": "models/nature/RockPath_Round_Small_2.glb",
+        "height": 0.12
+      },
+      {
+        "model": "models/nature/RockPath_Round_Wide.glb",
+        "height": 0.12
+      },
+      {
+        "model": "models/nature/RockPath_Square_Small_1.glb",
+        "height": 0.12
+      },
+      {
+        "model": "models/nature/RockPath_Square_Wide.glb",
+        "height": 0.12
+      }
+    ]
+  },
+  "buildings": {
+    "healer": {
+      "model": "models/buildings/building_church_red.glb",
+      "height": 11
+    },
+    "shop": {
+      "model": "models/buildings/building_market_blue.glb",
+      "height": 6.5
+    },
+    "hatchery": {
+      "model": "models/buildings/building_windmill_yellow.glb",
+      "height": 12
+    },
+    "tutor": {
+      "model": "models/buildings/building_barracks_red.glb",
+      "height": 7.5
+    },
+    "storage": {
+      "model": "models/buildings/building_tavern_green.glb",
+      "height": 8.5
+    },
+    "house": [
+      {
+        "model": "models/buildings/building_home_A_blue.glb",
+        "height": 6.5
+      },
+      {
+        "model": "models/buildings/building_home_B_red.glb",
+        "height": 6.5
+      },
+      {
+        "model": "models/buildings/building_home_A_yellow.glb",
+        "height": 6.5
+      },
+      {
+        "model": "models/buildings/building_home_B_green.glb",
+        "height": 6.5
+      }
+    ],
+    "tower": {
+      "model": "models/buildings/building_tower_A_blue.glb",
+      "height": 11
+    },
+    "watermill": {
+      "model": "models/buildings/building_watermill_blue.glb",
+      "height": 7.5
+    }
+  },
+  "decor": {
+    "well": {
+      "model": "models/buildings/building_well_blue.glb",
+      "height": 3.2
+    },
+    "barrel": {
+      "model": "models/buildings/barrel.glb",
+      "height": 1
+    },
+    "crate": {
+      "model": "models/buildings/crate_A_big.glb",
+      "height": 1
+    },
+    "sack": {
+      "model": "models/buildings/sack.glb",
+      "height": 0.7
+    },
+    "fence": {
+      "model": "models/buildings/fence_wood_straight.glb",
+      "height": 1.1
+    },
+    "flag": {
+      "model": "models/buildings/flag_red.glb",
+      "height": 3.2
+    },
+    "cart": null
+  },
+  "textures": {
+    "ground_detail": "textures/ground_detail.webp",
+    "rock_detail": "textures/rock_detail.webp"
+  },
+  "vfx": {
+    "slash_01": "vfx/slash_01.png",
+    "slash_02": "vfx/slash_02.png",
+    "slash_03": "vfx/slash_03.png",
+    "slash_04": "vfx/slash_04.png",
+    "spark_01": "vfx/spark_01.png",
+    "spark_04": "vfx/spark_04.png",
+    "spark_05": "vfx/spark_05.png",
+    "star_04": "vfx/star_04.png",
+    "star_06": "vfx/star_06.png",
+    "star_07": "vfx/star_07.png",
+    "magic_01": "vfx/magic_01.png",
+    "magic_03": "vfx/magic_03.png",
+    "magic_05": "vfx/magic_05.png",
+    "flare_01": "vfx/flare_01.png",
+    "light_01": "vfx/light_01.png",
+    "light_03": "vfx/light_03.png",
+    "smoke_01": "vfx/smoke_01.png",
+    "smoke_04": "vfx/smoke_04.png",
+    "smoke_07": "vfx/smoke_07.png",
+    "twirl_01": "vfx/twirl_01.png",
+    "twirl_02": "vfx/twirl_02.png",
+    "circle_02": "vfx/circle_02.png",
+    "circle_05": "vfx/circle_05.png",
+    "symbol_01": "vfx/symbol_01.png",
+    "symbol_02": "vfx/symbol_02.png",
+    "trace_01": "vfx/trace_01.png",
+    "trace_04": "vfx/trace_04.png",
+    "scorch_01": "vfx/scorch_01.png",
+    "muzzle_01": "vfx/muzzle_01.png",
+    "fire_01": "vfx/fire_01.png",
+    "dirt_02": "vfx/dirt_02.png"
+  },
+  "music": {
+    "town": "audio/music_town.mp3",
+    "overworld": "audio/music_overworld.mp3",
+    "battle": "audio/music_battle.mp3",
+    "boss": "audio/music_boss.mp3"
+  }
+}
