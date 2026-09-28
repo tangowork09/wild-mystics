@@ -1,6 +1,8 @@
 import { ELEMENTS, type Element } from './elements';
 import { PINCH, type AbilityId, type Rarity } from './traits';
 import type { ItemId } from './items';
+import { NEW_FORMS } from './forms';
+import { LINES, EVO_LEVELS, type LineDef } from './lines';
 import type { AccSpec } from '../assets/accessories';
 
 export type BodyType = 'quad' | 'blob' | 'bird' | 'serpent' | 'golem';
@@ -35,6 +37,9 @@ export interface Species {
   abilities: AbilityId[];
   evolves: Evo[];
   boss?: boolean;
+  /** v3: five-form evolution line id and this form's stage (1–5). Legendaries have none. */
+  line?: string;
+  stage?: number;
   /** Regional/elemental variant of another species (shown in the dex beside it). */
   variantOf?: string;
   /** Can be ridden in the overworld once caught (large, sturdy Mystics). */
@@ -66,7 +71,7 @@ export interface Species {
 }
 
 type Extra = Partial<Omit<Species, 'abilities'>> & { abilities?: AbilityId[] };
-type Row = [id: string, name: string, el: Element, hp: number, atk: number, def: number, spd: number, height: number, model: string, learn: [number, string][], extra?: Extra];
+export type Row = [id: string, name: string, el: Element, hp: number, atk: number, def: number, spd: number, height: number, model: string, learn: [number, string][], extra?: Extra];
 
 const BODY: Record<string, BodyType> = { fire: 'quad', water: 'blob', nature: 'blob', earth: 'golem', storm: 'quad', wind: 'bird', void: 'serpent' };
 const SECOND: Record<Element, AbilityId> = { fire: 'flame_body', water: 'regenerator', nature: 'sleep_spores', earth: 'sturdy', storm: 'static', wind: 'swift', void: 'opportunist' };
@@ -285,7 +290,7 @@ const LIST: [Row, string][] = [
   [['aether_sovereign', 'Aether Sovereign', 'storm', 300, 23, 19, 17, 9.5, 'Dragon Evolved', [[1, 'aether_judgement'], [1, 'skyfall'], [1, 'void_crown'], [1, 'eclipse_wave']], { boss: true, catchRate: 0, rarity: 'legendary', element2: 'void', tint: '#2a2a6a', tintGlow: '#ffe07a', acc: [{ k: 'halo', s: 0.3, at: [0, 0.08, -0.05] }, { k: 'horns', s: 0.26, c: '#fff2c8', c2: '#6a5aa8' }, { k: 'crystals', on: 'back', n: 8, s: 0.2, c: '#ffe8a0' }, { k: 'shards', n: 7, s: 0.07 }] }], 'The storm at the top of the world, given a crown and a will. The Guardians’ restlessness begins in its dreams.'],
 ];
 
-export const SPECIES: Record<string, Species> = Object.fromEntries(LIST.map(([row, lore]) => [row[0], make(row, lore)]));
+export const SPECIES: Record<string, Species> = Object.fromEntries([...LIST, ...NEW_FORMS].map(([row, lore]) => [row[0], make(row, lore)]));
 
 // Evolved forms default one tier above their base form unless set explicitly.
 for (const sp of Object.values(SPECIES)) {
@@ -293,6 +298,38 @@ for (const sp of Object.values(SPECIES)) {
     const t = SPECIES[e.id];
     if (t && t.rarity === 'common') t.rarity = sp.rarity === 'common' ? 'rare' : sp.rarity === 'rare' ? 'epic' : 'exotic';
   }
+}
+
+// v3: five-form lines. Each form evolves into the next at 10 → 20 → 30 → 35 (by training, Miscrits-style);
+// branch lines leave the shared first form with a stone from Lv 10.
+export const LINE_BY_ID = new Map<string, LineDef>();
+(function applyLines() {
+  for (const L of LINES) {
+    LINE_BY_ID.set(L.id, L);
+    L.stages.forEach((id, i) => {
+      const sp = SPECIES[id];
+      if (!sp) return;
+      if (!(L.branch && i === 0)) { sp.line = L.id; sp.stage = i + 1; }
+      const next = L.stages[i + 1];
+      if (!next || !SPECIES[next]) return;
+      if (L.branch && i === 0) {
+        sp.evolves = [...sp.evolves.filter((e) => e.id !== next), { id: next, item: L.branch.item, level: EVO_LEVELS[0] }];
+      } else {
+        sp.evolves = [{ id: next, level: EVO_LEVELS[i] }, ...sp.evolves.filter((e) => e.item && e.id !== next && !L.stages.includes(e.id))];
+      }
+    });
+  }
+})();
+
+/** The form a Mystic of this line should have at `level` (wild spawns, trainers): never de-evolves. */
+export function formForLevel(id: string, level: number): string {
+  const sp = SPECIES[id];
+  const L = sp?.line ? LINE_BY_ID.get(sp.line) : undefined;
+  if (!L) return id;
+  const want = Math.min(5, 1 + EVO_LEVELS.filter((l) => level >= l).length);
+  if (want <= (sp.stage ?? 1)) return id;
+  const target = L.stages[want - 1];
+  return SPECIES[target] ? target : id;
 }
 
 export const STARTERS = ['emberling', 'finnik', 'sporelet'];

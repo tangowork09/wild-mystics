@@ -13,7 +13,7 @@ import { RELICS } from '../data/relics';
 import { STATUS, PINCH, type StatusId } from '../data/traits';
 import { WATER_LEVEL, type Zone } from '../data/zones';
 import {
-  canEvolve, grantXp, rankedAp, rankedPower, skillList, statsOf, displayName, speciesOf, type Creature,
+  grantXp, xpToNext, rankedAp, rankedPower, skillList, statsOf, displayName, speciesOf, type Creature,
 } from '../game/creature';
 import { state, addCreature, markSeen, BATTLE_SLOTS, addItem } from '../game/state';
 import { emit } from '../game/events';
@@ -1527,10 +1527,10 @@ export class Battle {
         if (t.c.relics.some((uid) => state.relics.find((r) => r.uid === uid)?.id === 'scholar_lens')) share = Math.round(share * 1.25);
         const r = grantXp(t.c, share);
         t.newSkills = r.newSkills.map((id) => SKILLS[id]?.name ?? id);
-        if (r.levels > 0) sfx('levelup');
+        if (r.ready && t.beforeXp < xpToNext(t.beforeLv)) sfx('levelup');
       }
       for (const c of this.captured) addCreature(c);
-      o.evolvable = state.team.filter((c) => canEvolve(c, this.world.isNight));
+      o.evolvable = []; // v3: evolution happens when a Mystic is trained to Lv 10/20/30/35 (Team → Train)
       emit('battle_win', { kind: this.setup.kind, zone: this.setup.zone.id });
       await this.ui.results({
         title: o.result === 'captured' ? 'Captured!' : this.setup.kind === 'boss' ? 'Guardian Defeated' : this.setup.kind === 'tamer' ? 'Tamer Defeated' : 'Victory',

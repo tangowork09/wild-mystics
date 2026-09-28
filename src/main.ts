@@ -16,7 +16,7 @@ import { settings, onSettings } from './core/settings';
 import { haptic, setNativeHaptics } from './core/haptics';
 import { pick, randInt, weighted } from './core/noise';
 import { loadManifest, preloadTextures, ensureModels, essentialModels, ensureCreatures, streamRemainingCreatures } from './assets/manifest';
-import { SPECIES } from './data/species';
+import { SPECIES, formForLevel } from './data/species';
 import { ELEMENTS } from './data/elements';
 import { MATERIALS, type MaterialId, type ItemId } from './data/items';
 import { ZONES, START_POS, WATER_LEVEL, HOMESTEAD, spawnsBy, type Zone } from './data/zones';
@@ -657,7 +657,7 @@ async function tamer(it: Interactable) {
   const dir = new THREE.Vector3(it.pos.x - w.playerPos.x, 0, it.pos.z - w.playerPos.z);
   if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
   dir.normalize();
-  const enemies = team.map(([sp, lv]) => createCreature(sp, first ? lv : lv + 2));
+  const enemies = team.map(([sp, lv]) => { const L = first ? lv : lv + 2; return createCreature(formForLevel(sp, L), L); }); // v3: trainers field the form their level has earned
   const out = await runBattle({ kind: 'tamer', enemies, zone: it.zone, center: safeCenter(w.playerPos.clone(), dir, 5), forward: dir, advantage: null, tamer: { name: def.name, title: def.title, intro: def.intro } });
   game.busy = true;
   if (out === 'win') {
@@ -707,7 +707,7 @@ async function startWildBattle(list: { species: string; level: number; shiny: bo
   if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
   dir.normalize();
   const center = safeCenter(p, dir, 5.5);
-  const enemies = list.filter((e) => SPECIES[e.species]).map((e) => createCreature(e.species, e.level, { shiny: e.shiny, ...(e.alpha ? { alpha: true } : {}), caught: { how: how as NonNullable<Creature['caught']>['how'], zone: w.zone.id, at: Date.now() } })); // v3:creatures — alpha flag
+  const enemies = list.filter((e) => SPECIES[e.species]).map((e) => createCreature(formForLevel(e.species, e.level), e.level, { shiny: e.shiny, ...(e.alpha ? { alpha: true } : {}), caught: { how: how as NonNullable<Creature['caught']>['how'], zone: w.zone.id, at: Date.now() } })); // v3:creatures — alpha flag
   if (!enemies.length) return;
   const out = await runBattle({ kind: 'wild', enemies, zone: w.zone, center, forward: dir, advantage, how });
   if (wild) {

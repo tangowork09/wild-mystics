@@ -108,7 +108,7 @@ export function renderBag(root: HTMLElement, hooks: JournalHooks): TabCleanup {
     if (id === 'tonic') c.hp = Math.min(max, c.hp + Math.round(max * 0.5));
     else if (id === 'mega_tonic') c.hp = max;
     else if (id === 'elixir') c.hp = c.hp <= 0 ? Math.round(max * 0.5) : max;
-    else if (id === 'wisdom_scroll') { const r = grantXp(c, xpToNext(c.level) - c.xp); toast(`${esc(displayName(c))} reached level ${c.level}!${r.newSkills.length ? ' New move learned!' : ''}`, 'good'); }
+    else if (id === 'wisdom_scroll') { grantXp(c, xpToNext(c.level) - c.xp); toast(`${esc(displayName(c))}’s XP bar is full: train it in Team → Train!`, 'good'); }
     else if (id === 'cleanse') toast('Status effects only linger in battle. Nothing to cure.', '');
     addItem(id, -1);
     sfx('heal');

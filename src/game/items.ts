@@ -80,7 +80,7 @@ export async function useFieldItem(id: ItemId, target?: Creature): Promise<{ ok:
     case 'level': {
       if (!target || !canUseOn(id, target)) return { ok: false, msg: 'Choose a Mystic.' };
       for (let i = 0; i < e.n; i++) grantXp(target, xpToNext(target.level) - target.xp);
-      return done(`${displayName(target)} reached level ${target.level}!`);
+      return done(`${displayName(target)}’s XP bar is full: train it in Team → Train!`);
     }
     case 'xp': {
       if (!target || !canUseOn(id, target)) return { ok: false, msg: 'Choose a Mystic.' };

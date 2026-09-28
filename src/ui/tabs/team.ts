@@ -6,7 +6,8 @@ import { ELEMENTS, type Element } from '../../data/elements';
 import { ABILITIES, natureById, RARITY, STATUS } from '../../data/traits';
 import { RELICS } from '../../data/relics';
 import { ITEMS } from '../../data/items';
-import { displayName, geneGrade, rankedAp, speciesOf, statsOf, xpToNext, relicSlots, power, type Creature } from '../../game/creature';
+import { displayName, geneGrade, rankedAp, rankedPower, speciesOf, statsOf, xpToNext, relicSlots, power, train, trainReady, maxTrainCost, enhanceCost, type Creature, type TrainResult, type StatKey } from '../../game/creature';
+import { EVO_LEVELS } from '../../data/lines';
 import { state, save, TEAM_MAX } from '../../game/state';
 import { awaken, awakenCost } from '../../game/gacha';
 import { sfx } from '../../core/audio';
@@ -18,7 +19,10 @@ import { Pager } from '../pager';
 import type { JournalHooks, TabCleanup } from '../journal';
 
 const STAT_MAX = { hp: 520, atk: 120, def: 120, spd: 100 };
-type Sub = 'stats' | 'moves' | 'relics' | 'evolve';
+type Sub = 'train' | 'stats' | 'moves' | 'relics' | 'evolve';
+/** The last training roll per Mystic, shown until another Mystic is trained (Miscrits-style results). */
+const lastTrain = new WeakMap<Creature, TrainResult>();
+const Q_LABEL = { weak: 'Weak', good: 'Good', great: 'Great', max: 'Max' } as const;
 
 function evoRoutes(c: Creature, night: boolean) {
   return speciesOf(c).evolves.map((e) => {
@@ -48,10 +52,10 @@ export function askText(title: string, value: string, placeholder: string, max =
 export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
   let sel: Creature | null = state.team[0] ?? state.box[0] ?? null;
   let filter: Element | '' = '';
-  let sub: Sub = 'stats';
+  let sub: Sub = 'train';
   root.innerHTML = `<div class="team md">
     <div class="md-master">
-      <section class="sec"><header class="sec-h"><b>Team</b><span class="sec-n tm-n"></span><small>First three battle</small></header><div class="tm-slots"></div></section>
+      <section class="sec"><header class="sec-h"><b>Team</b><span class="sec-n tm-n"></span><small>Lead battles · others swap in</small></header><div class="tm-slots"></div></section>
       <section class="sec grow"><header class="sec-h"><b>Storage</b><span class="sec-n box-n"></span><button class="chip tm-filter" aria-label="Filter storage by element"></button></header><div class="tm-box"></div></section>
     </div>
     <div class="md-detail tm-detail"></div>
@@ -66,7 +70,7 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
     empty: () => emptyState(filter ? `No ${ELEMENTS[filter].name} Mystics stored` : 'Storage is empty', filter ? 'Try another element filter.' : 'Mystics you catch beyond a full team rest here.', 'chest'),
   });
 
-  const cellHTML = (c: Creature) => `<span class="mcell ${c.hp <= 0 ? 'ko' : ''} ${c.favorite ? 'fav' : ''}">${mysticFace(c.species, c.shiny, 46, `<span class="cap-lv">${c.level}</span>`)}<span class="mc-name ell">${esc(displayName(c))}</span></span>`;
+  const cellHTML = (c: Creature) => `<span class="mcell ${c.hp <= 0 ? 'ko' : ''} ${c.favorite ? 'fav' : ''} ${trainReady(c) ? 'ready' : ''}">${trainReady(c) ? `<i class="mc-train" title="Ready to train">${glyph('chevU')}</i>` : ''}${mysticFace(c.species, c.shiny, 46, `<span class="cap-lv">${c.level}</span>`)}<span class="mc-name ell">${esc(displayName(c))}</span></span>`;
 
   const drawSlots = () => {
     (root.querySelector('.tm-n') as HTMLElement).textContent = `${state.team.length}/${TEAM_MAX}`;
@@ -112,7 +116,7 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
         </div>
         <div class="cd-power"><small>Power</small><b class="tnum">${power(c)}</b></div>
       </div>
-      <div class="seg cd-subs" role="tablist">${(['stats', 'moves', 'relics', 'evolve'] as Sub[]).map((s) => `<button role="tab" data-sub="${s}" class="${s === sub ? 'on' : ''}" aria-selected="${s === sub}">${{ stats: 'Stats', moves: 'Moves', relics: 'Relics', evolve: 'Evolve' }[s]}</button>`).join('')}</div>
+      <div class="seg cd-subs" role="tablist">${(['train', 'stats', 'moves', 'relics', 'evolve'] as Sub[]).map((s) => `<button role="tab" data-sub="${s}" class="${s === sub ? 'on' : ''} ${s === 'train' && trainReady(c) ? 'glow' : ''}" aria-selected="${s === sub}">${{ train: 'Train', stats: 'Stats', moves: 'Moves', relics: 'Relics', evolve: 'Evolve' }[s]}</button>`).join('')}</div>
       <div class="cd-page">${subPage(c)}</div>
       <div class="cd-actions">${inTeam ? `
         ${ti > 0 ? `<button class="btn small" data-act="lead" title="Make lead">${icon('crown')}<span class="lb">Lead</span></button>` : ''}
@@ -132,6 +136,32 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
     const sp = speciesOf(c);
     const st = statsOf(c);
     const nat = natureById(c.nature);
+    if (sub === 'train') {
+      const ready = trainReady(c);
+      const need = xpToNext(c.level);
+      const cost = maxTrainCost(c);
+      const last = lastTrain.get(c);
+      const nextEvo = EVO_LEVELS.find((l) => l > c.level);
+      const evoTarget = sp.evolves.find((e) => e.level && !e.item)?.id;
+      const val = (k: StatKey) => (k === 'hp' ? st.maxHp : st[k]);
+      const row = (k: StatKey) => {
+        const q = last?.quality[k];
+        const d = last ? (k === 'hp' ? last.after.maxHp - last.before.maxHp : last.after[k] - last.before[k]) : 0;
+        return `<div class="tr-row"><span class="st-k">${k.toUpperCase()}</span><b class="tnum">${val(k)}</b>${q ? `<span class="tr-gain q-${q}">+${d} <small>${Q_LABEL[q]}</small></span>` : '<span class="tr-gain none">—</span>'}</div>`;
+      };
+      return `<div class="train">
+        <div class="tr-head">
+          <div class="tr-lv"><small>Level</small><b class="display tnum">${c.level}</b></div>
+          <div class="tr-xp">${bar(Math.min(1, c.xp / need), 'xp big')}<span class="tnum">${ready ? 'XP bar full: ready to train!' : `${c.xp} / ${need} XP · win battles to fill the bar`}</span></div>
+        </div>
+        <div class="tr-rows">${(['hp', 'atk', 'def', 'spd'] as StatKey[]).map(row).join('')}</div>
+        <div class="tr-btns">
+          <button class="btn primary big" data-act="train" ${ready ? '' : 'disabled'}>${glyph('chevU')} Train <small>Free</small></button>
+          <button class="btn gold big" data-act="maxtrain" ${ready ? '' : 'disabled'}>${icon('sparkles')} Max Train <small>${icon('gem')} ${cost}</small></button>
+        </div>
+        <p class="tr-note">${nextEvo && evoTarget && SPECIES[evoTarget] ? `Evolves at <b>Lv ${nextEvo}</b> into <b>${state.dex[evoTarget]?.seen ? SPECIES[evoTarget].name : '???'}</b>. ` : ''}Train rolls each stat Weak, Good or Great; Max Train makes every roll Max.</p>
+      </div>`;
+    }
     if (sub === 'stats') {
       const stat = (k: 'hp' | 'atk' | 'def' | 'spd', v: number) => `<div class="stat ${nat.up === k ? 'up' : nat.down === k ? 'down' : ''}"><span class="st-k">${k.toUpperCase()}${nat.up === k ? glyph('chevU') : nat.down === k ? glyph('chevD') : ''}</span>${bar(v / STAT_MAX[k], 'st')}<b class="tnum">${v}</b><em title="Gene ${c.genes[k]}/15">${c.genes[k]}</em></div>`;
       const ab = ABILITIES[c.ability];
@@ -143,7 +173,9 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
       return `<div class="cd-moves">${c.skills.map((s) => {
         const sk = SKILLS[s.id];
         if (!sk) return '';
-        return `<div class="move" style="--el:${ELEMENTS[sk.element].color}"><span class="mv-el">${icon(sk.element)}</span><span class="mv-b"><b class="ell">${sk.name}${s.rank > 1 ? ` <i class="rank">+${s.rank - 1}</i>` : ''}</b><small>${sk.desc}</small></span><span class="mv-ap tnum">${rankedAp(sk, s.rank)}<small>AP</small></span>${sk.status ? `<i class="mv-st" style="--c:${STATUS[sk.status.id].color}">${STATUS[sk.status.id].short}</i>` : ''}</div>`;
+        const cost = enhanceCost(s.rank);
+        const can = s.rank < 5 && state.inv.gold >= cost.gold && state.inv.elementum[sk.element] >= cost.shards;
+        return `<div class="move" style="--el:${ELEMENTS[sk.element].color}"><span class="mv-el">${icon(sk.element)}</span><span class="mv-b"><b class="ell">${sk.name}${s.rank > 1 ? ` <i class="rank">+${s.rank - 1}</i>` : ''}</b><small>${sk.power ? `Power ${Math.round(rankedPower(sk, s.rank))}${s.rank < 5 ? ` → ${Math.round(rankedPower(sk, s.rank + 1))}` : ''}` : sk.desc}</small></span><span class="mv-ap tnum">${rankedAp(sk, s.rank)}<small>AP</small></span>${sk.status ? `<i class="mv-st" style="--c:${STATUS[sk.status.id].color}">${STATUS[sk.status.id].short}</i>` : ''}${s.rank >= 5 ? '<span class="tag gold">Max</span>' : `<button class="btn tiny ${can ? 'primary' : ''}" data-act="enh:${s.id}" ${can ? '' : 'disabled'} title="Enhance: ${cost.gold} gold + ${cost.shards} ${ELEMENTS[sk.element].name} Elementum">${glyph('chevU')}<small class="tnum">${cost.gold}</small></button>`}</div>`;
       }).join('')}</div>`;
     }
     if (sub === 'relics') {
@@ -200,6 +232,34 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
     if (a === 'rename') {
       const name = await askText('Rename', c.nickname ?? '', speciesOf(c).name);
       if (name !== null) c.nickname = name ? name.slice(0, 16) : undefined;
+    }
+    if (a === 'train' || a === 'maxtrain') {
+      const max = a === 'maxtrain';
+      if (max && state.inv.aether < maxTrainCost(c)) { sfx('error'); toast(`Max Train needs ${maxTrainCost(c)} Aether.`, 'bad'); return; }
+      if (max) state.inv.aether -= maxTrainCost(c);
+      const r = train(c, max, hooks.isNight());
+      if (!r) { sfx('error'); return; }
+      lastTrain.set(c, r);
+      sfx('levelup');
+      toast(`${esc(displayName(c))} trained to <b>Lv ${c.level}</b>${max ? ' · Max Train!' : ''}${r.newSkills.length ? ` · learned <b>${r.newSkills.map((id) => SKILLS[id]?.name ?? id).join(', ')}</b>` : ''}`, 'good');
+      save();
+      drawSlots();
+      box.refresh();
+      drawDetail();
+      if (r.evolveTo) { await hooks.evolve(c, r.evolveTo); lastTrain.delete(c); }
+    }
+    if (a.startsWith('enh:')) {
+      const s = c.skills.find((x) => x.id === a.slice(4));
+      const sk = s && SKILLS[s.id];
+      if (s && sk) {
+        const cost = enhanceCost(s.rank);
+        if (s.rank >= 5 || state.inv.gold < cost.gold || state.inv.elementum[sk.element] < cost.shards) { sfx('error'); toast(`Enhancing needs ${cost.gold} gold and ${cost.shards} ${ELEMENTS[sk.element].name} Elementum.`, 'bad'); return; }
+        state.inv.gold -= cost.gold;
+        state.inv.elementum[sk.element] -= cost.shards;
+        s.rank++;
+        sfx('levelup');
+        toast(`${sk.name} enhanced to rank ${s.rank}!`, 'good');
+      }
     }
     if (a.startsWith('evo:')) await hooks.evolve(c, a.slice(4));
     if (a.startsWith('relic:')) {

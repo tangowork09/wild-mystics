@@ -4,7 +4,7 @@ import { ORBS, ITEMS, type OrbId, type ItemId } from '../data/items';
 import { STATUS, RARITY } from '../data/traits';
 import { SPECIES } from '../data/species';
 import type { Skill } from '../data/skills';
-import { rankedAp, skillList, xpToNext, displayName, geneGrade, type Creature } from '../game/creature';
+import { rankedAp, skillList, xpToNext, displayName, geneGrade, trainReady, type Creature } from '../game/creature';
 import { state } from '../game/state';
 import { sfx } from '../core/audio';
 import { haptic } from '../core/haptics';
@@ -437,10 +437,10 @@ export class BattleUI {
           ${o.captured.map((c) => `<div class="r-cap ${c.shiny ? 'shiny' : ''}" style="--rar:${RARITY[speciesRarity(c)].color}">${mysticFace(c.species, c.shiny, 52)}<div><b>${displayName(c)} joined your journey!</b><small>${RARITY[speciesRarity(c)].name} · Lv ${c.level} · Genes ${geneGrade(c.genes)}${c.shiny ? ' · Shiny' : ''}</small></div></div>`).join('')}
         </div>
         <div class="r-team">${o.team.map((t) => {
-          const lvUp = t.c.level > t.beforeLv;
-          return `<div class="r-mon ${lvUp ? 'up' : ''}">${mysticFace(t.c.species, t.c.shiny, 40)}<div class="r-info"><div class="r-name"><b>${displayName(t.c)}</b><span class="lv tnum">Lv ${t.beforeLv}${lvUp ? ` ${glyph('chevR')} <em>${t.c.level}</em>` : ''}</span></div>
+          const ready = trainReady(t.c); // v3: full XP bar → train it in Team → Train (Miscrits-style)
+          return `<div class="r-mon ${ready ? 'up' : ''}">${mysticFace(t.c.species, t.c.shiny, 40)}<div class="r-info"><div class="r-name"><b>${displayName(t.c)}</b><span class="lv tnum">Lv ${t.c.level}</span></div>
             <div class="bar xp"><i style="--p:${t.beforeXp / xpToNext(t.beforeLv)}" data-to="${t.c.xp / xpToNext(t.c.level)}"></i></div>
-            ${t.newSkills.map((s) => `<div class="learn">${icon('sparkles')} Learned <b>${s}</b></div>`).join('')}</div>${lvUp ? '<span class="r-up">Level up</span>' : ''}</div>`;
+            </div>${ready ? '<span class="r-up">Ready to train!</span>' : ''}</div>`;
         }).join('')}</div></div>
         <div class="r-foot"><button class="btn primary big r-go">Continue <kbd>Enter</kbd></button></div></div>`;
       this.root.appendChild(wrap);

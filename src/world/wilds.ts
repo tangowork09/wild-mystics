@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { makeCreatureRig, ensureCreatures, hasCreatureModel, getManifest } from '../assets/manifest';
 import type { Rig } from '../assets/placeholders';
-import { SPECIES } from '../data/species';
+import { SPECIES, formForLevel } from '../data/species';
 import { ELEMENTS } from '../data/elements';
 import { RARITY } from '../data/traits';
 import { ZONES, WATER_LEVEL, WORLD_SIZE, type Zone, zoneAt, spawnsBy } from '../data/zones';
@@ -221,6 +221,7 @@ export class Wilds {
   }
 
   private spawn(sp: string, zone: Zone, pos: THREE.Vector3, level: number, o: { alpha?: boolean; herd?: number; nightOnly?: boolean; den?: string; player?: THREE.Vector3 }) {
+    sp = formForLevel(sp, level); // v3: wild Mystics show the form their level has earned (Lv 10/20/30/35)
     const spec = SPECIES[sp];
     if (!spec) return null;
     const shiny = shinyRoll();

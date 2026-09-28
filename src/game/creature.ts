@@ -33,9 +33,13 @@ export interface Creature {
   favorite?: boolean;
   /** v3:creatures — caught (or fought) as an Alpha: elite, oversized, crowned. Optional, save-compatible. */
   alpha?: boolean;
+  /** v3 Miscrits-style training: stat points gained each time the Mystic is trained up a level. */
+  trained?: TrainedStats;
 }
 
 export interface Stats { maxHp: number; atk: number; def: number; spd: number }
+export type { StatKey };
+export type TrainedStats = Record<StatKey, number>;
 
 let uidCounter = 0;
 export const newUid = () => `${Date.now().toString(36)}${(uidCounter++).toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -68,12 +72,13 @@ export function statsOf(c: Creature): Stats {
   const L = c.level;
   const mult = (1 + c.infusion * 0.03) * RARITY[sp.rarity].statMult * (1 + (c.stars ?? 0) * 0.05);
   const g = c.genes;
+  const t = c.trained ?? NO_TRAINING;
   const n = c.nature ?? 'serene';
   return {
-    maxHp: Math.round((b.hp * (1 + L * 0.13) + g.hp * 0.8 + L * 2) * mult * natureMult(n, 'hp') * (1 + relicBonus(c, 'hp'))),
-    atk: Math.round((b.atk * (1 + L * 0.09) + g.atk * 0.25) * mult * natureMult(n, 'atk') * (1 + relicBonus(c, 'atk'))),
-    def: Math.round((b.def * (1 + L * 0.09) + g.def * 0.25) * mult * natureMult(n, 'def') * (1 + relicBonus(c, 'def'))),
-    spd: Math.round((b.spd * (1 + L * 0.07) + g.spd * 0.25) * mult * natureMult(n, 'spd') * (1 + relicBonus(c, 'spd'))),
+    maxHp: Math.round((b.hp * (1 + L * 0.13) + g.hp * 0.8 + L * 2 + t.hp * TRAIN_WEIGHT.hp) * mult * natureMult(n, 'hp') * (1 + relicBonus(c, 'hp'))),
+    atk: Math.round((b.atk * (1 + L * 0.09) + g.atk * 0.25 + t.atk * TRAIN_WEIGHT.atk) * mult * natureMult(n, 'atk') * (1 + relicBonus(c, 'atk'))),
+    def: Math.round((b.def * (1 + L * 0.09) + g.def * 0.25 + t.def * TRAIN_WEIGHT.def) * mult * natureMult(n, 'def') * (1 + relicBonus(c, 'def'))),
+    spd: Math.round((b.spd * (1 + L * 0.07) + g.spd * 0.25 + t.spd * TRAIN_WEIGHT.spd) * mult * natureMult(n, 'spd') * (1 + relicBonus(c, 'spd'))),
   };
 }
 
@@ -130,30 +135,69 @@ export function skillList(c: Creature): { skill: Skill; rank: number }[] {
 export function rankedPower(skill: Skill, rank: number) { return skill.power * (1 + (rank - 1) * 0.12); }
 export function rankedAp(skill: Skill, rank: number) { return skill.ap === 0 ? 0 : Math.max(1, skill.ap - (rank >= 5 ? 1 : 0)); }
 
-export interface LevelUpResult { levels: number; newSkills: string[]; canEvolve: boolean }
+export interface LevelUpResult { levels: number; newSkills: string[]; canEvolve: boolean; ready?: boolean }
 
+/** v3 (Miscrits): battle XP fills the bar but never levels a Mystic by itself. A full bar means it
+ *  is ready to Train (Team → Train), which raises the level with rolled stat gains. */
 export function grantXp(c: Creature, amount: number): LevelUpResult {
-  const before = c.level;
+  if (c.level < LEVEL_CAP) c.xp = Math.min(xpToNext(c.level), c.xp + Math.max(0, amount));
+  else c.xp = 0;
+  return { levels: 0, newSkills: [], canEvolve: false, ready: trainReady(c) };
+}
+
+export const trainReady = (c: Creature) => c.level < LEVEL_CAP && c.xp >= xpToNext(c.level);
+
+/** Gems (Aether) for a Max Train at this level: every stat rolls its best result. */
+export const maxTrainCost = (c: Creature) => 10 + c.level * 4;
+
+/** Training points → stat: one point is worth this much raw stat (≈ +10% at Lv 35 for a maxed Mystic). */
+export const TRAIN_WEIGHT: Record<StatKey, number> = { hp: 1, atk: 0.15, def: 0.15, spd: 0.12 };
+const NO_TRAINING: TrainedStats = { hp: 0, atk: 0, def: 0, spd: 0 };
+export type TrainQuality = 'weak' | 'good' | 'great' | 'max';
+export interface TrainResult {
+  gains: TrainedStats;
+  quality: Record<StatKey, TrainQuality>;
+  before: Stats;
+  after: Stats;
+  newSkills: string[];
+  /** Species this Mystic can evolve into now that it reached 10/20/30/35. */
+  evolveTo: string | null;
+}
+
+/** Train one level: +1 level, each stat rolls weak/good/great (Max Train: all max). */
+export function train(c: Creature, max = false, isNight = false): TrainResult | null {
+  if (!trainReady(c)) return null;
+  const before = statsOf(c);
   const known = new Set(c.skills.map((s) => s.id));
   const newSkills: string[] = [];
-  c.xp += amount;
-  while (c.xp >= xpToNext(c.level) && c.level < LEVEL_CAP) {
-    const oldMax = statsOf(c).maxHp;
-    c.xp -= xpToNext(c.level);
-    c.level++;
-    c.hp += statsOf(c).maxHp - oldMax;
-    for (const [lv, id] of speciesOf(c).learnset) {
-      if (lv === c.level && !known.has(id) && SKILLS[id]) {
-        known.add(id);
-        newSkills.push(id);
-        if (c.skills.length < 4) c.skills.push({ id, rank: 1 });
-        else c.skills[0] = { id, rank: 1 }; // replace oldest
-      }
+  const roll = (): [number, TrainQuality] => {
+    if (max) return [3, 'max'];
+    const r = Math.random();
+    return r < 0.35 ? [1, 'weak'] : r < 0.8 ? [2, 'good'] : [3, 'great'];
+  };
+  const gains = { ...NO_TRAINING };
+  const quality = {} as Record<StatKey, TrainQuality>;
+  for (const k of ['hp', 'atk', 'def', 'spd'] as StatKey[]) { const [v, q] = roll(); gains[k] = v; quality[k] = q; }
+  const tr = (c.trained ??= { ...NO_TRAINING });
+  for (const k of Object.keys(gains) as StatKey[]) tr[k] += gains[k];
+  c.xp = 0;
+  c.level++;
+  const after = statsOf(c);
+  c.hp = Math.min(after.maxHp, c.hp + (after.maxHp - before.maxHp));
+  for (const [lv, id] of speciesOf(c).learnset) {
+    if (lv === c.level && !known.has(id) && SKILLS[id]) {
+      known.add(id);
+      newSkills.push(id);
+      if (c.skills.length < 4) c.skills.push({ id, rank: 1 });
+      else c.skills[0] = { id, rank: 1 };
     }
   }
-  if (c.level >= LEVEL_CAP) c.xp = 0;
-  return { levels: c.level - before, newSkills, canEvolve: !!evolutionFor(c) };
+  const evo = evolutionFor(c, isNight);
+  return { gains, quality, before, after, newSkills, evolveTo: evo?.id ?? null };
 }
+
+/** Moves enhancement (Miscrits-style): gold + the move's Elementum; rank 5 max. */
+export const enhanceCost = (rank: number) => ({ gold: 50 * rank, shards: rank * 2 });
 
 /** Level-based evolution available now (respecting time-of-day conditions). */
 export function evolutionFor(c: Creature, isNight = false): Evo | null {
