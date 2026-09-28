@@ -1,6 +1,7 @@
 import { ELEMENTS, type Element } from './elements';
 import { PINCH, type AbilityId, type Rarity } from './traits';
 import type { ItemId } from './items';
+import type { AccSpec } from '../assets/accessories';
 
 export type BodyType = 'quad' | 'blob' | 'bird' | 'serpent' | 'golem';
 
@@ -49,6 +50,14 @@ export interface Species {
   tintGlow?: string;
   look: Look;
   lore: string;
+  /** v3: secondary element (dual-type Guardians). Damage multiplies both matchups. */
+  element2?: Element;
+  /** v3: procedural accessories attached to bones (crystals, leaf crowns, horns, shells, bells…). */
+  acc?: AccSpec[];
+  /** v3: overworld behaviour override (see wilds.ts archetypes). */
+  behavior?: 'grazer' | 'skittish' | 'curious' | 'territorial' | 'flyer' | 'swimmer';
+  /** v3: moves in herds / packs of this many (min–max). */
+  herd?: [number, number];
   /** @deprecated use `evolves` — kept so data rows stay terse. */
   evolvesTo?: { id: string; level: number };
 }

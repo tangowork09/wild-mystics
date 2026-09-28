@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import type { Look } from '../data/species';
+import type { Look as StyleLook } from './stylize';
 
 // Procedural stand-in models. Every creature is built from its `Look` so the roster reads
 // distinctly until real GLBs are dropped into public/assets and listed in manifest.json.
 
-export type AnimName = 'idle' | 'run' | 'walk' | 'attack' | 'hit' | 'faint' | 'cast' | 'victory' | 'interact' | 'jump' | 'fall' | 'land' | 'gather';
+export type AnimName = 'idle' | 'run' | 'walk' | 'attack' | 'hit' | 'faint' | 'cast' | 'victory' | 'interact' | 'jump' | 'fall' | 'land' | 'gather' | 'graze';
 
 export interface Rig {
   root: THREE.Group;
@@ -12,6 +13,10 @@ export interface Rig {
   /** `moving` is 0..1 (0 idle, ~0.5 walk, 1 run). */
   update(dt: number, moving: number): void;
   play(anim: AnimName): void;
+  /** v3 stylised-look controls: hit flash, dissolve, dithered fade, outline/shadow detail. */
+  look?: StyleLook;
+  /** True when the rig has a real clip for this animation. */
+  has?(anim: AnimName): boolean;
 }
 
 const geoCache = new Map<string, THREE.BufferGeometry>();
@@ -238,7 +243,7 @@ export function buildCreature(look: Look, shiny = false): Rig {
     root,
     height,
     play(name) {
-      if (name === 'idle' || name === 'run' || name === 'walk') { if (action?.name === 'faint') action = null; return; }
+      if (name === 'idle' || name === 'run' || name === 'walk' || name === 'graze') { if (action?.name === 'faint') action = null; return; }
       const n = name === 'victory' || name === 'interact' ? 'cast' : name;
       action = { name: n, time: 0, dur: n === 'faint' ? 0.8 : n === 'attack' ? 0.45 : n === 'cast' ? 0.6 : 0.35 };
     },

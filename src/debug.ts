@@ -43,9 +43,10 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
 
   if (view === 'portraits') {
     const m = await import('./assets/manifest');
-    await m.ensureModels(Object.keys(SPECIES).map(m.creatureModel));
+    const ids = q.get('only')?.split(',') ?? Object.keys(SPECIES); // v3:creatures — `&only=` subset
+    await m.ensureModels(ids.map(m.creatureModel));
     const out: Record<string, string> = {};
-    for (const id of Object.keys(SPECIES)) {
+    for (const id of ids) {
       out[id] = m.renderPortrait(id, false, 256);
       out[`${id}*`] = m.renderPortrait(id, true, 256);
     }
@@ -54,8 +55,17 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
     return true;
   }
   if (view === 'gallery') {
+    // v3:creatures — `&live` renders portraits from the rigs (new look), `&shiny`, `&only=a,b`, `&from=N&n=M` paging
+    const m = await import('./assets/manifest');
+    const only = q.get('only')?.split(',');
+    let list = Object.values(SPECIES).filter((s) => !only || only.includes(s.id));
+    const from = Number(q.get('from') ?? 0), n = Number(q.get('n') ?? 999);
+    list = list.slice(from, from + n);
+    const live = q.has('live');
+    if (live) await m.ensureModels(list.map((s) => m.creatureModel(s.id)));
+    const shiny = q.has('shiny');
     const g = el('div', 'gallery');
-    g.innerHTML = Object.values(SPECIES).map((s) => `<div class="gal" style="--el:${ELEMENTS[s.element].color}"><img src="${portrait(s.id)}" alt=""><b>${s.name}</b><small>${ELEMENTS[s.element].glyph} ${s.id}${s.boss ? ' · boss' : ''}</small></div>`).join('');
+    g.innerHTML = list.map((s) => `<div class="gal" style="--el:${ELEMENTS[s.element].color}"><img src="${live ? m.renderPortrait(s.id, shiny, 256) : portrait(s.id, shiny)}" alt=""><b>${s.name}</b><small>${ELEMENTS[s.element].glyph} ${s.id}${s.boss ? ' · boss' : ''}</small></div>`).join('');
     uiRoot().appendChild(g);
     w.__ready = true;
     return true;
