@@ -5,6 +5,7 @@ import type { DungeonDef } from '../../data/layout';
 import { THEMES, type ChestDef, type DungeonData, type ThemeStyle } from '../../data/dungeons';
 import { CELL, DX, DZ, LEVEL_Y, WALL_H, passable, type Door, type Layout, type Room } from './layout';
 import { piece, themedMaterial, type KitId } from './kit';
+import { procProp, type ProcKind } from './procprops';
 import { Glows, Motes, Shafts, surfaceMaterial, poolTexture } from './fx';
 import { dressRoom, type Dresser } from './dress';
 
@@ -45,10 +46,12 @@ export function mat(x: number, y: number, z: number, yaw = 0, s = 1, sy = s) {
   return new THREE.Matrix4().compose(new THREE.Vector3(x, y, z), tmpQ, tmpS);
 }
 
-/** Collects instance transforms per kit piece, then emits one InstancedMesh per piece part. */
+/** Collects instance transforms per kit piece / procedural prop, then emits one InstancedMesh per part. */
 export class Batch {
-  private lists = new Map<string, { kit: KitId; name: string; mats: THREE.Matrix4[]; shadow: boolean }>();
-  add(kit: KitId, name: string, m: THREE.Matrix4, shadow = true) {
+  private lists = new Map<string, { kit: KitId | 'proc'; name: string; mats: THREE.Matrix4[]; shadow: boolean }>();
+  add(kit: KitId, name: string, m: THREE.Matrix4, shadow = true) { this.push(kit, name, m, shadow); }
+  proc(kind: ProcKind, m: THREE.Matrix4, shadow = true) { this.push('proc', kind, m, shadow); }
+  private push(kit: KitId | 'proc', name: string, m: THREE.Matrix4, shadow: boolean) {
     const k = `${kit}/${name}/${shadow ? 1 : 0}`;
     let l = this.lists.get(k);
     if (!l) { l = { kit, name, mats: [], shadow }; this.lists.set(k, l); }
@@ -57,10 +60,12 @@ export class Batch {
   build(group: THREE.Group, themeKey: string, theme: ThemeStyle) {
     let calls = 0;
     for (const l of this.lists.values()) {
-      const p = piece(l.kit, l.name);
-      for (const part of p.parts) {
-        const inst = new THREE.InstancedMesh(part.geometry, themedMaterial(l.kit, part.material, themeKey, theme), l.mats.length);
-        l.mats.forEach((m, i) => inst.setMatrixAt(i, tmpM.multiplyMatrices(m, part.matrix)));
+      const parts = l.kit === 'proc'
+        ? procProp(l.name as ProcKind, theme, themeKey).map((p) => ({ geometry: p.geometry, material: p.material, matrix: null as THREE.Matrix4 | null }))
+        : piece(l.kit, l.name).parts.map((p) => ({ geometry: p.geometry, material: themedMaterial(l.kit as KitId, p.material, themeKey, theme), matrix: p.matrix as THREE.Matrix4 | null }));
+      for (const part of parts) {
+        const inst = new THREE.InstancedMesh(part.geometry, part.material, l.mats.length);
+        l.mats.forEach((m, i) => inst.setMatrixAt(i, part.matrix ? tmpM.multiplyMatrices(m, part.matrix) : m));
         inst.castShadow = l.shadow;
         inst.receiveShadow = true;
         inst.computeBoundingSphere();
