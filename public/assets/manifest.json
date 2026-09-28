@@ -3126,5 +3126,55 @@
       "model": "models/dungeon/quaternius.glb",
       "pieces": 9
     }
+  },
+  "sprites": {
+    "mossbuck": {
+      "src": "sprites/mossbuck.webp",
+      "portrait": "sprites/mossbuck-portrait.webp",
+      "w": 900,
+      "h": 1044,
+      "pad": 10,
+      "facing": "right"
+    },
+    "fawnlet": {
+      "src": "sprites/fawnlet.webp",
+      "portrait": "sprites/fawnlet-portrait.webp",
+      "w": 746,
+      "h": 1044,
+      "pad": 10,
+      "facing": "right"
+    },
+    "reefwarden": {
+      "src": "sprites/reefwarden.webp",
+      "portrait": "sprites/reefwarden-portrait.webp",
+      "w": 1044,
+      "h": 1030,
+      "pad": 10,
+      "facing": "right"
+    },
+    "saltfox": {
+      "src": "sprites/saltfox.webp",
+      "portrait": "sprites/saltfox-portrait.webp",
+      "w": 1000,
+      "h": 1044,
+      "pad": 10,
+      "facing": "left"
+    },
+    "shellback": {
+      "src": "sprites/shellback.webp",
+      "portrait": "sprites/shellback-portrait.webp",
+      "w": 945,
+      "h": 1044,
+      "pad": 10,
+      "facing": "right"
+    },
+    "skimgull": {
+      "src": "sprites/skimgull.webp",
+      "portrait": "sprites/skimgull-portrait.webp",
+      "w": 967,
+      "h": 1044,
+      "pad": 10,
+      "facing": "right"
+    }
   }
 }

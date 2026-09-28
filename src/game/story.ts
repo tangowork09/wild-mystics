@@ -14,6 +14,7 @@ import type { DialogSpec } from './contracts';
 import { createCreature } from './creature';
 import { state, save, resetSave, addCreature, addItem, itemCount, teamAlive } from './state';
 import { emit, on } from './events';
+import { setSettings } from '../core/settings';
 import { applyReward, notify, rewardText } from './rewards';
 import {
   accept, beginConversation, claim, endConversation, fillBeats, hasPendingBeats, isDone,
@@ -110,6 +111,15 @@ const PRO = {
   ] as Beat[],
   picked: [
     ['warden_brisa', '{starter}. Good choice — that one bites.', 'Keep it close. It’ll keep you closer.'],
+  ] as Beat[],
+  battleStyle: [
+    ['warden_brisa', 'One more thing before you go out there. How do you like to fight?', 'Some Wayfarers trade blows turn by turn. Others parry, dodge and jump the moment a strike lands.'],
+  ] as Beat[],
+  parryYes: [
+    ['warden_brisa', 'Quick hands, then. Watch the rings: parry the white, dodge the red, jump the gold.', 'Land them clean and your Mystic strikes back.'],
+  ] as Beat[],
+  parryNo: [
+    ['warden_brisa', 'Steady and thoughtful. Good. Pick your moves, and let your Mystic do the rest.', 'You can change your mind any time in Settings.'],
   ] as Beat[],
   kaiArrives: [
     ['rival_kai', 'Brisa! Brisa! Grandma said I could pick first!', '…Oh. Hi. Who are you?'],
@@ -225,6 +235,10 @@ async function runPrologue(h: StoryHost) {
       for (const s of STARTERS) if (s !== species && s !== state.story.rival) c.hideMystic(s);
       c.frame(['player', 'warden_brisa', species], { side: 0.9, height: 1.9, dist: 6 });
       await play(h, PRO.picked);
+      // v3: the player picks how battles feel before the first one (changeable later in Settings → Battle)
+      const style = await play(h, PRO.battleStyle, ['Classic: take turns, no timing', 'Parry mode: parry, dodge & jump in real time']);
+      setSettings({ parryMode: style === 1 });
+      await play(h, style === 1 ? PRO.parryYes : PRO.parryNo);
       state.story.prologue = 'rival';
       save();
     }

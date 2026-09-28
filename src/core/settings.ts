@@ -22,6 +22,7 @@ export interface Settings {
   cameraDistance: number;     // 5 – 18
   qteAssist: boolean;         // wider timing windows
   autoParry: boolean;         // accessibility: defence happens automatically (reduced rewards)
+  parryMode: boolean;         // v3: real-time parry/dodge/jump + timed hits (Expedition-style); off = classic turn-based
   battleSpeed: 1 | 1.5 | 2;
   damageNumbers: boolean;
   screenShake: number;        // 0 – 1
@@ -36,7 +37,7 @@ export interface Settings {
 export const DEFAULTS: Settings = {
   quality: 'auto', renderScale: 1, adaptiveResolution: true, fpsCap: 60, shadows: 'high', ambientOcclusion: true, bloom: true,
   grassDensity: 1, drawDistance: 1, masterVolume: 0.9, musicVolume: 0.55, sfxVolume: 0.85, ambientVolume: 0.6,
-  cameraSensitivity: 1, invertY: false, cameraDistance: 10, qteAssist: false, autoParry: false, battleSpeed: 1,
+  cameraSensitivity: 1, invertY: false, cameraDistance: 10, qteAssist: false, autoParry: false, parryMode: false, battleSpeed: 1,
   damageNumbers: true, screenShake: 1, hints: true, haptics: true, touchScale: 1, touchOpacity: 0.85, leftHanded: false, dayLength: 24,
 };
 

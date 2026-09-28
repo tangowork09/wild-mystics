@@ -115,7 +115,7 @@ export interface GameState {
 }
 
 export const TEAM_MAX = 4;
-export const BATTLE_SLOTS = 3;
+export const BATTLE_SLOTS = 1; // v3: 1v1 battles — the rest of the team waits in reserve (Swap, or auto on KO)
 export const SAVE_VERSION = 3;
 const LEGACY_KEY = 'expedition-wilds-save-v1';
 let KEY = 'wm-save-guest';

@@ -7,6 +7,7 @@ import { ELEMENTS } from '../data/elements';
 import { tier } from '../core/renderer';
 import { buildCreature, buildPlayer, type AnimName, type Rig } from './placeholders';
 import { prepareModel, Look, LOOK, rimOverride, resetGlobals, type PreparedInfo } from './stylize';
+import { loadSprite, getSprite, makeSpriteRig, type SpriteEntry } from './sprite';
 import { dress, tickDressing, groundAura, wisps, glowShell, anchorOf, type AccSpec, type Dressing } from './accessories';
 
 /**
@@ -38,6 +39,8 @@ export interface Manifest {
   textures?: Record<string, string>;
   vfx?: Record<string, string>;
   music?: Record<string, string>;
+  /** 2.5D painted Mystics (tools/add-sprite.py). A sprite replaces the species' 3D model everywhere. */
+  sprites?: Record<string, SpriteEntry>;
 }
 
 let manifest: Manifest = {};
@@ -88,7 +91,14 @@ export async function ensureModels(models: string[], onProgress?: (done: number,
 
 export const creatureModel = (id: string) => manifest.creatures?.[id]?.model ?? '';
 export const hasCreatureModel = (id: string) => gltfs.has(creatureModel(id));
-export async function ensureCreatures(ids: string[]) { await ensureModels(ids.map(creatureModel)); }
+export async function ensureCreatures(ids: string[]) {
+  const spr = (id: string) => (use2D ? manifest.sprites?.[id] : undefined);
+  await Promise.all([
+    ensureModels(ids.filter((id) => !spr(id)).map(creatureModel)),
+    ...ids.map(spr).filter((e): e is SpriteEntry => !!e).map((e) => loadSprite(e.src)),
+  ]);
+}
+const use2D = !new URLSearchParams(location.search).has('no2d');
 
 /** Everything the overworld needs before the first frame (environment, town, people). */
 export function essentialModels(): string[] {
@@ -104,7 +114,9 @@ export function essentialModels(): string[] {
 
 /** Stream every remaining creature model at low priority after boot. */
 export function streamRemainingCreatures() {
-  const all = Object.values(manifest.creatures ?? {}).map((e) => e.model).filter((m) => m && !gltfs.has(m));
+  const sprites = use2D ? manifest.sprites ?? {} : {};
+  for (const e of Object.values(sprites)) void loadSprite(e.src);
+  const all = Object.entries(manifest.creatures ?? {}).filter(([id]) => !sprites[id]).map(([, e]) => e.model).filter((m) => m && !gltfs.has(m));
   void ensureModels(all, undefined, 2);
 }
 
@@ -347,6 +359,12 @@ export function makeCreatureRig(speciesId: string, shiny = false, opts: Creature
   const sp = SPECIES[speciesId];
   const entry = manifest.creatures?.[speciesId];
   const mul = opts.alpha ? 1.6 : 1;
+  const spr = use2D ? manifest.sprites?.[speciesId] : undefined;
+  if (spr) {
+    const tex = getSprite(spr.src);
+    if (tex) return makeSpriteRig(sp, spr, tex, new Look(new THREE.Object3D(), lookFor(sp, shiny)), mul);
+    void loadSprite(spr.src);
+  }
   if (entry) {
     const r = rigFromGltf(entry, sp.height, mul);
     if (r) {
@@ -454,6 +472,8 @@ const portraitCache = new Map<string, string>();
 let pr: { renderer: THREE.WebGLRenderer; scene: THREE.Scene; cam: THREE.PerspectiveCamera; kick: THREE.DirectionalLight } | null = null;
 
 export function portrait(speciesId: string, shiny = false): string {
+  const spr = use2D ? manifest.sprites?.[speciesId] : undefined;
+  if (spr?.portrait) return `assets/${spr.portrait}`;
   const e = manifest.creatures?.[speciesId];
   const baked = shiny ? e?.portraitShiny ?? e?.portrait : e?.portrait;
   if (baked) return `assets/${baked}`;

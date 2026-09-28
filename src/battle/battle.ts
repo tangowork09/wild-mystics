@@ -46,6 +46,9 @@ const SPECIES_EL = (c: Creature) => speciesOf(c).element;
 const PARRY_EARLY = 150, PARRY_LATE = 60, DODGE_EARLY = 270, DODGE_LATE = 80, WHIFF_LOCK = 450;
 const auto = () => !!(window as unknown as { __autoplay?: boolean }).__autoplay;
 
+/** Stand-in for a QTE ring when classic (non-parry) battles hide the timing prompts. */
+const NO_RING = { set(_x: number, _y: number, _p: number) {}, judge(_t: string, _k: string) {} };
+
 type Press = { kind: 'parry' | 'dodge' | 'jump' | 'qte'; t: number; used?: boolean };
 
 export class Battle {
@@ -59,6 +62,8 @@ export class Battle {
   private F: THREE.Vector3;
   private R: THREE.Vector3;
   private reserves: Creature[] = [];
+  /** v3 1v1: foes waiting their turn (trainer teams, pack mates, a second rustle in the grass). */
+  private foeQueue: Creature[] = [];
   private presses: Press[] = [];
   private whiffs: number[] = [];
   private camPos = new THREE.Vector3();
@@ -123,7 +128,7 @@ export class Battle {
   }
   private partySlot(i: number, n: number) {
     const lat = (i - (n - 1) / 2) * 2.8;
-    return this.ground(this.C.clone().addScaledVector(this.F, -3.6 - Math.abs(i - (n - 1) / 2) * 0.9).addScaledVector(this.R, lat));
+    return this.ground(this.C.clone().addScaledVector(this.F, (n === 1 ? -2.1 : -3.6) - Math.abs(i - (n - 1) / 2) * 0.9).addScaledVector(this.R, lat));
   }
   private enemySlot(j: number, n: number, boss: boolean, isBoss: boolean) {
     if (boss) {
@@ -132,7 +137,7 @@ export class Battle {
       return this.ground(this.C.clone().addScaledVector(this.F, 4.2).addScaledVector(this.R, side * 5.8));
     }
     const lat = (j - (n - 1) / 2) * 3.4;
-    return this.ground(this.C.clone().addScaledVector(this.F, 3.8 + Math.abs(j - (n - 1) / 2) * 0.8).addScaledVector(this.R, lat));
+    return this.ground(this.C.clone().addScaledVector(this.F, (n === 1 ? 2.3 : 3.8) + Math.abs(j - (n - 1) / 2) * 0.8).addScaledVector(this.R, lat));
   }
   private place(u: Unit, pos: THREE.Vector3) {
     u.home.copy(pos).add(new THREE.Vector3(0, u.hover, 0));
@@ -156,19 +161,16 @@ export class Battle {
       this.participants.add(c);
     });
     const isBossFight = this.setup.kind === 'boss';
-    this.setup.enemies.forEach((c, j) => {
-      if (c.alpha) {
-        // Alphas: elite genes, full health, a sturdier Break gauge
-        c.genes = { hp: Math.max(c.genes.hp, 11), atk: Math.max(c.genes.atk, 11), def: Math.max(c.genes.def, 11), spd: Math.max(c.genes.spd, 10) };
-        c.hp = statsOf(c).maxHp;
-      }
-      const u = new Unit('enemy', c, makeCreatureRig(c.species, c.shiny, { alpha: !!c.alpha }), j, isBossFight && j === 0);
-      if (c.alpha) u.brkMax = 170;
-      this.place(u, this.enemySlot(j, this.setup.enemies.length, isBossFight, j === 0));
+    // v3: 1v1 — one Mystic per side. Guardians fight alone; trainers and packs send theirs one at a time.
+    const foes = isBossFight ? this.setup.enemies.slice(0, 1) : this.setup.enemies;
+    this.foeQueue = foes.slice(1);
+    for (const c of foes) markSeen(c.species, this.setup.zone.id);
+    foes.slice(0, 1).forEach((c, j) => {
+      const u = this.makeFoe(c, j, isBossFight && j === 0);
+      this.place(u, this.enemySlot(j, 1, isBossFight, j === 0));
       u.rig.look?.setFade(0);
       this.world.scene.add(u.rig.root);
       this.units.push(u);
-      markSeen(c.species, this.setup.zone.id);
     });
     // v3:creatures — the arena: cleared ring, rune decal, framed backdrop, stage lights
     const lead = this.setup.enemies[0];
@@ -204,6 +206,42 @@ export class Battle {
     ex.rotation.y = Math.atan2(this.F.x, this.F.z);
   }
 
+  private makeFoe(c: Creature, slot: number, boss: boolean) {
+    if (c.alpha) {
+      // Alphas: elite genes, full health, a sturdier Break gauge
+      c.genes = { hp: Math.max(c.genes.hp, 11), atk: Math.max(c.genes.atk, 11), def: Math.max(c.genes.def, 11), spd: Math.max(c.genes.spd, 10) };
+      c.hp = statsOf(c).maxHp;
+    }
+    const u = new Unit('enemy', c, makeCreatureRig(c.species, c.shiny, { alpha: !!c.alpha }), slot, boss);
+    if (c.alpha) u.brkMax = 170;
+    return u;
+  }
+
+  /** 1v1: when the foe on the field falls or is caught, the next one steps in. */
+  private async sendNextFoe() {
+    if (this.alive('enemy').length || !this.foeQueue.length) return;
+    const out = [...this.enemies].reverse().find((u) => u.gone || u.captured);
+    const c = this.foeQueue.shift()!;
+    await ensureCreatures([c.species]);
+    const u = this.makeFoe(c, 0, false);
+    this.place(u, this.enemySlot(0, 1, false, false));
+    u.rig.look?.setFade(0);
+    u.av = u.avStep * 0.6;
+    this.world.scene.add(u.rig.root);
+    this.units.push(u);
+    if (out) this.ui.replaceCard(out, u); else this.ui.mount(this.units);
+    const who = this.setup.kind === 'tamer' && this.setup.tamer ? `${this.setup.tamer.name} sends out ${u.name}!` : `A wild ${u.name} jumps in!`;
+    this.ui.bannerText(who, 'info', 1100);
+    sfx('encounter');
+    const col = ELEMENTS[u.sp.element].color;
+    this.vfx.groundDecal('symbol_01', u.home, { color: col, size: 1, size1: 3.5, life: 0.9, rot: 3 });
+    this.shot(u.home.clone().addScaledVector(this.F, -(4 + u.height * 1.6)).addScaledVector(this.R, 1.6 + u.height * 0.4).addScaledVector(UP, 1 + u.height * 0.5), u.chest(), 2.4);
+    await this.fadeIn(u, 0.5);
+    u.rig.play('cast');
+    await this.sleep(700);
+    this.ui.refresh(this.units);
+  }
+
   get party() { return this.units.filter((u) => u.side === 'party'); }
   get enemies() { return this.units.filter((u) => u.side === 'enemy'); }
   private alive(side: 'party' | 'enemy') { return this.units.filter((u) => u.side === side && u.alive); }
@@ -224,6 +262,13 @@ export class Battle {
   }
   private shotOverview(speed = 2.2) {
     const boss = this.setup.kind === 'boss' ? 1.35 : 1;
+    if (boss === 1) {
+      // v3 1v1 duel framing: over the partner's shoulder, both Mystics large in frame
+      const h = Math.max(1, ...this.units.filter((u) => u.alive).map((u) => u.height));
+      const k = 0.75 + h * 0.25;
+      this.shot(this.C.clone().addScaledVector(this.F, -8.2 * k).addScaledVector(this.R, 4.6 * k).addScaledVector(UP, 2.6 + 1.3 * k), this.C.clone().addScaledVector(this.F, 0.9).addScaledVector(UP, 0.9 + h * 0.3), speed);
+      return;
+    }
     this.shot(this.C.clone().addScaledVector(this.F, -13 * boss).addScaledVector(this.R, 7 * boss).addScaledVector(UP, 6.5 * boss), this.C.clone().addScaledVector(this.F, 1.5).addScaledVector(UP, 1.6 * boss), speed);
   }
   private shoulder(u: Unit, focus: THREE.Vector3, focusH: number) {
@@ -233,8 +278,9 @@ export class Battle {
     const right = new THREE.Vector3().crossVectors(dir, UP).normalize();
     const h = u.height;
     const big = Math.max(1, focusH / 2.2);
-    const back = 2.4 + h * 1.35 + (big - 1) * 1.6;
-    const side = 1.15 + h * 0.75;
+    const duel = this.setup.kind !== 'boss' ? 0.78 : 1; // v3 1v1: sit closer so both duelists read large
+    const back = (2.4 + h * 1.35) * duel + (big - 1) * 1.6;
+    const side = (1.15 + h * 0.75) * duel;
     const up = 0.55 + h * 0.8 + (big - 1) * 0.9;
     const pos = u.home.clone().addScaledVector(dir, -back).addScaledVector(right, side).addScaledVector(UP, up);
     const look = u.home.clone().lerp(focus, 0.72).addScaledVector(UP, Math.min(focusH * 0.55, 3.2) + 0.2);
@@ -525,7 +571,7 @@ export class Battle {
   }
 
   private checkEnd(): BattleOutcome['result'] | null {
-    if (!this.alive('enemy').length) return this.enemies.every((u) => u.captured) ? 'captured' : 'win';
+    if (!this.alive('enemy').length && !this.foeQueue.length) return this.enemies.every((u) => u.captured) ? 'captured' : 'win';
     if (!this.alive('party').length && !this.reserves.some((c) => c.hp > 0)) return 'lose';
     return null;
   }
@@ -591,6 +637,7 @@ export class Battle {
       }
       this.ui.hideSkill();
       await this.resolveFaints();
+      await this.sendNextFoe();
       this.ui.refresh(this.units);
     }
     return { result: 'fled', captured: this.captured, evolvable: [], drops: this.drops };
@@ -731,6 +778,7 @@ export class Battle {
   /** Timed-hit QTE. */
   private async qteHit(anchor: () => { x: number; y: number }, leadMs: number): Promise<'perfect' | 'good' | 'miss'> {
     leadMs = leadMs / Math.max(1, this.speed * 0.85);
+    if (!settings.parryMode) { await wait(leadMs * 0.7); return 'good'; } // v3 classic: no timing
     const ring = this.ui.ring('attack');
     const t0 = performance.now();
     const impact = t0 + leadMs;
@@ -1109,8 +1157,9 @@ export class Battle {
     if (melee) { await this.sleep(250); await this.dash(u, primary); }
     else await this.sleep(420);
 
+    const classic = !settings.parryMode; // v3: classic turn-based — no defence prompts, softer hits
     const defendAuto = this.autoBattle || settings.autoParry;
-    this.ui.showDefense(true, pattern.some((s) => s.jump));
+    if (!classic) this.ui.showDefense(true, pattern.some((s) => s.jump));
     this.presses = this.presses.filter((p) => p.kind === 'qte');
     this.whiffs = [];
     const lead = 850;
@@ -1120,13 +1169,13 @@ export class Battle {
     for (let i = 0; i < impacts.length; i++) {
       const imp = impacts[i];
       if (!imp.red && !imp.jump) blockable++;
-      const ring = this.ui.ring(imp.jump ? 'gold' : imp.red ? 'red' : 'defend');
+      const ring = classic ? NO_RING : this.ui.ring(imp.jump ? 'gold' : imp.red ? 'red' : 'defend');
       const ringStart = imp.at - 800;
       let animFired = false, shotFired = false, autoDef = false;
       for (;;) {
         await nextFrame();
         const now = performance.now();
-        if ((auto() || defendAuto) && !autoDef && now >= imp.at - 60 && !(window as unknown as { __noDefend?: boolean }).__noDefend) {
+        if (!classic && (auto() || defendAuto) && !autoDef && now >= imp.at - 60 && !(window as unknown as { __noDefend?: boolean }).__noDefend) {
           autoDef = true;
           const success = auto() || Math.random() < (settings.autoParry ? 0.8 : 0.65);
           if (success) this.press(imp.jump ? 'jump' : imp.red ? 'dodge' : settings.autoParry || Math.random() < 0.6 ? 'parry' : 'dodge', now);
@@ -1143,7 +1192,7 @@ export class Battle {
         }
         if (now >= imp.at + this.window(DODGE_LATE, primary)) break;
       }
-      const res = this.judgeDefense(imp.at, imp.red, imp.jump, primary);
+      const res = classic ? 'hit' : this.judgeDefense(imp.at, imp.red, imp.jump, primary);
       const anchorUnits = aoe ? this.alive('party') : [primary];
       if (res === 'parry') {
         parries++;
@@ -1174,7 +1223,7 @@ export class Battle {
         for (const t of targets) {
           if (!t.alive) continue;
           this.impactFx(skill, t, color, i, skill.id === 'strike' ? u.sp.element : skill.element, i === impacts.length - 1);
-          const r = this.damage(u, t, skill, rank, 1);
+          const r = this.damage(u, t, skill, rank, classic ? 0.82 : 1);
           this.applyDamage(t, r.amount, r.eff, r.crit, true, u, skill);
           this.onHitEffects(u, t, skill, melee);
         }
@@ -1372,7 +1421,7 @@ export class Battle {
       if (u.side === 'enemy') {
         emit('defeat', { species: u.c.species, zone: this.setup.zone.id, element: u.sp.element });
         if (u.c.alpha) emit('alpha_defeat', { species: u.c.species, zone: this.setup.zone.id, level: u.c.level });
-        const last = !this.units.some((x) => x.side === 'enemy' && x.alive);
+        const last = !this.units.some((x) => x.side === 'enemy' && x.alive) && !this.foeQueue.length;
         if (last) {
           // final blow: slow motion, the camera settles on the fallen
           const side = this.R.clone().multiplyScalar(this.sideSign);

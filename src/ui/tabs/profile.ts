@@ -85,6 +85,7 @@ const SECTIONS: { id: string; title: string; ic: string; rows: Row[] }[] = [
     { key: 'sfxVolume', label: 'Effects', type: 'range', min: 0, max: 1, step: 0.05, fmt: pct },
   ] },
   { id: 'gameplay', title: 'Gameplay', ic: 'sword', rows: [
+    { key: 'parryMode', label: 'Parry mode', type: 'toggle', hint: 'Parry, dodge and jump in real time + timed hits. Off: classic turn-based' },
     { key: 'battleSpeed', label: 'Battle speed', type: 'select', options: [[1, '1×'], [1.5, '1.5×'], [2, '2×']] },
     { key: 'damageNumbers', label: 'Damage numbers', type: 'toggle' },
     { key: 'screenShake', label: 'Screen shake', type: 'range', min: 0, max: 1, step: 0.1, fmt: pct },
