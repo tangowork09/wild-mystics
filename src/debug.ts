@@ -165,6 +165,7 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
     else if (ui.startsWith('shop:')) void openShop(ui.slice(5), { zone: game.world.zone }); // v3:ui
     else if (ui === 'build') game.builder.enter();
     else if (ui === 'homestead') void game.builder.openOverview();
+    else if (ui.startsWith('confirm:')) void (await import('./ui/confirm')).CONFIRM_DEMOS[ui.slice(8)]?.(); // v3:ui — ornate confirm previews
     else if (ui.startsWith('screen:')) {
       const s = w.__screens as typeof import('./ui/screens');
       const which = ui.split(':')[1];

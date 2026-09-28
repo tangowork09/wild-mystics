@@ -1,0 +1,1763 @@
+{
+  "lines": [
+    {
+      "id": "tuftumble",
+      "branch": null,
+      "stages": [
+        "tuftumble",
+        "peakfleece",
+        "cragfleece",
+        "boulderfleece",
+        "summitfleece"
+      ],
+      "existingCount": 2,
+      "newForms": [
+        {
+          "id": "cragfleece",
+          "name": "Cragfleece",
+          "element": "earth",
+          "hp": 91,
+          "atk": 22,
+          "def": 24,
+          "spd": 14,
+          "height": 2.4,
+          "model": "R2:Alpaca__444228bb.glb",
+          "learnset": [
+            [
+              1,
+              "rock_toss"
+            ],
+            [
+              1,
+              "aqua_jet"
+            ],
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "bubble_veil"
+            ],
+            [
+              22,
+              "geode_shell"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#c8935a",
+          "rideable": true,
+          "abilities": [
+            "sturdy",
+            "guardian_aura"
+          ],
+          "lore": "Grazes on cliffside lichen so high up those goats send Peakfleece for backup."
+        },
+        {
+          "id": "boulderfleece",
+          "name": "Boulderfleece",
+          "element": "earth",
+          "hp": 101,
+          "atk": 25,
+          "def": 27,
+          "spd": 15,
+          "height": 2.9,
+          "model": "R2:Alpaca__444228bb.glb",
+          "learnset": [
+            [
+              1,
+              "rock_toss"
+            ],
+            [
+              1,
+              "aqua_jet"
+            ],
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "bubble_veil"
+            ],
+            [
+              1,
+              "geode_shell"
+            ],
+            [
+              28,
+              "stone_skin"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#b8824a",
+          "rideable": true,
+          "abilities": [
+            "sturdy",
+            "guardian_aura"
+          ],
+          "lore": "Shoulders that could carry a landslide, and sometimes does."
+        },
+        {
+          "id": "summitfleece",
+          "name": "Summitfleece",
+          "element": "earth",
+          "hp": 111,
+          "atk": 28,
+          "def": 30,
+          "spd": 17,
+          "height": 3.3,
+          "model": "R2:Alpaca__444228bb.glb",
+          "learnset": [
+            [
+              1,
+              "rock_toss"
+            ],
+            [
+              1,
+              "aqua_jet"
+            ],
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "bubble_veil"
+            ],
+            [
+              1,
+              "geode_shell"
+            ],
+            [
+              1,
+              "stone_skin"
+            ],
+            [
+              34,
+              "scald"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#a8713a",
+          "rideable": true,
+          "abilities": [
+            "sturdy",
+            "guardian_aura"
+          ],
+          "lore": "Stands where the air runs out and the view goes on forever."
+        }
+      ]
+    },
+    {
+      "id": "rimehorn",
+      "branch": null,
+      "stages": [
+        "rimehorn",
+        "hoarhorn",
+        "glacihorn",
+        "boreahorn",
+        "auroshorn"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "hoarhorn",
+          "name": "Hoarhorn",
+          "element": "wind",
+          "hp": 85,
+          "atk": 20,
+          "def": 21,
+          "spd": 13,
+          "height": 2.3,
+          "model": "R2:Cow__382b3d4a.glb",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "frost_breath"
+            ],
+            [
+              12,
+              "cyclone"
+            ],
+            [
+              22,
+              "tailwind"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.24,
+          "tint": "#b8dcff",
+          "tintGlow": "#a8e0ff",
+          "abilities": [
+            "frostbite",
+            "thick_hide"
+          ],
+          "lore": "Breathes visible fog even in summer, mostly to look impressive."
+        },
+        {
+          "id": "glacihorn",
+          "name": "Glacihorn",
+          "element": "wind",
+          "hp": 93,
+          "atk": 23,
+          "def": 24,
+          "spd": 15,
+          "height": 2.7,
+          "model": "R2:Cow__382b3d4a.glb",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "frost_breath"
+            ],
+            [
+              1,
+              "cyclone"
+            ],
+            [
+              1,
+              "tailwind"
+            ],
+            [
+              28,
+              "gust_dive"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#9fd0ff",
+          "tintGlow": "#8fe8ff",
+          "abilities": [
+            "frostbite",
+            "thick_hide"
+          ],
+          "lore": "Its horns have grown a permanent rime that never melts, not even in the Ember Scar."
+        },
+        {
+          "id": "boreahorn",
+          "name": "Boreahorn",
+          "element": "wind",
+          "hp": 101,
+          "atk": 26,
+          "def": 27,
+          "spd": 17,
+          "height": 3.3,
+          "model": "R2:Cow__382b3d4a.glb",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "cyclone"
+            ],
+            [
+              1,
+              "tailwind"
+            ],
+            [
+              1,
+              "gust_dive"
+            ],
+            [
+              34,
+              "feather_dart"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#7fc0f0",
+          "tintGlow": "#7fe0ff",
+          "abilities": [
+            "frostbite",
+            "guardian_aura"
+          ],
+          "lore": "Herds gather in its lee; the wind simply gives up trying."
+        },
+        {
+          "id": "auroshorn",
+          "name": "Auroshorn",
+          "element": "wind",
+          "hp": 110,
+          "atk": 29,
+          "def": 30,
+          "spd": 20,
+          "height": 3.4,
+          "model": "R2:Cow__382b3d4a.glb",
+          "learnset": [
+            [
+              1,
+              "cyclone"
+            ],
+            [
+              1,
+              "tailwind"
+            ],
+            [
+              1,
+              "gust_dive"
+            ],
+            [
+              1,
+              "feather_dart"
+            ],
+            [
+              40,
+              "aether_gale"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#5fa0e0",
+          "tintGlow": "#a0f0ff",
+          "abilities": [
+            "frostbite",
+            "guardian_aura"
+          ],
+          "lore": "Walks the high passes where the sky itself freezes into colour."
+        }
+      ]
+    },
+    {
+      "id": "tinkertot",
+      "branch": null,
+      "stages": [
+        "tinkertot",
+        "springjolt",
+        "voltwork",
+        "dynamotron",
+        "archivolt"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "springjolt",
+          "name": "Springjolt",
+          "element": "storm",
+          "hp": 66,
+          "atk": 17,
+          "def": 16,
+          "spd": 18,
+          "height": 1.4,
+          "model": "R2:Animated_Robot__7d95dbce.glb",
+          "learnset": [
+            [
+              1,
+              "spark_jab"
+            ],
+            [
+              1,
+              "overcharge"
+            ],
+            [
+              10,
+              "static_field"
+            ],
+            [
+              16,
+              "spark_storm"
+            ],
+            [
+              22,
+              "crystal_lance"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.24,
+          "abilities": [
+            "static",
+            "focus"
+          ],
+          "lore": "Upgraded itself with parts it definitely did not ask permission to borrow."
+        },
+        {
+          "id": "voltwork",
+          "name": "Voltwork",
+          "element": "storm",
+          "hp": 75,
+          "atk": 20,
+          "def": 18,
+          "spd": 21,
+          "height": 1.7,
+          "model": "R2:Animated_Robot__7d95dbce.glb",
+          "learnset": [
+            [
+              1,
+              "spark_jab"
+            ],
+            [
+              1,
+              "static_field"
+            ],
+            [
+              1,
+              "spark_storm"
+            ],
+            [
+              18,
+              "crystal_lance"
+            ],
+            [
+              28,
+              "thunderclap"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#e8b93a",
+          "abilities": [
+            "static",
+            "focus"
+          ],
+          "lore": "Hums old marching tunes from a kingdom only it remembers."
+        },
+        {
+          "id": "dynamotron",
+          "name": "Dynamotron",
+          "element": "storm",
+          "hp": 85,
+          "atk": 23,
+          "def": 21,
+          "spd": 24,
+          "height": 2.1,
+          "model": "R2:Animated_Robot__7d95dbce.glb",
+          "learnset": [
+            [
+              1,
+              "static_field"
+            ],
+            [
+              1,
+              "crystal_lance"
+            ],
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              24,
+              "overcharge"
+            ],
+            [
+              34,
+              "prism_ray"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#d4a020",
+          "rideable": true,
+          "abilities": [
+            "surge",
+            "focus"
+          ],
+          "lore": "Its gears turn a whole chamber of the ruins back to life when it walks through."
+        },
+        {
+          "id": "archivolt",
+          "name": "Archivolt",
+          "element": "storm",
+          "hp": 98,
+          "atk": 27,
+          "def": 24,
+          "spd": 28,
+          "height": 2.5,
+          "model": "R2:Animated_Robot__7d95dbce.glb",
+          "learnset": [
+            [
+              1,
+              "crystal_lance"
+            ],
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              1,
+              "prism_ray"
+            ],
+            [
+              1,
+              "spark_storm"
+            ],
+            [
+              40,
+              "overcharge"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#c8901a",
+          "tintGlow": "#fff17a",
+          "rideable": true,
+          "abilities": [
+            "surge",
+            "breaker"
+          ],
+          "lore": "The ruins' last working memory, given legs and entirely too much curiosity."
+        }
+      ]
+    },
+    {
+      "id": "cogling",
+      "branch": null,
+      "stages": [
+        "cogling",
+        "gearbrute",
+        "arcannon",
+        "siegecannon",
+        "cannonlord"
+      ],
+      "existingCount": 3,
+      "newForms": [
+        {
+          "id": "siegecannon",
+          "name": "Siegecannon",
+          "element": "storm",
+          "hp": 101,
+          "atk": 27,
+          "def": 26,
+          "spd": 14,
+          "height": 2.6,
+          "model": "R2:Robot_Enemy_Large_Gun__78e23275.glb",
+          "learnset": [
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              1,
+              "spark_storm"
+            ],
+            [
+              1,
+              "static_field"
+            ],
+            [
+              30,
+              "crystal_lance"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#e8c020",
+          "abilities": [
+            "surge",
+            "breaker"
+          ],
+          "lore": "Rolls into position, plants its legs, and waits with the patience of a mountain."
+        },
+        {
+          "id": "cannonlord",
+          "name": "Cannonlord",
+          "element": "storm",
+          "hp": 111,
+          "atk": 30,
+          "def": 29,
+          "spd": 16,
+          "height": 3,
+          "model": "R2:Robot_Enemy_Large_Gun__78e23275.glb",
+          "learnset": [
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              1,
+              "crystal_lance"
+            ],
+            [
+              1,
+              "static_field"
+            ],
+            [
+              36,
+              "prism_ray"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#d4a800",
+          "tintGlow": "#fff8b0",
+          "abilities": [
+            "surge",
+            "intimidate"
+          ],
+          "lore": "The ruins' old war engine, still awaiting orders that stopped coming centuries ago."
+        }
+      ]
+    },
+    {
+      "id": "cogling__stiltshot",
+      "branch": {
+        "from": "cogling",
+        "item": "thunder_stone"
+      },
+      "stages": [
+        "cogling",
+        "stiltshot",
+        "farstilt",
+        "sharpstride",
+        "skypiercer"
+      ],
+      "existingCount": 2,
+      "newForms": [
+        {
+          "id": "farstilt",
+          "name": "Farstilt",
+          "element": "storm",
+          "hp": 80,
+          "atk": 24,
+          "def": 19,
+          "spd": 22,
+          "height": 1.9,
+          "model": "R2:Robot_Enemy_Legs_Gun__c320ce4a.glb",
+          "learnset": [
+            [
+              1,
+              "spark_jab"
+            ],
+            [
+              1,
+              "spark_storm"
+            ],
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              24,
+              "static_field"
+            ],
+            [
+              30,
+              "crystal_lance"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#e8c020",
+          "abilities": [
+            "surge",
+            "keen_eye"
+          ],
+          "lore": "Counts your heartbeat before it ever pulls the trigger."
+        },
+        {
+          "id": "sharpstride",
+          "name": "Sharpstride",
+          "element": "storm",
+          "hp": 91,
+          "atk": 27,
+          "def": 22,
+          "spd": 25,
+          "height": 2.3,
+          "model": "R2:Robot_Enemy_Legs_Gun__c320ce4a.glb",
+          "learnset": [
+            [
+              1,
+              "spark_storm"
+            ],
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              1,
+              "crystal_lance"
+            ],
+            [
+              30,
+              "static_field"
+            ],
+            [
+              36,
+              "prism_ray"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#f0d84a",
+          "abilities": [
+            "surge",
+            "keen_eye"
+          ],
+          "lore": "Never misses. The ruins have a very long memory of that fact."
+        },
+        {
+          "id": "skypiercer",
+          "name": "Skypiercer",
+          "element": "storm",
+          "hp": 104,
+          "atk": 30,
+          "def": 26,
+          "spd": 29,
+          "height": 2.8,
+          "model": "R2:Robot_Enemy_Legs_Gun__c320ce4a.glb",
+          "learnset": [
+            [
+              1,
+              "thunderclap"
+            ],
+            [
+              1,
+              "crystal_lance"
+            ],
+            [
+              1,
+              "prism_ray"
+            ],
+            [
+              36,
+              "static_field"
+            ],
+            [
+              42,
+              "overcharge"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#fff0a0",
+          "tintGlow": "#fff8d0",
+          "abilities": [
+            "surge",
+            "focus"
+          ],
+          "lore": "Its shot arcs so high that it comes down from a different weather system."
+        }
+      ]
+    },
+    {
+      "id": "whirrbit",
+      "branch": null,
+      "stages": [
+        "whirrbit",
+        "galegunner",
+        "galestrafe",
+        "skyraider",
+        "skymarshal"
+      ],
+      "existingCount": 2,
+      "newForms": [
+        {
+          "id": "galestrafe",
+          "name": "Galestrafe",
+          "element": "wind",
+          "hp": 78,
+          "atk": 23,
+          "def": 17,
+          "spd": 24,
+          "height": 1.8,
+          "model": "R2:Robot_Enemy_Flying_Gun__6d0889f1.glb",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "cyclone"
+            ],
+            [
+              1,
+              "overcharge"
+            ],
+            [
+              26,
+              "spark_storm"
+            ],
+            [
+              32,
+              "aether_gale"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#4ad0c0",
+          "abilities": [
+            "swift",
+            "focus"
+          ],
+          "lore": "Banks so hard the wind can't decide which way to blow."
+        },
+        {
+          "id": "skyraider",
+          "name": "Skyraider",
+          "element": "wind",
+          "hp": 90,
+          "atk": 26,
+          "def": 20,
+          "spd": 27,
+          "height": 2.2,
+          "model": "R2:Robot_Enemy_Flying_Gun__6d0889f1.glb",
+          "learnset": [
+            [
+              1,
+              "cyclone"
+            ],
+            [
+              1,
+              "overcharge"
+            ],
+            [
+              1,
+              "aether_gale"
+            ],
+            [
+              32,
+              "spark_storm"
+            ],
+            [
+              38,
+              "gust_dive"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#3ab8b0",
+          "rideable": true,
+          "abilities": [
+            "swift",
+            "focus"
+          ],
+          "lore": "Patrols routes the old kingdom mapped and nobody has flown since."
+        },
+        {
+          "id": "skymarshal",
+          "name": "Skymarshal",
+          "element": "wind",
+          "hp": 103,
+          "atk": 30,
+          "def": 23,
+          "spd": 30,
+          "height": 2.5,
+          "model": "R2:Robot_Enemy_Flying_Gun__6d0889f1.glb",
+          "learnset": [
+            [
+              1,
+              "aether_gale"
+            ],
+            [
+              1,
+              "spark_storm"
+            ],
+            [
+              1,
+              "gust_dive"
+            ],
+            [
+              38,
+              "cyclone"
+            ],
+            [
+              44,
+              "thunderclap"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#2aa0a0",
+          "rideable": true,
+          "abilities": [
+            "swift",
+            "breaker"
+          ],
+          "lore": "Outruns its own thunderclap and gets there first to file the report."
+        }
+      ]
+    },
+    {
+      "id": "dustclaw",
+      "branch": null,
+      "stages": [
+        "dustclaw",
+        "quakemaw",
+        "tremormaw",
+        "riftmaw",
+        "cataclysmaw"
+      ],
+      "existingCount": 2,
+      "newForms": [
+        {
+          "id": "tremormaw",
+          "name": "Tremormaw",
+          "element": "earth",
+          "hp": 92,
+          "atk": 25,
+          "def": 22,
+          "spd": 16,
+          "height": 2.75,
+          "model": "R2:T_Rex__34eed102.glb",
+          "learnset": [
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              1,
+              "shadow_claw"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              30,
+              "kindle"
+            ],
+            [
+              34,
+              "stone_skin"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#c8783a",
+          "rideable": true,
+          "abilities": [
+            "intimidate",
+            "bedrock"
+          ],
+          "lore": "Every bite cracks the ground; every step cracks it again."
+        },
+        {
+          "id": "riftmaw",
+          "name": "Riftmaw",
+          "element": "earth",
+          "hp": 101,
+          "atk": 27,
+          "def": 25,
+          "spd": 18,
+          "height": 3,
+          "model": "R2:T_Rex__34eed102.glb",
+          "learnset": [
+            [
+              1,
+              "shadow_claw"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "stone_skin"
+            ],
+            [
+              34,
+              "kindle"
+            ],
+            [
+              40,
+              "geode_shell"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#b8622a",
+          "rideable": true,
+          "abilities": [
+            "intimidate",
+            "bedrock"
+          ],
+          "lore": "Canyons follow wherever it decides to walk."
+        },
+        {
+          "id": "cataclysmaw",
+          "name": "Cataclysmaw",
+          "element": "earth",
+          "hp": 110,
+          "atk": 30,
+          "def": 29,
+          "spd": 21,
+          "height": 3.3,
+          "model": "R2:T_Rex__34eed102.glb",
+          "learnset": [
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "stone_skin"
+            ],
+            [
+              1,
+              "geode_shell"
+            ],
+            [
+              40,
+              "shadow_claw"
+            ],
+            [
+              45,
+              "boulder_slam"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#a8501a",
+          "rideable": true,
+          "abilities": [
+            "intimidate",
+            "breaker"
+          ],
+          "lore": "The desert remembers three ages. This one ate the other two."
+        }
+      ]
+    },
+    {
+      "id": "scorchclaw",
+      "branch": null,
+      "stages": [
+        "scorchclaw",
+        "charclaw",
+        "blazefang",
+        "pyrefang",
+        "wildfire_rex"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "charclaw",
+          "name": "Charclaw",
+          "element": "fire",
+          "hp": 62,
+          "atk": 21,
+          "def": 12,
+          "spd": 21,
+          "height": 1.6,
+          "model": "R2:Velociraptor__c1f0c4cb.glb",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "kindle"
+            ],
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              12,
+              "cinder_claw"
+            ],
+            [
+              22,
+              "meteor_fang"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.24,
+          "tint": "#b8401a",
+          "tintGlow": "#ff8a3a",
+          "abilities": [
+            "flame_body",
+            "momentum"
+          ],
+          "lore": "Leaves scorch-mark pawprints that take an hour to cool."
+        },
+        {
+          "id": "blazefang",
+          "name": "Blazefang",
+          "element": "fire",
+          "hp": 71,
+          "atk": 24,
+          "def": 14,
+          "spd": 24,
+          "height": 1.9,
+          "model": "R2:Velociraptor__c1f0c4cb.glb",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              1,
+              "cinder_claw"
+            ],
+            [
+              22,
+              "meteor_fang"
+            ],
+            [
+              28,
+              "flare_burst"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#a83010",
+          "tintGlow": "#ff9a4a",
+          "rideable": true,
+          "abilities": [
+            "flame_body",
+            "momentum"
+          ],
+          "lore": "Hunts at a dead sprint; the Scar's grass never grows back where it's been."
+        },
+        {
+          "id": "pyrefang",
+          "name": "Pyrefang",
+          "element": "fire",
+          "hp": 82,
+          "atk": 27,
+          "def": 17,
+          "spd": 27,
+          "height": 2.2,
+          "model": "R2:Velociraptor__c1f0c4cb.glb",
+          "learnset": [
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              1,
+              "meteor_fang"
+            ],
+            [
+              1,
+              "flare_burst"
+            ],
+            [
+              28,
+              "cinder_claw"
+            ],
+            [
+              34,
+              "lantern_flare"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#982a0a",
+          "tintGlow": "#ffaa5a",
+          "rideable": true,
+          "abilities": [
+            "flame_body",
+            "blaze"
+          ],
+          "lore": "Its bite ignites dry brush from three strides away."
+        },
+        {
+          "id": "wildfire_rex",
+          "name": "Wildfire Rex",
+          "element": "fire",
+          "hp": 94,
+          "atk": 30,
+          "def": 20,
+          "spd": 30,
+          "height": 2.7,
+          "model": "R2:Velociraptor__c1f0c4cb.glb",
+          "learnset": [
+            [
+              1,
+              "meteor_fang"
+            ],
+            [
+              1,
+              "flare_burst"
+            ],
+            [
+              1,
+              "lantern_flare"
+            ],
+            [
+              34,
+              "cinder_claw"
+            ],
+            [
+              40,
+              "ember_bite"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#8a2400",
+          "tintGlow": "#ffb060",
+          "rideable": true,
+          "abilities": [
+            "flame_body",
+            "blaze"
+          ],
+          "lore": "Runs so hot the desert mistakes it for noon at midnight."
+        }
+      ]
+    },
+    {
+      "id": "hornwall",
+      "branch": null,
+      "stages": [
+        "hornwall",
+        "frillguard",
+        "bastionfrill",
+        "ironfrill",
+        "rampart_warden"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "frillguard",
+          "name": "Frillguard",
+          "element": "earth",
+          "hp": 77,
+          "atk": 18,
+          "def": 23,
+          "spd": 10,
+          "height": 2.2,
+          "model": "R2:Triceratops__6aa1f3ff.glb",
+          "learnset": [
+            [
+              1,
+              "rock_toss"
+            ],
+            [
+              1,
+              "stone_skin"
+            ],
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              20,
+              "tremor"
+            ],
+            [
+              22,
+              "geode_shell"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.24,
+          "rideable": true,
+          "abilities": [
+            "thick_hide",
+            "guardian_aura"
+          ],
+          "lore": "Widens its frill and the whole herd remembers where the border is."
+        },
+        {
+          "id": "bastionfrill",
+          "name": "Bastionfrill",
+          "element": "earth",
+          "hp": 87,
+          "atk": 21,
+          "def": 25,
+          "spd": 11,
+          "height": 2.6,
+          "model": "R2:Triceratops__6aa1f3ff.glb",
+          "learnset": [
+            [
+              1,
+              "stone_skin"
+            ],
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              22,
+              "geode_shell"
+            ],
+            [
+              28,
+              "vine_snare"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "tint": "#c8935a",
+          "rideable": true,
+          "abilities": [
+            "thick_hide",
+            "guardian_aura"
+          ],
+          "lore": "Has never once taken a backward step, mostly out of principle."
+        },
+        {
+          "id": "ironfrill",
+          "name": "Ironfrill",
+          "element": "earth",
+          "hp": 98,
+          "atk": 24,
+          "def": 28,
+          "spd": 12,
+          "height": 3,
+          "model": "R2:Triceratops__6aa1f3ff.glb",
+          "learnset": [
+            [
+              1,
+              "boulder_slam"
+            ],
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "geode_shell"
+            ],
+            [
+              28,
+              "vine_snare"
+            ],
+            [
+              34,
+              "stone_skin"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "tint": "#b8824a",
+          "rideable": true,
+          "abilities": [
+            "thick_hide",
+            "guardian_aura"
+          ],
+          "lore": "Quarries bounce chisels off it and apologise."
+        },
+        {
+          "id": "rampart_warden",
+          "name": "Rampart Warden",
+          "element": "earth",
+          "hp": 112,
+          "atk": 28,
+          "def": 30,
+          "spd": 14,
+          "height": 3.4,
+          "model": "R2:Triceratops__6aa1f3ff.glb",
+          "learnset": [
+            [
+              1,
+              "tremor"
+            ],
+            [
+              1,
+              "geode_shell"
+            ],
+            [
+              1,
+              "vine_snare"
+            ],
+            [
+              34,
+              "stone_skin"
+            ],
+            [
+              40,
+              "boulder_slam"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "tint": "#a8713a",
+          "rideable": true,
+          "abilities": [
+            "thick_hide",
+            "guardian_aura"
+          ],
+          "lore": "The Dunes drew their oldest border around wherever it happened to be standing."
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "tuftumble",
+      "name": "Tuftumble",
+      "line": "tuftumble",
+      "stage": 1,
+      "element": "earth",
+      "prompt": "A scruffy earth-toned llama with a wind-tossed tuft of wool on its head and short legs built for tumbling down scree slopes, plain and playful."
+    },
+    {
+      "id": "peakfleece",
+      "name": "Peakfleece",
+      "line": "tuftumble",
+      "stage": 2,
+      "element": "earth",
+      "prompt": "A taller alpaca with a thick cream-and-tan fleece coat and sturdier legs, its wool bundled in climbing-rope-like locks, ready to carry a rider up switchbacks."
+    },
+    {
+      "id": "cragfleece",
+      "name": "Cragfleece",
+      "line": "tuftumble",
+      "stage": 3,
+      "element": "earth",
+      "prompt": "Broader-shouldered with craggy grey-brown wool plates emerging at its back and shoulders like exposed rock, its fleece thicker and its stance rooted to sheer cliffs."
+    },
+    {
+      "id": "boulderfleece",
+      "name": "Boulderfleece",
+      "line": "tuftumble",
+      "stage": 4,
+      "element": "earth",
+      "prompt": "A hulking mountain alpaca whose fleece has hardened into boulder-like clumps along its spine and legs, immense and unshakeable, footholds carved by its own steps."
+    },
+    {
+      "id": "summitfleece",
+      "name": "Summitfleece",
+      "line": "tuftumble",
+      "stage": 5,
+      "element": "earth",
+      "prompt": "A towering, snow-crowned alpaca colossus whose stone-plated fleece glitters with frost and mineral veins, standing where clouds break below its hooves, utterly majestic."
+    },
+    {
+      "id": "rimehorn",
+      "name": "Rimehorn",
+      "line": "rimehorn",
+      "stage": 1,
+      "element": "wind",
+      "prompt": "A shaggy blue-white yak with frost-rimed curling horns and a coat of icicle-tipped fur, breathing faint fog, sturdy and calm."
+    },
+    {
+      "id": "hoarhorn",
+      "name": "Hoarhorn",
+      "line": "rimehorn",
+      "stage": 2,
+      "element": "wind",
+      "prompt": "A bulkier yak with thicker hoarfrost fur and longer curling horns crusted in ice crystals, a permanent cloud of cold breath trailing behind it."
+    },
+    {
+      "id": "glacihorn",
+      "name": "Glacihorn",
+      "line": "rimehorn",
+      "stage": 3,
+      "element": "wind",
+      "prompt": "A broad-shouldered beast whose horns and back have grown pale blue glacier-ice plating over the original frost-white fur, powerful and glacially calm."
+    },
+    {
+      "id": "boreahorn",
+      "name": "Boreahorn",
+      "line": "rimehorn",
+      "stage": 4,
+      "element": "wind",
+      "prompt": "A massive ice-plated bovine with towering ridged horns like glacier spires and a wind-swept icy mane, radiating a visible cold aura."
+    },
+    {
+      "id": "auroshorn",
+      "name": "Auroshorn",
+      "line": "rimehorn",
+      "stage": 5,
+      "element": "wind",
+      "prompt": "A colossal aurora-crowned yak whose glacier-plated horns and mane shimmer with shifting aurora colours over icy blue-white fur, radiant and awe-inspiring at the summit of the peaks."
+    },
+    {
+      "id": "tinkertot",
+      "name": "Tinkertot",
+      "line": "tinkertot",
+      "stage": 1,
+      "element": "storm",
+      "prompt": "A small boxy bronze automaton with a single glowing storm-yellow optic, patchwork panels and stubby jointed limbs, endearingly clunky."
+    },
+    {
+      "id": "springjolt",
+      "name": "Springjolt",
+      "line": "tinkertot",
+      "stage": 2,
+      "element": "storm",
+      "prompt": "A slightly taller automaton bristling with mismatched scavenged gears and a coiled spring-antenna crackling with static, more animated and eager."
+    },
+    {
+      "id": "voltwork",
+      "name": "Voltwork",
+      "line": "tinkertot",
+      "stage": 3,
+      "element": "storm",
+      "prompt": "A sleeker clockwork figure with exposed brass gearwork along its chest glowing faint yellow, twin antennae sparking with small arcs of electricity."
+    },
+    {
+      "id": "dynamotron",
+      "name": "Dynamotron",
+      "line": "tinkertot",
+      "stage": 4,
+      "element": "storm",
+      "prompt": "A broad-framed mechanical guardian with a glowing generator core in its chest and thicker armored limbs, arcs of lightning crawling visibly over its plating."
+    },
+    {
+      "id": "archivolt",
+      "name": "Archivolt",
+      "line": "tinkertot",
+      "stage": 5,
+      "element": "storm",
+      "prompt": "A grand, ornate automaton crowned with rotating brass rings and a brilliant storm-core chest crystal blazing gold, lightning constantly dancing across its full armored frame — the ruins' masterpiece."
+    },
+    {
+      "id": "cogling",
+      "name": "Cogling",
+      "line": "cogling",
+      "stage": 1,
+      "element": "storm",
+      "prompt": "A small round bronze drone with a single glowing eye-lens and stubby tank-like treads, plain and toylike."
+    },
+    {
+      "id": "gearbrute",
+      "name": "Gearbrute",
+      "line": "cogling",
+      "stage": 2,
+      "element": "storm",
+      "prompt": "A hulking boxy robot with thick armored plating, oversized fists and twin glowing storm-yellow eye-lenses, built for demolition."
+    },
+    {
+      "id": "arcannon",
+      "name": "Arcannon",
+      "line": "cogling",
+      "stage": 3,
+      "element": "storm",
+      "prompt": "An imposing armored robot with a massive shoulder-mounted arc-cannon crackling with charged lightning, heavier plating and a glowing chest core."
+    },
+    {
+      "id": "siegecannon",
+      "name": "Siegecannon",
+      "line": "cogling",
+      "stage": 4,
+      "element": "storm",
+      "prompt": "A wider, tracked siege-robot bristling with additional cannon barrels and thicker armor plates, its central core glowing a deep charged gold."
+    },
+    {
+      "id": "cannonlord",
+      "name": "Cannonlord",
+      "line": "cogling",
+      "stage": 5,
+      "element": "storm",
+      "prompt": "A towering fortress-robot bristling with layered cannon arrays and glowing gold circuitry veining its entire dark armored frame, radiating dormant, world-ending firepower."
+    },
+    {
+      "id": "cogling",
+      "name": "Cogling",
+      "line": "cogling__stiltshot",
+      "stage": 1,
+      "element": "storm",
+      "prompt": "A small round bronze drone with a single glowing eye-lens and stubby tank-like treads, plain and toylike."
+    },
+    {
+      "id": "stiltshot",
+      "name": "Stiltshot",
+      "line": "cogling__stiltshot",
+      "stage": 2,
+      "element": "storm",
+      "prompt": "A slender robot balanced on tall jointed stilt-legs with a long rifle-barrel arm and a narrow scanning eye-lens, built for long-range precision."
+    },
+    {
+      "id": "farstilt",
+      "name": "Farstilt",
+      "line": "cogling__stiltshot",
+      "stage": 3,
+      "element": "storm",
+      "prompt": "A taller stilt-legged sniper unit with an elongated barrel and a glowing targeting eye, its thin frame plated in sleek storm-grey armor."
+    },
+    {
+      "id": "sharpstride",
+      "name": "Sharpstride",
+      "line": "cogling__stiltshot",
+      "stage": 4,
+      "element": "storm",
+      "prompt": "An elegant long-limbed mecha striding on even taller stilts, dual barrel arrays and a bright golden targeting optic scanning constantly."
+    },
+    {
+      "id": "skypiercer",
+      "name": "Skypiercer",
+      "line": "cogling__stiltshot",
+      "stage": 5,
+      "element": "storm",
+      "prompt": "A soaring, impossibly tall sharpshooter mecha on stilt-legs crowned with a radiant golden optic array and a single massive rail-barrel crackling with stored lightning, elegant and lethal."
+    },
+    {
+      "id": "whirrbit",
+      "name": "Whirrbit",
+      "line": "whirrbit",
+      "stage": 1,
+      "element": "wind",
+      "prompt": "A tiny rounded flying drone with a spinning rotor-fin and a single small lens-eye, teal-white plating, buzzing and quick."
+    },
+    {
+      "id": "galegunner",
+      "name": "Galegunner",
+      "line": "whirrbit",
+      "stage": 2,
+      "element": "wind",
+      "prompt": "A sleeker flying drone with twin rotor-fins and a mounted gun-barrel slung underneath, teal armor plating with wind-swept fin details."
+    },
+    {
+      "id": "galestrafe",
+      "name": "Galestrafe",
+      "line": "whirrbit",
+      "stage": 3,
+      "element": "wind",
+      "prompt": "A faster, arrow-shaped flying unit with swept-back rotor-blades and twin barrels, its teal plating streaked with deepening turquoise racing stripes."
+    },
+    {
+      "id": "skyraider",
+      "name": "Skyraider",
+      "line": "whirrbit",
+      "stage": 4,
+      "element": "wind",
+      "prompt": "A broad-winged combat drone with four angled rotor-blades and a heavier weapons pod, deep turquoise armor trailing faint wind-vortex streaks."
+    },
+    {
+      "id": "skymarshal",
+      "name": "Skymarshal",
+      "line": "whirrbit",
+      "stage": 5,
+      "element": "wind",
+      "prompt": "A majestic hovering war-drone with wide blade-wings that carve visible wind-spirals, glowing deep-teal plating and a crown of spinning golden rotor-vanes — commands the sky itself."
+    },
+    {
+      "id": "dustclaw",
+      "name": "Dustclaw",
+      "line": "dustclaw",
+      "stage": 1,
+      "element": "earth",
+      "prompt": "A lean sand-colored raptor with sharp stone-grey claws and a low predatory crouch, kicking up little puffs of dust as it runs."
+    },
+    {
+      "id": "quakemaw",
+      "name": "Quakemaw",
+      "line": "dustclaw",
+      "stage": 2,
+      "element": "earth",
+      "prompt": "A massive tan-and-grey tyrannosaur with heavy crushing jaws and thick armored hide, each footstep visibly cracking the ground."
+    },
+    {
+      "id": "tremormaw",
+      "name": "Tremormaw",
+      "line": "dustclaw",
+      "stage": 3,
+      "element": "earth",
+      "prompt": "An even bulkier rex with jagged grey-brown armor ridges along its spine and deeper crushing jaws, faint fracture-lines glowing dull orange at its feet when it stomps."
+    },
+    {
+      "id": "riftmaw",
+      "name": "Riftmaw",
+      "line": "dustclaw",
+      "stage": 4,
+      "element": "earth",
+      "prompt": "A towering armored rex whose spine ridges have become jagged rock spurs, its jaws wide enough to shear stone, trailing small chasms with every stride."
+    },
+    {
+      "id": "cataclysmaw",
+      "name": "Cataclysmaw",
+      "line": "dustclaw",
+      "stage": 5,
+      "element": "earth",
+      "prompt": "A colossal, canyon-scarred tyrant rex encrusted in dark cracked-earth armor with molten-orange fissure lines glowing across its hide and jaws — an apex predator that reshapes the land it walks."
+    },
+    {
+      "id": "scorchclaw",
+      "name": "Scorchclaw",
+      "line": "scorchclaw",
+      "stage": 1,
+      "element": "fire",
+      "prompt": "A lean orange-red raptor with glowing ember-orange claws and faint smoke trailing from its footprints, quick and sharp-eyed."
+    },
+    {
+      "id": "charclaw",
+      "name": "Charclaw",
+      "line": "scorchclaw",
+      "stage": 2,
+      "element": "fire",
+      "prompt": "A slightly bulkier raptor with charcoal-black scorch markings streaking its orange hide and brighter glowing claws, leaving smoking pawprints."
+    },
+    {
+      "id": "blazefang",
+      "name": "Blazefang",
+      "line": "scorchclaw",
+      "stage": 3,
+      "element": "fire",
+      "prompt": "A sleek, fast raptor wreathed in faint heat-shimmer with fang-like flame markings down its jaw and tail, its orange hide deepening toward red."
+    },
+    {
+      "id": "pyrefang",
+      "name": "Pyrefang",
+      "line": "scorchclaw",
+      "stage": 4,
+      "element": "fire",
+      "prompt": "A powerful sprinting raptor whose jaw and spine ridge glow like banked coals, deep red-black hide with bright ember cracks, trailing genuine embers."
+    },
+    {
+      "id": "wildfire_rex",
+      "name": "Wildfire Rex",
+      "line": "scorchclaw",
+      "stage": 5,
+      "element": "fire",
+      "prompt": "A blazing apex raptor rex with a crown of flame-like crest feathers and molten cracks glowing across dark ember-black hide, trailing a shimmering heat-haze — a wildfire given claws."
+    },
+    {
+      "id": "hornwall",
+      "name": "Hornwall",
+      "line": "hornwall",
+      "stage": 1,
+      "element": "earth",
+      "prompt": "A sturdy tan triceratops with a broad bony frill and three stout horns, low and immovable, plain and steady."
+    },
+    {
+      "id": "frillguard",
+      "name": "Frillguard",
+      "line": "hornwall",
+      "stage": 2,
+      "element": "earth",
+      "prompt": "A bulkier triceratops with a wider, ridge-patterned frill and thicker horns, its hide toughened to a deeper ochre."
+    },
+    {
+      "id": "bastionfrill",
+      "name": "Bastionfrill",
+      "line": "hornwall",
+      "stage": 3,
+      "element": "earth",
+      "prompt": "A heavily built triceratops whose frill has grown jagged rocky edges and whose horns have thickened further, hide the colour of packed stone."
+    },
+    {
+      "id": "ironfrill",
+      "name": "Ironfrill",
+      "line": "hornwall",
+      "stage": 4,
+      "element": "earth",
+      "prompt": "A massive triceratops with a frill plated in overlapping iron-grey rock scales and thick reinforced horns, utterly imposing and immovable."
+    },
+    {
+      "id": "rampart_warden",
+      "name": "Rampart Warden",
+      "line": "hornwall",
+      "stage": 5,
+      "element": "earth",
+      "prompt": "A colossal fortress-triceratops whose full rock-plated frill rises like a castle wall studded with mineral spikes, its three horns capped in gleaming stone — a walking rampart the desert bends around."
+    }
+  ]
+}

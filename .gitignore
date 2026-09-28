@@ -8,3 +8,8 @@ dist
 # generated
 docs/manual.html
 android/local.properties
+
+# local AI generation scratch (raw renders; the cut-out art is committed under src/assets and public/assets)
+resources/gen/
+resources/ui-art/
+resources/creatures/gen/

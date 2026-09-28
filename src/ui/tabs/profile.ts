@@ -4,10 +4,11 @@ import { LOGIN_REWARDS, rankXpToNext } from '../../data/progression';
 import { ZONES } from '../../data/zones';
 import { state, save, exportSave, importSave } from '../../game/state';
 import { pendingLogin, claimLogin } from '../../game/progress';
-import { settings, setSettings, RESTART_KEYS, type Settings } from '../../core/settings';
+import { settings, setSettings, RESTART_KEYS, DEFAULTS, type Settings } from '../../core/settings';
 import { setMusicVolume, sfx } from '../../core/audio';
 import { tier, governor } from '../../core/renderer';
-import { toast, confirmBox } from '../dom';
+import { toast } from '../dom';
+import { confirmDeleteSave, confirmOverwriteSave, confirmResetSettings } from '../confirm';
 import { bar, esc } from '../kit';
 import { icon, glyph } from '../icons';
 import { npcAvatar } from '../portraits';
@@ -64,7 +65,7 @@ export function renderProfile(root: HTMLElement, hooks: JournalHooks): TabCleanu
 }
 
 type Row = { key: keyof Settings; label: string; type: 'toggle' | 'range' | 'select'; min?: number; max?: number; step?: number; fmt?: (v: number) => string; options?: [string | number, string][]; hint?: string };
-type DataRow = { key: 'export' | 'import' | 'install' | 'reset'; label: string; hint: string };
+type DataRow = { key: 'export' | 'import' | 'install' | 'defaults' | 'reset'; label: string; hint: string };
 
 const pct = (v: number) => `${Math.round(v * 100)}%`;
 const SECTIONS: { id: string; title: string; ic: string; rows: Row[] }[] = [
@@ -125,7 +126,8 @@ export function renderSettings(root: HTMLElement, hooks: JournalHooks): TabClean
       { key: 'export', label: 'Export save', hint: 'Download a backup of your journey' },
       { key: 'import', label: 'Import save', hint: 'Restore from a backup file' },
       ...(hooks.canInstall() ? [{ key: 'install' as const, label: 'Install app', hint: 'Play full-screen and offline' }] : []),
-      { key: 'reset', label: 'Start over', hint: 'Erase this account’s save on this device' },
+      { key: 'defaults', label: 'Reset settings', hint: 'Graphics, sound and controls back to default' },
+      { key: 'reset', label: 'Delete save', hint: 'Erase this account’s save on this device' },
     ];
     pager?.destroy();
     pager = new Pager<Row | DataRow>(rowsHost, {
@@ -138,7 +140,8 @@ export function renderSettings(root: HTMLElement, hooks: JournalHooks): TabClean
       const ctl = r.key === 'export' ? `<button class="btn small" data-d="export">${glyph('chevD')} Export</button>`
         : r.key === 'import' ? `<label class="btn small">${glyph('chevU')} Import<input type="file" accept="application/json" hidden data-d="import"></label>`
         : r.key === 'install' ? '<button class="btn small primary" data-d="install">Install</button>'
-        : '<button class="btn small danger" data-d="reset">Erase</button>';
+        : r.key === 'defaults' ? '<button class="btn small" data-d="defaults">Reset</button>'
+        : '<button class="btn small danger" data-d="reset">Delete</button>';
       return `<div class="set-row"><div class="sr-t"><b>${r.label}</b><small>${r.hint}</small></div><div class="set-ctl">${ctl}</div></div>`;
     }
     const v = settings[r.key];
@@ -171,7 +174,14 @@ export function renderSettings(root: HTMLElement, hooks: JournalHooks): TabClean
       toast('Save exported.');
     }
     if (d === 'install') void hooks.install();
-    if (d === 'reset' && (await confirmBox('Start over?', 'This permanently erases this account’s save on this device.', 'Erase save', true))) hooks.reset();
+    if (d === 'defaults' && (await confirmResetSettings())) {
+      const restart = RESTART_KEYS.some((k) => settings[k] !== DEFAULTS[k]);
+      setSettings({ ...DEFAULTS });
+      setMusicVolume(settings.musicVolume * settings.masterVolume);
+      pager?.refresh();
+      toast(restart ? 'Settings reset. Some apply after you restart the game.' : 'Settings reset to default.', 'good');
+    }
+    if (d === 'reset' && (await confirmDeleteSave())) hooks.reset();
   });
   rowsHost.addEventListener('input', (e) => {
     const inp = e.target as HTMLInputElement;
@@ -186,6 +196,8 @@ export function renderSettings(root: HTMLElement, hooks: JournalHooks): TabClean
     if (inp.dataset.d !== 'import') return;
     const f = inp.files?.[0];
     if (!f) return;
+    inp.value = '';
+    if (!(await confirmOverwriteSave(`“${esc(f.name)}”`))) return;
     try { importSave(await f.text()); toast('Save imported. Restarting…', 'good'); setTimeout(() => location.reload(), 900); } catch { toast('That file is not a valid save.', 'bad'); }
   });
   root.querySelectorAll<HTMLElement>('[data-sec]').forEach((b) => b.addEventListener('click', () => { section = b.dataset.sec!; sfx('select'); draw(); }));

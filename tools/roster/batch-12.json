@@ -1,0 +1,507 @@
+{
+  "lines": [
+    {
+      "id": "geodgloop",
+      "branch": null,
+      "stages": ["geodgloop", "geodrift", "geodolem", "geodwarden", "geodsovereign"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "geodrift", "name": "Geodrift", "element": "earth",
+          "hp": 78, "atk": 18, "def": 24, "spd": 10,
+          "height": 1.15, "model": "Green Blob",
+          "learnset": [[1, "rock_toss"], [1, "geode_shell"], [10, "crystal_lance"], [16, "tremor"], [22, "stone_skin"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "tint": "#7a5ab8", "tintGlow": "#a8d8ff",
+          "abilities": ["bedrock", "absorb"],
+          "lore": "Rolls downhill on purpose now, just to hear the crystals inside chime."
+        },
+        {
+          "id": "geodolem", "name": "Geodolem", "element": "earth",
+          "hp": 87, "atk": 20, "def": 26, "spd": 12,
+          "height": 1.32, "model": "Green Blob",
+          "learnset": [[1, "rock_toss"], [1, "geode_shell"], [1, "crystal_lance"], [16, "tremor"], [22, "stone_skin"], [28, "boulder_slam"]],
+          "rarity": "rare", "catchRate": 0.18,
+          "tint": "#6a4aa0", "tintGlow": "#a8d8ff",
+          "abilities": ["bedrock", "absorb"],
+          "lore": "Stands up on stubby crystal legs for the first time and immediately trips over a pebble."
+        },
+        {
+          "id": "geodwarden", "name": "Geodwarden", "element": "earth",
+          "hp": 97, "atk": 23, "def": 28, "spd": 14,
+          "height": 1.52, "model": "Green Blob",
+          "learnset": [[1, "rock_toss"], [1, "crystal_lance"], [1, "tremor"], [22, "stone_skin"], [28, "boulder_slam"], [34, "prism_ray"]],
+          "rarity": "epic", "catchRate": 0.1,
+          "tint": "#5a3a90", "tintGlow": "#c8e8ff",
+          "abilities": ["bedrock", "absorb"],
+          "lore": "Grew arms out of raw quartz and appointed itself guardian of the vein it hatched in."
+        },
+        {
+          "id": "geodsovereign", "name": "Geodsovereign", "element": "earth",
+          "hp": 108, "atk": 26, "def": 29, "spd": 16,
+          "height": 1.75, "model": "Green Blob",
+          "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [28, "prism_ray"], [40, "spark_storm"]],
+          "rarity": "epic", "catchRate": 0.06,
+          "tint": "#4a2a80", "tintGlow": "#d8f0ff",
+          "abilities": ["bedrock", "guardian_aura"],
+          "lore": "Every geode in Glimmer Hollows quietly agrees this one is in charge."
+        }
+      ]
+    },
+    {
+      "id": "glimfox",
+      "branch": null,
+      "stages": ["glimfox", "glintfox", "fulgorfox", "prismfox", "fulgurmane"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "glintfox", "name": "Glintfox", "element": "storm",
+          "hp": 68, "atk": 22, "def": 14, "spd": 24,
+          "height": 1.15, "model": "A:Fox",
+          "learnset": [[1, "spark_jab"], [1, "pounce"], [1, "thunder_wave"], [18, "spark_storm"], [22, "thunderclap"], [24, "overcharge"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "tint": "#3a3a8a", "tintGlow": "#c8faff",
+          "abilities": ["static", "swift"],
+          "lore": "Sparks now jump between its ears when it's excited, which is always."
+        },
+        {
+          "id": "fulgorfox", "name": "Fulgorfox", "element": "storm",
+          "hp": 77, "atk": 24, "def": 16, "spd": 26,
+          "height": 1.3, "model": "A:Fox",
+          "learnset": [[1, "spark_jab"], [1, "pounce"], [1, "thunder_wave"], [1, "spark_storm"], [22, "thunderclap"], [24, "overcharge"], [28, "prism_ray"]],
+          "rarity": "rare", "catchRate": 0.18,
+          "tint": "#2f2f78", "tintGlow": "#c8faff",
+          "abilities": ["static", "swift"],
+          "lore": "Outran its own shadow once. The shadow still hasn't caught up."
+        },
+        {
+          "id": "prismfox", "name": "Prismfox", "element": "storm",
+          "hp": 88, "atk": 26, "def": 18, "spd": 28,
+          "height": 1.5, "model": "A:Fox",
+          "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [1, "spark_storm"], [22, "thunderclap"], [24, "overcharge"], [28, "prism_ray"], [34, "static_field"]],
+          "rarity": "epic", "catchRate": 0.1,
+          "tint": "#262668", "tintGlow": "#e8fdff",
+          "abilities": ["static", "focus"],
+          "lore": "Its fur throws small rainbows across the Hollows whenever lightning hits nearby crystal."
+        },
+        {
+          "id": "fulgurmane", "name": "Fulgurmane", "element": "storm",
+          "hp": 100, "atk": 29, "def": 20, "spd": 30,
+          "height": 1.7, "model": "A:Fox",
+          "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [1, "overcharge"], [24, "spark_storm"], [28, "prism_ray"], [34, "static_field"], [40, "thunderclap"]],
+          "rarity": "epic", "catchRate": 0.06,
+          "tint": "#1a1a55", "tintGlow": "#ffffff",
+          "abilities": ["static", "focus"],
+          "lore": "A living thunderbolt with a fox's grin; the Hollows' updrafts bend just to keep pace with it."
+        }
+      ]
+    },
+    {
+      "id": "shardmaw",
+      "branch": null,
+      "stages": ["shardmaw", "shardfang", "shardhowler", "quartzmaw", "shardking"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "shardfang", "name": "Shardfang", "element": "earth",
+          "hp": 86, "atk": 25, "def": 23, "spd": 17,
+          "height": 1.7, "model": "A:Wolf",
+          "learnset": [[1, "rock_toss"], [1, "pounce"], [10, "geode_shell"], [16, "crystal_lance"], [22, "stone_skin"], [28, "boulder_slam"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "tint": "#4a4460", "tintGlow": "#d8c8ff",
+          "abilities": ["bedrock", "breaker"],
+          "lore": "Its bite now leaves crystal splinters behind, and it never bites just once."
+        },
+        {
+          "id": "shardhowler", "name": "Shardhowler", "element": "earth",
+          "hp": 93, "atk": 27, "def": 25, "spd": 19,
+          "height": 1.95, "model": "A:Wolf",
+          "learnset": [[1, "rock_toss"], [1, "pounce"], [1, "geode_shell"], [16, "crystal_lance"], [22, "stone_skin"], [28, "thunderclap"]],
+          "rarity": "rare", "catchRate": 0.18,
+          "tint": "#3e3852", "tintGlow": "#e0d0ff",
+          "abilities": ["bedrock", "breaker"],
+          "lore": "Howls once, and every loose geode in the Hollows answers with a hum."
+        },
+        {
+          "id": "quartzmaw", "name": "Quartzmaw", "element": "earth",
+          "hp": 100, "atk": 28, "def": 27, "spd": 22,
+          "height": 2.2, "model": "A:Wolf",
+          "learnset": [[1, "pounce"], [1, "geode_shell"], [1, "crystal_lance"], [22, "stone_skin"], [28, "thunderclap"], [34, "prism_ray"]],
+          "rarity": "epic", "catchRate": 0.1,
+          "tint": "#322c46", "tintGlow": "#e8d8ff",
+          "rideable": true,
+          "abilities": ["bedrock", "breaker"],
+          "lore": "Runs the high ridges in a pack of one; its own teeth are argument enough."
+        },
+        {
+          "id": "shardking", "name": "Shardking", "element": "earth",
+          "hp": 108, "atk": 29, "def": 29, "spd": 24,
+          "height": 2.5, "model": "A:Wolf",
+          "learnset": [[1, "geode_shell"], [1, "crystal_lance"], [1, "stone_skin"], [28, "thunderclap"], [34, "prism_ray"], [40, "boulder_slam"]],
+          "rarity": "epic", "catchRate": 0.06,
+          "tint": "#282038", "tintGlow": "#f0e8ff",
+          "rideable": true,
+          "abilities": ["bedrock", "breaker"],
+          "lore": "The biggest geode veins in the Hollows all have the same set of claw marks nearby."
+        }
+      ]
+    },
+    {
+      "id": "prismbat",
+      "branch": null,
+      "stages": ["prismbat", "prismwing", "chromawing", "radiantwing", "luxwing"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "prismwing", "name": "Prismwing", "element": "storm",
+          "hp": 64, "atk": 21, "def": 14, "spd": 24,
+          "height": 1.1, "model": "R2:Bat__4ae13ae9.glb",
+          "learnset": [[1, "spark_jab"], [1, "feather_dart"], [8, "hypno_glow"], [12, "prism_ray"], [22, "thunderclap"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "tint": "#5a4af0", "tintGlow": "#c8faff",
+          "abilities": ["keen_eye", "static"],
+          "lore": "Its wingbeats now split cave-light into tiny rainbows across the ceiling."
+        },
+        {
+          "id": "chromawing", "name": "Chromawing", "element": "storm",
+          "hp": 73, "atk": 23, "def": 15, "spd": 26,
+          "height": 1.25, "model": "R2:Bat__4ae13ae9.glb",
+          "learnset": [[1, "spark_jab"], [1, "feather_dart"], [1, "hypno_glow"], [12, "prism_ray"], [22, "thunderclap"], [28, "overcharge"]],
+          "rarity": "rare", "catchRate": 0.18,
+          "tint": "#4a3ae0", "tintGlow": "#e0fbff",
+          "abilities": ["keen_eye", "static"],
+          "lore": "Roosts upside down, humming a different colour of light every night."
+        },
+        {
+          "id": "radiantwing", "name": "Radiantwing", "element": "storm",
+          "hp": 83, "atk": 25, "def": 17, "spd": 28,
+          "height": 1.4, "model": "R2:Bat__4ae13ae9.glb",
+          "learnset": [[1, "feather_dart"], [1, "hypno_glow"], [1, "prism_ray"], [22, "thunderclap"], [28, "overcharge"], [34, "spark_storm"]],
+          "rarity": "epic", "catchRate": 0.1,
+          "tint": "#3a2ad0", "tintGlow": "#f0fdff",
+          "abilities": ["keen_eye", "focus"],
+          "lore": "Lights entire crystal chambers just by stretching its wings."
+        },
+        {
+          "id": "luxwing", "name": "Luxwing", "element": "storm",
+          "hp": 95, "atk": 27, "def": 19, "spd": 30,
+          "height": 1.6, "model": "R2:Bat__4ae13ae9.glb",
+          "learnset": [[1, "hypno_glow"], [1, "prism_ray"], [1, "overcharge"], [28, "thunderclap"], [34, "spark_storm"], [40, "static_field"]],
+          "rarity": "epic", "catchRate": 0.06,
+          "tint": "#2a1ac0", "tintGlow": "#ffffff",
+          "abilities": ["keen_eye", "focus"],
+          "lore": "The old miners say if you see its true colours, you've found the richest vein in the Hollows."
+        }
+      ]
+    },
+    {
+      "id": "quartzback",
+      "branch": null,
+      "stages": ["quartzback", "quartzhide", "quartzridge", "quartzbastion", "quartzmonarch"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "quartzhide", "name": "Quartzhide", "element": "earth",
+          "hp": 90, "atk": 21, "def": 26, "spd": 11,
+          "height": 2.4, "model": "R2:Stegosaurus__6f8f4ac6.glb",
+          "learnset": [[1, "rock_toss"], [1, "geode_shell"], [10, "crystal_lance"], [16, "boulder_slam"], [22, "stone_skin"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "rideable": true,
+          "tint": "#8a7ab8", "tintGlow": "#d8f8ff",
+          "abilities": ["sturdy", "thick_hide"],
+          "lore": "Its back plates thicken into slabs of raw quartz; shrugging off boulders is now a party trick."
+        },
+        {
+          "id": "quartzridge", "name": "Quartzridge", "element": "earth",
+          "hp": 97, "atk": 23, "def": 27, "spd": 12,
+          "height": 2.7, "model": "R2:Stegosaurus__6f8f4ac6.glb",
+          "learnset": [[1, "rock_toss"], [1, "geode_shell"], [1, "crystal_lance"], [16, "boulder_slam"], [22, "stone_skin"], [28, "tremor"]],
+          "rarity": "rare", "catchRate": 0.18,
+          "rideable": true,
+          "tint": "#7a6aa8", "tintGlow": "#e8fcff",
+          "abilities": ["sturdy", "thick_hide"],
+          "lore": "A walking crystal ridge that miners quietly follow, hoping it stops somewhere valuable."
+        },
+        {
+          "id": "quartzbastion", "name": "Quartzbastion", "element": "earth",
+          "hp": 103, "atk": 25, "def": 28, "spd": 14,
+          "height": 3.0, "model": "R2:Stegosaurus__6f8f4ac6.glb",
+          "learnset": [[1, "geode_shell"], [1, "crystal_lance"], [1, "boulder_slam"], [22, "stone_skin"], [28, "tremor"], [34, "prism_ray"]],
+          "rarity": "epic", "catchRate": 0.1,
+          "rideable": true,
+          "tint": "#6a5a98", "tintGlow": "#f4feff",
+          "abilities": ["sturdy", "thick_hide"],
+          "lore": "Stands between danger and the herd without being asked twice."
+        },
+        {
+          "id": "quartzmonarch", "name": "Quartzmonarch", "element": "earth",
+          "hp": 109, "atk": 26, "def": 29, "spd": 15,
+          "height": 3.3, "model": "R2:Stegosaurus__6f8f4ac6.glb",
+          "learnset": [[1, "crystal_lance"], [1, "boulder_slam"], [1, "stone_skin"], [28, "tremor"], [34, "prism_ray"], [40, "geode_shell"]],
+          "rarity": "epic", "catchRate": 0.06,
+          "rideable": true,
+          "tint": "#5a4a88", "tintGlow": "#ffffff",
+          "abilities": ["sturdy", "guardian_aura"],
+          "lore": "The oldest, heaviest plates in Glimmer Hollows all grew on this one back."
+        }
+      ]
+    },
+    {
+      "id": "stormhowl",
+      "branch": null,
+      "stages": ["stormhowl", "thunderfang", "tempestmane", "skyfang", "tempestlord"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "thunderfang", "name": "Thunderfang", "element": "storm",
+          "hp": 88, "atk": 25, "def": 20, "spd": 24,
+          "height": 1.85, "model": "A:Wolf",
+          "learnset": [[1, "spark_jab"], [1, "pounce"], [1, "thunder_wave"], [16, "crystal_lance"], [22, "thunderclap"]],
+          "rarity": "epic", "catchRate": 0.09,
+          "rideable": true,
+          "tint": "#c8d8ff", "tintGlow": "#fff8b0",
+          "abilities": ["surge", "intimidate"],
+          "lore": "Bites down and the air itself cracks like a whip."
+        },
+        {
+          "id": "tempestmane", "name": "Tempestmane", "element": "storm",
+          "hp": 95, "atk": 27, "def": 21, "spd": 26,
+          "height": 2.1, "model": "A:Wolf",
+          "learnset": [[1, "spark_jab"], [1, "pounce"], [1, "thunder_wave"], [16, "crystal_lance"], [22, "thunderclap"], [28, "overcharge"]],
+          "rarity": "epic", "catchRate": 0.075,
+          "rideable": true,
+          "tint": "#a0c0ff", "tintGlow": "#fffcd8",
+          "abilities": ["surge", "intimidate"],
+          "lore": "Its mane crackles with a storm it hasn't quite let loose yet."
+        },
+        {
+          "id": "skyfang", "name": "Skyfang", "element": "storm",
+          "hp": 100, "atk": 28, "def": 23, "spd": 27,
+          "height": 2.4, "model": "A:Wolf",
+          "learnset": [[1, "pounce"], [1, "thunder_wave"], [1, "crystal_lance"], [22, "thunderclap"], [28, "overcharge"], [34, "spark_storm"]],
+          "rarity": "exotic", "catchRate": 0.05,
+          "rideable": true,
+          "tint": "#7098ff", "tintGlow": "#fffcd8",
+          "abilities": ["surge", "intimidate"],
+          "lore": "Runs so fast along ridgelines that thunder arrives a full second late."
+        },
+        {
+          "id": "tempestlord", "name": "Tempestlord", "element": "storm",
+          "hp": 106, "atk": 29, "def": 24, "spd": 28,
+          "height": 2.7, "model": "A:Wolf",
+          "learnset": [[1, "thunder_wave"], [1, "crystal_lance"], [1, "overcharge"], [28, "thunderclap"], [34, "spark_storm"], [40, "static_field"]],
+          "rarity": "exotic", "catchRate": 0.035,
+          "rideable": true,
+          "tint": "#4a70ff", "tintGlow": "#ffffff",
+          "abilities": ["surge", "intimidate"],
+          "lore": "When it howls at the summit, every cloud for miles turns to listen."
+        }
+      ]
+    },
+    {
+      "id": "stormray",
+      "branch": null,
+      "stages": ["stormray", "squallray", "thunderfin", "zephyrmanta", "maelray"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "squallray", "name": "Squallray", "element": "storm",
+          "hp": 83, "atk": 24, "def": 18, "spd": 24,
+          "height": 0.95, "model": "R2:Manta_ray__32b4e08e.glb",
+          "learnset": [[1, "spark_jab"], [1, "gale_cut"], [16, "static_field"], [22, "aether_gale"]],
+          "rarity": "epic", "catchRate": 0.09,
+          "behavior": "flyer",
+          "tint": "#2e2e78", "tintGlow": "#fff8b0",
+          "abilities": ["surge", "swift"],
+          "lore": "Rides the storm-fronts in over the Hollows, always a beat ahead of the thunder."
+        },
+        {
+          "id": "thunderfin", "name": "Thunderfin", "element": "storm",
+          "hp": 90, "atk": 25, "def": 20, "spd": 26,
+          "height": 1.1, "model": "R2:Manta_ray__32b4e08e.glb",
+          "learnset": [[1, "spark_jab"], [1, "gale_cut"], [1, "static_field"], [22, "aether_gale"], [28, "thunderclap"]],
+          "rarity": "epic", "catchRate": 0.075,
+          "behavior": "flyer",
+          "tint": "#242468", "tintGlow": "#fffcd0",
+          "abilities": ["surge", "swift"],
+          "lore": "Its wingtips spark when it banks hard through a cloud."
+        },
+        {
+          "id": "zephyrmanta", "name": "Zephyrmanta", "element": "storm",
+          "hp": 96, "atk": 27, "def": 21, "spd": 27,
+          "height": 1.3, "model": "R2:Manta_ray__32b4e08e.glb",
+          "learnset": [[1, "gale_cut"], [1, "static_field"], [1, "aether_gale"], [22, "thunderclap"], [34, "spark_storm"]],
+          "rarity": "exotic", "catchRate": 0.05,
+          "behavior": "flyer",
+          "tint": "#1c1c58", "tintGlow": "#ffffff",
+          "abilities": ["surge", "focus"],
+          "lore": "Glides for entire days on nothing but stolen static."
+        },
+        {
+          "id": "maelray", "name": "Maelray", "element": "storm",
+          "hp": 102, "atk": 28, "def": 23, "spd": 29,
+          "height": 1.5, "model": "R2:Manta_ray__32b4e08e.glb",
+          "learnset": [[1, "gale_cut"], [1, "aether_gale"], [1, "thunderclap"], [28, "spark_storm"], [40, "overcharge"]],
+          "rarity": "exotic", "catchRate": 0.035,
+          "behavior": "flyer",
+          "tint": "#141448", "tintGlow": "#ffffff",
+          "abilities": ["surge", "focus"],
+          "lore": "A living storm-front; ships and Wayfarers alike just get out of its way."
+        }
+      ]
+    },
+    {
+      "id": "haloling",
+      "branch": null,
+      "stages": ["haloling", "haloglow", "sanctilume", "seraphume", "empyrion"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "haloglow", "name": "Haloglow", "element": "void",
+          "hp": 74, "atk": 23, "def": 17, "spd": 23,
+          "height": 1.3, "model": "Ghost",
+          "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [16, "soul_siphon"], [22, "aether_gale"]],
+          "rarity": "epic", "catchRate": 0.09,
+          "tint": "#fff0c8", "tintGlow": "#fff0c0", "tintAll": true, "tintL": 0.65,
+          "abilities": ["umbra", "regenerator"],
+          "lore": "Its ring of light steadies, just enough to read by on the darkest ledges."
+        },
+        {
+          "id": "sanctilume", "name": "Sanctilume", "element": "void",
+          "hp": 83, "atk": 25, "def": 18, "spd": 25,
+          "height": 1.5, "model": "Ghost",
+          "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "soul_siphon"], [22, "aether_gale"], [28, "umbral_wave"]],
+          "rarity": "epic", "catchRate": 0.075,
+          "tint": "#ffe8a0", "tintGlow": "#fff8e0", "tintAll": true, "tintL": 0.58,
+          "abilities": ["umbra", "regenerator"],
+          "lore": "Lost climbers say a warm light finds them right before the cold does."
+        },
+        {
+          "id": "seraphume", "name": "Seraphume", "element": "void",
+          "hp": 91, "atk": 26, "def": 20, "spd": 27,
+          "height": 1.75, "model": "Ghost",
+          "learnset": [[1, "hypno_glow"], [1, "soul_siphon"], [1, "aether_gale"], [22, "umbral_wave"], [34, "ink_cloud"]],
+          "rarity": "exotic", "catchRate": 0.05,
+          "tint": "#ffe080", "tintGlow": "#fff8e0", "tintAll": true, "tintL": 0.5,
+          "abilities": ["umbra", "guardian_aura"],
+          "lore": "Hovers over the summit shrines at dawn like it's still keeping a promise."
+        },
+        {
+          "id": "empyrion", "name": "Empyrion", "element": "void",
+          "hp": 100, "atk": 28, "def": 21, "spd": 28,
+          "height": 2.0, "model": "Ghost",
+          "learnset": [[1, "soul_siphon"], [1, "aether_gale"], [1, "umbral_wave"], [28, "ink_cloud"], [40, "warden_edge"]],
+          "rarity": "exotic", "catchRate": 0.035,
+          "tint": "#ffd860", "tintGlow": "#ffffff", "tintAll": true, "tintL": 0.42,
+          "abilities": ["umbra", "guardian_aura"],
+          "lore": "Some say it's what's left of a Sky Warden's kindness, still making its rounds."
+        }
+      ]
+    },
+    {
+      "id": "wardenshade",
+      "branch": null,
+      "stages": ["wardenshade", "wardenwraith", "sentinelshade", "highward", "duskwarden"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "wardenwraith", "name": "Wardenwraith", "element": "void",
+          "hp": 90, "atk": 26, "def": 23, "spd": 18,
+          "height": 2.0, "model": "R2:KayKit_Skeleton_Warrior.glb",
+          "learnset": [[1, "warden_edge"], [1, "shadow_claw"], [16, "stone_skin"], [22, "umbral_wave"]],
+          "rarity": "epic", "catchRate": 0.09,
+          "tint": "#c0ccf0", "tintGlow": "#a8f8ff",
+          "abilities": ["guardian_aura", "sturdy"],
+          "lore": "Still walks the same ten paces of ruined hallway it swore to guard, centuries ago."
+        },
+        {
+          "id": "sentinelshade", "name": "Sentinelshade", "element": "void",
+          "hp": 96, "atk": 27, "def": 24, "spd": 20,
+          "height": 2.2, "model": "R2:KayKit_Skeleton_Warrior.glb",
+          "learnset": [[1, "warden_edge"], [1, "shadow_claw"], [1, "stone_skin"], [22, "umbral_wave"], [28, "soul_siphon"]],
+          "rarity": "epic", "catchRate": 0.075,
+          "tint": "#a8b8f0", "tintGlow": "#c8fcff",
+          "abilities": ["guardian_aura", "sturdy"],
+          "lore": "Salutes any climber who bows first. It has excellent memory for manners."
+        },
+        {
+          "id": "highward", "name": "Highward", "element": "void",
+          "hp": 101, "atk": 28, "def": 26, "spd": 22,
+          "height": 2.5, "model": "R2:KayKit_Skeleton_Warrior.glb",
+          "learnset": [[1, "warden_edge"], [1, "stone_skin"], [1, "umbral_wave"], [22, "soul_siphon"], [34, "ink_cloud"]],
+          "rarity": "exotic", "catchRate": 0.05,
+          "rideable": true,
+          "tint": "#90a4f0", "tintGlow": "#e8ffff",
+          "abilities": ["guardian_aura", "sturdy"],
+          "lore": "Stands at the last gate before the summit and has never once let the weather in."
+        },
+        {
+          "id": "duskwarden", "name": "Duskwarden", "element": "void",
+          "hp": 107, "atk": 29, "def": 27, "spd": 24,
+          "height": 2.8, "model": "R2:KayKit_Skeleton_Warrior.glb",
+          "learnset": [[1, "warden_edge"], [1, "umbral_wave"], [1, "soul_siphon"], [28, "ink_cloud"], [40, "hypno_glow"]],
+          "rarity": "exotic", "catchRate": 0.035,
+          "rideable": true,
+          "tint": "#7890f0", "tintGlow": "#e8ffff",
+          "abilities": ["guardian_aura", "sturdy"],
+          "lore": "The Sky Wardens are gone. This is the part of their oath that refused to be."
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "geodgloop", "name": "Geodgloop", "line": "geodgloop", "stage": 1, "element": "earth", "prompt": "A small round mossy-green blob with a cracked-open geode embedded in its back, violet crystal facets glittering through the gap and a faint icy-blue glow at the core; big curious eyes peek out beneath the crystal crown." },
+    { "id": "geodrift", "name": "Geodrift", "line": "geodgloop", "stage": 2, "element": "earth", "prompt": "A slightly larger lump-shaped blob, more of its rubbery hide replaced by cracked violet crystal plates fused down its spine, with tiny quartz nubs sprouting like knees; the same glow-blue core now peeks through two more seams." },
+    { "id": "geodolem", "name": "Geodolem", "line": "geodgloop", "stage": 3, "element": "earth", "prompt": "The blob rises onto four short crystal stumps, its body now half rock half jelly, deep amethyst geode facets ringing a wider cracked crown on its head, glowing pale-blue light pulsing between the seams." },
+    { "id": "geodwarden", "name": "Geodwarden", "line": "geodgloop", "stage": 4, "element": "earth", "prompt": "A hulking crystal golem shape now dominates, jelly visible only in glowing seams between huge violet geode slabs armoured across its back and shoulders, sky-blue light blazing from its chest core like a lantern." },
+    { "id": "geodsovereign", "name": "Geodsovereign", "line": "geodgloop", "stage": 5, "element": "earth", "prompt": "A towering geode colossus, its whole body an ornate cathedral of deep-violet crystal spires and shelves crowned in a jagged quartz halo, brilliant blue-white light pouring from countless seams as if lit from within." },
+
+    { "id": "glimfox", "name": "Glimfox", "line": "glimfox", "stage": 1, "element": "storm", "prompt": "A sleek indigo-blue fox with a single sharp storm-crystal shard jutting from its brow and small cyan sparks crackling along its tail-tip; alert amber eyes, lean athletic build." },
+    { "id": "glintfox", "name": "Glintfox", "line": "glimfox", "stage": 2, "element": "storm", "prompt": "A slightly leaner, faster-looking fox, two crystal shards now framing its brow like small antennae, its tail fur tipped in bright cyan static that visibly crackles." },
+    { "id": "fulgorfox", "name": "Fulgorfox", "line": "glimfox", "stage": 3, "element": "storm", "prompt": "A wiry storm-fox with a crest of jagged indigo crystal running down its spine, front paws sparking with restless energy, its four-shard brow-crown glowing brighter cyan." },
+    { "id": "prismfox", "name": "Prismfox", "line": "glimfox", "stage": 4, "element": "storm", "prompt": "A tall, rangy fox wrapped in a mane of crystal shards that splits stray light into small rainbows, its whole coat deepened to near-black indigo, eyes blazing electric cyan." },
+    { "id": "fulgurmane", "name": "Fulgurmane", "line": "glimfox", "stage": 5, "element": "storm", "prompt": "A majestic storm-fox with a flowing mane of fused lightning-crystal spines that arcs and glows white-cyan with contained thunder, deep midnight-indigo fur, and a piercing gaze that seems to crackle." },
+
+    { "id": "shardmaw", "name": "Shardmaw", "line": "shardmaw", "stage": 1, "element": "earth", "prompt": "A lean grey-violet wolf with jagged amethyst crystal shards bristling along its spine and jaw, lilac glow lighting the cracks in its teeth; sharp predatory eyes." },
+    { "id": "shardfang", "name": "Shardfang", "line": "shardmaw", "stage": 2, "element": "earth", "prompt": "A slightly bulkier crystal wolf, more shards now fused along its jaw into a jagged crystalline muzzle, its spine-crest thicker and glowing a richer lavender." },
+    { "id": "shardhowler", "name": "Shardhowler", "line": "shardmaw", "stage": 3, "element": "earth", "prompt": "A powerful wolf whose whole back bristles with a ridge of long amethyst crystal blades, deep slate-violet fur, muzzle wreathed in glowing lavender light when it howls." },
+    { "id": "quartzmaw", "name": "Quartzmaw", "line": "shardmaw", "stage": 4, "element": "earth", "prompt": "A large, muscular crystal wolf built to be ridden, its spine-blades grown into a towering armoured crest, deep charcoal-violet fur, jaw and crest glowing bright lilac-white." },
+    { "id": "shardking", "name": "Shardking", "line": "shardmaw", "stage": 5, "element": "earth", "prompt": "A magnificent alpha crystal wolf, nearly black-violet fur beneath an immense crown of fused amethyst blades from skull to tail, every shard blazing radiant white-lavender light." },
+
+    { "id": "prismbat", "name": "Prismbat", "line": "prismbat", "stage": 1, "element": "storm", "prompt": "A small violet-blue bat with a single glinting crystal shard for a nose-leaf and pale cyan-lit wing membranes threaded with faint light-lines; big round curious eyes." },
+    { "id": "prismwing", "name": "Prismwing", "line": "prismbat", "stage": 2, "element": "storm", "prompt": "A slightly bigger bat with two small crystal shards flanking its nose, its thin wing membranes now shimmering with visible rainbow refractions along the veins, deepened indigo fur." },
+    { "id": "chromawing", "name": "Chromawing", "line": "prismbat", "stage": 3, "element": "storm", "prompt": "A sleek violet bat whose wing membranes have become stained-glass panes of shifting colour, a crown of small crystal spikes along its head, eyes glowing bright cyan." },
+    { "id": "radiantwing", "name": "Radiantwing", "line": "prismbat", "stage": 4, "element": "storm", "prompt": "A striking bat with broad prism-glass wings that scatter full rainbows in flight, a ridge of luminous crystal spines down its back, deep indigo fur fading almost to black, wings edged in bright light." },
+    { "id": "luxwing", "name": "Luxwing", "line": "prismbat", "stage": 5, "element": "storm", "prompt": "A radiant crystal bat whose vast stained-glass wings blaze with captured light in every colour, an elaborate crown of fused prism spires on its head, deep near-black indigo fur, and eyes like twin lanterns." },
+
+    { "id": "quartzback", "name": "Quartzback", "line": "quartzback", "stage": 1, "element": "earth", "prompt": "A sturdy stegosaur-like creature with lavender-grey hide and a row of pale quartz plates down its spine, each one glowing faint sky-blue at the base; broad calm face, thick stocky legs." },
+    { "id": "quartzhide", "name": "Quartzhide", "line": "quartzback", "stage": 2, "element": "earth", "prompt": "A slightly bulkier stegosaur with its spinal plates now solid milky quartz, glowing a brighter blue where they meet its lavender hide, thicker armoured legs." },
+    { "id": "quartzridge", "name": "Quartzridge", "line": "quartzback", "stage": 3, "element": "earth", "prompt": "A broad-backed tank whose quartz plates have grown into a jagged ridge from neck to tail, each plate glowing pale blue, hide deepened to dusky violet-grey." },
+    { "id": "quartzbastion", "name": "Quartzbastion", "line": "quartzback", "stage": 4, "element": "earth", "prompt": "A massive armoured quartz-back with towering plate formations fused into overlapping shield-shelves, deep violet hide, plates blazing near-white with inner light." },
+    { "id": "quartzmonarch", "name": "Quartzmonarch", "line": "quartzback", "stage": 5, "element": "earth", "prompt": "An immense crystal-armoured colossus whose spine carries a cathedral of fused quartz plates crowned at the shoulders, deep amethyst hide, every seam blazing brilliant white-blue light like a living geode." },
+
+    { "id": "stormhowl", "name": "Stormhowl", "line": "stormhowl", "stage": 1, "element": "storm", "prompt": "A pale storm-white wolf with a crackling mane of pale-gold static and sharp lightning-blue eyes, lean muscular build built for the high ridgelines." },
+    { "id": "thunderfang", "name": "Thunderfang", "line": "stormhowl", "stage": 2, "element": "storm", "prompt": "A slightly larger storm-white wolf, its mane now visibly forked with small lightning branches, fangs glinting faint gold, storm-blue eyes narrowed and fierce." },
+    { "id": "tempestmane", "name": "Tempestmane", "line": "stormhowl", "stage": 3, "element": "storm", "prompt": "A powerful wolf whose entire mane has become a crown of living static arcs in pale gold, coat deepening toward a stormy blue-white, muscular chest built for the charge." },
+    { "id": "skyfang", "name": "Skyfang", "line": "stormhowl", "stage": 4, "element": "storm", "prompt": "A tall, rangy storm-wolf wreathed in crackling lightning that runs constantly along its spine and legs, mane blazing near-white gold, eyes like twin bolts." },
+    { "id": "tempestlord", "name": "Tempestlord", "line": "stormhowl", "stage": 5, "element": "storm", "prompt": "A majestic storm-wolf the size of a summit boulder, its whole mane and tail a permanent corona of blinding white-gold lightning, deep storm-blue coat rippling with static, eyes burning like the eye of a thunderhead." },
+
+    { "id": "stormray", "name": "Stormray", "line": "stormray", "stage": 1, "element": "storm", "prompt": "A flat, wide indigo manta-ray-like creature gliding with wing-fins tipped in pale storm-gold, small sparks flickering off its trailing tail, bright alert eyes on a smooth rounded head." },
+    { "id": "squallray", "name": "Squallray", "line": "stormray", "stage": 2, "element": "storm", "prompt": "A slightly broader indigo ray with brighter gold static crackling along its wing edges, its tail now trailing a faint spark-trail as it glides." },
+    { "id": "thunderfin", "name": "Thunderfin", "line": "stormray", "stage": 3, "element": "storm", "prompt": "A sleek deep-indigo ray whose wing-fins have grown longer and sharper, laced with visible branching lightning along the leading edge, gold sparks streaming off every wingbeat." },
+    { "id": "zephyrmanta", "name": "Zephyrmanta", "line": "stormray", "stage": 4, "element": "storm", "prompt": "A large glowing ray, deep near-black indigo, its vast wings now edged in a constant crown of crackling gold-white lightning, twin light-trails streaming from its wingtips in flight." },
+    { "id": "maelray", "name": "Maelray", "line": "stormray", "stage": 5, "element": "storm", "prompt": "An immense storm-ray gliding like a living thundercloud, deep indigo-black body wreathed head to tail in blinding white-gold lightning arcs, wings so wide they seem to blot out the sky behind them." },
+
+    { "id": "haloling", "name": "Haloling", "line": "haloling", "stage": 1, "element": "void", "prompt": "A small pale ghost-light drifting in a soft cream-gold glow, a thin halo ring floating just above it, faint wisps trailing like a candle flame; two gentle glowing eyes." },
+    { "id": "haloglow", "name": "Haloglow", "line": "haloling", "stage": 2, "element": "void", "prompt": "A slightly larger drifting ghost-light, its halo ring now solid and brighter gold, its cream-white form trailing longer wisps of warm light." },
+    { "id": "sanctilume", "name": "Sanctilume", "line": "haloling", "stage": 3, "element": "void", "prompt": "A softly glowing spirit with a wider, more defined golden halo and two smaller light-rings orbiting its trailing wisps, its form a richer warm gold-cream." },
+    { "id": "seraphume", "name": "Seraphume", "line": "haloling", "stage": 4, "element": "void", "prompt": "An elegant light-spirit wreathed in three nested golden halo rings and long trailing streamers of warm light, its glowing core now a deep radiant gold." },
+    { "id": "empyrion", "name": "Empyrion", "line": "haloling", "stage": 5, "element": "void", "prompt": "A magnificent being of layered golden halos and streaming light-wings, its core blazing like a captured sunrise, trailing warmth and soft radiance in every direction." },
+
+    { "id": "wardenshade", "name": "Wardenshade", "line": "wardenshade", "stage": 1, "element": "void", "prompt": "A tall spectral armoured warrior, pale blue-white plate armour over a translucent ghostly frame, wielding a glowing cyan blade, faint mist trailing from its cloak; steady glowing eyes beneath a worn helm." },
+    { "id": "wardenwraith", "name": "Wardenwraith", "line": "wardenshade", "stage": 2, "element": "void", "prompt": "A slightly taller spectral knight, its pale armour now etched with faint glowing cyan runes, cloak trailing longer wisps of mist, blade burning a touch brighter." },
+    { "id": "sentinelshade", "name": "Sentinelshade", "line": "wardenshade", "stage": 3, "element": "void", "prompt": "An imposing armoured spirit with a more ornate pale helm and pauldrons traced in glowing cyan sigils, its whole form more solid yet still edged in drifting mist, blade wreathed in light." },
+    { "id": "highward", "name": "Highward", "line": "wardenshade", "stage": 4, "element": "void", "prompt": "A towering armoured guardian spirit in elaborate pale-violet plate etched entirely in luminous cyan sigils, a long ghostly cloak streaming like banners, blade blazing bright and steady." },
+    { "id": "duskwarden", "name": "Duskwarden", "line": "wardenshade", "stage": 5, "element": "void", "prompt": "A magnificent spectral warden in resplendent violet-silver armour wreathed in glowing cyan runes from helm to greaves, a vast trailing cloak of living mist, and a blade that burns like captured starlight." }
+  ]
+}

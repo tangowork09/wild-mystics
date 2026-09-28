@@ -1,0 +1,163 @@
+{
+  "lines": [
+    {
+      "id": "kilnback",
+      "branch": null,
+      "stages": ["kilnback", "forgeback", "emberplate", "cinderridge", "calderaback"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "forgeback", "name": "Forgeback", "element": "fire", "hp": 79, "atk": 20, "def": 22, "spd": 12, "height": 2.4, "model": "R2:Stegosaurus__6f8f4ac6.glb", "learnset": [[1, "ember_bite"], [1, "stone_skin"], [9, "flame_wheel"], [14, "flare_burst"], [19, "kindle"], [24, "cinder_claw"]], "rarity": "rare", "catchRate": 0.28, "tint": "#a8552e", "tintGlow": "#ff8438", "rideable": true, "abilities": ["flame_body", "thick_hide"], "lore": "Its back-plates glow hotter after a good meal." },
+        { "id": "emberplate", "name": "Emberplate", "element": "fire", "hp": 88, "atk": 23, "def": 24, "spd": 14, "height": 2.9, "model": "R2:Stegosaurus__6f8f4ac6.glb", "learnset": [[1, "ember_bite"], [1, "stone_skin"], [1, "flame_wheel"], [14, "flare_burst"], [19, "kindle"], [24, "cinder_claw"], [30, "meteor_fang"]], "rarity": "rare", "catchRate": 0.18, "tint": "#8a4522", "tintGlow": "#ff9048", "rideable": true, "abilities": ["flame_body", "sturdy"], "lore": "Blacksmiths quietly follow it around for the free heat." },
+        { "id": "cinderridge", "name": "Cinderridge", "element": "fire", "hp": 99, "atk": 26, "def": 26, "spd": 16, "height": 3.3, "model": "R2:Stegosaurus__6f8f4ac6.glb", "learnset": [[1, "ember_bite"], [1, "stone_skin"], [1, "flame_wheel"], [1, "flare_burst"], [19, "kindle"], [24, "cinder_claw"], [30, "meteor_fang"]], "rarity": "epic", "catchRate": 0.1, "tint": "#6a3418", "tintGlow": "#ffa058", "rideable": true, "abilities": ["flame_body", "sturdy"], "lore": "Walks slow so the whole caravan can warm up as it passes." },
+        { "id": "calderaback", "name": "Calderaback", "element": "fire", "hp": 111, "atk": 29, "def": 28, "spd": 18, "height": 3.4, "model": "R2:Stegosaurus__6f8f4ac6.glb", "learnset": [[1, "ember_bite"], [1, "stone_skin"], [1, "flame_wheel"], [1, "flare_burst"], [19, "kindle"], [24, "cinder_claw"], [30, "meteor_fang"]], "rarity": "epic", "catchRate": 0.06, "tint": "#4a2410", "tintGlow": "#ffb068", "rideable": true, "abilities": ["flame_body", "guardian_aura"], "lore": "Its back plates don't just glow anymore. They roar, quietly, all the time." }
+      ]
+    },
+    {
+      "id": "thrumcrest",
+      "branch": null,
+      "stages": ["thrumcrest", "thunderneck", "voltneck", "stormspine", "thunderwake"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "voltneck", "name": "Voltneck", "element": "storm", "hp": 97, "atk": 24, "def": 24, "spd": 13, "height": 2.4, "model": "R2:Apatosaurus__7b873860.glb", "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [16, "thunderclap"], [24, "boulder_slam"], [30, "spark_storm"], [36, "crystal_lance"]], "rarity": "rare", "catchRate": 0.18, "tint": "#e0b020", "rideable": true, "abilities": ["surge", "thick_hide"], "lore": "Its neck alone conducts enough charge to light a village." },
+        { "id": "stormspine", "name": "Stormspine", "element": "storm", "hp": 104, "atk": 27, "def": 27, "spd": 15, "height": 2.9, "model": "R2:Apatosaurus__7b873860.glb", "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [1, "thunderclap"], [24, "boulder_slam"], [30, "spark_storm"], [36, "crystal_lance"], [42, "prism_ray"]], "rarity": "epic", "catchRate": 0.1, "tint": "#c89a10", "rideable": true, "abilities": ["surge", "sturdy"], "lore": "Thunderheads gather wherever it grazes, out of habit more than threat." },
+        { "id": "thunderwake", "name": "Thunderwake", "element": "storm", "hp": 112, "atk": 30, "def": 30, "spd": 17, "height": 3.4, "model": "R2:Apatosaurus__7b873860.glb", "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [1, "thunderclap"], [24, "boulder_slam"], [30, "spark_storm"], [36, "crystal_lance"], [42, "prism_ray"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a67c08", "tintGlow": "#fff17a", "rideable": true, "abilities": ["surge", "guardian_aura"], "lore": "The storm doesn't follow it. It just hasn't left yet." }
+      ]
+    },
+    {
+      "id": "duneplod",
+      "branch": null,
+      "stages": ["duneplod", "sandtrudge", "duneback", "caravox", "wayfarox"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "sandtrudge", "name": "Sandtrudge", "element": "earth", "hp": 75, "atk": 17, "def": 20, "spd": 12, "height": 2.0, "model": "R2:Donkey__ca29f94e.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [10, "boulder_slam"], [15, "tremor"], [20, "geode_shell"]], "rarity": "rare", "catchRate": 0.25, "rideable": true, "abilities": ["sturdy", "pickup"], "lore": "Never in a hurry. Never late, either." },
+        { "id": "duneback", "name": "Duneback", "element": "earth", "hp": 85, "atk": 19, "def": 23, "spd": 13, "height": 2.35, "model": "R2:Donkey__ca29f94e.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [15, "tremor"], [20, "geode_shell"]], "rarity": "rare", "catchRate": 0.18, "tint": "#c89858", "rideable": true, "abilities": ["sturdy", "pickup"], "lore": "Caravans trust it with the heaviest crates without asking twice." },
+        { "id": "caravox", "name": "Caravox", "element": "earth", "hp": 97, "atk": 22, "def": 26, "spd": 15, "height": 2.7, "model": "R2:Donkey__ca29f94e.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [1, "tremor"], [20, "geode_shell"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a87840", "rideable": true, "abilities": ["sturdy", "thick_hide"], "lore": "Has crossed the Dunes so many times it could do it blind. Frequently does." },
+        { "id": "wayfarox", "name": "Wayfarox", "element": "earth", "hp": 110, "atk": 25, "def": 29, "spd": 17, "height": 3.1, "model": "R2:Donkey__ca29f94e.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [1, "tremor"], [20, "geode_shell"]], "rarity": "epic", "catchRate": 0.06, "tint": "#8a6030", "rideable": true, "abilities": ["sturdy", "guardian_aura"], "lore": "The dunes shift. Its route never does." }
+      ]
+    },
+    {
+      "id": "boltstripe",
+      "branch": null,
+      "stages": ["boltstripe", "voltstripe", "sparkrunner", "stormstrider", "thunderhoof"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "voltstripe", "name": "Voltstripe", "element": "storm", "hp": 66, "atk": 18, "def": 14, "spd": 23, "height": 2.2, "model": "R2:Zebra__ff99ce31.glb", "learnset": [[1, "spark_jab"], [1, "overcharge"], [8, "thunder_wave"], [13, "spark_storm"], [18, "thunderclap"], [24, "static_field"]], "rarity": "rare", "catchRate": 0.28, "tint": "#f0d030", "rideable": true, "abilities": ["static", "swift"], "lore": "Its stripes crackle brighter every time it startles. It startles often." },
+        { "id": "sparkrunner", "name": "Sparkrunner", "element": "storm", "hp": 75, "atk": 21, "def": 16, "spd": 25, "height": 2.55, "model": "R2:Zebra__ff99ce31.glb", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "thunder_wave"], [13, "spark_storm"], [18, "thunderclap"], [24, "static_field"], [30, "crystal_lance"]], "rarity": "rare", "catchRate": 0.18, "tint": "#e0c020", "rideable": true, "abilities": ["static", "swift"], "lore": "Outraces its own hoofbeats and gets there first." },
+        { "id": "stormstrider", "name": "Stormstrider", "element": "storm", "hp": 85, "atk": 24, "def": 18, "spd": 27, "height": 2.9, "model": "R2:Zebra__ff99ce31.glb", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "thunder_wave"], [1, "spark_storm"], [18, "thunderclap"], [24, "static_field"], [30, "crystal_lance"]], "rarity": "epic", "catchRate": 0.1, "tint": "#c8a810", "rideable": true, "abilities": ["surge", "swift"], "lore": "Storm chasers just call it 'the forecast' now." },
+        { "id": "thunderhoof", "name": "Thunderhoof", "element": "storm", "hp": 96, "atk": 27, "def": 20, "spd": 29, "height": 3.3, "model": "R2:Zebra__ff99ce31.glb", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "thunder_wave"], [1, "spark_storm"], [18, "thunderclap"], [24, "static_field"], [30, "crystal_lance"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a68a08", "tintGlow": "#fff17a", "rideable": true, "abilities": ["surge", "focus"], "lore": "Thunder used to follow lightning. Now it follows this." }
+      ]
+    },
+    {
+      "id": "bonelet",
+      "branch": null,
+      "stages": ["bonelet", "bonewarden", "boneknight", "cryptlord", "netherking"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "boneknight", "name": "Boneknight", "element": "void", "hp": 85, "atk": 23, "def": 23, "spd": 14, "height": 2.2, "model": "R2:KayKit_Skeleton_Warrior.glb", "learnset": [[1, "shadow_claw"], [1, "rock_toss"], [12, "soul_siphon"], [16, "boulder_slam"], [20, "umbral_wave"], [26, "warden_edge"]], "rarity": "rare", "catchRate": 0.18, "abilities": ["sturdy", "guardian_aura"], "lore": "Still remembers its oath. Nobody remembers who it swore it to." },
+        { "id": "cryptlord", "name": "Cryptlord", "element": "void", "hp": 97, "atk": 26, "def": 26, "spd": 16, "height": 2.7, "model": "R2:KayKit_Skeleton_Warrior.glb", "learnset": [[1, "shadow_claw"], [1, "rock_toss"], [1, "boulder_slam"], [12, "soul_siphon"], [20, "umbral_wave"], [26, "warden_edge"], [32, "hypno_glow"]], "rarity": "epic", "catchRate": 0.1, "tint": "#2a2a3a", "abilities": ["sturdy", "intimidate"], "lore": "Its throne room has excellent acoustics and terrible visitor reviews." },
+        { "id": "netherking", "name": "Netherking", "element": "void", "hp": 110, "atk": 29, "def": 29, "spd": 18, "height": 3.2, "model": "R2:KayKit_Skeleton_Warrior.glb", "learnset": [[1, "shadow_claw"], [1, "rock_toss"], [1, "boulder_slam"], [12, "soul_siphon"], [20, "umbral_wave"], [26, "warden_edge"], [32, "hypno_glow"]], "rarity": "epic", "catchRate": 0.06, "tint": "#18182a", "tintGlow": "#9878ff", "abilities": ["sturdy", "guardian_aura"], "lore": "Every rattling bone in the marsh salutes when it passes." }
+      ]
+    },
+    {
+      "id": "bonelet__hexbones",
+      "branch": { "from": "bonelet", "item": "void_stone" },
+      "stages": ["bonelet", "hexbones", "hexwraith", "curseweaver", "hexsovereign"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "hexwraith", "name": "Hexwraith", "element": "void", "hp": 79, "atk": 25, "def": 15, "spd": 20, "height": 2.15, "model": "R2:KayKit_Skeleton_Mage.glb", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [10, "toxic_mist"], [16, "umbral_wave"], [22, "soul_siphon"], [28, "ink_cloud"]], "rarity": "rare", "catchRate": 0.18, "tint": "#3a2a5a", "abilities": ["umbra", "focus"], "lore": "Its riddles have answers. It just prefers you keep guessing." },
+        { "id": "curseweaver", "name": "Curseweaver", "element": "void", "hp": 91, "atk": 27, "def": 17, "spd": 23, "height": 2.6, "model": "R2:KayKit_Skeleton_Mage.glb", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "toxic_mist"], [16, "umbral_wave"], [22, "soul_siphon"], [28, "ink_cloud"], [34, "warden_edge"]], "rarity": "epic", "catchRate": 0.1, "tint": "#281f48", "tintGlow": "#9878ff", "abilities": ["umbra", "opportunist"], "lore": "Ties a small curse into every hex like a ribbon on a gift." },
+        { "id": "hexsovereign", "name": "Hexsovereign", "element": "void", "hp": 104, "atk": 30, "def": 19, "spd": 26, "height": 3.15, "model": "R2:KayKit_Skeleton_Mage.glb", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "toxic_mist"], [16, "umbral_wave"], [22, "soul_siphon"], [28, "ink_cloud"], [34, "warden_edge"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1c1538", "tintGlow": "#b39cff", "abilities": ["umbra", "focus"], "lore": "Speaks once a season. The marsh still hasn't finished unpacking the last riddle." }
+      ]
+    },
+    {
+      "id": "bonelet__rattlecloak",
+      "branch": { "from": "bonelet", "item": "wind_stone" },
+      "stages": ["bonelet", "rattlecloak", "windshroud", "gustblade", "wraithgale"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "windshroud", "name": "Windshroud", "element": "wind", "hp": 71, "atk": 24, "def": 14, "spd": 25, "height": 2.05, "model": "R2:KayKit_Skeleton_Rogue.glb", "learnset": [[1, "gale_cut"], [1, "shadow_claw"], [10, "feather_dart"], [16, "venom_fang"], [22, "cyclone"], [28, "gust_dive"]], "rarity": "rare", "catchRate": 0.18, "tint": "#b8c8d8", "abilities": ["opportunist", "swift"], "lore": "You hear the cloak snap in the wind a half-second after it's already gone." },
+        { "id": "gustblade", "name": "Gustblade", "element": "wind", "hp": 82, "atk": 27, "def": 16, "spd": 28, "height": 2.5, "model": "R2:KayKit_Skeleton_Rogue.glb", "learnset": [[1, "gale_cut"], [1, "shadow_claw"], [1, "feather_dart"], [16, "venom_fang"], [22, "cyclone"], [28, "gust_dive"], [34, "aether_gale"]], "rarity": "epic", "catchRate": 0.1, "tint": "#98acc0", "abilities": ["opportunist", "focus"], "lore": "Every draw of its blade sounds like a door closing somewhere else." },
+        { "id": "wraithgale", "name": "Wraithgale", "element": "wind", "hp": 94, "atk": 30, "def": 18, "spd": 30, "height": 3.0, "model": "R2:KayKit_Skeleton_Rogue.glb", "learnset": [[1, "gale_cut"], [1, "shadow_claw"], [1, "feather_dart"], [16, "venom_fang"], [22, "cyclone"], [28, "gust_dive"], [34, "aether_gale"]], "rarity": "epic", "catchRate": 0.06, "tint": "#7890a8", "tintGlow": "#eaffff", "abilities": ["opportunist", "focus"], "lore": "The marsh mist parts for it and doesn't quite close the same way after." }
+      ]
+    },
+    {
+      "id": "squeakwing",
+      "branch": null,
+      "stages": ["squeakwing", "fluttershriek", "nightwing", "dreadwing", "voidwing"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "fluttershriek", "name": "Fluttershriek", "element": "void", "hp": 55, "atk": 17, "def": 11, "spd": 23, "height": 1.15, "model": "R2:Bat__4ae13ae9.glb", "learnset": [[1, "shadow_claw"], [1, "feather_dart"], [8, "hypno_glow"], [12, "soul_siphon"], [16, "toxic_mist"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["keen_eye", "opportunist"], "lore": "Apologises to fewer trees now. Mostly by dodging them." },
+        { "id": "nightwing", "name": "Nightwing", "element": "void", "hp": 63, "atk": 20, "def": 13, "spd": 26, "height": 1.4, "model": "R2:Bat__4ae13ae9.glb", "learnset": [[1, "shadow_claw"], [1, "feather_dart"], [1, "hypno_glow"], [12, "soul_siphon"], [16, "toxic_mist"], [22, "ink_cloud"]], "rarity": "rare", "catchRate": 0.18, "tint": "#3a2a5a", "abilities": ["keen_eye", "umbra"], "lore": "Reads the shape of a room in sound before it enters it." },
+        { "id": "dreadwing", "name": "Dreadwing", "element": "void", "hp": 72, "atk": 23, "def": 15, "spd": 29, "height": 1.7, "model": "R2:Bat__4ae13ae9.glb", "learnset": [[1, "shadow_claw"], [1, "feather_dart"], [1, "hypno_glow"], [1, "soul_siphon"], [16, "toxic_mist"], [22, "ink_cloud"], [28, "umbral_wave"]], "rarity": "epic", "catchRate": 0.1, "tint": "#281f48", "tintGlow": "#9878ff", "abilities": ["umbra", "opportunist"], "lore": "Its shriek arrives after it's already behind you." },
+        { "id": "voidwing", "name": "Voidwing", "element": "void", "hp": 82, "atk": 26, "def": 17, "spd": 30, "height": 2.05, "model": "R2:Bat__4ae13ae9.glb", "learnset": [[1, "shadow_claw"], [1, "feather_dart"], [1, "hypno_glow"], [1, "soul_siphon"], [16, "toxic_mist"], [22, "ink_cloud"], [28, "umbral_wave"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1c1538", "tintGlow": "#b39cff", "abilities": ["umbra", "focus"], "lore": "The dark doesn't hide it. It just stops arguing." }
+      ]
+    },
+    {
+      "id": "hissling",
+      "branch": null,
+      "stages": ["hissling", "coilfang", "vipercoil", "thornviper", "venomcrown"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "coilfang", "name": "Coilfang", "element": "nature", "hp": 62, "atk": 18, "def": 13, "spd": 18, "height": 1.15, "model": "R2:Snake__0f3a551e.glb", "learnset": [[1, "venom_fang"], [1, "vine_snare"], [8, "hypno_glow"], [12, "thorn_volley"], [16, "toxic_mist"], [20, "grove_wrath"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["poison_touch", "overgrow"], "lore": "Hisses a warning first. The warning is optional; the bite is not." },
+        { "id": "vipercoil", "name": "Vipercoil", "element": "nature", "hp": 71, "atk": 21, "def": 15, "spd": 21, "height": 1.4, "model": "R2:Snake__0f3a551e.glb", "learnset": [[1, "venom_fang"], [1, "vine_snare"], [1, "hypno_glow"], [12, "thorn_volley"], [16, "toxic_mist"], [20, "grove_wrath"], [26, "pounce"]], "rarity": "rare", "catchRate": 0.18, "tint": "#3a5a1a", "abilities": ["poison_touch", "overgrow"], "lore": "Coils patiently, sometimes for hours, always for effect." },
+        { "id": "thornviper", "name": "Thornviper", "element": "nature", "hp": 81, "atk": 24, "def": 17, "spd": 24, "height": 1.7, "model": "R2:Snake__0f3a551e.glb", "learnset": [[1, "venom_fang"], [1, "vine_snare"], [1, "hypno_glow"], [1, "thorn_volley"], [16, "toxic_mist"], [20, "grove_wrath"], [26, "pounce"], [32, "thorn_howl"]], "rarity": "epic", "catchRate": 0.1, "tint": "#2a4a10", "abilities": ["poison_touch", "opportunist"], "lore": "Nests in bramble specifically to match its own mood." },
+        { "id": "venomcrown", "name": "Venomcrown", "element": "nature", "hp": 92, "atk": 27, "def": 19, "spd": 27, "height": 2.0, "model": "R2:Snake__0f3a551e.glb", "learnset": [[1, "venom_fang"], [1, "vine_snare"], [1, "hypno_glow"], [1, "thorn_volley"], [16, "toxic_mist"], [20, "grove_wrath"], [26, "pounce"], [32, "thorn_howl"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1a3a08", "tintGlow": "#9aff4a", "abilities": ["poison_touch", "focus"], "lore": "The Vale's other snakes flatten themselves when it passes." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "kilnback", "name": "Kilnback", "line": "kilnback", "stage": 1, "element": "fire", "prompt": "A sturdy stegosaur-like creature with warm terracotta hide and a row of glowing orange back-plates, gentle eyes and slow deliberate steps, faint heat-shimmer rising off its spine." },
+    { "id": "forgeback", "name": "Forgeback", "line": "kilnback", "stage": 2, "element": "fire", "prompt": "A broader stegosaur with deeper rust-red hide and brighter, hotter-glowing back-plates, small curls of smoke rising between them as it walks." },
+    { "id": "emberplate", "name": "Emberplate", "line": "kilnback", "stage": 3, "element": "fire", "prompt": "A heftier stegosaur whose back-plates have thickened and darkened at the edges like cooling iron, glowing ember-orange cores visible through cracks, rust-red hide deepening toward brown." },
+    { "id": "cinderridge", "name": "Cinderridge", "line": "kilnback", "stage": 4, "element": "fire", "prompt": "A massive stegosaur with a jagged ridge of dark, forge-hot plates running its full spine, deep umber-red hide seamed in glowing orange cracks, heat visibly rippling the air around it." },
+    { "id": "calderaback", "name": "Calderaback", "line": "kilnback", "stage": 5, "element": "fire", "prompt": "A titanic stegosaur whose back has become a living caldera ridge of dark volcanic plates glowing deep orange-gold at every seam, near-black hide radiating constant heat-haze, utterly monumental and warm-eyed despite its scale." },
+
+    { "id": "thrumcrest", "name": "Thrumcrest", "line": "thrumcrest", "stage": 1, "element": "storm", "prompt": "A long-necked sauropod creature with a hollow crest on its head and warm tan-gold hide marked in faint yellow streaks, humming softly before a storm." },
+    { "id": "thunderneck", "name": "Thunderneck", "line": "thrumcrest", "stage": 2, "element": "storm", "prompt": "A much larger long-necked dinosaur with a fuller resonating crest and deep golden-tan hide crackling faintly with static along its neck, an imposing but gentle presence." },
+    { "id": "voltneck", "name": "Voltneck", "line": "thrumcrest", "stage": 3, "element": "storm", "prompt": "An even taller sauropod whose crest now glows faintly gold, visible arcs of static travelling the full length of its long neck, hide deepening to a rich amber." },
+    { "id": "stormspine", "name": "Stormspine", "line": "thrumcrest", "stage": 4, "element": "storm", "prompt": "A colossal sauropod with a spine of small glowing storm-gold ridges running neck to tail, deep amber-bronze hide crackling with constant static, small clouds visibly gathering above its crest." },
+    { "id": "thunderwake", "name": "Thunderwake", "line": "thrumcrest", "stage": 5, "element": "storm", "prompt": "An awe-inspiring storm-titan sauropod whose entire spine and crest blaze with rolling golden lightning, deep bronze hide crackling head to tail, trailing a visible wake of gathered storm cloud." },
+
+    { "id": "duneplod", "name": "Duneplod", "line": "duneplod", "stage": 1, "element": "earth", "prompt": "A sturdy sand-coloured donkey creature with patient dark eyes and a laden, unhurried gait, small packs of gear strapped to its sides." },
+    { "id": "sandtrudge", "name": "Sandtrudge", "line": "duneplod", "stage": 2, "element": "earth", "prompt": "A broader, more muscular sand-donkey with a thicker tan-brown coat and stone-toughened hooves, carrying heavier loads with total calm." },
+    { "id": "duneback", "name": "Duneback", "line": "duneplod", "stage": 3, "element": "earth", "prompt": "A hefty pack-beast whose hide has toughened into a sandy ochre hide with faint stone-plate ridges along its back, unbothered by any weight." },
+    { "id": "caravox", "name": "Caravox", "line": "duneplod", "stage": 4, "element": "earth", "prompt": "A massive, heavily muscled pack-beast with rugged stone-plated shoulders and deep ochre-brown hide, radiating the steady reliability of a creature that has never once been lost." },
+    { "id": "wayfarox", "name": "Wayfarox", "line": "duneplod", "stage": 5, "element": "earth", "prompt": "A monumental desert-beast of burden, its shoulders and back fully plated in weathered sandstone armour, deep bronze-umber hide glowing faintly amber at the seams, utterly unshakeable." },
+
+    { "id": "boltstripe", "name": "Boltstripe", "line": "boltstripe", "stage": 1, "element": "storm", "prompt": "A lean zebra-like creature with crisp black-and-gold lightning-shaped stripes, alert ears and a faint static crackle along its mane." },
+    { "id": "voltstripe", "name": "Voltstripe", "line": "boltstripe", "stage": 2, "element": "storm", "prompt": "A leaner, faster zebra with bolder gold-lightning stripes and a brighter crackling mane, static visibly sparking between its ears when startled." },
+    { "id": "sparkrunner", "name": "Sparkrunner", "line": "boltstripe", "stage": 3, "element": "storm", "prompt": "A swift golden-striped zebra whose stripe pattern now glows faintly, a trailing crackle of static following every stride, mane standing on end." },
+    { "id": "stormstrider", "name": "Stormstrider", "line": "boltstripe", "stage": 4, "element": "storm", "prompt": "A powerful zebra-steed with deep gold-and-black storm-stripes crackling continuously, a mane of visible arcing static, small storm clouds gathering as it runs." },
+    { "id": "thunderhoof", "name": "Thunderhoof", "line": "boltstripe", "stage": 5, "element": "storm", "prompt": "A magnificent storm-stallion whose gold lightning-stripes blaze continuously down a near-black coat, a mane of living lightning, hoofbeats that arrive as thunderclaps." },
+
+    { "id": "bonelet", "name": "Bonelet", "line": "bonelet", "stage": 1, "element": "void", "prompt": "A small rattling skeleton creature wrapped in a tattered grey cloak, glowing violet eye-lights and a permanently amused rattle to its bones." },
+    { "id": "bonewarden", "name": "Bonewarden", "line": "bonelet", "stage": 2, "element": "void", "prompt": "A taller armoured skeleton warrior in weathered bone-plate, glowing violet eye-sockets and a steady unblinking stance, marsh moss growing faintly on its joints." },
+    { "id": "boneknight", "name": "Boneknight", "line": "bonelet", "stage": 3, "element": "void", "prompt": "A broader bone-knight in heavier plate armour etched with faded runes, deeper violet eye-glow, standing at permanent, dutiful attention." },
+    { "id": "cryptlord", "name": "Cryptlord", "line": "bonelet", "stage": 4, "element": "void", "prompt": "An imposing armoured bone-lord draped in a tattered regal cloak over dark plate, violet eye-glow now bright enough to light its own path, radiating cold authority." },
+    { "id": "netherking", "name": "Netherking", "line": "bonelet", "stage": 5, "element": "void", "prompt": "A towering bone-sovereign in ornate dark plate fused with faintly glowing violet runes down every joint, a tattered crown-like cloak trailing behind it, commanding total stillness wherever it stands." },
+
+    { "id": "bonelet", "name": "Bonelet", "line": "bonelet__hexbones", "stage": 1, "element": "void", "prompt": "A small rattling skeleton creature wrapped in a tattered grey cloak, glowing violet eye-lights and a permanently amused rattle to its bones." },
+    { "id": "hexbones", "name": "Hexbones", "line": "bonelet__hexbones", "stage": 2, "element": "void", "prompt": "A robed skeleton mage wrapped in violet-trimmed tattered cloth, a faint glowing hex-symbol hovering near one bony hand, eye-lights burning steady violet." },
+    { "id": "hexwraith", "name": "Hexwraith", "line": "bonelet__hexbones", "stage": 3, "element": "void", "prompt": "A taller robed skeleton mage whose tattered cloak now trails glowing violet sigils, a second faint hex-glyph orbiting its raised hand, eye-lights deepening to indigo." },
+    { "id": "curseweaver", "name": "Curseweaver", "line": "bonelet__hexbones", "stage": 4, "element": "void", "prompt": "An imposing hex-mage draped in a heavier rune-stitched cloak, several glowing violet glyphs circling it constantly, indigo eye-glow bright and deliberate." },
+    { "id": "hexsovereign", "name": "Hexsovereign", "line": "bonelet__hexbones", "stage": 5, "element": "void", "prompt": "A commanding archmage of bone wrapped in an ornate rune-covered cloak, a full ring of glowing violet hex-glyphs orbiting its raised arms, eye-glow like twin cold stars." },
+
+    { "id": "bonelet", "name": "Bonelet", "line": "bonelet__rattlecloak", "stage": 1, "element": "void", "prompt": "A small rattling skeleton creature wrapped in a tattered grey cloak, glowing violet eye-lights and a permanently amused rattle to its bones." },
+    { "id": "rattlecloak", "name": "Rattlecloak", "line": "bonelet__rattlecloak", "stage": 2, "element": "wind", "prompt": "A lean skeleton rogue wrapped in a silent, wind-whipped grey cloak, faint pale-blue eye-glow and a blade held loose and ready." },
+    { "id": "windshroud", "name": "Windshroud", "line": "bonelet__rattlecloak", "stage": 3, "element": "wind", "prompt": "A leaner bone-rogue whose cloak now billows constantly with captured wind, twin blades at the ready, pale-blue eye-glow sharp and watchful." },
+    { "id": "gustblade", "name": "Gustblade", "line": "bonelet__rattlecloak", "stage": 4, "element": "wind", "prompt": "A swift armoured bone-duellist whose wind-cloak trails visible gusts, blades gleaming pale silver-blue, eye-glow bright and focused mid-motion." },
+    { "id": "wraithgale", "name": "Wraithgale", "line": "bonelet__rattlecloak", "stage": 5, "element": "wind", "prompt": "A masterful wind-wraith duellist wrapped in a cloak of constantly swirling gale, blades trailing pale cyan light, eye-glow like twin distant stars in a gathering storm." },
+
+    { "id": "squeakwing", "name": "Squeakwing", "line": "squeakwing", "stage": 1, "element": "void", "prompt": "A small round-eared bat with dusky purple-grey fur and oversized membrane wings, chittering nervously mid-flight." },
+    { "id": "fluttershriek", "name": "Fluttershriek", "line": "squeakwing", "stage": 2, "element": "void", "prompt": "A leaner bat with broader violet-grey wings and sharper hearing-tuned ears, a faint echo-ripple visible around its shrieks." },
+    { "id": "nightwing", "name": "Nightwing", "line": "squeakwing", "stage": 3, "element": "void", "prompt": "A sleeker night-bat with deep indigo wing membranes edged in faint violet glow, keen glowing eyes cutting easily through darkness." },
+    { "id": "dreadwing", "name": "Dreadwing", "line": "squeakwing", "stage": 4, "element": "void", "prompt": "A striking bat with wide near-black wings rimmed in bright violet glow, a haunting silhouette that seems to arrive before any sound does." },
+    { "id": "voidwing", "name": "Voidwing", "line": "squeakwing", "stage": 5, "element": "void", "prompt": "A magnificent void-bat whose vast wings are edged in brilliant glowing violet like torn night sky, eyes blazing pale lavender, utterly silent and utterly unmissable." },
+
+    { "id": "hissling", "name": "Hissling", "line": "hissling", "stage": 1, "element": "nature", "prompt": "A small coiled snake creature in mossy green scales with darker leaf-shaped patterning, tongue flicking curiously, coiled loosely in the grass." },
+    { "id": "coilfang", "name": "Coilfang", "line": "hissling", "stage": 2, "element": "nature", "prompt": "A longer moss-green snake with bolder leaf-patterned scales and a more pronounced hood, coiling with visible readiness." },
+    { "id": "vipercoil", "name": "Vipercoil", "line": "hissling", "stage": 3, "element": "nature", "prompt": "A thicker viper with deep green scales patterned in dark thorn-like markings, a wider hood and sharper fangs visible at rest." },
+    { "id": "thornviper", "name": "Thornviper", "line": "hissling", "stage": 4, "element": "nature", "prompt": "A powerful viper whose scales have roughened into thorn-like ridges along its back, deep forest-green patterning, hood flared wide and imposing." },
+    { "id": "venomcrown", "name": "Venomcrown", "line": "hissling", "stage": 5, "element": "nature", "prompt": "A commanding serpent sovereign, its thorn-ridged scales a deep emerald patterned in glowing pale-green markings, an immense flared hood like a crown, utterly still and utterly in control." }
+  ]
+}

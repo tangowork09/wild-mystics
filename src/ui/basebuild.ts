@@ -14,7 +14,8 @@ import {
 } from '../game/base';
 import { displayName, statsOf, xpToNext } from '../game/creature';
 import type { Overworld } from '../world/world';
-import { modal, toast, confirmBox, el, uiRoot } from './dom';
+import { modal, toast, el, uiRoot } from './dom';
+import { confirmDemolish } from './confirm';
 import { bar, costList, esc, mysticFace, emptyState } from './kit';
 import { icon, glyph } from './icons';
 import { pickCreature } from './pickers';
@@ -294,7 +295,7 @@ export class BaseBuilder {
         });
         b.querySelector('[data-move]')?.addEventListener('click', () => { close(); this.startPlacing(d, uid); });
         b.querySelector('[data-demo]')?.addEventListener('click', async () => {
-          if (!(await confirmBox(`Demolish ${d.name}?`, 'You get back half of the base build cost. Residents return to storage.', 'Demolish', true))) return;
+          if (!(await confirmDemolish(d.name))) return;
           demolish(uid);
           this.hooks.world.homestead.sync();
           this.hooks.changed();

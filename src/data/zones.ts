@@ -73,10 +73,10 @@ const DEFS: ZoneDef[] = [
     id: 'vale', name: 'Verdant Vale', subtitle: 'Where every journey begins', bearing: 180, tier: 1,
     lore: 'Rolling meadows, sun-dappled groves and the hearth-town of Hearthwick at the foot of Mount Aether. Young Mystics play in the tall grass here, and Thornjaw Rex guards the Old Grove by the sea.',
     center: [0, 640], levels: [2, 8],
-    ground: ['#6aa546', '#9cc866', '#d6ca78'], fog: '#cfe2d6', sky: { zenith: '#ffffff', horizon: '#fff8f0', aerial: '#6f8fe0', haze: 1, mist: 0.35, sat: 1.1, contrast: 1.04, warmth: 0.1, cloud: 0.42, aurora: 0, night: '#ffffff', leaves: 0.08 },
+    ground: ['#7cb24c', '#a9cf6a', '#dccd82'], fog: '#d6e6d2', sky: { zenith: '#ffffff', horizon: '#fff6e8', aerial: '#7a98e0', haze: 1, mist: 0.3, sat: 1.04, contrast: 1.06, warmth: 0.55, cloud: 0.42, aurora: 0, night: '#ffffff', leaves: 0.14 }, // v3:look — sunny golden meadow
     terrain: { base: 1, ridges: 0, mesas: 0, lakes: 0.45, dunes: 0, pools: 0 },
     flora: { tree_round: 1200, tree_pine: 180, tree_twisted: 150, rock: 350, boulder: 80, bush: 1100, fern: 900, mushroom: 320, flowers: 1400, pebbles: 380, log: 100 },
-    grass: '#7ab84a', tallGrass: '#5f9a3a', particles: '#fff3b0', weather: 'pollen', music: 'overworld',
+    grass: '#8fc452', tallGrass: '#6aa640', particles: '#fff3b0', weather: 'pollen', music: 'overworld',
     boss: { species: 'thornjaw', level: 9, pos: [-150, 790], adds: ['spikegloop'] }, camp: [-122, 762],
     town: { id: 'hearthwick', name: 'Hearthwick', pos: [0, 540], kind: 'town' }, water: { shallow: '#5fc8c0', deep: '#1f5a78' },
   },

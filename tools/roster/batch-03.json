@@ -1,0 +1,196 @@
+{
+  "lines": [
+    {
+      "id": "glub",
+      "branch": null,
+      "stages": ["glub", "glubbernaut", "deepglub", "glubtitan", "glubsovereign"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "deepglub", "name": "Deepglub", "element": "water", "hp": 87, "atk": 20, "def": 20, "spd": 15, "height": 2.04, "model": "Glub Evolved", "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "aqua_jet"], [14, "riptide"], [22, "mend_rain"]], "rarity": "rare", "catchRate": 0.12, "tint": "#2a8ac0", "abilities": ["torrent", "regenerator"], "lore": "Its bubble-patterns are getting complicated enough that scholars are starting to take notes." },
+        { "id": "glubtitan", "name": "Glubtitan", "element": "water", "hp": 99, "atk": 23, "def": 23, "spd": 17, "height": 2.45, "model": "Glub Evolved", "learnset": [[1, "tide_lash"], [1, "aqua_jet"], [1, "riptide"], [22, "mend_rain"], [28, "brine_lance"]], "rarity": "epic", "catchRate": 0.08, "tint": "#1a6ca0", "abilities": ["torrent", "regenerator"], "lore": "Patrols the deepest trench in the Lakes and hums a note nothing else can reach." },
+        { "id": "glubsovereign", "name": "Glubsovereign", "element": "water", "hp": 112, "atk": 26, "def": 26, "spd": 20, "height": 3.06, "model": "Glub Evolved", "learnset": [[1, "tide_lash"], [1, "riptide"], [1, "mend_rain"], [28, "brine_lance"], [34, "purify"]], "rarity": "epic", "catchRate": 0.05, "tint": "#0e5080", "abilities": ["torrent", "guardian_aura"], "lore": "The Lakes have a pressure and a pulse now, and both belong to it." }
+      ]
+    },
+    {
+      "id": "croakus",
+      "branch": null,
+      "stages": ["croakus", "bellowcroak", "deepcroak", "thundercroak", "bellowking"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "bellowcroak", "name": "Bellowcroak", "element": "water", "hp": 74, "atk": 17, "def": 15, "spd": 16, "height": 1.68, "model": "Frog", "learnset": [[1, "aqua_jet"], [1, "mend_rain"], [1, "riptide"], [22, "tide_lash"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["torrent", "regenerator"], "lore": "Now heard four lakes away. It considers this an improvement, not a problem." },
+        { "id": "deepcroak", "name": "Deepcroak", "element": "water", "hp": 85, "atk": 20, "def": 17, "spd": 18, "height": 2.02, "model": "Frog", "learnset": [[1, "aqua_jet"], [1, "riptide"], [1, "tide_lash"], [28, "scald"]], "rarity": "rare", "catchRate": 0.18, "tint": "#2a8ac8", "abilities": ["torrent", "regenerator"], "lore": "Dives so deep to croak that the fish there have started answering back." },
+        { "id": "thundercroak", "name": "Thundercroak", "element": "water", "hp": 98, "atk": 23, "def": 20, "spd": 21, "height": 2.52, "model": "Frog", "learnset": [[1, "aqua_jet"], [1, "tide_lash"], [1, "scald"], [34, "brine_lance"]], "rarity": "epic", "catchRate": 0.1, "tint": "#1a6ca8", "rideable": true, "abilities": ["torrent", "regenerator"], "lore": "One croak can clear a flock of gulls off the water. Two can clear the weather." },
+        { "id": "bellowking", "name": "Bellowking", "element": "water", "hp": 112, "atk": 26, "def": 23, "spd": 24, "height": 3.28, "model": "Frog", "learnset": [[1, "aqua_jet"], [1, "scald"], [1, "brine_lance"], [40, "riptide"], [45, "mend_rain"]], "rarity": "epic", "catchRate": 0.06, "tint": "#0e5088", "rideable": true, "abilities": ["torrent", "guardian_aura"], "lore": "Every lake in the region sets its own dawn chorus around when it decides to start." }
+      ]
+    },
+    {
+      "id": "bubblin",
+      "branch": null,
+      "stages": ["bubblin", "magmallow", "cindermallow", "moltenmallow", "infernmallow"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "cindermallow", "name": "Cindermallow", "element": "fire", "hp": 77, "atk": 21, "def": 16, "spd": 15, "height": 1.32, "model": "Pink Slime", "learnset": [[1, "ember_bite"], [1, "mend_rain"], [1, "flare_burst"], [18, "meteor_fang"], [22, "cinder_claw"]], "rarity": "epic", "catchRate": 0.08, "tint": "#e8501a", "abilities": ["flame_body", "blaze"], "lore": "Toasts perfectly on the outside. Somehow still gooey within. Scientifically concerning." },
+        { "id": "moltenmallow", "name": "Moltenmallow", "element": "fire", "hp": 89, "atk": 24, "def": 19, "spd": 17, "height": 1.58, "model": "Pink Slime", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [1, "cinder_claw"], [28, "flame_wheel"]], "rarity": "epic", "catchRate": 0.05, "tint": "#c8380e", "abilities": ["flame_body", "blaze"], "lore": "Sits in campfires for fun. The campfires lose that contest every time." },
+        { "id": "infernmallow", "name": "Infernmallow", "element": "fire", "hp": 102, "atk": 27, "def": 22, "spd": 20, "height": 1.98, "model": "Pink Slime", "learnset": [[1, "ember_bite"], [1, "cinder_claw"], [1, "flame_wheel"], [34, "meteor_fang"], [40, "kindle"]], "rarity": "exotic", "catchRate": 0.03, "tint": "#a82606", "tintGlow": "#ff8a4a", "abilities": ["flame_body", "rage"], "lore": "Ember Scar cooks call it the world's worst, most delicious camping hazard." }
+      ]
+    },
+    {
+      "id": "bubblin__mosslime",
+      "branch": { "from": "bubblin", "item": "leaf_stone" },
+      "stages": ["bubblin", "mosslime", "bloomlime", "groveslime", "edenlime"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "bloomlime", "name": "Bloomlime", "element": "nature", "hp": 83, "atk": 17, "def": 20, "spd": 14, "height": 1.32, "model": "Pink Slime", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [18, "grove_wrath"], [22, "sleep_spore"]], "rarity": "epic", "catchRate": 0.08, "tint": "#4a9e3a", "abilities": ["regenerator", "sleep_spores"], "lore": "Flowers year-round now. Bees have started filing complaints about false alarms." },
+        { "id": "groveslime", "name": "Groveslime", "element": "nature", "hp": 95, "atk": 20, "def": 23, "spd": 16, "height": 1.58, "model": "Pink Slime", "learnset": [[1, "thorn_volley"], [1, "vine_snare"], [1, "sleep_spore"], [28, "pounce"]], "rarity": "epic", "catchRate": 0.05, "tint": "#3a8430", "abilities": ["regenerator", "sleep_spores"], "lore": "A whole little garden lives inside it, and it waters them from within." },
+        { "id": "edenlime", "name": "Edenlime", "element": "nature", "hp": 109, "atk": 23, "def": 26, "spd": 19, "height": 1.98, "model": "Pink Slime", "learnset": [[1, "thorn_volley"], [1, "sleep_spore"], [1, "pounce"], [34, "grove_wrath"], [40, "bloom"]], "rarity": "exotic", "catchRate": 0.03, "tint": "#2a6a24", "abilities": ["regenerator", "guardian_aura"], "lore": "The oldest gardeners in the Vale swear their best blooms all trace back to one very patient slime." }
+      ]
+    },
+    {
+      "id": "bubblin__zapjelly",
+      "branch": { "from": "bubblin", "item": "thunder_stone" },
+      "stages": ["bubblin", "zapjelly", "voltjelly", "stormjelly", "fulminjelly"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "voltjelly", "name": "Voltjelly", "element": "storm", "hp": 70, "atk": 20, "def": 14, "spd": 20, "height": 1.32, "model": "Pink Slime", "learnset": [[1, "spark_jab"], [1, "mend_rain"], [1, "static_field"], [18, "thunderclap"], [22, "overcharge"]], "rarity": "epic", "catchRate": 0.08, "tint": "#f0c020", "abilities": ["static", "surge"], "lore": "Hums at 60 hertz, then 90, then whatever it feels like that day." },
+        { "id": "stormjelly", "name": "Stormjelly", "element": "storm", "hp": 82, "atk": 23, "def": 16, "spd": 23, "height": 1.58, "model": "Pink Slime", "learnset": [[1, "spark_jab"], [1, "static_field"], [1, "overcharge"], [28, "spark_storm"]], "rarity": "epic", "catchRate": 0.05, "tint": "#e0a810", "abilities": ["static", "surge"], "lore": "Static builds so fast that nearby Mystics' fur stands on end just walking past." },
+        { "id": "fulminjelly", "name": "Fulminjelly", "element": "storm", "hp": 95, "atk": 26, "def": 19, "spd": 26, "height": 1.98, "model": "Pink Slime", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "spark_storm"], [34, "thunderclap"], [40, "crystal_lance"]], "rarity": "exotic", "catchRate": 0.03, "tint": "#d09000", "tintGlow": "#fff8b0", "abilities": ["surge", "breaker"], "lore": "A lightning strike that never quite finished happening, and has decided it likes it that way." }
+      ]
+    },
+    {
+      "id": "bubblin__umbrajelly",
+      "branch": { "from": "bubblin", "item": "void_stone" },
+      "stages": ["bubblin", "umbrajelly", "voidjelly", "nightjelly", "eclipsejelly"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "voidjelly", "name": "Voidjelly", "element": "void", "hp": 71, "atk": 20, "def": 15, "spd": 17, "height": 1.32, "model": "Pink Slime", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "umbral_wave"], [18, "static_field"], [22, "toxic_mist"]], "rarity": "exotic", "catchRate": 0.05, "tint": "#3a1e66", "abilities": ["opportunist", "umbra"], "lore": "Moonlight doesn't reflect off it anymore. It just quietly keeps it." },
+        { "id": "nightjelly", "name": "Nightjelly", "element": "void", "hp": 82, "atk": 23, "def": 17, "spd": 20, "height": 1.58, "model": "Pink Slime", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "toxic_mist"], [28, "ink_cloud"]], "rarity": "exotic", "catchRate": 0.035, "tint": "#2a144e", "abilities": ["opportunist", "umbra"], "lore": "The new moon isn't dark because there's no moon. It's dark because this is nearby." },
+        { "id": "eclipsejelly", "name": "Eclipsejelly", "element": "void", "hp": 93, "atk": 26, "def": 20, "spd": 23, "height": 1.98, "model": "Pink Slime", "learnset": [[1, "shadow_claw"], [1, "toxic_mist"], [1, "ink_cloud"], [34, "umbral_wave"], [40, "warden_edge"]], "rarity": "exotic", "catchRate": 0.02, "tint": "#1c0c38", "tintGlow": "#c88bff", "abilities": ["umbra", "intimidate"], "lore": "Old bog-tales say a Bubblin found a Void Stone once and simply never stopped changing. This is where the tale ends. Probably." }
+      ]
+    },
+    {
+      "id": "alpuff",
+      "branch": null,
+      "stages": ["alpuff", "alpaqueen", "alpastorm", "alpatempest", "alpasovereign"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "alpastorm", "name": "Alpastorm", "element": "wind", "hp": 87, "atk": 20, "def": 19, "spd": 20, "height": 2.16, "model": "Alpaking Evolved", "learnset": [[1, "gale_cut"], [1, "tailwind"], [1, "feather_dart"], [14, "cyclone"], [22, "frost_breath"]], "rarity": "rare", "catchRate": 0.09, "tint": "#4ad8c0", "abilities": ["tailwind_soul", "swift"], "lore": "Its fleece carries static now. Sweaters made from it hum a little." },
+        { "id": "alpatempest", "name": "Alpatempest", "element": "wind", "hp": 99, "atk": 23, "def": 23, "spd": 23, "height": 2.59, "model": "Alpaking Evolved", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [1, "cyclone"], [28, "frost_breath"], [34, "gust_dive"]], "rarity": "epic", "catchRate": 0.06, "tint": "#2ab8a8", "rideable": true, "abilities": ["tailwind_soul", "swift"], "lore": "Leads the whole herd over the high passes before any storm even arrives." },
+        { "id": "alpasovereign", "name": "Alpasovereign", "element": "wind", "hp": 112, "atk": 26, "def": 25, "spd": 26, "height": 3.24, "model": "Alpaking Evolved", "learnset": [[1, "gale_cut"], [1, "cyclone"], [1, "frost_breath"], [34, "gust_dive"], [40, "aether_gale"]], "rarity": "epic", "catchRate": 0.035, "tint": "#1a9890", "rideable": true, "abilities": ["tailwind_soul", "guardian_aura"], "lore": "The high meadows have a weather pattern now, and it follows her mood." }
+      ]
+    },
+    {
+      "id": "whirlie",
+      "branch": null,
+      "stages": ["whirlie", "whirlisk", "maelisk", "vortisk", "maelsovereign"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "whirlisk", "name": "Whirlisk", "element": "water", "hp": 62, "atk": 17, "def": 13, "spd": 20, "height": 1.44, "model": "Hywirl", "learnset": [[1, "tide_lash"], [1, "aqua_jet"], [1, "riptide"], [22, "bubble_veil"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["torrent", "regenerator"], "lore": "Spins a slightly bigger whirlpool now. Boats disagree slightly more." },
+        { "id": "maelisk", "name": "Maelisk", "element": "water", "hp": 71, "atk": 20, "def": 15, "spd": 23, "height": 1.73, "model": "Hywirl", "learnset": [[1, "tide_lash"], [1, "riptide"], [1, "bubble_veil"], [28, "scald"]], "rarity": "rare", "catchRate": 0.18, "tint": "#2a8ac8", "abilities": ["torrent", "regenerator"], "lore": "Practices figure-eights in open water. The fish have learned to just go around." },
+        { "id": "vortisk", "name": "Vortisk", "element": "water", "hp": 82, "atk": 23, "def": 17, "spd": 26, "height": 2.16, "model": "Hywirl", "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "scald"], [34, "brine_lance"]], "rarity": "epic", "catchRate": 0.1, "tint": "#1a6ca8", "abilities": ["torrent", "focus"], "lore": "Can spin a whirlpool wide enough to see the bottom of the lake from the rim." },
+        { "id": "maelsovereign", "name": "Maelsovereign", "element": "water", "hp": 93, "atk": 26, "def": 20, "spd": 29, "height": 2.81, "model": "Hywirl", "learnset": [[1, "tide_lash"], [1, "scald"], [1, "brine_lance"], [40, "riptide"], [45, "aqua_jet"]], "rarity": "epic", "catchRate": 0.06, "tint": "#0e5088", "tintGlow": "#bfe8ff", "abilities": ["torrent", "focus"], "lore": "Every whirlpool in Mirror Lakes answers to the same current, and the current answers to her." }
+      ]
+    },
+    {
+      "id": "glenhart",
+      "branch": null,
+      "stages": ["glenhart", "aurorhart", "prismhart", "starhart", "zenithart"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "prismhart", "name": "Prismhart", "element": "wind", "hp": 92, "atk": 24, "def": 21, "spd": 23, "height": 2.76, "model": "R2:Stag__a9c69fbc.glb", "learnset": [[1, "gale_cut"], [1, "bloom"], [1, "frost_breath"], [20, "cyclone"], [26, "purify"], [30, "aether_gale"]], "rarity": "exotic", "catchRate": 0.04, "tint": "#7fd0ff", "tintGlow": "#9fffe0", "rideable": true, "abilities": ["tailwind_soul", "guardian_aura"], "lore": "Its antlers now catch every colour of the aurora at once, not just the green." },
+        { "id": "starhart", "name": "Starhart", "element": "wind", "hp": 101, "atk": 27, "def": 24, "spd": 26, "height": 3.17, "model": "R2:Stag__a9c69fbc.glb", "learnset": [[1, "gale_cut"], [1, "frost_breath"], [1, "cyclone"], [26, "purify"], [30, "aether_gale"], [36, "gust_dive"]], "rarity": "exotic", "catchRate": 0.025, "tint": "#5fb8ff", "tintGlow": "#bfffea", "rideable": true, "abilities": ["tailwind_soul", "guardian_aura"], "lore": "Walks the ridgeline only when the sky is putting on its very best show." },
+        { "id": "zenithart", "name": "Zenithart", "element": "wind", "hp": 110, "atk": 30, "def": 27, "spd": 29, "height": 3.39, "model": "R2:Stag__a9c69fbc.glb", "learnset": [[1, "gale_cut"], [1, "cyclone"], [1, "purify"], [30, "aether_gale"], [36, "gust_dive"], [42, "frost_breath"]], "rarity": "exotic", "catchRate": 0.015, "tint": "#3fa0ff", "tintGlow": "#dfffef", "rideable": true, "abilities": ["tailwind_soul", "guardian_aura"], "lore": "The peaks' own aurora bends toward wherever it happens to be standing." }
+      ]
+    },
+    {
+      "id": "clacker",
+      "branch": null,
+      "stages": ["clacker", "snapclack", "ironclack", "titanclack", "clackmonarch"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "snapclack", "name": "Snapclack", "element": "water", "hp": 67, "atk": 17, "def": 20, "spd": 12, "height": 1.08, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "tide_lash"], [1, "stone_skin"], [1, "aqua_jet"], [12, "bubble_veil"], [22, "brine_lance"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["torrent", "thick_hide"], "lore": "Upgraded to a full standing ovation. The lake shore has never been louder." },
+        { "id": "ironclack", "name": "Ironclack", "element": "water", "hp": 77, "atk": 20, "def": 23, "spd": 14, "height": 1.3, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "tide_lash"], [1, "aqua_jet"], [1, "bubble_veil"], [28, "brine_lance"], [34, "shell_guard"]], "rarity": "rare", "catchRate": 0.18, "tint": "#2a7ab0", "abilities": ["torrent", "thick_hide"], "lore": "Its claws have gone from applause to actual percussion instruments." },
+        { "id": "titanclack", "name": "Titanclack", "element": "water", "hp": 89, "atk": 23, "def": 26, "spd": 16, "height": 1.62, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "brine_lance"], [34, "shell_guard"], [40, "riptide"]], "rarity": "epic", "catchRate": 0.1, "tint": "#1a6098", "abilities": ["torrent", "thick_hide"], "lore": "Cracks boulders open on the shoreline just to see if it still can. It can." },
+        { "id": "clackmonarch", "name": "Clackmonarch", "element": "water", "hp": 101, "atk": 26, "def": 30, "spd": 19, "height": 2.11, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "tide_lash"], [1, "brine_lance"], [1, "shell_guard"], [40, "riptide"], [45, "stone_skin"]], "rarity": "epic", "catchRate": 0.06, "tint": "#0e4a7c", "abilities": ["torrent", "sturdy"], "lore": "The whole reef claps when it claps. Nobody taught them to; it just happened." }
+      ]
+    },
+    {
+      "id": "sandclack",
+      "branch": null,
+      "stages": ["sandclack", "sandpinch", "duneclad", "boneclack", "sandmonarch"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "sandpinch", "name": "Sandpinch", "element": "earth", "hp": 69, "atk": 17, "def": 21, "spd": 10, "height": 1.08, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "tremor"], [12, "boulder_slam"], [22, "geode_shell"]], "rarity": "rare", "catchRate": 0.25, "tint": "#c89a50", "abilities": ["bedrock", "thick_hide"], "lore": "Its shell bleached fully white under the desert sun. Looks fantastic. Feels like an oven." },
+        { "id": "duneclad", "name": "Duneclad", "element": "earth", "hp": 79, "atk": 20, "def": 24, "spd": 12, "height": 1.3, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "rock_toss"], [1, "tremor"], [1, "boulder_slam"], [1, "geode_shell"], [22, "stone_skin"]], "rarity": "rare", "catchRate": 0.18, "tint": "#b88238", "abilities": ["bedrock", "thick_hide"], "lore": "Buries itself in warm sand up to the eyestalks and calls that a vacation." },
+        { "id": "boneclack", "name": "Boneclack", "element": "earth", "hp": 91, "atk": 23, "def": 28, "spd": 14, "height": 1.62, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "rock_toss"], [1, "boulder_slam"], [1, "geode_shell"], [1, "stone_skin"], [28, "tremor"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a86a22", "abilities": ["bedrock", "thick_hide"], "lore": "Old caravans use its shed shell-plates as sun-bleached trail markers." },
+        { "id": "sandmonarch", "name": "Sandmonarch", "element": "earth", "hp": 103, "atk": 26, "def": 30, "spd": 16, "height": 2.11, "model": "R2:Crab_Enemy__b9bbf6bd.glb", "learnset": [[1, "rock_toss"], [1, "geode_shell"], [1, "stone_skin"], [1, "tremor"], [34, "boulder_slam"]], "rarity": "epic", "catchRate": 0.06, "tint": "#986012", "abilities": ["bedrock", "sturdy"], "lore": "The oasis has one true ruler, and it settles every dispute with a single unhurried clack." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "glub", "name": "Glub", "line": "glub", "stage": 1, "element": "water", "prompt": "A round pale-blue blob dotted with small bubbles, simple happy dot eyes and a gently wobbling shape." },
+    { "id": "glubbernaut", "name": "Glubbernaut", "line": "glub", "stage": 2, "element": "water", "prompt": "A larger blob encased in a faint shell of pressurised water, deeper blue jelly with more defined bubble patterns and a calm patient gaze." },
+    { "id": "deepglub", "name": "Deepglub", "line": "glub", "stage": 3, "element": "water", "prompt": "A broader pressure-shelled blob with swirling bubble patterns across its whole body, richer sapphire jelly glowing faintly at its core." },
+    { "id": "glubtitan", "name": "Glubtitan", "line": "glub", "stage": 4, "element": "water", "prompt": "A massive deep-water blob wrapped in a visible shimmering pressure field, deep navy jelly patterned like flowing currents." },
+    { "id": "glubsovereign", "name": "Glubsovereign", "line": "glub", "stage": 5, "element": "water", "prompt": "An immense sovereign of the deep, its jelly body a swirling navy-to-teal current given form, crowned in a constant shimmering halo of compressed water." },
+
+    { "id": "croakus", "name": "Croakus", "line": "croakus", "stage": 1, "element": "water", "prompt": "A plump blue-green frog with a large inflating throat-sac, wide friendly eyes and rounded webbed feet." },
+    { "id": "bellowcroak", "name": "Bellowcroak", "line": "croakus", "stage": 2, "element": "water", "prompt": "A bigger frog with an even larger throat-sac mid-inflate, richer teal-green skin and sturdier hind legs for leaping." },
+    { "id": "deepcroak", "name": "Deepcroak", "line": "croakus", "stage": 3, "element": "water", "prompt": "A broad, powerful frog with a deeply ridged throat-sac and darker teal skin patterned like rippling water, a confident half-smile." },
+    { "id": "thundercroak", "name": "Thundercroak", "line": "croakus", "stage": 4, "element": "water", "prompt": "An imposing frog with a resonating chest-sac large enough to see ripples on the water from, deep storm-teal skin marked with pale lightning-bolt patterns." },
+    { "id": "bellowking", "name": "Bellowking", "line": "croakus", "stage": 5, "element": "water", "prompt": "A colossal frog monarch whose throat-sac blooms like a second moon when it calls, deep sapphire-teal skin glowing faintly along ridged, crown-like markings." },
+
+    { "id": "bubblin", "name": "Bubblin", "line": "bubblin", "stage": 1, "element": "water", "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks." },
+    { "id": "magmallow", "name": "Magmallow", "line": "bubblin", "stage": 2, "element": "fire", "prompt": "A slime wreathed in gentle heat-shimmer, orange-red jelly with a molten glowing core visible beneath its skin." },
+    { "id": "cindermallow", "name": "Cindermallow", "line": "bubblin", "stage": 3, "element": "fire", "prompt": "A firmer, toastier-looking slime with a crackled orange-red crust and a glowing molten core pulsing brighter beneath." },
+    { "id": "moltenmallow", "name": "Moltenmallow", "line": "bubblin", "stage": 4, "element": "fire", "prompt": "A bubbling slime whose whole body glows like fresh lava under a thin crust, deep red-orange skin cracked with bright glowing seams." },
+    { "id": "infernmallow", "name": "Infernmallow", "line": "bubblin", "stage": 5, "element": "fire", "prompt": "A magnificent molten slime sovereign, its crust glowing gold at every fissure over a core of pure captured flame, trailing small drifting embers." },
+
+    { "id": "bubblin", "name": "Bubblin", "line": "bubblin__mosslime", "stage": 1, "element": "water", "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks." },
+    { "id": "mosslime", "name": "Mosslime", "line": "bubblin__mosslime", "stage": 2, "element": "nature", "prompt": "A round jelly slime dotted with tiny sprouting flowers, soft green translucent skin with visible growing roots inside." },
+    { "id": "bloomlime", "name": "Bloomlime", "line": "bubblin__mosslime", "stage": 3, "element": "nature", "prompt": "A fuller jelly slime blooming with small flowers across its whole surface, richer green skin glowing faintly at each bud." },
+    { "id": "groveslime", "name": "Groveslime", "line": "bubblin__mosslime", "stage": 4, "element": "nature", "prompt": "A lush, garden-covered slime with tiny ferns and blossoms rooted throughout its body, deep forest-green jelly barely visible beneath the growth." },
+    { "id": "edenlime", "name": "Edenlime", "line": "bubblin__mosslime", "stage": 5, "element": "nature", "prompt": "A magnificent living garden given a jelly heart, an entire miniature grove of flowers and ferns flourishing across its glowing emerald body." },
+
+    { "id": "bubblin", "name": "Bubblin", "line": "bubblin__zapjelly", "stage": 1, "element": "water", "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks." },
+    { "id": "zapjelly", "name": "Zapjelly", "line": "bubblin__zapjelly", "stage": 2, "element": "storm", "prompt": "A round yellow jelly slime crackling faintly with static, translucent skin threaded with tiny glowing lightning-lines." },
+    { "id": "voltjelly", "name": "Voltjelly", "line": "bubblin__zapjelly", "stage": 3, "element": "storm", "prompt": "A firmer jelly slime with brighter crackling lightning-lines threading its whole body, richer gold translucent skin humming visibly." },
+    { "id": "stormjelly", "name": "Stormjelly", "line": "bubblin__zapjelly", "stage": 4, "element": "storm", "prompt": "A charged jelly slime wrapped in a faint static halo, deep amber-gold skin webbed with glowing bolt-patterns." },
+    { "id": "fulminjelly", "name": "Fulminjelly", "line": "bubblin__zapjelly", "stage": 5, "element": "storm", "prompt": "A magnificent storm-charged slime sovereign, its whole body a captured lightning strike frozen mid-flash, radiant gold skin crackling constantly at the edges." },
+
+    { "id": "bubblin", "name": "Bubblin", "line": "bubblin__umbrajelly", "stage": 1, "element": "water", "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks." },
+    { "id": "umbrajelly", "name": "Umbrajelly", "line": "bubblin__umbrajelly", "stage": 2, "element": "void", "prompt": "A round dark violet jelly slime under a new moon, faint magenta glow-lines pulsing slowly through its translucent body." },
+    { "id": "voidjelly", "name": "Voidjelly", "line": "bubblin__umbrajelly", "stage": 3, "element": "void", "prompt": "A denser violet-black jelly slime with brighter pulsing glow-lines, its surface seeming to faintly swallow ambient light." },
+    { "id": "nightjelly", "name": "Nightjelly", "line": "bubblin__umbrajelly", "stage": 4, "element": "void", "prompt": "A deep void-black slime whose glow-lines now form slow-shifting constellation patterns, its edges blurring softly into shadow." },
+    { "id": "eclipsejelly", "name": "Eclipsejelly", "line": "bubblin__umbrajelly", "stage": 5, "element": "void", "prompt": "A magnificent void sovereign slime, its near-black body a captured eclipse ringed in a faint violet corona, glowing sigils drifting slowly beneath its skin." },
+
+    { "id": "alpuff", "name": "Alpuff", "line": "alpuff", "stage": 1, "element": "wind", "prompt": "A small fluffy alpaca with an oversized wind-ruffled coat, soft cream-teal fleece and a gentle, curious face." },
+    { "id": "alpaqueen", "name": "Alpaqueen", "line": "alpuff", "stage": 2, "element": "wind", "prompt": "A taller, more elegant alpaca with a flowing wind-swept mane, richer cream-teal fleece and a poised, regal posture." },
+    { "id": "alpastorm", "name": "Alpastorm", "line": "alpuff", "stage": 3, "element": "wind", "prompt": "A sturdier alpaca with a crackling static-charged mane and thicker fleece, deeper teal-cream coat rippling as if caught in a permanent breeze." },
+    { "id": "alpatempest", "name": "Alpatempest", "line": "alpuff", "stage": 4, "element": "wind", "prompt": "A powerful alpaca with a wildly billowing storm-mane and long elegant legs, rich teal fleece streaked with faster-moving cloud-like patterns." },
+    { "id": "alpasovereign", "name": "Alpasovereign", "line": "alpuff", "stage": 5, "element": "wind", "prompt": "A majestic alpaca sovereign crowned in a flowing cloud-mane, radiant pale teal fleece rippling like wind-blown silk, commanding the high meadows with quiet grace." },
+
+    { "id": "whirlie", "name": "Whirlie", "line": "whirlie", "stage": 1, "element": "water", "prompt": "A small spinning water-creature shaped like a tight swirl, pale blue translucent body with a constant gentle whirlpool motion." },
+    { "id": "whirlisk", "name": "Whirlisk", "line": "whirlie", "stage": 2, "element": "water", "prompt": "A slightly larger spinning water-form with a more defined swirling core, richer blue translucent body rippling faster at the edges." },
+    { "id": "maelisk", "name": "Maelisk", "line": "whirlie", "stage": 3, "element": "water", "prompt": "A broader whirlpool-creature with visible layered currents spiraling through its body, deeper teal-blue and faintly glowing at its spinning center." },
+    { "id": "vortisk", "name": "Vortisk", "line": "whirlie", "stage": 4, "element": "water", "prompt": "A powerful vortex-creature whose spinning form now churns visible waves around it, dark sapphire-teal body glowing at the core of its whirl." },
+    { "id": "maelsovereign", "name": "Maelsovereign", "line": "whirlie", "stage": 5, "element": "water", "prompt": "A colossal sovereign whirlpool given form, a towering spiral of deep glowing blue-teal water crowned in constantly circling foam and light." },
+
+    { "id": "glenhart", "name": "Glenhart", "line": "glenhart", "stage": 1, "element": "nature", "prompt": "A stately stag with moss-flecked antlers holding small fireflies, warm chestnut coat dappled like dappled sunlight." },
+    { "id": "aurorhart", "name": "Aurorhart", "line": "glenhart", "stage": 2, "element": "wind", "prompt": "A luminous stag with pale icy-teal fur and antlers that shimmer like the aurora, hooves that seem to ring softly with each step." },
+    { "id": "prismhart", "name": "Prismhart", "line": "glenhart", "stage": 3, "element": "wind", "prompt": "A radiant stag whose antlers now shimmer through the full spread of aurora colours, pale teal-white fur glowing faintly at every point where light catches it." },
+    { "id": "starhart", "name": "Starhart", "line": "glenhart", "stage": 4, "element": "wind", "prompt": "A resplendent stag with antlers like branching starlight and a coat that seems dusted in captured night-sky, glowing softly teal-white all over." },
+    { "id": "zenithart", "name": "Zenithart", "line": "glenhart", "stage": 5, "element": "wind", "prompt": "A transcendent stag sovereign whose vast aurora-lit antlers arc like a crown of living sky, brilliant pale teal-white fur radiating a constant gentle glow, hoofprints that shimmer like distant stars." },
+
+    { "id": "clacker", "name": "Clacker", "line": "clacker", "stage": 1, "element": "water", "prompt": "A round blue crab with oversized clacking claws and small curious eyestalks, pale teal shell with darker ridged claws." },
+    { "id": "snapclack", "name": "Snapclack", "line": "clacker", "stage": 2, "element": "water", "prompt": "A sturdier crab with bigger, sharper claws and a thicker ridged shell, richer teal-blue coloring with faint battle-worn nicks on its claws." },
+    { "id": "ironclack", "name": "Ironclack", "line": "clacker", "stage": 3, "element": "water", "prompt": "A powerful armored crab with claws like polished iron and a heavily ridged carapace, deep steel-blue shell with a confident stance." },
+    { "id": "titanclack", "name": "Titanclack", "line": "clacker", "stage": 4, "element": "water", "prompt": "A massive crab with boulder-cracking claws and a fortress-like carapace, dark slate-blue shell reinforced with thick natural plating." },
+    { "id": "clackmonarch", "name": "Clackmonarch", "line": "clacker", "stage": 5, "element": "water", "prompt": "A colossal crab monarch whose claws could crush stone effortlessly, its immense carapace a deep royal blue ridged like a castle wall, claws raised in permanent, thunderous applause." },
+
+    { "id": "sandclack", "name": "Sandclack", "line": "sandclack", "stage": 1, "element": "earth", "prompt": "A pale bone-white crab with oversized sun-bleached claws, sandy tan shell with fine desert-worn ridges." },
+    { "id": "sandpinch", "name": "Sandpinch", "line": "sandclack", "stage": 2, "element": "earth", "prompt": "A sturdier white-shelled crab with thicker claws and a sun-bleached carapace, warm sand-tan coloring with sharper ridge patterns." },
+    { "id": "duneclad", "name": "Duneclad", "line": "sandclack", "stage": 3, "element": "earth", "prompt": "A broader desert crab half-dusted in fine sand, pale bone-white shell with deep tan mottling and sturdy digging claws." },
+    { "id": "boneclack", "name": "Boneclack", "line": "sandclack", "stage": 4, "element": "earth", "prompt": "A powerful desert crab with a weathered, bone-pale carapace and heavy crushing claws, sandy ochre markings across its thick shell." },
+    { "id": "sandmonarch", "name": "Sandmonarch", "line": "sandclack", "stage": 5, "element": "earth", "prompt": "A colossal desert crab monarch with an ancient sun-bleached fortress of a shell and massive claws, deep sandstone-tan coloring ridged like carved dune rock." }
+  ]
+}

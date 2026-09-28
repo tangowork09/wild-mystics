@@ -103,20 +103,6 @@ export function modal(cls: string, build: (body: HTMLElement, close: () => void)
   });
 }
 
-/** Confirm dialog. */
-export function confirmBox(title: string, body: string, yes = 'Confirm', danger = false): Promise<boolean> {
-  return new Promise((resolve) => {
-    let answered = false;
-    void modal('confirm', (b, close) => {
-      b.innerHTML = `<h2>${title}</h2><p class="confirm-body">${body}</p>
-        <div class="row-end"><button class="btn ghost" data-a="no">Cancel</button><button class="btn ${danger ? 'danger' : 'primary'}" data-a="yes">${yes}</button></div>`;
-      b.querySelector('[data-a=yes]')!.addEventListener('click', () => { answered = true; resolve(true); close(); });
-      b.querySelector('[data-a=no]')!.addEventListener('click', () => close());
-      requestAnimationFrame(() => (b.querySelector('[data-a=yes]') as HTMLElement | null)?.focus({ preventScroll: true }));
-    }, () => { if (!answered) resolve(false); });
-  });
-}
-
 export function bar(frac: number, cls = '') {
   return `<div class="bar ${cls}"><i style="--p:${Math.max(0, Math.min(1, frac)).toFixed(4)}"></i></div>`;
 }

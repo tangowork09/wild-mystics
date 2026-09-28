@@ -11,7 +11,8 @@ import { EVO_LEVELS } from '../../data/lines';
 import { state, save, TEAM_MAX } from '../../game/state';
 import { awaken, awakenCost } from '../../game/gacha';
 import { sfx } from '../../core/audio';
-import { toast, confirmBox, modal, popover } from '../dom';
+import { toast, modal, popover } from '../dom';
+import { confirmRelease } from '../confirm';
 import { bar, hpBar, elementBadge, esc, mysticFace, rarityTag, stars, emptyState } from '../kit';
 import { icon, glyph } from '../icons';
 import { pickRelic } from '../pickers';
@@ -220,7 +221,7 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
     if (a === 'fav') c.favorite = !c.favorite;
     if (a === 'release' && bi >= 0) {
       if (c.favorite) { toast('Unfavourite it first.', 'bad'); return; }
-      if (!(await confirmBox('Release to the wild?', `${esc(displayName(c))} will return to the wild. This can’t be undone. You’ll receive 5 Mystic Essence.`, 'Release', true))) return;
+      if (!(await confirmRelease(displayName(c), c.species, c.shiny))) return;
       state.box.splice(bi, 1);
       state.inv.essence += 5;
       sel = state.team[0] ?? state.box[0] ?? null;

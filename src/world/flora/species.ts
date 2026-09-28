@@ -71,8 +71,8 @@ export const SPECIES = {
   bush_gold: { family: 'bush', layer: 'cover', scale: [0.8, 1.4], collider: 0, sway: 1, leaf: ['#e8a83a', '#d89a34', '#c8b048'], maxSlope: 0.9 },
   bush_dry: { family: 'bush', layer: 'cover', scale: [0.6, 1.1], collider: 0, sway: 0.6, leaf: ['#b8a45a', '#a89452', '#c2ae6a'], maxSlope: 0.9 },
   bush_frost: { family: 'bush', layer: 'cover', scale: [0.7, 1.2], collider: 0, sway: 0.5, leaf: ['#5e8a86', '#6a948c'], snow: 0.7, maxSlope: 1 },
-  fern: { family: 'fern', layer: 'cover', scale: [0.9, 1.6], collider: 0, sway: 1.2, maxSlope: 0.9 },
-  flowers: { family: 'flowers', layer: 'cover', scale: [0.55, 0.95], collider: 0, sway: 1.4, maxSlope: 0.7 },
+  fern: { family: 'fern', layer: 'cover', variants: [0], scale: [0.9, 1.6], collider: 0, sway: 1.2, maxSlope: 0.9 }, // v3:look — Fern_1 only (Plant_1/7 use the atlas's blue/red leaves)
+  flowers: { family: 'flowers', layer: 'cover', scale: [0.2, 0.34], collider: 0, sway: 1.4, maxSlope: 0.7 }, // v3:look — small clusters (was knee-high)
   mushroom: { family: 'mushroom', layer: 'cover', scale: [0.8, 1.8], collider: 0, sway: 0, maxSlope: 0.8, glow: 0.35, glowMode: 'tint', body: ['#ffffff'] },
   rock: { family: 'rock', layer: 'cover', scale: [0.6, 1.9], collider: 0, sway: 0, body: ['#ece8e0', '#e0dcd6', '#f4efe6'], sink: 0.15, tilt: 0.4, maxSlope: 3 },
   rock_desert: { family: 'rock', layer: 'cover', scale: [0.6, 2.0], collider: 0, sway: 0, body: ['#f0d0a0', '#e8c090'], swap: { Rocks: 'RocksDesert' }, sink: 0.15, tilt: 0.4, maxSlope: 3 },
@@ -113,8 +113,8 @@ export const LANDS: Record<string, LandEco> = {
     trees: [['oak', 72], ['pine', 10], ['blossom', 12], ['autumn', 6]],
     open: [['oak', 60], ['blossom', 28], ['autumn', 12]],
     outcrops: ['outcrop', 0.05],
-    cover: [['bush', 1.6, 'edge'], ['bush', 0.18, 'meadow'], ['fern', 3, 'forest'], ['flowers', 1.3, 'meadow'], ['mushroom', 0.6, 'forest'],
-      ['rock', 0.6, 'slope'], ['rock', 0.06, 'any'], ['boulder', 0.14, 'slope'], ['pebbles', 1.2, 'shore'], ['reeds', 7, 'shore'], ['log', 0.15, 'forest'], ['tuft', 0.5, 'slope']],
+    cover: [['bush', 1.6, 'edge'], ['bush', 0.18, 'meadow'], ['fern', 3, 'forest'], ['flowers', 5, 'meadow'], ['flowers', 1.2, 'edge'], ['mushroom', 0.6, 'forest'],
+      ['rock', 0.6, 'slope'], ['rock', 0.06, 'any'], ['rock', 1.6, 'shore'], ['boulder', 0.14, 'slope'], ['boulder', 0.25, 'shore'], ['pebbles', 1.2, 'shore'], ['reeds', 4, 'shore'], ['log', 0.15, 'forest'], ['tuft', 0.5, 'slope']],
   },
   lakes: {
     forest: 0.52, density: 0.72, groves: 0.4, lone: 0.012, treeLine: 150,

@@ -1,0 +1,179 @@
+{
+  "lines": [
+    {
+      "id": "emberling",
+      "branch": null,
+      "stages": ["emberling", "pyrowyrm", "blazewyrm", "infernowyrm", "solarwyrm"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "blazewyrm", "name": "Blazewyrm", "element": "fire", "hp": 81, "atk": 24, "def": 17, "spd": 21, "height": 2.53, "model": "Dragon Evolved", "learnset": [[1, "ember_bite"], [1, "kindle"], [1, "flare_burst"], [13, "cinder_claw"], [18, "meteor_fang"], [24, "flame_wheel"]], "rarity": "epic", "catchRate": 0.04, "tint": "#ff5a1a", "abilities": ["blaze", "momentum"], "lore": "Its wings finally caught up with its ego. Both are considerable." },
+        { "id": "infernowyrm", "name": "Infernowyrm", "element": "fire", "hp": 93, "atk": 26, "def": 20, "spd": 24, "height": 3.04, "model": "Dragon Evolved", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [1, "cinder_claw"], [18, "meteor_fang"], [24, "flame_wheel"], [30, "lantern_flare"]], "rarity": "epic", "catchRate": 0.025, "tint": "#e8420a", "abilities": ["blaze", "momentum"], "lore": "Flies close enough to the sun that the sun occasionally complains." },
+        { "id": "solarwyrm", "name": "Solarwyrm", "element": "fire", "hp": 107, "atk": 29, "def": 23, "spd": 26, "height": 3.4, "model": "Dragon Evolved", "learnset": [[1, "ember_bite"], [1, "cinder_claw"], [1, "meteor_fang"], [24, "flame_wheel"], [30, "lantern_flare"], [36, "kindle"]], "rarity": "exotic", "catchRate": 0.015, "tint": "#c83000", "tintGlow": "#ffb04a", "abilities": ["blaze", "focus"], "lore": "Ember Scar's oldest legend: a dragon that got so bright, the maps just mark that spot 'noon, always'." }
+      ]
+    },
+    {
+      "id": "finnik",
+      "branch": null,
+      "stages": ["finnik", "tidecaller", "tidewalker", "skysurge", "tidesovereign"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "tidewalker", "name": "Tidewalker", "element": "water", "hp": 87, "atk": 21, "def": 20, "spd": 19, "height": 2.3, "model": "Fish:elite", "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "aqua_jet"], [12, "mend_rain"], [18, "riptide"], [24, "scald"]], "rarity": "epic", "catchRate": 0.045, "tint": "#2a8ad0", "abilities": ["torrent", "keen_eye"], "lore": "Walks further inland every year, just to prove the sky is still there." },
+        { "id": "skysurge", "name": "Skysurge", "element": "water", "hp": 98, "atk": 24, "def": 23, "spd": 22, "height": 2.76, "model": "Fish:elite", "learnset": [[1, "tide_lash"], [1, "aqua_jet"], [1, "mend_rain"], [18, "riptide"], [24, "scald"], [30, "brine_lance"]], "rarity": "epic", "catchRate": 0.03, "tint": "#1a6ab0", "abilities": ["torrent", "keen_eye"], "lore": "Leaps so high on stormy days that gulls mistake it for one of their own." },
+        { "id": "tidesovereign", "name": "Tidesovereign", "element": "water", "hp": 111, "atk": 27, "def": 26, "spd": 25, "height": 3.31, "model": "Fish:elite", "learnset": [[1, "tide_lash"], [1, "riptide"], [1, "scald"], [24, "mend_rain"], [30, "brine_lance"], [36, "purify"]], "rarity": "exotic", "catchRate": 0.02, "tint": "#0e5090", "tintGlow": "#bfe8ff", "abilities": ["torrent", "focus"], "lore": "Old river-folk say the tide doesn't come in on its own anymore — it's summoned." }
+      ]
+    },
+    {
+      "id": "sporelet",
+      "branch": null,
+      "stages": ["sporelet", "mycobloom", "sporeking", "mycotitan", "elderbloom"],
+      "existingCount": 3,
+      "newForms": [
+        { "id": "mycotitan", "name": "Mycotitan", "element": "nature", "hp": 100, "atk": 23, "def": 23, "spd": 17, "height": 2.52, "model": "Mushroom King", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [14, "grove_wrath"], [26, "pounce"]], "rarity": "exotic", "catchRate": 0.02, "tint": "#3ea850", "rideable": true, "abilities": ["overgrow", "guardian_aura"], "lore": "Its cap alone shades half a glade. Smaller Mystics hold court beneath it." },
+        { "id": "elderbloom", "name": "Elderbloom", "element": "nature", "hp": 109, "atk": 26, "def": 26, "spd": 20, "height": 3.15, "model": "Mushroom King", "learnset": [[1, "thorn_volley"], [1, "vine_snare"], [1, "grove_wrath"], [26, "pounce"], [34, "thorn_howl"]], "rarity": "exotic", "catchRate": 0.012, "tint": "#2a8038", "tintGlow": "#d8ffb0", "rideable": true, "abilities": ["overgrow", "guardian_aura"], "lore": "The forest's oldest memory, wearing a crown of every mushroom that ever looked up to it." }
+      ]
+    },
+    {
+      "id": "gloop",
+      "branch": null,
+      "stages": ["gloop", "spikegloop", "thorngloop", "briargloop", "grovegloop"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "thorngloop", "name": "Thorngloop", "element": "nature", "hp": 80, "atk": 19, "def": 19, "spd": 12, "height": 1.56, "model": "Green Spiky Blob", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [22, "sleep_spore"]], "rarity": "rare", "catchRate": 0.18, "tint": "#4a9a3a", "abilities": ["overgrow", "sleep_spores"], "lore": "Grew actual thorns after the spikes stopped being enough of a hint." },
+        { "id": "briargloop", "name": "Briargloop", "element": "nature", "hp": 92, "atk": 22, "def": 22, "spd": 14, "height": 1.87, "model": "Green Spiky Blob", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [22, "sleep_spore"], [28, "pounce"]], "rarity": "epic", "catchRate": 0.1, "tint": "#3a7a2a", "abilities": ["overgrow", "sleep_spores"], "lore": "Rolls through the Vale leaving a hedge of brambles wherever it naps." },
+        { "id": "grovegloop", "name": "Grovegloop", "element": "nature", "hp": 106, "atk": 25, "def": 25, "spd": 16, "height": 2.34, "model": "Green Spiky Blob", "learnset": [[1, "thorn_volley"], [1, "vine_snare"], [1, "sleep_spore"], [28, "pounce"], [34, "grove_wrath"]], "rarity": "epic", "catchRate": 0.06, "tint": "#2a5e1e", "abilities": ["overgrow", "guardian_aura"], "lore": "Half moss, half thicket, all grudge — it remembers every single sat-on afternoon." }
+      ]
+    },
+    {
+      "id": "chirpling",
+      "branch": null,
+      "stages": ["chirpling", "chirpeak", "hawklet", "skytalon", "stormtalon"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "chirpeak", "name": "Chirpeak", "element": "wind", "hp": 55, "atk": 15, "def": 11, "spd": 20, "height": 1.08, "model": "Birb", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [10, "tailwind"], [22, "cyclone"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["tailwind_soul", "swift"], "lore": "Grew a little crest. Absolutely insufferable about it now." },
+        { "id": "hawklet", "name": "Hawklet", "element": "wind", "hp": 63, "atk": 17, "def": 13, "spd": 23, "height": 1.3, "model": "Birb", "learnset": [[1, "gale_cut"], [1, "tailwind"], [1, "cyclone"], [28, "gust_dive"]], "rarity": "rare", "catchRate": 0.18, "tint": "#4ac8d8", "abilities": ["tailwind_soul", "swift"], "lore": "Practices its hawk screech every morning. It is getting better, slowly." },
+        { "id": "skytalon", "name": "Skytalon", "element": "wind", "hp": 72, "atk": 20, "def": 16, "spd": 26, "height": 1.62, "model": "Birb", "learnset": [[1, "gale_cut"], [1, "cyclone"], [1, "gust_dive"], [28, "feather_dart"], [34, "frost_breath"]], "rarity": "epic", "catchRate": 0.1, "tint": "#2aa8c0", "abilities": ["tailwind_soul", "keen_eye"], "lore": "Finally has real talons. Still can't quite believe its own luck." },
+        { "id": "stormtalon", "name": "Stormtalon", "element": "wind", "hp": 83, "atk": 23, "def": 19, "spd": 29, "height": 2.03, "model": "Birb", "learnset": [[1, "gale_cut"], [1, "gust_dive"], [1, "frost_breath"], [34, "cyclone"], [40, "aether_gale"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1888a8", "tintGlow": "#eafffa", "rideable": true, "abilities": ["tailwind_soul", "keen_eye"], "lore": "The self-belief paid off. Ask it what it is and it will simply let you look up." }
+      ]
+    },
+    {
+      "id": "pecklet",
+      "branch": null,
+      "stages": ["pecklet", "peckstone", "geopeck", "craghen", "boulderplume"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "peckstone", "name": "Peckstone", "element": "earth", "hp": 62, "atk": 16, "def": 14, "spd": 14, "height": 1.08, "model": "Chicken", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [22, "boulder_slam"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["bedrock", "sturdy"], "lore": "Started pecking bigger stones. Considers this a promotion." },
+        { "id": "geopeck", "name": "Geopeck", "element": "earth", "hp": 71, "atk": 18, "def": 16, "spd": 16, "height": 1.3, "model": "Chicken", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [28, "tremor"]], "rarity": "rare", "catchRate": 0.18, "tint": "#c8863a", "abilities": ["bedrock", "sturdy"], "lore": "Cracked its first geode by accident. Hasn't stopped looking for a second one since." },
+        { "id": "craghen", "name": "Craghen", "element": "earth", "hp": 82, "atk": 21, "def": 18, "spd": 18, "height": 1.62, "model": "Chicken", "learnset": [[1, "rock_toss"], [1, "boulder_slam"], [1, "tremor"], [34, "geode_shell"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a8682a", "abilities": ["bedrock", "sturdy"], "lore": "Nests are just a pile of its favourite rocks now. It is very proud of the pile." },
+        { "id": "boulderplume", "name": "Boulderplume", "element": "earth", "hp": 94, "atk": 24, "def": 21, "spd": 21, "height": 2.11, "model": "Chicken", "learnset": [[1, "rock_toss"], [1, "tremor"], [1, "geode_shell"], [40, "boulder_slam"], [45, "stone_skin"]], "rarity": "epic", "catchRate": 0.06, "tint": "#8a501e", "rideable": true, "abilities": ["bedrock", "guardian_aura"], "lore": "The proudest rockhound in Stormreach; every gem in its plumage, it found and kept itself." }
+      ]
+    },
+    {
+      "id": "hopscotch",
+      "branch": null,
+      "stages": ["hopscotch", "cloudhop", "skyhopper", "stormbounder", "zenithare"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "cloudhop", "name": "Cloudhop", "element": "wind", "hp": 64, "atk": 17, "def": 13, "spd": 20, "height": 1.68, "model": "Bunny", "learnset": [[1, "gale_cut"], [1, "tailwind"], [1, "cyclone"], [22, "feather_dart"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["tailwind_soul", "swift"], "lore": "Naps are getting longer. So are the clouds it naps on." },
+        { "id": "skyhopper", "name": "Skyhopper", "element": "wind", "hp": 74, "atk": 20, "def": 15, "spd": 23, "height": 2.02, "model": "Bunny", "learnset": [[1, "gale_cut"], [1, "cyclone"], [1, "feather_dart"], [28, "gust_dive"]], "rarity": "rare", "catchRate": 0.18, "tint": "#4ad8c0", "abilities": ["tailwind_soul", "swift"], "lore": "Has started collecting favourite clouds the way other Mystics collect pebbles." },
+        { "id": "stormbounder", "name": "Stormbounder", "element": "wind", "hp": 85, "atk": 23, "def": 17, "spd": 26, "height": 2.52, "model": "Bunny", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [1, "gust_dive"], [34, "cyclone"]], "rarity": "epic", "catchRate": 0.1, "tint": "#2ab8a8", "rideable": true, "abilities": ["tailwind_soul", "swift"], "lore": "Bounces off thunderheads like they're trampolines. The thunder does not appreciate this." },
+        { "id": "zenithare", "name": "Zenithare", "element": "wind", "hp": 97, "atk": 26, "def": 19, "spd": 30, "height": 3.28, "model": "Bunny", "learnset": [[1, "gale_cut"], [1, "gust_dive"], [1, "cyclone"], [40, "aether_gale"], [45, "tailwind"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1a9890", "tintGlow": "#eafffa", "rideable": true, "abilities": ["tailwind_soul", "focus"], "lore": "Legend says it leapt once and simply never fully came down again." }
+      ]
+    },
+    {
+      "id": "pricklet",
+      "branch": null,
+      "stages": ["pricklet", "saguardian", "spinewarden", "thornbastion", "desertking"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "spinewarden", "name": "Spinewarden", "element": "nature", "hp": 86, "atk": 21, "def": 23, "spd": 12, "height": 2.24, "model": "Cactoro:elite", "learnset": [[1, "thorn_volley"], [1, "vine_snare"], [1, "grove_wrath"], [22, "pounce"]], "rarity": "rare", "catchRate": 0.13, "tint": "#3a8a2a", "abilities": ["overgrow", "sleep_spores"], "lore": "Doubled its spines after the last sandstorm nearly toppled it. Never again." },
+        { "id": "thornbastion", "name": "Thornbastion", "element": "nature", "hp": 97, "atk": 24, "def": 26, "spd": 14, "height": 2.69, "model": "Cactoro:elite", "learnset": [[1, "thorn_volley"], [1, "grove_wrath"], [1, "pounce"], [28, "thorn_howl"]], "rarity": "epic", "catchRate": 0.08, "tint": "#2a6e1e", "rideable": true, "abilities": ["overgrow", "sleep_spores"], "lore": "Whole caravans reroute around it rather than risk a hug." },
+        { "id": "desertking", "name": "Desertking", "element": "nature", "hp": 110, "atk": 27, "def": 29, "spd": 16, "height": 3.36, "model": "Cactoro:elite", "learnset": [[1, "thorn_volley"], [1, "pounce"], [1, "thorn_howl"], [34, "grove_wrath"], [40, "bloom"]], "rarity": "epic", "catchRate": 0.05, "tint": "#1e5614", "rideable": true, "abilities": ["overgrow", "guardian_aura"], "lore": "Every spring in the Dunes owes its water to something this old choosing, once, to stay and guard it." }
+      ]
+    },
+    {
+      "id": "voltcat",
+      "branch": null,
+      "stages": ["voltcat", "sparkcat", "stormlynx", "boltpanther", "thundermane"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "sparkcat", "name": "Sparkcat", "element": "storm", "hp": 58, "atk": 17, "def": 12, "spd": 22, "height": 1.08, "model": "Cat", "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [1, "overcharge"], [10, "thunderclap"], [22, "static_field"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["surge", "static"], "lore": "Its fur crackles audibly now. Thunderstorms make it purr." },
+        { "id": "stormlynx", "name": "Stormlynx", "element": "storm", "hp": 67, "atk": 20, "def": 14, "spd": 25, "height": 1.3, "model": "Cat", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "thunderclap"], [22, "static_field"], [28, "spark_storm"]], "rarity": "rare", "catchRate": 0.18, "tint": "#e8b81a", "abilities": ["surge", "static"], "lore": "Pounces trailed by little forks of lightning. The mice do not stand a chance." },
+        { "id": "boltpanther", "name": "Boltpanther", "element": "storm", "hp": 77, "atk": 23, "def": 16, "spd": 27, "height": 1.62, "model": "Cat", "learnset": [[1, "spark_jab"], [1, "thunderclap"], [1, "static_field"], [28, "spark_storm"], [34, "crystal_lance"]], "rarity": "epic", "catchRate": 0.1, "tint": "#c89a0a", "abilities": ["surge", "swift"], "lore": "Runs so fast the thunderclap catches up a full second late." },
+        { "id": "thundermane", "name": "Thundermane", "element": "storm", "hp": 89, "atk": 26, "def": 18, "spd": 30, "height": 2.11, "model": "Cat", "learnset": [[1, "spark_jab"], [1, "static_field"], [1, "spark_storm"], [34, "thunderclap"], [40, "crystal_lance"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a87c00", "tintGlow": "#fff17a", "rideable": true, "abilities": ["surge", "swift"], "lore": "A storm given a heartbeat and a hunting instinct; when it roars, the sky roars back." }
+      ]
+    },
+    {
+      "id": "monkroose",
+      "branch": null,
+      "stages": ["monkroose", "cragroose", "boulderoose", "stonemoose", "titanroose"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "cragroose", "name": "Cragroose", "element": "earth", "hp": 74, "atk": 20, "def": 16, "spd": 17, "height": 1.8, "model": "Monkroose", "learnset": [[1, "rock_toss"], [1, "boulder_slam"], [1, "tremor"], [22, "stone_skin"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["bedrock", "sturdy"], "lore": "Upgraded to boulders. Rivals now keep a respectful distance during juggling hour." },
+        { "id": "boulderoose", "name": "Boulderoose", "element": "earth", "hp": 85, "atk": 23, "def": 18, "spd": 20, "height": 2.16, "model": "Monkroose", "learnset": [[1, "rock_toss"], [1, "tremor"], [1, "stone_skin"], [28, "geode_shell"]], "rarity": "rare", "catchRate": 0.18, "tint": "#c8823a", "abilities": ["bedrock", "sturdy"], "lore": "Juggles three boulders at once and has never once dropped the bit." },
+        { "id": "stonemoose", "name": "Stonemoose", "element": "earth", "hp": 98, "atk": 26, "def": 21, "spd": 23, "height": 2.7, "model": "Monkroose", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "geode_shell"], [34, "boulder_slam"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a8642a", "rideable": true, "abilities": ["bedrock", "sturdy"], "lore": "Antlers grew stone-heavy, so it just started juggling those too." },
+        { "id": "titanroose", "name": "Titanroose", "element": "earth", "hp": 112, "atk": 30, "def": 24, "spd": 26, "height": 3.38, "model": "Monkroose", "learnset": [[1, "rock_toss"], [1, "geode_shell"], [1, "boulder_slam"], [40, "tremor"], [45, "stone_skin"]], "rarity": "epic", "catchRate": 0.06, "tint": "#8a4e1e", "rideable": true, "abilities": ["bedrock", "guardian_aura"], "lore": "The undisputed champion of every juggling contest in Stormreach — mostly because no one else can lift the props." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "emberling", "name": "Emberling", "line": "emberling", "stage": 1, "element": "fire", "prompt": "A small round hatchling drake with stubby wings and a soot-smudged snout, warm orange-red scales and tiny curling smoke-wisps from its nostrils." },
+    { "id": "pyrowyrm", "name": "Pyrowyrm", "line": "emberling", "stage": 2, "element": "fire", "prompt": "A lean young dragon with bigger wings trailing faint embers, deep red-orange scales along its back fading to a paler belly, eyes glowing like coals." },
+    { "id": "blazewyrm", "name": "Blazewyrm", "line": "emberling", "stage": 3, "element": "fire", "prompt": "A longer, more muscular dragon with wide flame-edged wings and a spiked ridge down its spine, scales deepening to a richer red with brighter ember trails." },
+    { "id": "infernowyrm", "name": "Infernowyrm", "line": "emberling", "stage": 4, "element": "fire", "prompt": "A powerful dragon whose wings now trail continuous ribbons of fire, its scales a deep molten red-orange with a crown of small horns glowing at the tips." },
+    { "id": "solarwyrm", "name": "Solarwyrm", "line": "emberling", "stage": 5, "element": "fire", "prompt": "A magnificent dragon sovereign with vast wings that blaze like sunset clouds, its scales a radiant gradient from molten gold to deep ember-red, crowned in a blazing horn-corona." },
+
+    { "id": "finnik", "name": "Finnik", "line": "finnik", "stage": 1, "element": "water", "prompt": "A small blue fish standing improbably on two stubby legs, wide curious eyes and a fin-crest like a little crown, pale blue scales with a silver belly." },
+    { "id": "tidecaller", "name": "Tidecaller", "line": "finnik", "stage": 2, "element": "water", "prompt": "A taller fish-being with confident webbed legs and flowing fin-crest, deeper blue scales with silver highlights, one fin raised as if commanding a wave." },
+    { "id": "tidewalker", "name": "Tidewalker", "line": "finnik", "stage": 3, "element": "water", "prompt": "A more upright, striding fish-being with longer legs and a rippling fin-mane, deep blue scales patterned like flowing water, eyes bright with certainty." },
+    { "id": "skysurge", "name": "Skysurge", "line": "finnik", "stage": 4, "element": "water", "prompt": "An athletic, leaping fish-being with wing-like pectoral fins spread wide, glossy sapphire scales catching light like sea-spray, fin-crest streaming behind it." },
+    { "id": "tidesovereign", "name": "Tidesovereign", "line": "finnik", "stage": 5, "element": "water", "prompt": "A regal, towering tide-being with vast flowing fin-wings and a crown-like dorsal crest, deep sapphire-to-navy scales glowing faintly at the seams like moonlit water." },
+
+    { "id": "sporelet", "name": "Sporelet", "line": "sporelet", "stage": 1, "element": "nature", "prompt": "A small round mushroom-capped creature napping in a sunbeam, soft brown cap with pale speckles and sleepy half-closed eyes." },
+    { "id": "mycobloom", "name": "Mycobloom", "line": "sporelet", "stage": 2, "element": "nature", "prompt": "A taller mushroom creature with a wider, gently glowing cap and calm round eyes, warm tan cap deepening at the gills, faint spores drifting from it." },
+    { "id": "sporeking", "name": "Sporeking", "line": "sporelet", "stage": 3, "element": "nature", "prompt": "A regal mushroom monarch with a broad crowned cap and sturdy stance, rich amber cap with darker gill-folds, a calm and commanding gaze." },
+    { "id": "mycotitan", "name": "Mycotitan", "line": "sporelet", "stage": 4, "element": "nature", "prompt": "A towering mushroom titan whose cap has grown tiered like a pagoda, deep amber-brown ridges with glowing spore-flecks, roots thick as tree trunks." },
+    { "id": "elderbloom", "name": "Elderbloom", "line": "sporelet", "stage": 5, "element": "nature", "prompt": "An ancient, majestic mushroom sovereign whose vast tiered cap is a canopy of its own, glowing spore-light drifting from every gill, ringed in smaller mushrooms that grew up looking to it." },
+
+    { "id": "gloop", "name": "Gloop", "line": "gloop", "stage": 1, "element": "nature", "prompt": "A soft, round wobbling blob of moss-green jelly with two sleepy dot eyes and a faint happy hum-shimmer." },
+    { "id": "spikegloop", "name": "Spikegloop", "line": "gloop", "stage": 2, "element": "nature", "prompt": "A spikier blob bristling with short soft thorns, deeper green jelly with a slightly grumpy pinched expression." },
+    { "id": "thorngloop", "name": "Thorngloop", "line": "gloop", "stage": 3, "element": "nature", "prompt": "A broader blob now covered in true woody thorns radiating outward, richer forest-green jelly with small leaf-buds sprouting between spikes." },
+    { "id": "briargloop", "name": "Briargloop", "line": "gloop", "stage": 4, "element": "nature", "prompt": "A bramble-wrapped blob whose thorns have grown into tangled woody vines around its body, deep green jelly barely visible beneath a living hedge." },
+    { "id": "grovegloop", "name": "Grovegloop", "line": "gloop", "stage": 5, "element": "nature", "prompt": "A towering thicket given a wobbling jelly heart, its whole body a dense woven briar-mound sprouting leaves and small flowers, deep mossy green glimpsed only at the seams." },
+
+    { "id": "chirpling", "name": "Chirpling", "line": "chirpling", "stage": 1, "element": "wind", "prompt": "A small round fluffy bird puffed up like a cotton ball, dusty teal feathers and a tiny stern expression trying very hard to look fierce." },
+    { "id": "chirpeak", "name": "Chirpeak", "line": "chirpling", "stage": 2, "element": "wind", "prompt": "A slightly leaner round bird sporting a small proud crest of feathers, teal plumage deepening with the faintest cyan sheen, still puffed but a touch more purposeful." },
+    { "id": "hawklet", "name": "Hawklet", "line": "chirpling", "stage": 3, "element": "wind", "prompt": "A gawky, half-grown hawk-shape emerging from the fluff, longer wings and a sharper little beak, teal-cyan feathers with the first true flight feathers coming in." },
+    { "id": "skytalon", "name": "Skytalon", "line": "chirpling", "stage": 4, "element": "wind", "prompt": "A sleek young hawk with strong wings and real talons at last, rich teal-cyan plumage with darker wingtip markings and a fiercely confident stare." },
+    { "id": "stormtalon", "name": "Stormtalon", "line": "chirpling", "stage": 5, "element": "wind", "prompt": "A magnificent storm-hawk with vast sweeping wings and glinting talons, deep teal-to-slate plumage crackling faintly at the wingtips, its stare finally as fierce as it always claimed." },
+
+    { "id": "pecklet", "name": "Pecklet", "line": "pecklet", "stage": 1, "element": "earth", "prompt": "A small round dusty-orange hen pecking at pebbles, stubby wings and a determined little beak, one shiny stone already tucked under a wing." },
+    { "id": "peckstone", "name": "Peckstone", "line": "pecklet", "stage": 2, "element": "earth", "prompt": "A slightly bigger hen with a rocky crest of small stones along its head, warm terracotta feathers and stronger stubby legs for digging." },
+    { "id": "geopeck", "name": "Geopeck", "line": "pecklet", "stage": 3, "element": "earth", "prompt": "A sturdier hen whose crest has grown into jagged little rock spikes, deep ochre-brown feathers dusted with mineral flecks, a geode shard clutched proudly in one foot." },
+    { "id": "craghen", "name": "Craghen", "line": "pecklet", "stage": 4, "element": "earth", "prompt": "A broad, boulder-shouldered hen with a thick rocky mane down its neck, rich rust-brown plumage textured like canyon stone, small gems embedded along its crest." },
+    { "id": "boulderplume", "name": "Boulderplume", "line": "pecklet", "stage": 5, "element": "earth", "prompt": "A magnificent, powerfully built rock-hen whose entire plumage glitters with embedded gems and polished stones, deep earthen browns capped by a crown of crystal-tipped feathers, sturdy enough to carry a rider across the Peaks." },
+
+    { "id": "hopscotch", "name": "Hopscotch", "line": "hopscotch", "stage": 1, "element": "wind", "prompt": "A small fluffy bunny mid-leap with oversized hind legs and wide bright eyes, soft teal-white fur ruffled by the wind." },
+    { "id": "cloudhop", "name": "Cloudhop", "line": "hopscotch", "stage": 2, "element": "wind", "prompt": "A slightly bigger bunny with longer ears that catch the breeze like little sails, fluffy teal-white fur now tipped with faint cloud-wisp fluff." },
+    { "id": "skyhopper", "name": "Skyhopper", "line": "hopscotch", "stage": 3, "element": "wind", "prompt": "A lean, athletic hare with long wind-swept ears and powerful hind legs, teal-cyan fur streaked with faster-moving cloud patterns along its back." },
+    { "id": "stormbounder", "name": "Stormbounder", "line": "hopscotch", "stage": 4, "element": "wind", "prompt": "A powerful hare crackling faintly at the ear-tips with static, storm-teal fur ruffled like a coiled spring, always mid-bounce." },
+    { "id": "zenithare", "name": "Zenithare", "line": "hopscotch", "stage": 5, "element": "wind", "prompt": "A majestic celestial hare with vast wind-swept ears trailing wisps of actual cloud, radiant teal-white fur glowing faintly at each gust, forever caught mid-leap above the world." },
+
+    { "id": "pricklet", "name": "Pricklet", "line": "pricklet", "stage": 1, "element": "nature", "prompt": "A small round cactus creature bristling with soft spines, dusty sage green with a faintly worried expression and two stubby arm-nubs." },
+    { "id": "saguardian", "name": "Saguardian", "line": "pricklet", "stage": 2, "element": "nature", "prompt": "A tall standing cactus sentinel with thick spined arms crossed protectively, deep green ridged body with a calm, watchful stare." },
+    { "id": "spinewarden", "name": "Spinewarden", "line": "pricklet", "stage": 3, "element": "nature", "prompt": "A broader cactus guardian with denser spine-clusters along both arms and a small flower-crown budding at its crown, richer forest-green ridges." },
+    { "id": "thornbastion", "name": "Thornbastion", "line": "pricklet", "stage": 4, "element": "nature", "prompt": "A hulking cactus bastion with thick armoured ridges and long defensive spines radiating outward, deep green body dotted with small white blossoms." },
+    { "id": "desertking", "name": "Desertking", "line": "pricklet", "stage": 5, "element": "nature", "prompt": "A towering, ancient cactus monarch crowned in a full ring of desert blossoms, its immense ridged body a deep, venerable green standing eternal watch over a hidden spring." },
+
+    { "id": "voltcat", "name": "Voltcat", "line": "voltcat", "stage": 1, "element": "storm", "prompt": "A small sleek cat with fur that stands on end from static, pale yellow coat with darker lightning-bolt markings and bright spark-flecked eyes." },
+    { "id": "sparkcat", "name": "Sparkcat", "line": "voltcat", "stage": 2, "element": "storm", "prompt": "A leaner, more energetic cat with visibly crackling fur-tips, richer gold coat with sharper bolt-markings, tail flicking little sparks." },
+    { "id": "stormlynx", "name": "Stormlynx", "line": "voltcat", "stage": 3, "element": "storm", "prompt": "An athletic lynx with tufted, static-charged ear-tips and powerful haunches, deep amber-gold fur patterned with branching lightning streaks." },
+    { "id": "boltpanther", "name": "Boltpanther", "line": "voltcat", "stage": 4, "element": "storm", "prompt": "A sleek, powerful panther crackling with constant static along its spine, dark gold fur with glowing lightning-vein markings and fierce storm-bright eyes." },
+    { "id": "thundermane", "name": "Thundermane", "line": "voltcat", "stage": 5, "element": "storm", "prompt": "A majestic storm-panther with a crackling mane of living lightning, deep bronze-gold fur veined in glowing bolts, eyes blazing like the heart of a thunderhead." },
+
+    { "id": "monkroose", "name": "Monkroose", "line": "monkroose", "stage": 1, "element": "earth", "prompt": "A sturdy monkey-moose hybrid with small antlers and dexterous hands, sandy brown fur, mid-toss with a river stone in each hand." },
+    { "id": "cragroose", "name": "Cragroose", "line": "monkroose", "stage": 2, "element": "earth", "prompt": "A broader monkroose with thicker antlers and stronger arms, deeper tan fur, now juggling fist-sized rocks with easy confidence." },
+    { "id": "boulderoose", "name": "Boulderoose", "line": "monkroose", "stage": 3, "element": "earth", "prompt": "A muscular monkroose whose antlers have grown rugged and rock-textured, rich ochre fur, effortlessly keeping three stones aloft at once." },
+    { "id": "stonemoose", "name": "Stonemoose", "line": "monkroose", "stage": 4, "element": "earth", "prompt": "A powerful moose-ape with heavy stone-plated antlers and broad juggler's shoulders, deep terracotta fur dusted with rock grit." },
+    { "id": "titanroose", "name": "Titanroose", "line": "monkroose", "stage": 5, "element": "earth", "prompt": "A towering titan of a moose-ape with massive crystal-veined antlers and boulder-sized hands, richly textured earthen fur, effortlessly balancing stones the size of boulders overhead." }
+  ]
+}

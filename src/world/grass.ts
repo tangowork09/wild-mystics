@@ -20,7 +20,7 @@ const HALF = WORLD_SIZE / 2;
 
 // per-land flower palettes (4 colours) and night glow
 const FLOWERS: Record<string, [string, string, string, string, number]> = {
-  vale: ['#ff8fb8', '#ffd84a', '#ffffff', '#b58aff', 0],
+  vale: ['#ffffff', '#fff4d0', '#8fb2ff', '#ffd84a', 0], // v3:look — daisies, bluebells, buttercups
   lakes: ['#6fa8ff', '#f0f8ff', '#c8b8ff', '#ffe680', 0],
   coast: ['#ffffff', '#ffe066', '#ff9ec0', '#8ab8ff', 0],
   marsh: ['#c8a8ff', '#e8ffe8', '#d8f070', '#7fc8ff', 0.7],
@@ -104,8 +104,9 @@ export class Grass {
       uSunDirG: LOOK.uSunDir, uSunColG: LOOK.uSunCol, uEnvAmbG: LOOK.uEnvAmb, uNightG: LOOK.uNight,
       uPal: { value: pal },
     };
-    const near = this.pool('near', bladeGeometry(3, 2, 0.05, 0.13), Q.grassNear, Q.grassNearR, 0, 1);
-    const far = this.pool('far', bladeGeometry(2, 1, 0.11, 0.0), Q.grassFar, Q.grassFarR, Q.grassNearR, 1);
+    // v3:look — finer, denser blades (a soft meadow, not spikes)
+    const near = this.pool('near', bladeGeometry(5, 2, 0.03, 0.15), Q.grassNear, Q.grassNearR, 0, 1);
+    const far = this.pool('far', bladeGeometry(3, 1, 0.065, 0.1), Q.grassFar, Q.grassFarR, Q.grassNearR, 1);
     const flowers = this.pool('flower', flowerGeometry(), Q.flowers, Math.max(Q.grassNearR * 1.6, Q.grassFarR * 0.62), 0, 1);
     this.mesh.add(near, far, flowers);
   }
@@ -214,13 +215,13 @@ export class Grass {
           float cleared = uClear.z > 0.0 ? smoothstep(uClear.z * 0.7, uClear.z, distance(wxz, uClear.xy)) : 1.0;
           float tall = smoothstep(0.25, 0.45, F.b) * cleared;
           ${flower
-            ? 'float keep = step(aRand.w, F.g * smoothstep(0.45, 0.8, F.a) * 0.9) * (1.0 - tall * 0.7);'
-            : 'float keep = step(aRand.w, F.g * uDens * mix(0.5, 1.0, cleared) * (1.0 + tall * 0.4));'}
+            ? 'float keep = step(aRand.w, F.g * max(smoothstep(0.28, 0.7, F.a), 0.3) * 1.1) * (1.0 - tall * 0.7);'
+            : 'float keep = step(aRand.w, F.g * uDens * 1.3 * mix(0.5, 1.0, cleared) * (1.0 + tall * 0.4));'}
           float t = position.y;
           ${flower
             ? 'float h = mix(0.32, 0.6, aRand.y) * keep * fade;'
             : `float h = mix(0.26, 0.62, aRand.y) * mix(1.0, 2.5, tall) * keep * fade * mix(0.35, 1.0, cleared) ${kind === 'far' ? '* 1.25' : ''};`}
-          float wdt = ${flower ? 'mix(0.07, 0.11, aRand.x) * keep * fade' : 'mix(1.0, 1.6, tall) * mix(0.8, 1.25, aRand.x) * keep * fade'};
+          float wdt = ${flower ? 'mix(0.08, 0.13, aRand.x) * keep * fade' : 'mix(1.0, 1.6, tall) * mix(0.8, 1.25, aRand.x) * keep * fade'};
           float ang = aRand.x * 6.2831853 + aRand.z;
           vec3 p;
           ${flower ? `
@@ -253,7 +254,7 @@ export class Grass {
           base = mix(base, base * vec3(1.18, 1.08, 0.62), smoothstep(0.55, 0.85, n2) * 0.55);
           base = mix(base, base * vec3(0.72, 0.95, 0.78), tall * 0.8);
           vBase = base * mix(0.34, 0.5, tall);
-          vTip = mix(base * 1.2, base * vec3(1.25, 1.2, 0.8), 0.25 + aRand.y * 0.2);
+          vTip = mix(base * 1.26, base * vec3(1.38, 1.3, 0.76), 0.3 + aRand.y * 0.3);
           ${flower ? `
           int pk = land * 4 + int(aRand.y * 3.99);
           vFlower = uPal[pk];

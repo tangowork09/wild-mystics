@@ -1,0 +1,4314 @@
+[
+  {
+    "id": "emberling",
+    "name": "Emberling",
+    "line": "emberling",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A small round hatchling drake with stubby wings and a soot-smudged snout, warm orange-red scales and tiny curling smoke-wisps from its nostrils."
+  },
+  {
+    "id": "pyrowyrm",
+    "name": "Pyrowyrm",
+    "line": "emberling",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A lean young dragon with bigger wings trailing faint embers, deep red-orange scales along its back fading to a paler belly, eyes glowing like coals."
+  },
+  {
+    "id": "blazewyrm",
+    "name": "Blazewyrm",
+    "line": "emberling",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A longer, more muscular dragon with wide flame-edged wings and a spiked ridge down its spine, scales deepening to a richer red with brighter ember trails."
+  },
+  {
+    "id": "infernowyrm",
+    "name": "Infernowyrm",
+    "line": "emberling",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A powerful dragon whose wings now trail continuous ribbons of fire, its scales a deep molten red-orange with a crown of small horns glowing at the tips."
+  },
+  {
+    "id": "solarwyrm",
+    "name": "Solarwyrm",
+    "line": "emberling",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A magnificent dragon sovereign with vast wings that blaze like sunset clouds, its scales a radiant gradient from molten gold to deep ember-red, crowned in a blazing horn-corona."
+  },
+  {
+    "id": "finnik",
+    "name": "Finnik",
+    "line": "finnik",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small blue fish standing improbably on two stubby legs, wide curious eyes and a fin-crest like a little crown, pale blue scales with a silver belly."
+  },
+  {
+    "id": "tidecaller",
+    "name": "Tidecaller",
+    "line": "finnik",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A taller fish-being with confident webbed legs and flowing fin-crest, deeper blue scales with silver highlights, one fin raised as if commanding a wave."
+  },
+  {
+    "id": "tidewalker",
+    "name": "Tidewalker",
+    "line": "finnik",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A more upright, striding fish-being with longer legs and a rippling fin-mane, deep blue scales patterned like flowing water, eyes bright with certainty."
+  },
+  {
+    "id": "skysurge",
+    "name": "Skysurge",
+    "line": "finnik",
+    "stage": 4,
+    "element": "water",
+    "prompt": "An athletic, leaping fish-being with wing-like pectoral fins spread wide, glossy sapphire scales catching light like sea-spray, fin-crest streaming behind it."
+  },
+  {
+    "id": "tidesovereign",
+    "name": "Tidesovereign",
+    "line": "finnik",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A regal, towering tide-being with vast flowing fin-wings and a crown-like dorsal crest, deep sapphire-to-navy scales glowing faintly at the seams like moonlit water."
+  },
+  {
+    "id": "sporelet",
+    "name": "Sporelet",
+    "line": "sporelet",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A small round mushroom-capped creature napping in a sunbeam, soft brown cap with pale speckles and sleepy half-closed eyes."
+  },
+  {
+    "id": "mycobloom",
+    "name": "Mycobloom",
+    "line": "sporelet",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A taller mushroom creature with a wider, gently glowing cap and calm round eyes, warm tan cap deepening at the gills, faint spores drifting from it."
+  },
+  {
+    "id": "sporeking",
+    "name": "Sporeking",
+    "line": "sporelet",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A regal mushroom monarch with a broad crowned cap and sturdy stance, rich amber cap with darker gill-folds, a calm and commanding gaze."
+  },
+  {
+    "id": "mycotitan",
+    "name": "Mycotitan",
+    "line": "sporelet",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A towering mushroom titan whose cap has grown tiered like a pagoda, deep amber-brown ridges with glowing spore-flecks, roots thick as tree trunks."
+  },
+  {
+    "id": "elderbloom",
+    "name": "Elderbloom",
+    "line": "sporelet",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "An ancient, majestic mushroom sovereign whose vast tiered cap is a canopy of its own, glowing spore-light drifting from every gill, ringed in smaller mushrooms that grew up looking to it."
+  },
+  {
+    "id": "gloop",
+    "name": "Gloop",
+    "line": "gloop",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A soft, round wobbling blob of moss-green jelly with two sleepy dot eyes and a faint happy hum-shimmer."
+  },
+  {
+    "id": "spikegloop",
+    "name": "Spikegloop",
+    "line": "gloop",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A spikier blob bristling with short soft thorns, deeper green jelly with a slightly grumpy pinched expression."
+  },
+  {
+    "id": "thorngloop",
+    "name": "Thorngloop",
+    "line": "gloop",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A broader blob now covered in true woody thorns radiating outward, richer forest-green jelly with small leaf-buds sprouting between spikes."
+  },
+  {
+    "id": "briargloop",
+    "name": "Briargloop",
+    "line": "gloop",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A bramble-wrapped blob whose thorns have grown into tangled woody vines around its body, deep green jelly barely visible beneath a living hedge."
+  },
+  {
+    "id": "grovegloop",
+    "name": "Grovegloop",
+    "line": "gloop",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A towering thicket given a wobbling jelly heart, its whole body a dense woven briar-mound sprouting leaves and small flowers, deep mossy green glimpsed only at the seams."
+  },
+  {
+    "id": "chirpling",
+    "name": "Chirpling",
+    "line": "chirpling",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small round fluffy bird puffed up like a cotton ball, dusty teal feathers and a tiny stern expression trying very hard to look fierce."
+  },
+  {
+    "id": "chirpeak",
+    "name": "Chirpeak",
+    "line": "chirpling",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A slightly leaner round bird sporting a small proud crest of feathers, teal plumage deepening with the faintest cyan sheen, still puffed but a touch more purposeful."
+  },
+  {
+    "id": "hawklet",
+    "name": "Hawklet",
+    "line": "chirpling",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A gawky, half-grown hawk-shape emerging from the fluff, longer wings and a sharper little beak, teal-cyan feathers with the first true flight feathers coming in."
+  },
+  {
+    "id": "skytalon",
+    "name": "Skytalon",
+    "line": "chirpling",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A sleek young hawk with strong wings and real talons at last, rich teal-cyan plumage with darker wingtip markings and a fiercely confident stare."
+  },
+  {
+    "id": "stormtalon",
+    "name": "Stormtalon",
+    "line": "chirpling",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A magnificent storm-hawk with vast sweeping wings and glinting talons, deep teal-to-slate plumage crackling faintly at the wingtips, its stare finally as fierce as it always claimed."
+  },
+  {
+    "id": "pecklet",
+    "name": "Pecklet",
+    "line": "pecklet",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A small round dusty-orange hen pecking at pebbles, stubby wings and a determined little beak, one shiny stone already tucked under a wing."
+  },
+  {
+    "id": "peckstone",
+    "name": "Peckstone",
+    "line": "pecklet",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A slightly bigger hen with a rocky crest of small stones along its head, warm terracotta feathers and stronger stubby legs for digging."
+  },
+  {
+    "id": "geopeck",
+    "name": "Geopeck",
+    "line": "pecklet",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A sturdier hen whose crest has grown into jagged little rock spikes, deep ochre-brown feathers dusted with mineral flecks, a geode shard clutched proudly in one foot."
+  },
+  {
+    "id": "craghen",
+    "name": "Craghen",
+    "line": "pecklet",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A broad, boulder-shouldered hen with a thick rocky mane down its neck, rich rust-brown plumage textured like canyon stone, small gems embedded along its crest."
+  },
+  {
+    "id": "boulderplume",
+    "name": "Boulderplume",
+    "line": "pecklet",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A magnificent, powerfully built rock-hen whose entire plumage glitters with embedded gems and polished stones, deep earthen browns capped by a crown of crystal-tipped feathers, sturdy enough to carry a rider across the Peaks."
+  },
+  {
+    "id": "hopscotch",
+    "name": "Hopscotch",
+    "line": "hopscotch",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small fluffy bunny mid-leap with oversized hind legs and wide bright eyes, soft teal-white fur ruffled by the wind."
+  },
+  {
+    "id": "cloudhop",
+    "name": "Cloudhop",
+    "line": "hopscotch",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A slightly bigger bunny with longer ears that catch the breeze like little sails, fluffy teal-white fur now tipped with faint cloud-wisp fluff."
+  },
+  {
+    "id": "skyhopper",
+    "name": "Skyhopper",
+    "line": "hopscotch",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A lean, athletic hare with long wind-swept ears and powerful hind legs, teal-cyan fur streaked with faster-moving cloud patterns along its back."
+  },
+  {
+    "id": "stormbounder",
+    "name": "Stormbounder",
+    "line": "hopscotch",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A powerful hare crackling faintly at the ear-tips with static, storm-teal fur ruffled like a coiled spring, always mid-bounce."
+  },
+  {
+    "id": "zenithare",
+    "name": "Zenithare",
+    "line": "hopscotch",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic celestial hare with vast wind-swept ears trailing wisps of actual cloud, radiant teal-white fur glowing faintly at each gust, forever caught mid-leap above the world."
+  },
+  {
+    "id": "pricklet",
+    "name": "Pricklet",
+    "line": "pricklet",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A small round cactus creature bristling with soft spines, dusty sage green with a faintly worried expression and two stubby arm-nubs."
+  },
+  {
+    "id": "saguardian",
+    "name": "Saguardian",
+    "line": "pricklet",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A tall standing cactus sentinel with thick spined arms crossed protectively, deep green ridged body with a calm, watchful stare."
+  },
+  {
+    "id": "spinewarden",
+    "name": "Spinewarden",
+    "line": "pricklet",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A broader cactus guardian with denser spine-clusters along both arms and a small flower-crown budding at its crown, richer forest-green ridges."
+  },
+  {
+    "id": "thornbastion",
+    "name": "Thornbastion",
+    "line": "pricklet",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A hulking cactus bastion with thick armoured ridges and long defensive spines radiating outward, deep green body dotted with small white blossoms."
+  },
+  {
+    "id": "desertking",
+    "name": "Desertking",
+    "line": "pricklet",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A towering, ancient cactus monarch crowned in a full ring of desert blossoms, its immense ridged body a deep, venerable green standing eternal watch over a hidden spring."
+  },
+  {
+    "id": "voltcat",
+    "name": "Voltcat",
+    "line": "voltcat",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small sleek cat with fur that stands on end from static, pale yellow coat with darker lightning-bolt markings and bright spark-flecked eyes."
+  },
+  {
+    "id": "sparkcat",
+    "name": "Sparkcat",
+    "line": "voltcat",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A leaner, more energetic cat with visibly crackling fur-tips, richer gold coat with sharper bolt-markings, tail flicking little sparks."
+  },
+  {
+    "id": "stormlynx",
+    "name": "Stormlynx",
+    "line": "voltcat",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "An athletic lynx with tufted, static-charged ear-tips and powerful haunches, deep amber-gold fur patterned with branching lightning streaks."
+  },
+  {
+    "id": "boltpanther",
+    "name": "Boltpanther",
+    "line": "voltcat",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A sleek, powerful panther crackling with constant static along its spine, dark gold fur with glowing lightning-vein markings and fierce storm-bright eyes."
+  },
+  {
+    "id": "thundermane",
+    "name": "Thundermane",
+    "line": "voltcat",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A majestic storm-panther with a crackling mane of living lightning, deep bronze-gold fur veined in glowing bolts, eyes blazing like the heart of a thunderhead."
+  },
+  {
+    "id": "monkroose",
+    "name": "Monkroose",
+    "line": "monkroose",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A sturdy monkey-moose hybrid with small antlers and dexterous hands, sandy brown fur, mid-toss with a river stone in each hand."
+  },
+  {
+    "id": "cragroose",
+    "name": "Cragroose",
+    "line": "monkroose",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A broader monkroose with thicker antlers and stronger arms, deeper tan fur, now juggling fist-sized rocks with easy confidence."
+  },
+  {
+    "id": "boulderoose",
+    "name": "Boulderoose",
+    "line": "monkroose",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A muscular monkroose whose antlers have grown rugged and rock-textured, rich ochre fur, effortlessly keeping three stones aloft at once."
+  },
+  {
+    "id": "stonemoose",
+    "name": "Stonemoose",
+    "line": "monkroose",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A powerful moose-ape with heavy stone-plated antlers and broad juggler's shoulders, deep terracotta fur dusted with rock grit."
+  },
+  {
+    "id": "titanroose",
+    "name": "Titanroose",
+    "line": "monkroose",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A towering titan of a moose-ape with massive crystal-veined antlers and boulder-sized hands, richly textured earthen fur, effortlessly balancing stones the size of boulders overhead."
+  },
+  {
+    "id": "impling",
+    "name": "Impling",
+    "line": "impling",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A small mischievous imp with tiny bat wings and a miniature pitchfork, dusky red skin and a wide impish grin."
+  },
+  {
+    "id": "hellion",
+    "name": "Hellion",
+    "line": "impling",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A taller horned demon with bigger wings and a crackling laugh, deeper red skin with dark markings, pitchfork now properly sized."
+  },
+  {
+    "id": "brimlord",
+    "name": "Brimlord",
+    "line": "impling",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A broader demon with curling ram-like horns and wings edged in ember-light, deep crimson skin patterned with glowing cracks like cooling lava."
+  },
+  {
+    "id": "direlord",
+    "name": "Direlord",
+    "line": "impling",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "An imposing horned demon lord with an ornate bone pitchfork and wide leathery wings, dark garnet skin glowing at every crack, a commanding smirk."
+  },
+  {
+    "id": "archdemon",
+    "name": "Archdemon",
+    "line": "impling",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A towering demon sovereign with vast wings of flame-edged leather and a crown of curling horns, near-black crimson skin blazing with molten fissures, its grin equal parts menace and delight."
+  },
+  {
+    "id": "gloomling",
+    "name": "Gloomling",
+    "line": "gloomling",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small imp-like creature hanging upside down from a branch, violet-grey skin and wide glowing eyes, giggling at nothing in particular."
+  },
+  {
+    "id": "gloomlord",
+    "name": "Gloomlord",
+    "line": "gloomling",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A taller goblin-like figure with a crooked little crown and clawed hands, deeper violet skin with faint glowing veins, a sly knowing grin."
+  },
+  {
+    "id": "duskgloom",
+    "name": "Duskgloom",
+    "line": "gloomling",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broader goblin lord with a more ornate bone crown and longer claws, deep violet-grey skin glowing faintly along its veins, still grinning slyly."
+  },
+  {
+    "id": "nightgloom",
+    "name": "Nightgloom",
+    "line": "gloomling",
+    "stage": 4,
+    "element": "void",
+    "prompt": "An imposing shadow-wreathed figure with a jagged crown and a trailing cloak of living darkness, indigo skin marked with glowing violet runes."
+  },
+  {
+    "id": "umbragloom",
+    "name": "Umbragloom",
+    "line": "gloomling",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A towering void sovereign draped in shifting shadow-cloth and crowned in curling dark horns, deep violet-black skin glowing with slow-pulsing runic light."
+  },
+  {
+    "id": "grunt",
+    "name": "Grunt",
+    "line": "grunt",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A small stocky orc with a crude wooden club and a determined scowl, dusty tan-green skin and simple leather straps."
+  },
+  {
+    "id": "warlord",
+    "name": "Warlord",
+    "line": "grunt",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A broader orc warrior with a proper stone axe and battle-worn armor, deeper olive skin with scars, a commanding stance."
+  },
+  {
+    "id": "warbrute",
+    "name": "Warbrute",
+    "line": "grunt",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A heavily muscled orc brute with a massive rock-headed maul and layered hide armor, weathered bronze-green skin marked with war-paint."
+  },
+  {
+    "id": "warkhan",
+    "name": "Warkhan",
+    "line": "grunt",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "An imposing orc chieftain in spiked stone armor with a trophy-hung belt, deep umber-green skin crossed with old scars, a steady commanding gaze."
+  },
+  {
+    "id": "warmonarch",
+    "name": "Warmonarch",
+    "line": "grunt",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A towering orc warmonarch in ornate boulder-plate armor and a banner-topped horned helm, rich earthen bronze skin, radiating the authority of a hundred won battles."
+  },
+  {
+    "id": "cinderquid",
+    "name": "Cinderquid",
+    "line": "cinderquid",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A small squid with stubby glowing tentacles trailing faint smoke, deep red-orange body with a soft round mantle."
+  },
+  {
+    "id": "scorchquid",
+    "name": "Scorchquid",
+    "line": "cinderquid",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A slightly larger squid whose tentacle-tips now flicker with tiny flames, richer red mantle with brighter ember-glow patterns."
+  },
+  {
+    "id": "magmaquid",
+    "name": "Magmaquid",
+    "line": "cinderquid",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A broader squid with longer tentacles trailing continuous embers, deep magma-red mantle cracked with glowing orange seams."
+  },
+  {
+    "id": "infernoquid",
+    "name": "Infernoquid",
+    "line": "cinderquid",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A powerful squid whose whole mantle glows like a coal, its many tentacles wreathed in drifting flame, dark ember-red skin veined in gold light."
+  },
+  {
+    "id": "cinderkraken",
+    "name": "Cinderkraken",
+    "line": "cinderquid",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A colossal lava-kraken with a crown of massive flame-wreathed tentacles and a mantle like cooling obsidian, glowing gold fissures pulsing across its whole body."
+  },
+  {
+    "id": "zapbee",
+    "name": "Zapbee",
+    "line": "zapbee",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small round bee with thin crackling wings and a soft yellow-black striped body, tiny spark-flecks trailing from its stinger."
+  },
+  {
+    "id": "voltarmor",
+    "name": "Voltarmor",
+    "line": "zapbee",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A larger armored bee with plated chitin and buzzing lightning-fast wings, deeper gold-black striping with a hardened glossy shell."
+  },
+  {
+    "id": "voltguard",
+    "name": "Voltguard",
+    "line": "zapbee",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A sturdier armored bee with thicker plate segments along its thorax and crackling wing-edges, rich gold-bronze chitin with darker battle stripes."
+  },
+  {
+    "id": "stormguard",
+    "name": "Stormguard",
+    "line": "zapbee",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "An imposing sentinel-bee with heavy layered armor plates and wings that leave visible spark-trails, deep bronze-gold shell veined with glowing lightning cracks."
+  },
+  {
+    "id": "voltsovereign",
+    "name": "Voltsovereign",
+    "line": "zapbee",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A magnificent armored bee sovereign crowned in crystalline plate and trailing constant arcs of lightning from every wing-edge, radiant gold-bronze chitin glowing at every seam."
+  },
+  {
+    "id": "zorp",
+    "name": "Zorp",
+    "line": "zorp",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small grey alien with a stubby antenna and huge curious eyes, smooth pale lavender-grey skin crackling faintly with static."
+  },
+  {
+    "id": "xenobolt",
+    "name": "Xenobolt",
+    "line": "zorp",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A taller alien with a longer antenna and slender limbs, deeper grey-violet skin marked with faint circuit-like lightning patterns."
+  },
+  {
+    "id": "voltxen",
+    "name": "Voltxen",
+    "line": "zorp",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A leaner alien with an elaborate branching antenna array and glowing circuit-patterns across its limbs, cool slate-violet skin crackling at the fingertips."
+  },
+  {
+    "id": "starxen",
+    "name": "Starxen",
+    "line": "zorp",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "An imposing alien with a crown-like antenna cluster and skin patterned in constellations of tiny glowing dots, deep indigo-grey and faintly luminous."
+  },
+  {
+    "id": "cosmarch",
+    "name": "Cosmarch",
+    "line": "zorp",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A regal alien sovereign with a radiant crown of branching antennae like captured lightning, deep cosmic-violet skin glowing with slow-drifting star-like patterns across every limb."
+  },
+  {
+    "id": "frostling",
+    "name": "Frostling",
+    "line": "frostling",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small round yeti cub with shaggy white fur and stubby arms, rosy cheeks and bright curious eyes peeking through the fluff."
+  },
+  {
+    "id": "glaciator",
+    "name": "Glaciator",
+    "line": "frostling",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A bulkier young yeti with thick shaggy fur and sturdy limbs, pale blue-white coat with a determined, snowball-ready stance."
+  },
+  {
+    "id": "glacilord",
+    "name": "Glacilord",
+    "line": "frostling",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A broader yeti with denser fur and small ice-crystal formations along its shoulders, frost-pale coat glinting faintly blue in the cold."
+  },
+  {
+    "id": "frostgiant",
+    "name": "Frostgiant",
+    "line": "frostling",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A towering yeti giant with heavy ice-plated shoulders and a thick frosted mane, pale icy-blue fur crusted with glittering frost patterns."
+  },
+  {
+    "id": "frostmonarch",
+    "name": "Frostmonarch",
+    "line": "frostling",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A colossal yeti sovereign crowned in a jagged ice-crown and draped in frost-crusted fur, radiant pale blue-white coat glittering like fresh snow under its own cold light."
+  },
+  {
+    "id": "shadekin",
+    "name": "Shadekin",
+    "line": "shadekin",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small lean ninja-shaped creature in a dark hood, teal-grey cloth wrappings and sharp watchful eyes, barely a shadow's outline."
+  },
+  {
+    "id": "shinobi",
+    "name": "Shinobi",
+    "line": "shadekin",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A taller, more agile ninja figure with a flowing scarf and twin blades, deeper slate-teal wrappings and a poised, silent stance."
+  },
+  {
+    "id": "shadowblade",
+    "name": "Shadowblade",
+    "line": "shadekin",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A leaner, faster ninja with a longer trailing scarf and a single curved blade, dark teal-grey wrappings blending into shifting shadow at the edges."
+  },
+  {
+    "id": "nightfang",
+    "name": "Nightfang",
+    "line": "shadekin",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "An elite shadow-warrior wrapped in wind-torn cloth with twin glinting blades, near-black teal garb that seems to blur at the edges mid-motion."
+  },
+  {
+    "id": "kagesoul",
+    "name": "Kagesoul",
+    "line": "shadekin",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A legendary shadow-master barely more than a suggestion of movement, dark storm-teal wrappings trailing like smoke, twin blades catching light that shouldn't be there."
+  },
+  {
+    "id": "sparkmage",
+    "name": "Sparkmage",
+    "line": "sparkmage",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A slim robed figure crackling with static, holding a crooked wooden staff topped with a small spark, pale grey robes with yellow lightning trim."
+  },
+  {
+    "id": "voltmage",
+    "name": "Voltmage",
+    "line": "sparkmage",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A more composed robed spellcaster with a sturdier staff and a small floating spark-orb, richer grey-gold robes crackling faintly at the hem."
+  },
+  {
+    "id": "stormsage",
+    "name": "Stormsage",
+    "line": "sparkmage",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A confident storm-scholar in layered robes with a crystal-topped staff, deep charcoal-gold robes patterned with faint lightning-bolt embroidery."
+  },
+  {
+    "id": "tempestmage",
+    "name": "Tempestmage",
+    "line": "sparkmage",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A powerful storm mage wreathed in a faint crackling aura, ornate gold-trimmed robes billowing as if caught in a permanent squall, staff topped with a captured storm cloud."
+  },
+  {
+    "id": "archtempest",
+    "name": "Archtempest",
+    "line": "sparkmage",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A magnificent archmage of the storm, robes of deep stormcloud-grey and gold lightning trim swirling around them, staff crowned with a permanently crackling miniature thundercloud."
+  },
+  {
+    "id": "wisp",
+    "name": "Wisp",
+    "line": "wisp",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small drifting flame-light with a faint humanoid shimmer inside, soft violet-white glow trailing thin wisps of light."
+  },
+  {
+    "id": "willowisp",
+    "name": "Willowisp",
+    "line": "wisp",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly larger drifting light with a clearer flickering silhouette inside, warmer pale gold-violet glow trailing longer light-ribbons."
+  },
+  {
+    "id": "moorwisp",
+    "name": "Moorwisp",
+    "line": "wisp",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A brighter wandering light trailing a second smaller spark beside it, soft lilac-gold glow with a more defined gentle silhouette."
+  },
+  {
+    "id": "ladylantern",
+    "name": "Ladylantern",
+    "line": "wisp",
+    "stage": 4,
+    "element": "void",
+    "prompt": "An elegant glowing figure wrapped in trailing light like a lantern-lit gown, warm cream-gold glow with a serene, motherly presence."
+  },
+  {
+    "id": "soulguide",
+    "name": "Soulguide",
+    "line": "wisp",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A radiant guiding spirit crowned in soft golden light with long flowing ribbons of glow trailing like a comet's tail, its warm presence lighting the whole marsh path ahead."
+  },
+  {
+    "id": "glub",
+    "name": "Glub",
+    "line": "glub",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A round pale-blue blob dotted with small bubbles, simple happy dot eyes and a gently wobbling shape."
+  },
+  {
+    "id": "glubbernaut",
+    "name": "Glubbernaut",
+    "line": "glub",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A larger blob encased in a faint shell of pressurised water, deeper blue jelly with more defined bubble patterns and a calm patient gaze."
+  },
+  {
+    "id": "deepglub",
+    "name": "Deepglub",
+    "line": "glub",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A broader pressure-shelled blob with swirling bubble patterns across its whole body, richer sapphire jelly glowing faintly at its core."
+  },
+  {
+    "id": "glubtitan",
+    "name": "Glubtitan",
+    "line": "glub",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A massive deep-water blob wrapped in a visible shimmering pressure field, deep navy jelly patterned like flowing currents."
+  },
+  {
+    "id": "glubsovereign",
+    "name": "Glubsovereign",
+    "line": "glub",
+    "stage": 5,
+    "element": "water",
+    "prompt": "An immense sovereign of the deep, its jelly body a swirling navy-to-teal current given form, crowned in a constant shimmering halo of compressed water."
+  },
+  {
+    "id": "croakus",
+    "name": "Croakus",
+    "line": "croakus",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A plump blue-green frog with a large inflating throat-sac, wide friendly eyes and rounded webbed feet."
+  },
+  {
+    "id": "bellowcroak",
+    "name": "Bellowcroak",
+    "line": "croakus",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A bigger frog with an even larger throat-sac mid-inflate, richer teal-green skin and sturdier hind legs for leaping."
+  },
+  {
+    "id": "deepcroak",
+    "name": "Deepcroak",
+    "line": "croakus",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A broad, powerful frog with a deeply ridged throat-sac and darker teal skin patterned like rippling water, a confident half-smile."
+  },
+  {
+    "id": "thundercroak",
+    "name": "Thundercroak",
+    "line": "croakus",
+    "stage": 4,
+    "element": "water",
+    "prompt": "An imposing frog with a resonating chest-sac large enough to see ripples on the water from, deep storm-teal skin marked with pale lightning-bolt patterns."
+  },
+  {
+    "id": "bellowking",
+    "name": "Bellowking",
+    "line": "croakus",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A colossal frog monarch whose throat-sac blooms like a second moon when it calls, deep sapphire-teal skin glowing faintly along ridged, crown-like markings."
+  },
+  {
+    "id": "bubblin",
+    "name": "Bubblin",
+    "line": "bubblin",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks."
+  },
+  {
+    "id": "magmallow",
+    "name": "Magmallow",
+    "line": "bubblin",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A slime wreathed in gentle heat-shimmer, orange-red jelly with a molten glowing core visible beneath its skin."
+  },
+  {
+    "id": "cindermallow",
+    "name": "Cindermallow",
+    "line": "bubblin",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A firmer, toastier-looking slime with a crackled orange-red crust and a glowing molten core pulsing brighter beneath."
+  },
+  {
+    "id": "moltenmallow",
+    "name": "Moltenmallow",
+    "line": "bubblin",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A bubbling slime whose whole body glows like fresh lava under a thin crust, deep red-orange skin cracked with bright glowing seams."
+  },
+  {
+    "id": "infernmallow",
+    "name": "Infernmallow",
+    "line": "bubblin",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A magnificent molten slime sovereign, its crust glowing gold at every fissure over a core of pure captured flame, trailing small drifting embers."
+  },
+  {
+    "id": "bubblin",
+    "name": "Bubblin",
+    "line": "bubblin__mosslime",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks."
+  },
+  {
+    "id": "mosslime",
+    "name": "Mosslime",
+    "line": "bubblin__mosslime",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A round jelly slime dotted with tiny sprouting flowers, soft green translucent skin with visible growing roots inside."
+  },
+  {
+    "id": "bloomlime",
+    "name": "Bloomlime",
+    "line": "bubblin__mosslime",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A fuller jelly slime blooming with small flowers across its whole surface, richer green skin glowing faintly at each bud."
+  },
+  {
+    "id": "groveslime",
+    "name": "Groveslime",
+    "line": "bubblin__mosslime",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A lush, garden-covered slime with tiny ferns and blossoms rooted throughout its body, deep forest-green jelly barely visible beneath the growth."
+  },
+  {
+    "id": "edenlime",
+    "name": "Edenlime",
+    "line": "bubblin__mosslime",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A magnificent living garden given a jelly heart, an entire miniature grove of flowers and ferns flourishing across its glowing emerald body."
+  },
+  {
+    "id": "bubblin",
+    "name": "Bubblin",
+    "line": "bubblin__zapjelly",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks."
+  },
+  {
+    "id": "zapjelly",
+    "name": "Zapjelly",
+    "line": "bubblin__zapjelly",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A round yellow jelly slime crackling faintly with static, translucent skin threaded with tiny glowing lightning-lines."
+  },
+  {
+    "id": "voltjelly",
+    "name": "Voltjelly",
+    "line": "bubblin__zapjelly",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A firmer jelly slime with brighter crackling lightning-lines threading its whole body, richer gold translucent skin humming visibly."
+  },
+  {
+    "id": "stormjelly",
+    "name": "Stormjelly",
+    "line": "bubblin__zapjelly",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A charged jelly slime wrapped in a faint static halo, deep amber-gold skin webbed with glowing bolt-patterns."
+  },
+  {
+    "id": "fulminjelly",
+    "name": "Fulminjelly",
+    "line": "bubblin__zapjelly",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A magnificent storm-charged slime sovereign, its whole body a captured lightning strike frozen mid-flash, radiant gold skin crackling constantly at the edges."
+  },
+  {
+    "id": "bubblin",
+    "name": "Bubblin",
+    "line": "bubblin__umbrajelly",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A round pink jelly slime with a happy squished face, glossy translucent skin with tiny bubble specks."
+  },
+  {
+    "id": "umbrajelly",
+    "name": "Umbrajelly",
+    "line": "bubblin__umbrajelly",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A round dark violet jelly slime under a new moon, faint magenta glow-lines pulsing slowly through its translucent body."
+  },
+  {
+    "id": "voidjelly",
+    "name": "Voidjelly",
+    "line": "bubblin__umbrajelly",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A denser violet-black jelly slime with brighter pulsing glow-lines, its surface seeming to faintly swallow ambient light."
+  },
+  {
+    "id": "nightjelly",
+    "name": "Nightjelly",
+    "line": "bubblin__umbrajelly",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A deep void-black slime whose glow-lines now form slow-shifting constellation patterns, its edges blurring softly into shadow."
+  },
+  {
+    "id": "eclipsejelly",
+    "name": "Eclipsejelly",
+    "line": "bubblin__umbrajelly",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A magnificent void sovereign slime, its near-black body a captured eclipse ringed in a faint violet corona, glowing sigils drifting slowly beneath its skin."
+  },
+  {
+    "id": "alpuff",
+    "name": "Alpuff",
+    "line": "alpuff",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small fluffy alpaca with an oversized wind-ruffled coat, soft cream-teal fleece and a gentle, curious face."
+  },
+  {
+    "id": "alpaqueen",
+    "name": "Alpaqueen",
+    "line": "alpuff",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A taller, more elegant alpaca with a flowing wind-swept mane, richer cream-teal fleece and a poised, regal posture."
+  },
+  {
+    "id": "alpastorm",
+    "name": "Alpastorm",
+    "line": "alpuff",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A sturdier alpaca with a crackling static-charged mane and thicker fleece, deeper teal-cream coat rippling as if caught in a permanent breeze."
+  },
+  {
+    "id": "alpatempest",
+    "name": "Alpatempest",
+    "line": "alpuff",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A powerful alpaca with a wildly billowing storm-mane and long elegant legs, rich teal fleece streaked with faster-moving cloud-like patterns."
+  },
+  {
+    "id": "alpasovereign",
+    "name": "Alpasovereign",
+    "line": "alpuff",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic alpaca sovereign crowned in a flowing cloud-mane, radiant pale teal fleece rippling like wind-blown silk, commanding the high meadows with quiet grace."
+  },
+  {
+    "id": "whirlie",
+    "name": "Whirlie",
+    "line": "whirlie",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small spinning water-creature shaped like a tight swirl, pale blue translucent body with a constant gentle whirlpool motion."
+  },
+  {
+    "id": "whirlisk",
+    "name": "Whirlisk",
+    "line": "whirlie",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A slightly larger spinning water-form with a more defined swirling core, richer blue translucent body rippling faster at the edges."
+  },
+  {
+    "id": "maelisk",
+    "name": "Maelisk",
+    "line": "whirlie",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A broader whirlpool-creature with visible layered currents spiraling through its body, deeper teal-blue and faintly glowing at its spinning center."
+  },
+  {
+    "id": "vortisk",
+    "name": "Vortisk",
+    "line": "whirlie",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A powerful vortex-creature whose spinning form now churns visible waves around it, dark sapphire-teal body glowing at the core of its whirl."
+  },
+  {
+    "id": "maelsovereign",
+    "name": "Maelsovereign",
+    "line": "whirlie",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A colossal sovereign whirlpool given form, a towering spiral of deep glowing blue-teal water crowned in constantly circling foam and light."
+  },
+  {
+    "id": "glenhart",
+    "name": "Glenhart",
+    "line": "glenhart",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A stately stag with moss-flecked antlers holding small fireflies, warm chestnut coat dappled like dappled sunlight."
+  },
+  {
+    "id": "aurorhart",
+    "name": "Aurorhart",
+    "line": "glenhart",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A luminous stag with pale icy-teal fur and antlers that shimmer like the aurora, hooves that seem to ring softly with each step."
+  },
+  {
+    "id": "prismhart",
+    "name": "Prismhart",
+    "line": "glenhart",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A radiant stag whose antlers now shimmer through the full spread of aurora colours, pale teal-white fur glowing faintly at every point where light catches it."
+  },
+  {
+    "id": "starhart",
+    "name": "Starhart",
+    "line": "glenhart",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A resplendent stag with antlers like branching starlight and a coat that seems dusted in captured night-sky, glowing softly teal-white all over."
+  },
+  {
+    "id": "zenithart",
+    "name": "Zenithart",
+    "line": "glenhart",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A transcendent stag sovereign whose vast aurora-lit antlers arc like a crown of living sky, brilliant pale teal-white fur radiating a constant gentle glow, hoofprints that shimmer like distant stars."
+  },
+  {
+    "id": "clacker",
+    "name": "Clacker",
+    "line": "clacker",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A round blue crab with oversized clacking claws and small curious eyestalks, pale teal shell with darker ridged claws."
+  },
+  {
+    "id": "snapclack",
+    "name": "Snapclack",
+    "line": "clacker",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A sturdier crab with bigger, sharper claws and a thicker ridged shell, richer teal-blue coloring with faint battle-worn nicks on its claws."
+  },
+  {
+    "id": "ironclack",
+    "name": "Ironclack",
+    "line": "clacker",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A powerful armored crab with claws like polished iron and a heavily ridged carapace, deep steel-blue shell with a confident stance."
+  },
+  {
+    "id": "titanclack",
+    "name": "Titanclack",
+    "line": "clacker",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A massive crab with boulder-cracking claws and a fortress-like carapace, dark slate-blue shell reinforced with thick natural plating."
+  },
+  {
+    "id": "clackmonarch",
+    "name": "Clackmonarch",
+    "line": "clacker",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A colossal crab monarch whose claws could crush stone effortlessly, its immense carapace a deep royal blue ridged like a castle wall, claws raised in permanent, thunderous applause."
+  },
+  {
+    "id": "sandclack",
+    "name": "Sandclack",
+    "line": "sandclack",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A pale bone-white crab with oversized sun-bleached claws, sandy tan shell with fine desert-worn ridges."
+  },
+  {
+    "id": "sandpinch",
+    "name": "Sandpinch",
+    "line": "sandclack",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A sturdier white-shelled crab with thicker claws and a sun-bleached carapace, warm sand-tan coloring with sharper ridge patterns."
+  },
+  {
+    "id": "duneclad",
+    "name": "Duneclad",
+    "line": "sandclack",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A broader desert crab half-dusted in fine sand, pale bone-white shell with deep tan mottling and sturdy digging claws."
+  },
+  {
+    "id": "boneclack",
+    "name": "Boneclack",
+    "line": "sandclack",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A powerful desert crab with a weathered, bone-pale carapace and heavy crushing claws, sandy ochre markings across its thick shell."
+  },
+  {
+    "id": "sandmonarch",
+    "name": "Sandmonarch",
+    "line": "sandclack",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A colossal desert crab monarch with an ancient sun-bleached fortress of a shell and massive claws, deep sandstone-tan coloring ridged like carved dune rock."
+  },
+  {
+    "id": "sandgloop",
+    "name": "Sandgloop",
+    "line": "sandgloop",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A squat, sand-colored blob with a lumpy, granular hide like packed dune-sand, small round eyes, and a faint ripple where it oozes; warm ochre-gold body fading paler at its underside."
+  },
+  {
+    "id": "duneglop",
+    "name": "Duneglop",
+    "line": "sandgloop",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A larger, rounder sand blob with visible wind-ripple ridges across its back and tiny sand-grain sparkles catching the light; the same ochre-gold hue as before but with a subtly hardening, sun-cracked crust starting to form along its top."
+  },
+  {
+    "id": "glazeback",
+    "name": "Glazeback",
+    "line": "sandgloop",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A broad sand blob whose upper crust has fused into a warm amber-glass shell, sun-glazed cracks glowing faintly along its spine, still soft and wobbling underneath the hardened dome; richer bronze-gold coloring."
+  },
+  {
+    "id": "glasshide",
+    "name": "Glasshide",
+    "line": "sandgloop",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A humanoid-postured glass-sand golem, its entire body now a thick smoky-amber glass carapace over a soft ochre core glowing dimly within, faceted shoulder ridges, pale glassy highlights catching the light like heat-shimmer."
+  },
+  {
+    "id": "sandglass",
+    "name": "Sandglass",
+    "line": "sandgloop",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A towering desert colossus entirely encased in deep bronze-amber glass, ornate hourglass-shaped ridges spiraling down its body, glowing pale blue-white cracks of trapped light threading through its glass hide like frozen lightning, a commanding, ancient silhouette."
+  },
+  {
+    "id": "frostpeck",
+    "name": "Frostpeck",
+    "line": "frostpeck",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A round, fluffy snow-white chicken with thick powder-blue down, tiny stub wings, bright button eyes, and a dusting of frost crystals across its back like sugar."
+  },
+  {
+    "id": "frostdown",
+    "name": "Frostdown",
+    "line": "frostpeck",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A larger, puffier snow chicken with a thick ring of frost-blue down around its neck like a ruff, small icy specks glinting on its wingtips, the same round cheerful silhouette but plumper."
+  },
+  {
+    "id": "icecomb",
+    "name": "Icecomb",
+    "line": "frostpeck",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A proud frost hen with a crystalline pale-blue ice comb curling atop its head like frozen fire, frost-down cascading down its neck, deepening sky-blue plumage."
+  },
+  {
+    "id": "glacialwing",
+    "name": "Glacialwing",
+    "line": "frostpeck",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A sleek glacier-blue bird with wide frost-feathered wings edged in sharp ice crystals, its ice comb now a jagged crown, pale glowing frost patterns tracing its feathers."
+  },
+  {
+    "id": "frostmantle",
+    "name": "Frostmantle",
+    "line": "frostpeck",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic snow bird with an enormous trailing mantle of frozen plumage that shimmers like an aurora, deep glacier-blue body, glowing icy-white cracks of light threading through its crest and wings, a regal, wind-swept final form."
+  },
+  {
+    "id": "ashwing",
+    "name": "Ashwing",
+    "line": "ashwing",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A small round bird with dark charcoal-red feathers and glowing ember-orange wingtips, tiny smoke wisps trailing from its tail, bright eager eyes, a chick-like silhouette that still insists on looking fierce."
+  },
+  {
+    "id": "cinderwing",
+    "name": "Cinderwing",
+    "line": "ashwing",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A sleeker soot-red bird with longer ember-orange flight feathers that leave a faint trail of drifting sparks, a slightly sharper beak, the same dark ash body deepening toward charcoal."
+  },
+  {
+    "id": "charhawk",
+    "name": "Charhawk",
+    "line": "ashwing",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A proper hawk-shaped bird now, charcoal-black plumage licked with curling smoke, fierce orange eyes, its wingtips smoldering like dying coals, a hooked beak and confident predator stance."
+  },
+  {
+    "id": "scarhawk",
+    "name": "Scarhawk",
+    "line": "ashwing",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A battle-worn ash hawk with jagged charcoal feathers and cracked, glowing ember seams along its wings, talons wreathed in low flame, a scar-like streak of bright orange across one wing."
+  },
+  {
+    "id": "ashphoenix",
+    "name": "Ashphoenix",
+    "line": "ashwing",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A magnificent ash-black phoenix with a long trailing tail of curling smoke and molten-orange flame, wings edged in bright glowing cinder-light, glowing cracks of fire threading through its charcoal plumage like a creature reborn from its own ashes."
+  },
+  {
+    "id": "moonhop",
+    "name": "Moonhop",
+    "line": "moonhop",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A slender indigo-violet hare with oversized ears fading to pale lavender at the tips, faint glowing moon-shaped markings along its haunches, huge dark eyes reflecting starlight."
+  },
+  {
+    "id": "duskhop",
+    "name": "Duskhop",
+    "line": "moonhop",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly larger violet hare with longer ears trailing wisps of shadow, its moon-marking now a soft glowing crescent on its forehead, deepening indigo fur with a faint starry dust across its back."
+  },
+  {
+    "id": "nightspring",
+    "name": "Nightspring",
+    "line": "moonhop",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A lean, coiled-for-leaping hare with smoky violet fur and ghostly translucent afterimages trailing its powerful hind legs, glowing lavender crescent markings now running down both flanks."
+  },
+  {
+    "id": "voidhare",
+    "name": "Voidhare",
+    "line": "moonhop",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A tall, rangy hare wrapped in near-black void fur, its ears long ribbons of drifting shadow, glowing violet eclipse-rings circling each eye, a faint star-flecked aura shimmering around its silhouette."
+  },
+  {
+    "id": "eclipsehare",
+    "name": "Eclipsehare",
+    "line": "moonhop",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A towering, regal void hare cloaked in deep black-violet fur that fades into starry mist at the edges, a luminous eclipse-ring crown hovering above its head, glowing lavender-white light bleeding from cracks along its long ears and haunches."
+  },
+  {
+    "id": "mirecroak",
+    "name": "Mirecroak",
+    "line": "mirecroak",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A squat, murky-green bog frog with a dark violet throat sac that pulses faintly, warty mottled skin, and wide glowing amber eyes half-lidded in the muck."
+  },
+  {
+    "id": "bogling",
+    "name": "Bogling",
+    "line": "mirecroak",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly larger swamp frog with deeper moss-green skin and thicker warts along its back, a bigger violet throat pouch that glows softly when it croaks, faint purple mist curling from its nostrils."
+  },
+  {
+    "id": "mudlurker",
+    "name": "Mudlurker",
+    "line": "mirecroak",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broad, low-crouching bog toad caked in dried mud plates, its violet throat glow now spreading in faint veins across its chest, murky green skin darkening toward black at the edges."
+  },
+  {
+    "id": "bogmaw",
+    "name": "Bogmaw",
+    "line": "mirecroak",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A hulking swamp toad with an enormous glowing violet throat pouch and wide lantern-lure eyes, cracked mud-armor skin, faint wisps of purple vapor drifting from its wide mouth."
+  },
+  {
+    "id": "miredredge",
+    "name": "Miredredge",
+    "line": "mirecroak",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A colossal ancient bog king wreathed in dripping moss and near-black swamp hide, its chest ablaze with a massive glowing violet lantern-throat, faint ghostly will-o'-wisp lights orbiting its hunched, moss-crowned silhouette."
+  },
+  {
+    "id": "dunecat",
+    "name": "Dunecat",
+    "line": "dunecat",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A small sand-gold cat with faint darker tabby stripes, tufted ear-tips, a stubby tail, and sleepy half-lidded eyes, dozing in a curl of warm dune-colored fur."
+  },
+  {
+    "id": "dustpaw",
+    "name": "Dustpaw",
+    "line": "dunecat",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A leaner sand-gold cat with slightly longer legs and dusty paw-tufts that puff sand with every step, sharper tabby markings, alert amber eyes."
+  },
+  {
+    "id": "sandlynx",
+    "name": "Sandlynx",
+    "line": "dunecat",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A rangy desert lynx with long tufted ears, a short bobbed tail, deepening tan-gold fur with bold dark stripes down its back, powerful haunches built for pouncing."
+  },
+  {
+    "id": "dunestalker",
+    "name": "Dunestalker",
+    "line": "dunecat",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A lean, muscular desert predator cat with a low prowling stance, burnt-amber fur streaked in dark bands, glowing pale eyes, a small sand-toned mane starting to form at its neck and shoulders."
+  },
+  {
+    "id": "sandmane",
+    "name": "Sandmane",
+    "line": "dunecat",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A majestic sand-lion with a huge sun-gold mane that ripples like heat-shimmer, richly burnished amber fur, powerful shoulders, glowing warm-gold eyes, an unmistakably regal, sun-crowned desert guardian silhouette."
+  },
+  {
+    "id": "magmaglub",
+    "name": "Magmaglub",
+    "line": "magmaglub",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A small round lava-toad blob, glossy magma-orange skin with a molten crimson glow along its seams, stubby limbs, wide amber eyes, faint heat shimmer rippling off its back."
+  },
+  {
+    "id": "magmawallow",
+    "name": "Magmawallow",
+    "line": "magmaglub",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A slightly larger, lumpier lava blob-toad, deep ember-red hide with dark cooling-rock patches starting to crust over its back, the same amber eyes now flanked by tiny heat-cracks that pulse like embers."
+  },
+  {
+    "id": "magmordant",
+    "name": "Magmordant",
+    "line": "magmaglub",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A leaner, more upright molten toad-beast standing on stronger hind legs, its hide a dark red-black crust webbed with glowing orange fissures, a ridge of hardened magma spikes running down its spine, amber eyes narrowed and fierce."
+  },
+  {
+    "id": "magmarauger",
+    "name": "Magmarauger",
+    "line": "magmaglub",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A hulking bipedal lava beast with broad shoulders and clawed forelimbs, obsidian-black hide cracked all over with bright molten seams, a mane of hardened magma spikes down its neck and back, glowing orange eyes."
+  },
+  {
+    "id": "magmalossus",
+    "name": "Magmalossus",
+    "line": "magmaglub",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A towering, colossal lava titan, its cooled-obsidian hide fissured everywhere with brilliant molten-gold cracks that pulse like a heartbeat, massive spiked magma ridges crowning its back and shoulders like a crown, huge glowing amber eyes, radiating heat haze — the final, mountain-sized form of the line."
+  },
+  {
+    "id": "sunbee",
+    "name": "Sunbee",
+    "line": "sunbee",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A small armored bee with a sun-gold carapace fading to deep amber at the wingtips, warm honey-coloured eyes, faint heat-shimmer trailing off its wings."
+  },
+  {
+    "id": "sunstinger",
+    "name": "Sunstinger",
+    "line": "sunbee",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A slightly larger armored bee, its carapace now a richer burnt-orange with a glowing ember-red stinger tip, wings edged in gold, the same warm amber eyes."
+  },
+  {
+    "id": "sunhornet",
+    "name": "Sunhornet",
+    "line": "sunbee",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A leaner hornet-shaped Mystic with a burnished copper-orange exoskeleton, twin translucent wings streaked with gold veins, a longer glowing stinger, and sharp amber eyes."
+  },
+  {
+    "id": "solarwing",
+    "name": "Solarwing",
+    "line": "sunbee",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A striking sun-hornet with wide gilded wings that catch light like stained glass, deep vermilion-and-gold banded carapace, a crown of small spines behind its head, glowing amber eyes."
+  },
+  {
+    "id": "solarion",
+    "name": "Solarion",
+    "line": "sunbee",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A radiant, regal hornet-queen wreathed in shimmering golden light, wings like fanned sun-rays edged in molten copper, an ornate crest of glowing spines crowning its head, huge warm amber eyes — the final, sovereign form of the line."
+  },
+  {
+    "id": "dustwhirl",
+    "name": "Dustwhirl",
+    "line": "dustwhirl",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small spinning column of sand given a face, tawny dust-tan body swirling like a mini tornado, two bright eyes peeking from the vortex, loose grit trailing off its edges."
+  },
+  {
+    "id": "dustdevil",
+    "name": "Dustdevil",
+    "line": "dustwhirl",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A slightly taller sand-vortex creature, its swirling body a deeper bronze-tan with faint spiraling wind-lines, small stony fragments orbiting near its base, sharp curious eyes."
+  },
+  {
+    "id": "duneswirl",
+    "name": "Duneswirl",
+    "line": "dustwhirl",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A broader, more defined dust-vortex with a rippling ochre-brown funnel body, small dune-ridge patterns etched into its swirling form, orbiting pebbles and dried thorns caught in its spin, keen amber eyes."
+  },
+  {
+    "id": "sandcyclone",
+    "name": "Sandcyclone",
+    "line": "dustwhirl",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A towering sandstorm funnel with a rich burnt-umber body streaked with golden dust-lines, jagged rock shards and sun-bleached bones caught spinning around its base, a faint golden glow pulsing at its core, piercing eyes."
+  },
+  {
+    "id": "simoom",
+    "name": "Simoom",
+    "line": "dustwhirl",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A massive, roaring sandstorm titan whose funnel-body is a deep burnt-copper haze crackling with bright golden dust-energy at its core, ancient wind-carved rock spires embedded and orbiting within its swirl, huge glowing amber eyes at its heart — the final, horizon-swallowing form of the line."
+  },
+  {
+    "id": "frostwisp",
+    "name": "Frostwisp",
+    "line": "frostwisp",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small pale-cyan lantern-flame ghost, its wispy body flickering like frozen mist, faint icy glow at its core, two soft glowing eyes."
+  },
+  {
+    "id": "frostwill",
+    "name": "Frostwill",
+    "line": "frostwisp",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A slightly larger ice-blue wisp, its flickering form now trailing thin curls of frost-mist, small icicle shards drifting around it, glowing pale eyes."
+  },
+  {
+    "id": "rimewisp",
+    "name": "Rimewisp",
+    "line": "frostwisp",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A brighter, more defined frost-spirit with a swirling icy-blue body rimmed in delicate frost patterns, tiny suspended snowflakes orbiting it, luminous eyes glowing through the chill."
+  },
+  {
+    "id": "glacewraith",
+    "name": "Glacewraith",
+    "line": "frostwisp",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A tall, elegant ice-wraith with a flowing glacial-blue body like living frozen smoke, jagged translucent ice shards forming a crown and trailing cloak, bright glowing eyes cutting through a faint white mist."
+  },
+  {
+    "id": "hoarwraith",
+    "name": "Hoarwraith",
+    "line": "frostwisp",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic, ancient ice-wraith, its towering form a deep glacial-blue haze crowned with great translucent icicle spires like a frozen halo, a brilliant white glow radiating from its core through curling frost-mist, piercing luminous eyes — the final, winter-sovereign form of the line."
+  },
+  {
+    "id": "glowcap",
+    "name": "Glowcap",
+    "line": "glowcap",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small violet mushroom creature with a glowing indigo cap dotted with faint luminous spots, stubby limbs, warm round eyes peeking from beneath the cap’s rim, soft purple bioluminescence."
+  },
+  {
+    "id": "glowshroom",
+    "name": "Glowshroom",
+    "line": "glowcap",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly taller violet mushroom, its glowing cap now larger with brighter luminous spots trailing faint spore-motes, deeper indigo stem, the same warm round eyes."
+  },
+  {
+    "id": "duskcap",
+    "name": "Duskcap",
+    "line": "glowcap",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broader mushroom Mystic with a rich violet-black cap rimmed in glowing purple gills, faint wisps of shadow curling from its edges, luminous spore-dust drifting around it, calm glowing eyes."
+  },
+  {
+    "id": "umbrashroom",
+    "name": "Umbrashroom",
+    "line": "glowcap",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A large, imposing mushroom titan with a deep indigo-black cap edged in brilliant violet glow, shadowy tendrils of spore-mist trailing from its gills, small luminous mushrooms sprouting along its stem, glowing eyes watching from the gloom."
+  },
+  {
+    "id": "umbracap",
+    "name": "Umbracap",
+    "line": "glowcap",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A towering, regal fungal sovereign whose vast cap glows with a pale violet-white bioluminescent crown of gills, deep indigo-black stem wreathed in drifting shadow-spores and luminous motes, huge calm glowing eyes — the final, marsh-ruling form of the line, ornate and majestic rather than sinister."
+  },
+  {
+    "id": "emberjaw",
+    "name": "Emberjaw",
+    "line": "emberjaw",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A stocky fire-toned ape-beast with dark rust-brown fur, glowing orange embers smoldering along its knuckles and jaw, a short mane starting to flicker with flame, warm amber eyes."
+  },
+  {
+    "id": "cinderjaw",
+    "name": "Cinderjaw",
+    "line": "emberjaw",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A slightly bulkier fire-ape with deeper red-brown fur, small licks of flame now trailing from its forearms and jaw, a thicker smoldering mane at its neck, fierce amber eyes."
+  },
+  {
+    "id": "scorchjaw",
+    "name": "Scorchjaw",
+    "line": "emberjaw",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A broader, more muscular fire-ape with charred umber fur streaked in glowing cinder-lines, a fuller mane of low flame around its neck and shoulders, its jaw wreathed in a faint ember-glow, intense amber eyes."
+  },
+  {
+    "id": "scorchmane",
+    "name": "Scorchmane",
+    "line": "emberjaw",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A powerful, towering fire-ape with near-black charred fur, a blazing orange mane of true fire cascading down its neck and back, glowing fissures across its knuckles and chest, piercing amber eyes."
+  },
+  {
+    "id": "pyromane",
+    "name": "Pyromane",
+    "line": "emberjaw",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A colossal, magnificent fire-ape titan, its charcoal-black fur wreathed in a brilliant blazing gold-orange mane that flows like living fire down its back and shoulders, glowing ember-cracks across its powerful frame, huge fierce amber eyes — the final, ridge-lighting form of the line."
+  },
+  {
+    "id": "trotlet",
+    "name": "Trotlet",
+    "line": "trotlet",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A stocky young foal with stubby legs and a sandy-brown coat, kicking up small clods of dirt as it trots in wobbly circles, pleased with itself."
+  },
+  {
+    "id": "loamstrider",
+    "name": "Loamstrider",
+    "line": "trotlet",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A sturdy working horse with a broad chest and deep umber coat, powerful legs built for hauling, calm intelligent eyes and dust always clinging to its fetlocks."
+  },
+  {
+    "id": "clodrunner",
+    "name": "Clodrunner",
+    "line": "trotlet",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A leaner, faster-built horse with a rich brown coat and rocky nodules embedded along its fetlocks like natural horseshoes, throwing up a visible trail of clods at a run."
+  },
+  {
+    "id": "ploughmane",
+    "name": "Ploughmane",
+    "line": "trotlet",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A grand draft horse with a heavy mane textured like tilled furrows of dark soil, deep brown coat and stone-plated fetlocks, radiating calm working-class strength."
+  },
+  {
+    "id": "earthmarch",
+    "name": "Earthmarch",
+    "line": "trotlet",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A colossal earthen warhorse whose furrowed soil-mane has become a rolling ridge of stone and root down its neck, deep umber-bronze coat with glowing amber seams in its hooves, each stride leaving the ground visibly reshaped."
+  },
+  {
+    "id": "trotlet",
+    "name": "Trotlet",
+    "line": "trotlet__skymane",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A stocky young foal with stubby legs and a sandy-brown coat, kicking up small clods of dirt as it trots in wobbly circles, pleased with itself."
+  },
+  {
+    "id": "skymane",
+    "name": "Skymane",
+    "line": "trotlet__skymane",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A pale, elegant horse whose mane drifts like trailing cloud, near-white coat with a faint sky-blue sheen, hooves that barely seem to touch the ground."
+  },
+  {
+    "id": "cloudmane",
+    "name": "Cloudmane",
+    "line": "trotlet__skymane",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A leaner sky-horse whose cloud-mane now billows constantly around its neck and shoulders, pale blue-white coat brightening at the edges, cantering just above the grass."
+  },
+  {
+    "id": "galemane",
+    "name": "Galemane",
+    "line": "trotlet__skymane",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A powerful sky-steed with a full flowing mane of living cloud-wisp, bright pale-blue coat streaked in glowing cyan along its flanks, a constant soft gale trailing its gallop."
+  },
+  {
+    "id": "zephyrsteed",
+    "name": "Zephyrsteed",
+    "line": "trotlet__skymane",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic sky-sovereign horse wreathed in a swirling mane and tail of living wind and cloud, luminous pale coat glowing faintly cyan at every edge, seeming to gallop just above the world entirely."
+  },
+  {
+    "id": "moolet",
+    "name": "Moolet",
+    "line": "moolet",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A round young calf with short blunt horns and a warm caramel-brown hide, sturdy little legs and a contented expression, chewing thoughtfully."
+  },
+  {
+    "id": "bullwark",
+    "name": "Bullwark",
+    "line": "moolet",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A broad, muscular bull with thick curved horns and a deep umber hide, planted stance and a stubborn, immovable presence."
+  },
+  {
+    "id": "ironhoof",
+    "name": "Ironhoof",
+    "line": "moolet",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "An even broader bull whose hooves and horn-bases have hardened into iron-grey stone plating, dark umber hide with a heavier, more deliberate stance."
+  },
+  {
+    "id": "grandbull",
+    "name": "Grandbull",
+    "line": "moolet",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A massive bull armoured across its shoulders and horns in overlapping grey stone plates, near-black umber hide, radiating slow unstoppable weight."
+  },
+  {
+    "id": "titanbull",
+    "name": "Titanbull",
+    "line": "moolet",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A mountainous bull titan fully plated in dark fused stone across its head and shoulders, near-black hide glowing faintly at the seams, horns like carved standing stones — the ground itself seems to brace when it moves."
+  },
+  {
+    "id": "moolet",
+    "name": "Moolet",
+    "line": "moolet__pyrox",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A round young calf with short blunt horns and a warm caramel-brown hide, sturdy little legs and a contented expression, chewing thoughtfully."
+  },
+  {
+    "id": "pyrox",
+    "name": "Pyrox",
+    "line": "moolet__pyrox",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A stout bull whose hide has scorched to a deep rust-red, horns smouldering faintly at the tips, snorting small curls of smoke."
+  },
+  {
+    "id": "cinderox",
+    "name": "Cinderox",
+    "line": "moolet__pyrox",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A broader rust-red bull with cracked-ember patterning across its hide and brighter smouldering horns, faint heat-shimmer rising off its back."
+  },
+  {
+    "id": "forgeox",
+    "name": "Forgeox",
+    "line": "moolet__pyrox",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A powerful bull armoured across its shoulders in dark cracked plates glowing orange at the seams like a forge, horns burning steadily, heat visibly rolling off it."
+  },
+  {
+    "id": "vulcanox",
+    "name": "Vulcanox",
+    "line": "moolet__pyrox",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A titanic volcanic bull whose obsidian-dark hide is seamed with rivers of glowing molten orange, horns wreathed in constant flame, radiating heat like a standing furnace."
+  },
+  {
+    "id": "truffly",
+    "name": "Truffly",
+    "line": "truffly",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A round little piglet creature with a big sniffing snout and floppy ears, mossy brown fur speckled with dirt, nose buried in the undergrowth."
+  },
+  {
+    "id": "trufflenose",
+    "name": "Trufflenose",
+    "line": "truffly",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A slightly bigger piglet with an even more prominent snout and small curling tusks just starting to show, mossy brown fur, digging with real enthusiasm."
+  },
+  {
+    "id": "boarloam",
+    "name": "Boarloam",
+    "line": "truffly",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A sturdy young boar with visible curling tusks and thicker bristled fur in mottled brown and moss-green, snout permanently caked in rich soil."
+  },
+  {
+    "id": "goldtusker",
+    "name": "Goldtusker",
+    "line": "truffly",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A hefty boar with long, gleaming tusks and a dense mane of bristled brown-green fur, small glints of gold and treasure visible caught in its coat."
+  },
+  {
+    "id": "trufflemonarch",
+    "name": "Trufflemonarch",
+    "line": "truffly",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A magnificent forest boar crowned in curling golden-sheened tusks and a thick regal mane of deep moss-brown bristles, draped faintly in trailing roots and tiny mushrooms like jewellery it earned."
+  },
+  {
+    "id": "dozewool",
+    "name": "Dozewool",
+    "line": "dozewool",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A round, heavy-fleeced sheep creature with half-closed dreamy eyes and thick curling cream wool, moving at an unhurried drowsy pace."
+  },
+  {
+    "id": "slumberfleece",
+    "name": "Slumberfleece",
+    "line": "dozewool",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A slightly larger sheep with even thicker, softer cream wool now tinged pale lavender at the curls, eyes perpetually half-lidded and content."
+  },
+  {
+    "id": "dreamwool",
+    "name": "Dreamwool",
+    "line": "dozewool",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A plush, heavy-bodied sheep whose lavender-cream wool has grown into deep drifting curls, faint dream-like sparkles drifting from its fleece as it dozes on its feet."
+  },
+  {
+    "id": "reverieram",
+    "name": "Reverieram",
+    "line": "dozewool",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A grand ram with a magnificent curled horn pair and dense violet-cream fleece that seems to shimmer faintly like it's still half a dream, drowsy but immense."
+  },
+  {
+    "id": "dreamshepherd",
+    "name": "Dreamshepherd",
+    "line": "dozewool",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A towering, gentle ram-giant draped in luxuriant deep-violet wool that drifts with faint glowing motes like captured stardust, huge curled horns and half-lidded knowing eyes, radiating calm the way a hearth radiates warmth."
+  },
+  {
+    "id": "snubbit",
+    "name": "Snubbit",
+    "line": "snubbit",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small stout pug-like creature with a wrinkled snub nose and pale cream fur, snoring softly even while awake, a faint breeze curling off its stubby tail."
+  },
+  {
+    "id": "gustail",
+    "name": "Gustail",
+    "line": "snubbit",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A leaner, more athletic pug-dog with tan-and-cream fur and a tail that leaves small dust-devils spinning behind it, chasing itself with real enthusiasm."
+  },
+  {
+    "id": "blizzarf",
+    "name": "Blizzarf",
+    "line": "snubbit",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A sturdy husky-like dog with thick white-and-grey fur and icy-blue markings, breath visibly fogging, standing ready to pull a sled or start a blizzard."
+  },
+  {
+    "id": "permarf",
+    "name": "Permarf",
+    "line": "snubbit",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A powerful husky with a dense frost-pale coat and deeper icy-blue markings down its back, small drifts of snow swirling around its paws as it moves."
+  },
+  {
+    "id": "aurorarf",
+    "name": "Aurorarf",
+    "line": "snubbit",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A magnificent arctic wolf-dog whose thick white coat is streaked in glowing pale-cyan aurora patterns down its spine and tail, trailing swirling snow and faint colour with every bound."
+  },
+  {
+    "id": "honeybuzz",
+    "name": "Honeybuzz",
+    "line": "honeybuzz",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A small round bee-like creature with fuzzy golden-and-green stripes and translucent wings, trailing a faint sweet-smelling glimmer of pollen."
+  },
+  {
+    "id": "thornet",
+    "name": "Thornet",
+    "line": "honeybuzz",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A leaner wasp-like creature with sharper golden-green banding and a visible thorn-shaped stinger, wings buzzing with quicker, sharper energy."
+  },
+  {
+    "id": "barbnet",
+    "name": "Barbnet",
+    "line": "honeybuzz",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A sleeker wasp with deep green-and-gold banding and a longer, barbed thorn-stinger, wings edged faintly translucent-violet, poised and quick."
+  },
+  {
+    "id": "venomnet",
+    "name": "Venomnet",
+    "line": "honeybuzz",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A striking wasp with bold dark-green armoured banding and a wicked curved stinger dripping faint toxin-glow, wings a blur of violet-tinted motion."
+  },
+  {
+    "id": "hivemonarch",
+    "name": "Hivemonarch",
+    "line": "honeybuzz",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A commanding hive-sovereign wasp in deep emerald-and-gold armoured banding, a huge curved glowing stinger and wings that shimmer violet-green, radiating quiet, absolute authority over every smaller stinger nearby."
+  },
+  {
+    "id": "nibblet",
+    "name": "Nibblet",
+    "line": "nibblet",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A small round rat creature with bright inquisitive eyes and cheeks visibly stuffed full, sandy-brown fur and a long curious tail, clutching a shiny pebble."
+  },
+  {
+    "id": "gnawglint",
+    "name": "Gnawglint",
+    "line": "nibblet",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A slightly bigger rat with a glinting, alert gleam in its eye and even fuller cheeks, sandy-brown fur, sorting a small pile of shiny trinkets."
+  },
+  {
+    "id": "hoardrat",
+    "name": "Hoardrat",
+    "line": "nibblet",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A stocky, well-fed rat with rich earthy-brown fur and a small mound of hoarded shinies always nearby, whiskers twitching with constant appraisal."
+  },
+  {
+    "id": "vaultgnaw",
+    "name": "Vaultgnaw",
+    "line": "nibblet",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A hefty, burly rat with thick digging claws and dense umber fur, small glints of buried treasure caught in its fur, radiating the quiet confidence of a creature that owns a lot of tunnels."
+  },
+  {
+    "id": "coinlord",
+    "name": "Coinlord",
+    "line": "nibblet",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A magnificently plump rat-sovereign draped in a rattling mantle of found coins, buttons and polished stones, deep umber-gold fur and sharp glinting eyes, sitting like royalty atop its own hoard."
+  },
+  {
+    "id": "tuftumble",
+    "name": "Tuftumble",
+    "line": "tuftumble",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A scruffy earth-toned llama with a wind-tossed tuft of wool on its head and short legs built for tumbling down scree slopes, plain and playful."
+  },
+  {
+    "id": "peakfleece",
+    "name": "Peakfleece",
+    "line": "tuftumble",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A taller alpaca with a thick cream-and-tan fleece coat and sturdier legs, its wool bundled in climbing-rope-like locks, ready to carry a rider up switchbacks."
+  },
+  {
+    "id": "cragfleece",
+    "name": "Cragfleece",
+    "line": "tuftumble",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "Broader-shouldered with craggy grey-brown wool plates emerging at its back and shoulders like exposed rock, its fleece thicker and its stance rooted to sheer cliffs."
+  },
+  {
+    "id": "boulderfleece",
+    "name": "Boulderfleece",
+    "line": "tuftumble",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A hulking mountain alpaca whose fleece has hardened into boulder-like clumps along its spine and legs, immense and unshakeable, footholds carved by its own steps."
+  },
+  {
+    "id": "summitfleece",
+    "name": "Summitfleece",
+    "line": "tuftumble",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A towering, snow-crowned alpaca colossus whose stone-plated fleece glitters with frost and mineral veins, standing where clouds break below its hooves, utterly majestic."
+  },
+  {
+    "id": "rimehorn",
+    "name": "Rimehorn",
+    "line": "rimehorn",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A shaggy blue-white yak with frost-rimed curling horns and a coat of icicle-tipped fur, breathing faint fog, sturdy and calm."
+  },
+  {
+    "id": "hoarhorn",
+    "name": "Hoarhorn",
+    "line": "rimehorn",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A bulkier yak with thicker hoarfrost fur and longer curling horns crusted in ice crystals, a permanent cloud of cold breath trailing behind it."
+  },
+  {
+    "id": "glacihorn",
+    "name": "Glacihorn",
+    "line": "rimehorn",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A broad-shouldered beast whose horns and back have grown pale blue glacier-ice plating over the original frost-white fur, powerful and glacially calm."
+  },
+  {
+    "id": "boreahorn",
+    "name": "Boreahorn",
+    "line": "rimehorn",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A massive ice-plated bovine with towering ridged horns like glacier spires and a wind-swept icy mane, radiating a visible cold aura."
+  },
+  {
+    "id": "auroshorn",
+    "name": "Auroshorn",
+    "line": "rimehorn",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A colossal aurora-crowned yak whose glacier-plated horns and mane shimmer with shifting aurora colours over icy blue-white fur, radiant and awe-inspiring at the summit of the peaks."
+  },
+  {
+    "id": "tinkertot",
+    "name": "Tinkertot",
+    "line": "tinkertot",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small boxy bronze automaton with a single glowing storm-yellow optic, patchwork panels and stubby jointed limbs, endearingly clunky."
+  },
+  {
+    "id": "springjolt",
+    "name": "Springjolt",
+    "line": "tinkertot",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A slightly taller automaton bristling with mismatched scavenged gears and a coiled spring-antenna crackling with static, more animated and eager."
+  },
+  {
+    "id": "voltwork",
+    "name": "Voltwork",
+    "line": "tinkertot",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A sleeker clockwork figure with exposed brass gearwork along its chest glowing faint yellow, twin antennae sparking with small arcs of electricity."
+  },
+  {
+    "id": "dynamotron",
+    "name": "Dynamotron",
+    "line": "tinkertot",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A broad-framed mechanical guardian with a glowing generator core in its chest and thicker armored limbs, arcs of lightning crawling visibly over its plating."
+  },
+  {
+    "id": "archivolt",
+    "name": "Archivolt",
+    "line": "tinkertot",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A grand, ornate automaton crowned with rotating brass rings and a brilliant storm-core chest crystal blazing gold, lightning constantly dancing across its full armored frame — the ruins' masterpiece."
+  },
+  {
+    "id": "cogling",
+    "name": "Cogling",
+    "line": "cogling",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small round bronze drone with a single glowing eye-lens and stubby tank-like treads, plain and toylike."
+  },
+  {
+    "id": "gearbrute",
+    "name": "Gearbrute",
+    "line": "cogling",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A hulking boxy robot with thick armored plating, oversized fists and twin glowing storm-yellow eye-lenses, built for demolition."
+  },
+  {
+    "id": "arcannon",
+    "name": "Arcannon",
+    "line": "cogling",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "An imposing armored robot with a massive shoulder-mounted arc-cannon crackling with charged lightning, heavier plating and a glowing chest core."
+  },
+  {
+    "id": "siegecannon",
+    "name": "Siegecannon",
+    "line": "cogling",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A wider, tracked siege-robot bristling with additional cannon barrels and thicker armor plates, its central core glowing a deep charged gold."
+  },
+  {
+    "id": "cannonlord",
+    "name": "Cannonlord",
+    "line": "cogling",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A towering fortress-robot bristling with layered cannon arrays and glowing gold circuitry veining its entire dark armored frame, radiating dormant, world-ending firepower."
+  },
+  {
+    "id": "cogling",
+    "name": "Cogling",
+    "line": "cogling__stiltshot",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small round bronze drone with a single glowing eye-lens and stubby tank-like treads, plain and toylike."
+  },
+  {
+    "id": "stiltshot",
+    "name": "Stiltshot",
+    "line": "cogling__stiltshot",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A slender robot balanced on tall jointed stilt-legs with a long rifle-barrel arm and a narrow scanning eye-lens, built for long-range precision."
+  },
+  {
+    "id": "farstilt",
+    "name": "Farstilt",
+    "line": "cogling__stiltshot",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A taller stilt-legged sniper unit with an elongated barrel and a glowing targeting eye, its thin frame plated in sleek storm-grey armor."
+  },
+  {
+    "id": "sharpstride",
+    "name": "Sharpstride",
+    "line": "cogling__stiltshot",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "An elegant long-limbed mecha striding on even taller stilts, dual barrel arrays and a bright golden targeting optic scanning constantly."
+  },
+  {
+    "id": "skypiercer",
+    "name": "Skypiercer",
+    "line": "cogling__stiltshot",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A soaring, impossibly tall sharpshooter mecha on stilt-legs crowned with a radiant golden optic array and a single massive rail-barrel crackling with stored lightning, elegant and lethal."
+  },
+  {
+    "id": "whirrbit",
+    "name": "Whirrbit",
+    "line": "whirrbit",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A tiny rounded flying drone with a spinning rotor-fin and a single small lens-eye, teal-white plating, buzzing and quick."
+  },
+  {
+    "id": "galegunner",
+    "name": "Galegunner",
+    "line": "whirrbit",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A sleeker flying drone with twin rotor-fins and a mounted gun-barrel slung underneath, teal armor plating with wind-swept fin details."
+  },
+  {
+    "id": "galestrafe",
+    "name": "Galestrafe",
+    "line": "whirrbit",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A faster, arrow-shaped flying unit with swept-back rotor-blades and twin barrels, its teal plating streaked with deepening turquoise racing stripes."
+  },
+  {
+    "id": "skyraider",
+    "name": "Skyraider",
+    "line": "whirrbit",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A broad-winged combat drone with four angled rotor-blades and a heavier weapons pod, deep turquoise armor trailing faint wind-vortex streaks."
+  },
+  {
+    "id": "skymarshal",
+    "name": "Skymarshal",
+    "line": "whirrbit",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic hovering war-drone with wide blade-wings that carve visible wind-spirals, glowing deep-teal plating and a crown of spinning golden rotor-vanes — commands the sky itself."
+  },
+  {
+    "id": "dustclaw",
+    "name": "Dustclaw",
+    "line": "dustclaw",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A lean sand-colored raptor with sharp stone-grey claws and a low predatory crouch, kicking up little puffs of dust as it runs."
+  },
+  {
+    "id": "quakemaw",
+    "name": "Quakemaw",
+    "line": "dustclaw",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A massive tan-and-grey tyrannosaur with heavy crushing jaws and thick armored hide, each footstep visibly cracking the ground."
+  },
+  {
+    "id": "tremormaw",
+    "name": "Tremormaw",
+    "line": "dustclaw",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "An even bulkier rex with jagged grey-brown armor ridges along its spine and deeper crushing jaws, faint fracture-lines glowing dull orange at its feet when it stomps."
+  },
+  {
+    "id": "riftmaw",
+    "name": "Riftmaw",
+    "line": "dustclaw",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A towering armored rex whose spine ridges have become jagged rock spurs, its jaws wide enough to shear stone, trailing small chasms with every stride."
+  },
+  {
+    "id": "cataclysmaw",
+    "name": "Cataclysmaw",
+    "line": "dustclaw",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A colossal, canyon-scarred tyrant rex encrusted in dark cracked-earth armor with molten-orange fissure lines glowing across its hide and jaws — an apex predator that reshapes the land it walks."
+  },
+  {
+    "id": "scorchclaw",
+    "name": "Scorchclaw",
+    "line": "scorchclaw",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A lean orange-red raptor with glowing ember-orange claws and faint smoke trailing from its footprints, quick and sharp-eyed."
+  },
+  {
+    "id": "charclaw",
+    "name": "Charclaw",
+    "line": "scorchclaw",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A slightly bulkier raptor with charcoal-black scorch markings streaking its orange hide and brighter glowing claws, leaving smoking pawprints."
+  },
+  {
+    "id": "blazefang",
+    "name": "Blazefang",
+    "line": "scorchclaw",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A sleek, fast raptor wreathed in faint heat-shimmer with fang-like flame markings down its jaw and tail, its orange hide deepening toward red."
+  },
+  {
+    "id": "pyrefang",
+    "name": "Pyrefang",
+    "line": "scorchclaw",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A powerful sprinting raptor whose jaw and spine ridge glow like banked coals, deep red-black hide with bright ember cracks, trailing genuine embers."
+  },
+  {
+    "id": "wildfire_rex",
+    "name": "Wildfire Rex",
+    "line": "scorchclaw",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A blazing apex raptor rex with a crown of flame-like crest feathers and molten cracks glowing across dark ember-black hide, trailing a shimmering heat-haze — a wildfire given claws."
+  },
+  {
+    "id": "hornwall",
+    "name": "Hornwall",
+    "line": "hornwall",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A sturdy tan triceratops with a broad bony frill and three stout horns, low and immovable, plain and steady."
+  },
+  {
+    "id": "frillguard",
+    "name": "Frillguard",
+    "line": "hornwall",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A bulkier triceratops with a wider, ridge-patterned frill and thicker horns, its hide toughened to a deeper ochre."
+  },
+  {
+    "id": "bastionfrill",
+    "name": "Bastionfrill",
+    "line": "hornwall",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A heavily built triceratops whose frill has grown jagged rocky edges and whose horns have thickened further, hide the colour of packed stone."
+  },
+  {
+    "id": "ironfrill",
+    "name": "Ironfrill",
+    "line": "hornwall",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A massive triceratops with a frill plated in overlapping iron-grey rock scales and thick reinforced horns, utterly imposing and immovable."
+  },
+  {
+    "id": "rampart_warden",
+    "name": "Rampart Warden",
+    "line": "hornwall",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A colossal fortress-triceratops whose full rock-plated frill rises like a castle wall studded with mineral spikes, its three horns capped in gleaming stone — a walking rampart the desert bends around."
+  },
+  {
+    "id": "kilnback",
+    "name": "Kilnback",
+    "line": "kilnback",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A sturdy stegosaur-like creature with warm terracotta hide and a row of glowing orange back-plates, gentle eyes and slow deliberate steps, faint heat-shimmer rising off its spine."
+  },
+  {
+    "id": "forgeback",
+    "name": "Forgeback",
+    "line": "kilnback",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A broader stegosaur with deeper rust-red hide and brighter, hotter-glowing back-plates, small curls of smoke rising between them as it walks."
+  },
+  {
+    "id": "emberplate",
+    "name": "Emberplate",
+    "line": "kilnback",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A heftier stegosaur whose back-plates have thickened and darkened at the edges like cooling iron, glowing ember-orange cores visible through cracks, rust-red hide deepening toward brown."
+  },
+  {
+    "id": "cinderridge",
+    "name": "Cinderridge",
+    "line": "kilnback",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A massive stegosaur with a jagged ridge of dark, forge-hot plates running its full spine, deep umber-red hide seamed in glowing orange cracks, heat visibly rippling the air around it."
+  },
+  {
+    "id": "calderaback",
+    "name": "Calderaback",
+    "line": "kilnback",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A titanic stegosaur whose back has become a living caldera ridge of dark volcanic plates glowing deep orange-gold at every seam, near-black hide radiating constant heat-haze, utterly monumental and warm-eyed despite its scale."
+  },
+  {
+    "id": "thrumcrest",
+    "name": "Thrumcrest",
+    "line": "thrumcrest",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A long-necked sauropod creature with a hollow crest on its head and warm tan-gold hide marked in faint yellow streaks, humming softly before a storm."
+  },
+  {
+    "id": "thunderneck",
+    "name": "Thunderneck",
+    "line": "thrumcrest",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A much larger long-necked dinosaur with a fuller resonating crest and deep golden-tan hide crackling faintly with static along its neck, an imposing but gentle presence."
+  },
+  {
+    "id": "voltneck",
+    "name": "Voltneck",
+    "line": "thrumcrest",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "An even taller sauropod whose crest now glows faintly gold, visible arcs of static travelling the full length of its long neck, hide deepening to a rich amber."
+  },
+  {
+    "id": "stormspine",
+    "name": "Stormspine",
+    "line": "thrumcrest",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A colossal sauropod with a spine of small glowing storm-gold ridges running neck to tail, deep amber-bronze hide crackling with constant static, small clouds visibly gathering above its crest."
+  },
+  {
+    "id": "thunderwake",
+    "name": "Thunderwake",
+    "line": "thrumcrest",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "An awe-inspiring storm-titan sauropod whose entire spine and crest blaze with rolling golden lightning, deep bronze hide crackling head to tail, trailing a visible wake of gathered storm cloud."
+  },
+  {
+    "id": "duneplod",
+    "name": "Duneplod",
+    "line": "duneplod",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A sturdy sand-coloured donkey creature with patient dark eyes and a laden, unhurried gait, small packs of gear strapped to its sides."
+  },
+  {
+    "id": "sandtrudge",
+    "name": "Sandtrudge",
+    "line": "duneplod",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A broader, more muscular sand-donkey with a thicker tan-brown coat and stone-toughened hooves, carrying heavier loads with total calm."
+  },
+  {
+    "id": "duneback",
+    "name": "Duneback",
+    "line": "duneplod",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A hefty pack-beast whose hide has toughened into a sandy ochre hide with faint stone-plate ridges along its back, unbothered by any weight."
+  },
+  {
+    "id": "caravox",
+    "name": "Caravox",
+    "line": "duneplod",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A massive, heavily muscled pack-beast with rugged stone-plated shoulders and deep ochre-brown hide, radiating the steady reliability of a creature that has never once been lost."
+  },
+  {
+    "id": "wayfarox",
+    "name": "Wayfarox",
+    "line": "duneplod",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A monumental desert-beast of burden, its shoulders and back fully plated in weathered sandstone armour, deep bronze-umber hide glowing faintly amber at the seams, utterly unshakeable."
+  },
+  {
+    "id": "boltstripe",
+    "name": "Boltstripe",
+    "line": "boltstripe",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A lean zebra-like creature with crisp black-and-gold lightning-shaped stripes, alert ears and a faint static crackle along its mane."
+  },
+  {
+    "id": "voltstripe",
+    "name": "Voltstripe",
+    "line": "boltstripe",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A leaner, faster zebra with bolder gold-lightning stripes and a brighter crackling mane, static visibly sparking between its ears when startled."
+  },
+  {
+    "id": "sparkrunner",
+    "name": "Sparkrunner",
+    "line": "boltstripe",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A swift golden-striped zebra whose stripe pattern now glows faintly, a trailing crackle of static following every stride, mane standing on end."
+  },
+  {
+    "id": "stormstrider",
+    "name": "Stormstrider",
+    "line": "boltstripe",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A powerful zebra-steed with deep gold-and-black storm-stripes crackling continuously, a mane of visible arcing static, small storm clouds gathering as it runs."
+  },
+  {
+    "id": "thunderhoof",
+    "name": "Thunderhoof",
+    "line": "boltstripe",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A magnificent storm-stallion whose gold lightning-stripes blaze continuously down a near-black coat, a mane of living lightning, hoofbeats that arrive as thunderclaps."
+  },
+  {
+    "id": "bonelet",
+    "name": "Bonelet",
+    "line": "bonelet",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small rattling skeleton creature wrapped in a tattered grey cloak, glowing violet eye-lights and a permanently amused rattle to its bones."
+  },
+  {
+    "id": "bonewarden",
+    "name": "Bonewarden",
+    "line": "bonelet",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A taller armoured skeleton warrior in weathered bone-plate, glowing violet eye-sockets and a steady unblinking stance, marsh moss growing faintly on its joints."
+  },
+  {
+    "id": "boneknight",
+    "name": "Boneknight",
+    "line": "bonelet",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broader bone-knight in heavier plate armour etched with faded runes, deeper violet eye-glow, standing at permanent, dutiful attention."
+  },
+  {
+    "id": "cryptlord",
+    "name": "Cryptlord",
+    "line": "bonelet",
+    "stage": 4,
+    "element": "void",
+    "prompt": "An imposing armoured bone-lord draped in a tattered regal cloak over dark plate, violet eye-glow now bright enough to light its own path, radiating cold authority."
+  },
+  {
+    "id": "netherking",
+    "name": "Netherking",
+    "line": "bonelet",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A towering bone-sovereign in ornate dark plate fused with faintly glowing violet runes down every joint, a tattered crown-like cloak trailing behind it, commanding total stillness wherever it stands."
+  },
+  {
+    "id": "bonelet",
+    "name": "Bonelet",
+    "line": "bonelet__hexbones",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small rattling skeleton creature wrapped in a tattered grey cloak, glowing violet eye-lights and a permanently amused rattle to its bones."
+  },
+  {
+    "id": "hexbones",
+    "name": "Hexbones",
+    "line": "bonelet__hexbones",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A robed skeleton mage wrapped in violet-trimmed tattered cloth, a faint glowing hex-symbol hovering near one bony hand, eye-lights burning steady violet."
+  },
+  {
+    "id": "hexwraith",
+    "name": "Hexwraith",
+    "line": "bonelet__hexbones",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A taller robed skeleton mage whose tattered cloak now trails glowing violet sigils, a second faint hex-glyph orbiting its raised hand, eye-lights deepening to indigo."
+  },
+  {
+    "id": "curseweaver",
+    "name": "Curseweaver",
+    "line": "bonelet__hexbones",
+    "stage": 4,
+    "element": "void",
+    "prompt": "An imposing hex-mage draped in a heavier rune-stitched cloak, several glowing violet glyphs circling it constantly, indigo eye-glow bright and deliberate."
+  },
+  {
+    "id": "hexsovereign",
+    "name": "Hexsovereign",
+    "line": "bonelet__hexbones",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A commanding archmage of bone wrapped in an ornate rune-covered cloak, a full ring of glowing violet hex-glyphs orbiting its raised arms, eye-glow like twin cold stars."
+  },
+  {
+    "id": "bonelet",
+    "name": "Bonelet",
+    "line": "bonelet__rattlecloak",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small rattling skeleton creature wrapped in a tattered grey cloak, glowing violet eye-lights and a permanently amused rattle to its bones."
+  },
+  {
+    "id": "rattlecloak",
+    "name": "Rattlecloak",
+    "line": "bonelet__rattlecloak",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A lean skeleton rogue wrapped in a silent, wind-whipped grey cloak, faint pale-blue eye-glow and a blade held loose and ready."
+  },
+  {
+    "id": "windshroud",
+    "name": "Windshroud",
+    "line": "bonelet__rattlecloak",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A leaner bone-rogue whose cloak now billows constantly with captured wind, twin blades at the ready, pale-blue eye-glow sharp and watchful."
+  },
+  {
+    "id": "gustblade",
+    "name": "Gustblade",
+    "line": "bonelet__rattlecloak",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A swift armoured bone-duellist whose wind-cloak trails visible gusts, blades gleaming pale silver-blue, eye-glow bright and focused mid-motion."
+  },
+  {
+    "id": "wraithgale",
+    "name": "Wraithgale",
+    "line": "bonelet__rattlecloak",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A masterful wind-wraith duellist wrapped in a cloak of constantly swirling gale, blades trailing pale cyan light, eye-glow like twin distant stars in a gathering storm."
+  },
+  {
+    "id": "squeakwing",
+    "name": "Squeakwing",
+    "line": "squeakwing",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small round-eared bat with dusky purple-grey fur and oversized membrane wings, chittering nervously mid-flight."
+  },
+  {
+    "id": "fluttershriek",
+    "name": "Fluttershriek",
+    "line": "squeakwing",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A leaner bat with broader violet-grey wings and sharper hearing-tuned ears, a faint echo-ripple visible around its shrieks."
+  },
+  {
+    "id": "nightwing",
+    "name": "Nightwing",
+    "line": "squeakwing",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A sleeker night-bat with deep indigo wing membranes edged in faint violet glow, keen glowing eyes cutting easily through darkness."
+  },
+  {
+    "id": "dreadwing",
+    "name": "Dreadwing",
+    "line": "squeakwing",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A striking bat with wide near-black wings rimmed in bright violet glow, a haunting silhouette that seems to arrive before any sound does."
+  },
+  {
+    "id": "voidwing",
+    "name": "Voidwing",
+    "line": "squeakwing",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A magnificent void-bat whose vast wings are edged in brilliant glowing violet like torn night sky, eyes blazing pale lavender, utterly silent and utterly unmissable."
+  },
+  {
+    "id": "hissling",
+    "name": "Hissling",
+    "line": "hissling",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A small coiled snake creature in mossy green scales with darker leaf-shaped patterning, tongue flicking curiously, coiled loosely in the grass."
+  },
+  {
+    "id": "coilfang",
+    "name": "Coilfang",
+    "line": "hissling",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A longer moss-green snake with bolder leaf-patterned scales and a more pronounced hood, coiling with visible readiness."
+  },
+  {
+    "id": "vipercoil",
+    "name": "Vipercoil",
+    "line": "hissling",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A thicker viper with deep green scales patterned in dark thorn-like markings, a wider hood and sharper fangs visible at rest."
+  },
+  {
+    "id": "thornviper",
+    "name": "Thornviper",
+    "line": "hissling",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A powerful viper whose scales have roughened into thorn-like ridges along its back, deep forest-green patterning, hood flared wide and imposing."
+  },
+  {
+    "id": "venomcrown",
+    "name": "Venomcrown",
+    "line": "hissling",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A commanding serpent sovereign, its thorn-ridged scales a deep emerald patterned in glowing pale-green markings, an immense flared hood like a crown, utterly still and utterly in control."
+  },
+  {
+    "id": "weblin",
+    "name": "Weblin",
+    "line": "weblin",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small round spider with eight glinting violet eyes and thin glassy legs, spinning a web that shimmers faintly with caught dewdrops; dark plum body with pale lilac joints."
+  },
+  {
+    "id": "silkfen",
+    "name": "Silkfen",
+    "line": "weblin",
+    "stage": 2,
+    "element": "void",
+    "prompt": "Grows a second row of eyes and longer, silk-draped legs trailing loose threads like ribbons; same plum-and-lilac colouring, now with faint glowing thread patterns along its back."
+  },
+  {
+    "id": "duskweaver",
+    "name": "Duskweaver",
+    "line": "weblin",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broader abdomen patterned like a woven web, with glowing violet thread-lines pulsing along each leg; the same many-eyed face, now framed by a ruff of spun silk."
+  },
+  {
+    "id": "nightloom",
+    "name": "Nightloom",
+    "line": "weblin",
+    "stage": 4,
+    "element": "void",
+    "prompt": "Looms over its own web platform on long, elegant legs, trailing veils of silk like a gown; deep violet body glows faintly at every joint where thread meets chitin."
+  },
+  {
+    "id": "fatewoven",
+    "name": "Fatewoven",
+    "line": "weblin",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A majestic web-matriarch with an ornate crown of spun silk and glowing thread-patterns forming constellations across its abdomen; the same ancient many-eyed gaze, now serene and vast, ruling a web the size of a hollow."
+  },
+  {
+    "id": "skullbop",
+    "name": "Skullbop",
+    "line": "skullbop",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small bouncing skull with hollow violet-glowing eye sockets and a chattering jaw, chipped ivory-white bone with faint moss stains."
+  },
+  {
+    "id": "rattlecap",
+    "name": "Rattlecap",
+    "line": "skullbop",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly larger skull now trailing a wisp of dark smoke beneath its jaw, ivory bone deepening toward grey, eye-glow a touch brighter violet."
+  },
+  {
+    "id": "jawknell",
+    "name": "Jawknell",
+    "line": "skullbop",
+    "stage": 3,
+    "element": "void",
+    "prompt": "Its jaw has grown an extra hinge and small bone spurs ring its crown like a jester's cap; smoky wisps thicken into a trailing tail."
+  },
+  {
+    "id": "direknell",
+    "name": "Direknell",
+    "line": "skullbop",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A cluster of smaller rattling bone-shards now orbits its skull, jaw wide and ornate with carved grooves that glow violet when it chatters."
+  },
+  {
+    "id": "grimcrown",
+    "name": "Grimcrown",
+    "line": "skullbop",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A towering ceremonial skull crowned with interlocking jawbones and a swirling cloak of violet smoke, eye sockets blazing like twin lanterns over the whole graveyard."
+  },
+  {
+    "id": "blorp",
+    "name": "Blorp",
+    "line": "blorp",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A squat, bulging purple slime with a wide gummy grin and two stubby horn-nubs, faintly glowing veins running through its jelly body."
+  },
+  {
+    "id": "gobblorp",
+    "name": "Gobblorp",
+    "line": "blorp",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A bigger slime with two curling horns and a wide lantern-swallowing jaw, deep violet body glowing brighter along its veins, faint magenta glow around its grin."
+  },
+  {
+    "id": "lampmaw",
+    "name": "Lampmaw",
+    "line": "blorp",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A taller slime now with three curling horns and a permanently open jaw ringed in tiny lantern-flame lights it's swallowed, deepening violet jelly with brighter magenta veins."
+  },
+  {
+    "id": "moonmaw",
+    "name": "Moonmaw",
+    "line": "blorp",
+    "stage": 4,
+    "element": "void",
+    "prompt": "Looms wide and toothy with a crescent-shaped horn crown and a chest full of dimly glowing swallowed lanterns visible through translucent jelly."
+  },
+  {
+    "id": "duskgorge",
+    "name": "Duskgorge",
+    "line": "blorp",
+    "stage": 5,
+    "element": "void",
+    "prompt": "An enormous, regal slime sovereign whose whole body is a lantern-lit night sky under violet jelly skin, crowned in branching horns and trailing wisps of stolen light."
+  },
+  {
+    "id": "gildfin",
+    "name": "Gildfin",
+    "line": "gildfin",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small round goldfish with stubby fins and huge round eyes, bright orange-gold scales with a faint shimmer."
+  },
+  {
+    "id": "mirrorscale",
+    "name": "Mirrorscale",
+    "line": "gildfin",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A sleek koi with flowing fins and pearlescent scales that catch the sky's colours, gold fading into soft blue along its back."
+  },
+  {
+    "id": "glimmerkoi",
+    "name": "Glimmerkoi",
+    "line": "gildfin",
+    "stage": 3,
+    "element": "water",
+    "prompt": "Longer and more elegant with trailing ribbon fins, scales shifting from gold to silvery-blue and catching glints of light like a mirror in motion."
+  },
+  {
+    "id": "astralkoi",
+    "name": "Astralkoi",
+    "line": "gildfin",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A graceful, elongating koi whose fins trail like comet tails and whose pale blue scales now hold faint star-like sparkle points."
+  },
+  {
+    "id": "mirrorwyrm",
+    "name": "Mirrorwyrm",
+    "line": "gildfin",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A majestic serpentine koi-dragon with flowing starlit fins and scales like liquid moonlight, its long body arcing through the air trailing a faint galaxy-glow."
+  },
+  {
+    "id": "gildfin",
+    "name": "Gildfin",
+    "line": "gildfin__magmascale",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small round goldfish with stubby fins and huge round eyes, bright orange-gold scales with a faint shimmer."
+  },
+  {
+    "id": "magmascale",
+    "name": "Magmascale",
+    "line": "gildfin__magmascale",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A koi wreathed in heat-shimmer, orange-red scales glowing at the edges like cooling lava, fins trailing faint embers."
+  },
+  {
+    "id": "cinderkoi",
+    "name": "Cinderkoi",
+    "line": "gildfin__magmascale",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A longer, more muscular lava-koi with cracked-magma scale patterns glowing brighter at the seams, fins now edged in true flame."
+  },
+  {
+    "id": "pyrokoi",
+    "name": "Pyrokoi",
+    "line": "gildfin__magmascale",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "An imposing fire-koi whose whole spine glows like a lava seam, trailing streams of drifting cinders from every fin."
+  },
+  {
+    "id": "magmawyrm",
+    "name": "Magmawyrm",
+    "line": "gildfin__magmascale",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A colossal molten dragon-koi, scales like cooling obsidian veined with glowing gold, its mane and fins a constant wreath of rolling flame."
+  },
+  {
+    "id": "quillpuff",
+    "name": "Quillpuff",
+    "line": "quillpuff",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small round puffed-up fish covered in soft spines, pale blue-white body with a worried, wide-eyed expression."
+  },
+  {
+    "id": "sunbasker",
+    "name": "Sunbasker",
+    "line": "quillpuff",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A huge flat sunfish drifting sideways at the surface, pale gold-cream body with soft blue fin edges and a serene half-lidded expression, small birds perched along its back."
+  },
+  {
+    "id": "solscale",
+    "name": "Solscale",
+    "line": "quillpuff",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A broader, more radiant sunfish with a faint golden sheen spreading across its pale body and brighter blue-gold fin edges, still drifting serenely at the surface."
+  },
+  {
+    "id": "coronafin",
+    "name": "Coronafin",
+    "line": "quillpuff",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A grand golden sunfish whose fin-edges now flare like solar rays, pale cream body glowing faintly warm, its half-lidded eyes calm as still water."
+  },
+  {
+    "id": "sovereignsun",
+    "name": "Sovereignsun",
+    "line": "quillpuff",
+    "stage": 5,
+    "element": "water",
+    "prompt": "An immense radiant sunfish crowned in flaring golden fin-rays like a corona, glowing softly gold all over with serene half-lidded eyes; where it surfaces, the whole lake seems to shine."
+  },
+  {
+    "id": "chompsy",
+    "name": "Chompsy",
+    "line": "chompsy",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small fierce piranha with an oversized toothy grin and bright red-orange scales, fins flared aggressively."
+  },
+  {
+    "id": "grinfin",
+    "name": "Grinfin",
+    "line": "chompsy",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A sleek grey-blue shark with a permanent wide grin full of teeth, powerful fins and a confident, predatory glide."
+  },
+  {
+    "id": "ripjaw",
+    "name": "Ripjaw",
+    "line": "chompsy",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A bulkier shark with a jagged double row of teeth and battle-scarred fins, grey-blue skin deepening toward a colder slate tone."
+  },
+  {
+    "id": "direfin",
+    "name": "Direfin",
+    "line": "chompsy",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A broad-shouldered apex shark with reinforced ridged fins and rows of glinting teeth, its slate-blue hide darkening with faint predatory markings."
+  },
+  {
+    "id": "leviagrin",
+    "name": "Leviagrin",
+    "line": "chompsy",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A colossal ancient leviathan shark, its cavernous grin ringed in glowing teeth and its dark, storm-blue hide scarred like a warship's hull, trailing a wake wherever it turns."
+  },
+  {
+    "id": "lanterngulp",
+    "name": "Lanterngulp",
+    "line": "lanterngulp",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A round, dark anglerfish with a huge toothy grin and a tiny glowing lure dangling above its head, deep violet-black body with faint star-like speckles."
+  },
+  {
+    "id": "duskangler",
+    "name": "Duskangler",
+    "line": "lanterngulp",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly longer anglerfish with a brighter, warmer lure-glow and small fin-spines, its violet-black hide now flecked with faint constellations."
+  },
+  {
+    "id": "gloomlure",
+    "name": "Gloomlure",
+    "line": "lanterngulp",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broader, more patient-looking anglerfish with a longer glowing lure-stalk and ridged fins, deep indigo body dotted with soft starlight speckles."
+  },
+  {
+    "id": "abysslure",
+    "name": "Abysslure",
+    "line": "lanterngulp",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A large, imposing anglerfish with an ornate branching lure crowned in warm light and heavier armoured fins, near-black body glittering like a night sky."
+  },
+  {
+    "id": "voidmaw",
+    "name": "Voidmaw",
+    "line": "lanterngulp",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A massive ancient anglerfish sovereign of the deep, its huge crowned lure blazing like a captive star above a cavernous jaw, body a void-black expanse glittering with true constellations."
+  },
+  {
+    "id": "hobsnap",
+    "name": "Hobsnap",
+    "line": "hobsnap",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A dark, sleek goblin shark with a long flattened snout and a jaw that juts forward on display, deep violet-grey hide with faint glowing gill-markings."
+  },
+  {
+    "id": "springjaw",
+    "name": "Springjaw",
+    "line": "hobsnap",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly bulkier goblin shark whose jaw now snaps forward with visible mechanical speed, hide deepening toward indigo with brighter glowing gill-lines."
+  },
+  {
+    "id": "vaultjaw",
+    "name": "Vaultjaw",
+    "line": "hobsnap",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A broader, more armoured goblin shark with reinforced jaw-plates and longer fins, deep indigo-violet skin marked with glowing amber gill-streaks."
+  },
+  {
+    "id": "clampfiend",
+    "name": "Clampfiend",
+    "line": "hobsnap",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A heavily built predator shark whose jaw has grown segmented, trap-like plating, its near-black hide glowing amber along every fin edge and gill slit."
+  },
+  {
+    "id": "doomlatch",
+    "name": "Doomlatch",
+    "line": "hobsnap",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A colossal ancient goblin shark whose crowned, segmented jaw looks forged rather than grown, void-black hide blazing with amber glow-lines like a living machine of the deep."
+  },
+  {
+    "id": "bellowdeep",
+    "name": "Bellowdeep",
+    "line": "bellowdeep",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A colossal, gentle blue-grey whale with a broad barrel body, small fin-like flippers and deep-set warm amber eyes half-closed in song, smooth rounded silhouette with faint darker speckling along its back."
+  },
+  {
+    "id": "bellowswell",
+    "name": "Bellowswell",
+    "line": "bellowdeep",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A slightly larger Bellowdeep with a fuller belly and softly glowing pale-blue throat grooves that pulse when it hums, same rounded silhouette and amber eyes, now ringed with faint freckled patterning."
+  },
+  {
+    "id": "bellowtide",
+    "name": "Bellowtide",
+    "line": "bellowdeep",
+    "stage": 3,
+    "element": "water",
+    "prompt": "Broader still, its back now carries a low ridge of barnacle-like nodules glowing faintly blue at the tips, the throat grooves deepened into visible channels, tail fluke grown a soft frilled edge."
+  },
+  {
+    "id": "bellowchorus",
+    "name": "Bellowchorus",
+    "line": "bellowdeep",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A truly massive whale-shape with twin rows of luminous throat grooves shimmering like organ pipes, dark ocean-blue skin fading to cream underneath, small crystalline barnacle-crowns forming along its spine."
+  },
+  {
+    "id": "bellowsong",
+    "name": "Bellowsong",
+    "line": "bellowdeep",
+    "stage": 5,
+    "element": "water",
+    "prompt": "An ancient, legendary-scale leviathan whose entire back is a crown of glowing coral-blue ridges pulsing in rhythm with its song, deep indigo skin, a cream underside, huge kind amber eyes holding the whole lake's memory."
+  },
+  {
+    "id": "barbelmail",
+    "name": "Barbelmail",
+    "line": "barbelmail",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A stout armoured catfish standing on four stubby legs, its back plated in overlapping bronze-brown scutes and long whiskered barbels framing a wide, patient face."
+  },
+  {
+    "id": "barbelguard",
+    "name": "Barbelguard",
+    "line": "barbelmail",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A broader Barbelmail with an extra row of plating along its flanks and thicker barbels, the same bronze-brown scutes now showing faint hammered, rivet-like ridges."
+  },
+  {
+    "id": "barbelbulwark",
+    "name": "Barbelbulwark",
+    "line": "barbelmail",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "Heavier-set with a raised plated crest along its spine and stouter legs, its scutes darkened toward iron-brown, barbels grown stiff and spear-like."
+  },
+  {
+    "id": "barbelrampart",
+    "name": "Barbelrampart",
+    "line": "barbelmail",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A wall of a creature: broad, low and dense, its plating now overlapping like castle brick in deep rust-brown, small tremor-cracks of pale ore glinting between the scutes."
+  },
+  {
+    "id": "barbelcitadel",
+    "name": "Barbelcitadel",
+    "line": "barbelmail",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A living fortress of dark iron-brown armour plate crowned with jagged rampart-like ridges along its back, four thick braced legs, long barbels hanging like drawbridge chains."
+  },
+  {
+    "id": "emberspine",
+    "name": "Emberspine",
+    "line": "emberspine",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A sleek fire lionfish standing on fin-legs, its body striped in glowing orange-red with a crown of ember-tipped spines fanned along its back."
+  },
+  {
+    "id": "cinderspine",
+    "name": "Cinderspine",
+    "line": "emberspine",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A larger, more muscular Emberspine with denser spine-fans that smoulder at the tips, deeper orange-red stripes and small trailing wisps of smoke."
+  },
+  {
+    "id": "scorchspine",
+    "name": "Scorchspine",
+    "line": "emberspine",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "Its spine-fan has doubled, curving forward like a blazing mane, skin darkening toward scorched red-black with bright cinder-orange stripes still glowing beneath."
+  },
+  {
+    "id": "blazespine",
+    "name": "Blazespine",
+    "line": "emberspine",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A towering fire fish whose entire dorsal fan burns steady like banked coals, deep garnet-red body with molten orange fissure-markings and trailing smoke plumes."
+  },
+  {
+    "id": "novaspine",
+    "name": "Novaspine",
+    "line": "emberspine",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A radiant, majestic final form whose full crown of spines flares like a captured sunburst, near-black ember-red body glowing from every seam, bright golden-white nova-glow at its spine-tips."
+  },
+  {
+    "id": "skysail",
+    "name": "Skysail",
+    "line": "skysail",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A small manta-ray-shaped glider skimming just above water, pale sky-blue with a soft frilled wing-edge and two round curious eyes."
+  },
+  {
+    "id": "cloudsail",
+    "name": "Cloudsail",
+    "line": "skysail",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A slightly larger Skysail with longer, more sculpted wing-tips and a faint teal sheen, its frilled edges now trailing small wisps like cloud vapour."
+  },
+  {
+    "id": "galesail",
+    "name": "Galesail",
+    "line": "skysail",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "Broader-winged, banking through the air rather than water, its pale-blue body deepening to teal with pale cloud-streak patterning across its back."
+  },
+  {
+    "id": "zephyrsail",
+    "name": "Zephyrsail",
+    "line": "skysail",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A graceful high-altitude glider with long trailing wing-streamers and a deep teal-cyan body, faint wind-glow tracing the edges of its wings."
+  },
+  {
+    "id": "stratosail",
+    "name": "Stratosail",
+    "line": "skysail",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic sky-manta with vast sculpted wings edged in glowing pale cyan, deep storm-teal body fading to cream beneath, trailing long wind-streamer ribbons like a comet's tail."
+  },
+  {
+    "id": "skimgull",
+    "name": "Skimgull",
+    "line": "skimgull",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A scrappy pale pigeon-like Mystic with quick wings and bright curious eyes, feathers a soft off-white with grey wingtips."
+  },
+  {
+    "id": "galeherald",
+    "name": "Galeherald",
+    "line": "skimgull",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A larger, gilded gull with a fuller crest of gold-cream feathers streaming from its head, warm amber-gold plumage and sharper, more confident eyes."
+  },
+  {
+    "id": "galeharbinger",
+    "name": "Galeharbinger",
+    "line": "skimgull",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A tall, regal herald-bird with a longer golden mane-crest and broader wings edged in pale storm-white, plumage deepened to a rich honey-gold."
+  },
+  {
+    "id": "galesentinel",
+    "name": "Galesentinel",
+    "line": "skimgull",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A commanding sky-sentinel with an even fuller crest streaming like a banner, deep gold plumage with pale cloud-white wing markings and sharp, watchful eyes."
+  },
+  {
+    "id": "galecrown",
+    "name": "Galecrown",
+    "line": "skimgull",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A majestic, near-mythic herald crowned in a blazing mane of gold-white feathers, rich amber-gold body, vast wings edged in glowing pale light, radiating quiet authority."
+  },
+  {
+    "id": "saltfox",
+    "name": "Saltfox",
+    "line": "saltfox",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A lean coastal fox with a pale blue-white coat, webbed paw-tufts and a fin-like tail tip, alert and quick-eyed."
+  },
+  {
+    "id": "tidefox",
+    "name": "Tidefox",
+    "line": "saltfox",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A slightly larger Saltfox with a deeper blue-tinged coat and small translucent fin-frills along its tail and ears."
+  },
+  {
+    "id": "brinefox",
+    "name": "Brinefox",
+    "line": "saltfox",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A sleeker, faster fox with a rich teal-blue coat, more pronounced fin-frills down its spine and a glossy salt-crystal sheen catching the light."
+  },
+  {
+    "id": "ripfox",
+    "name": "Ripfox",
+    "line": "saltfox",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A swift, wave-carved fox shape with a deep aqua coat streaked in foam-white, fully finned tail and ear-tufts, built for cutting through current."
+  },
+  {
+    "id": "maelfox",
+    "name": "Maelfox",
+    "line": "saltfox",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A majestic final-form fox wreathed in trailing fin-like fur that moves like flowing water, deep ocean-blue coat with foam-white markings and piercing storm-grey eyes."
+  },
+  {
+    "id": "shellback",
+    "name": "Shellback",
+    "line": "shellback",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A squat hermit-toad wearing a borrowed shell far too big for it, warm teal skin and a curious, sleepy expression peeking out."
+  },
+  {
+    "id": "reefwarden",
+    "name": "Reefwarden",
+    "line": "shellback",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A larger shelled toad whose shell has become a living coral reef, barnacles, sea fans and glowing coral tips, teal-blue skin fading to a cream belly, huge warm amber eyes."
+  },
+  {
+    "id": "reefbastion",
+    "name": "Reefbastion",
+    "line": "shellback",
+    "stage": 3,
+    "element": "water",
+    "prompt": "An even broader reef-toad, its shell now a dense coral rampart with small glowing tide-pools between the ridges, deeper teal skin and a thicker, more armoured brow."
+  },
+  {
+    "id": "reefmonarch",
+    "name": "Reefmonarch",
+    "line": "shellback",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A grand reef-guardian whose coral shell has grown tiered like a crown of reef terraces, rich blue-teal skin, glowing coral crests, and a calm, regal gaze."
+  },
+  {
+    "id": "reefmonolith",
+    "name": "Reefmonolith",
+    "line": "shellback",
+    "stage": 5,
+    "element": "water",
+    "prompt": "An ancient, colossal reef-guardian whose shell is an entire miniature reef ecosystem of glowing coral spires, tiny waterfalls and drifting fronds, deep teal-blue skin and vast, kind amber eyes."
+  },
+  {
+    "id": "coralclack",
+    "name": "Coralclack",
+    "line": "coralclack",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A bright coral-pink crab with a coral-garden growing across its shell, one larger display claw and quick, clacking motions."
+  },
+  {
+    "id": "coralshell",
+    "name": "Coralshell",
+    "line": "coralclack",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A slightly larger Coralclack with denser coral growth across its shell and a brighter, more elaborate display claw fringed in pale pink fans."
+  },
+  {
+    "id": "coralcrest",
+    "name": "Coralcrest",
+    "line": "coralclack",
+    "stage": 3,
+    "element": "water",
+    "prompt": "A broader crab whose coral crown has grown taller along its shell-ridge, deep coral-red colouring with pale pink fan accents and a proudly raised display claw."
+  },
+  {
+    "id": "coralcrown",
+    "name": "Coralcrown",
+    "line": "coralclack",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A striking coral-armoured crab whose shell now forms a tiered coral crown, rich rose-red colouring, glowing pale-pink coral tips and an imposing raised claw."
+  },
+  {
+    "id": "coralthrone",
+    "name": "Coralthrone",
+    "line": "coralclack",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A magnificent, throne-like crab whose entire shell has become a flourishing coral garden with glowing fronds and tiny anemones, deep rose-red body and a regal, unhurried presence."
+  },
+  {
+    "id": "jestfin",
+    "name": "Jestfin",
+    "line": "jestfin",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A small round clownfish in bold orange-and-white bands with a mischievous gap-toothed grin, translucent frilled fins flicking like a jester's sleeves."
+  },
+  {
+    "id": "quipfin",
+    "name": "Quipfin",
+    "line": "jestfin",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A slightly bigger clownfish whose fin-frills have grown into a ruffled collar of orange and cream, with one eye perpetually mid-wink."
+  },
+  {
+    "id": "harlequill",
+    "name": "Harlequill",
+    "line": "jestfin",
+    "stage": 3,
+    "element": "water",
+    "prompt": "Its collar has become a proper diamond-patterned jester ruff in orange, cream and a new deep sapphire-violet tint, with long quill-like dorsal spines that wiggle when it laughs."
+  },
+  {
+    "id": "masquerfin",
+    "name": "Masquerfin",
+    "line": "jestfin",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A showy carnival fish trailing ribbon-fins in violet and gold, a painted mask-pattern spreading across its face in the same orange-and-cream bands as ever, only bolder."
+  },
+  {
+    "id": "harlequeen",
+    "name": "Harlequeen",
+    "line": "jestfin",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A resplendent reef monarch crowned in flowing magenta-and-gold ribbon fins shaped like a jester's crown, its original orange-and-cream bands now glowing faintly gold along every seam."
+  },
+  {
+    "id": "lancefin",
+    "name": "Lancefin",
+    "line": "lancefin",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A sleek cobalt-blue swordfish with a long silver rostrum blade and a proud, focused stare, dorsal fin raised like a raised visor."
+  },
+  {
+    "id": "sabrefin",
+    "name": "Sabrefin",
+    "line": "lancefin",
+    "stage": 2,
+    "element": "water",
+    "prompt": "A leaner, longer swordfish in deepening blue, its rostrum now a proper twin-edged sabre and its dorsal fin fanned like a cape."
+  },
+  {
+    "id": "rapierjaw",
+    "name": "Rapierjaw",
+    "line": "lancefin",
+    "stage": 3,
+    "element": "water",
+    "prompt": "Darker indigo-blue plating along its spine, a needle-fine rostrum held forward like a fencer's rapier, fins trimmed sharp and precise."
+  },
+  {
+    "id": "bladewake",
+    "name": "Bladewake",
+    "line": "lancefin",
+    "stage": 4,
+    "element": "water",
+    "prompt": "A long, powerful duelist in near-navy blue with faint steel highlights, its wake curling into blade-shaped ripples behind it."
+  },
+  {
+    "id": "tidelance",
+    "name": "Tidelance",
+    "line": "lancefin",
+    "stage": 5,
+    "element": "water",
+    "prompt": "A midnight-blue champion swordfish crowned in a faint silver-blue glow along every fin edge, its rostrum gleaming like a legendary blade held high."
+  },
+  {
+    "id": "inkwhirl",
+    "name": "Inkwhirl",
+    "line": "inkwhirl",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A dusky violet octopus-like Mystic with long curling tentacles arranged in elegant loops, faint constellations of ink-dot freckles across its mantle."
+  },
+  {
+    "id": "inkdrift",
+    "name": "Inkdrift",
+    "line": "inkwhirl",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A larger tentacled Mystic in deepening violet, its ink trails drifting into soft looping shapes behind it as it moves."
+  },
+  {
+    "id": "versewhirl",
+    "name": "Versewhirl",
+    "line": "inkwhirl",
+    "stage": 3,
+    "element": "void",
+    "prompt": "Its mantle has darkened to a rich indigo-violet with faint glowing dot-patterns, tentacles now curling into deliberate, elegant script-like shapes."
+  },
+  {
+    "id": "sonnetide",
+    "name": "Sonnetide",
+    "line": "inkwhirl",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A stately deep-violet ink dancer, tentacles trailing in long ribboned arcs, its dot-markings now glowing soft lilac like scattered stars."
+  },
+  {
+    "id": "inkmuse",
+    "name": "Inkmuse",
+    "line": "inkwhirl",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A magnificent violet-black muse crowned in glowing lilac ink-patterns, its many tentacles sweeping in a slow, hypnotic, poem-like flourish."
+  },
+  {
+    "id": "fawnlet",
+    "name": "Fawnlet",
+    "line": "fawnlet",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A small dappled fawn in warm honey-brown with soft cream spots like scattered sunlight, tiny velvet nubs just starting to bud into antlers."
+  },
+  {
+    "id": "mossbuck",
+    "name": "Mossbuck",
+    "line": "fawnlet",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A tall moss-and-antler stag with sprawling branch-like antlers draped in ferns, tiny mushrooms and white flowers, glowing leaf-shaped eye markings down its flank, golden-brown fur fading to a cream belly."
+  },
+  {
+    "id": "thicketbuck",
+    "name": "Thicketbuck",
+    "line": "fawnlet",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "An even broader stag whose antlers have grown a second tangle of living thicket, deeper moss-green fur now shot through with the same glowing leaf markings, more mushrooms clustered at the base of each antler."
+  },
+  {
+    "id": "grovemonarch",
+    "name": "Grovemonarch",
+    "line": "fawnlet",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A towering forest monarch whose antlers form a near-complete canopy of branches, leaves and hanging vines, its glowing leaf-markings now a steady soft light along its spine, deep mossy green fur with a rich cream mane."
+  },
+  {
+    "id": "canopyheart",
+    "name": "Canopyheart",
+    "line": "fawnlet",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A majestic elder stag whose full canopy-antlers shelter small glowing motes of golden light like fireflies, its deep forest-green coat crowned in a rich cream mane, every glowing leaf-mark blazing gently gold."
+  },
+  {
+    "id": "bramblewolf",
+    "name": "Bramblewolf",
+    "line": "bramblewolf",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A lean grey-green wolf bristling with small thorny brambles along its back and tail, sharp amber eyes, a low predatory crouch."
+  },
+  {
+    "id": "thornfang",
+    "name": "Thornfang",
+    "line": "bramblewolf",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A larger, darker wolf whose thorn-bramble mane has thickened into a spiked ruff, faint yellow-green glow along its markings, ivory horns curving back from its brow."
+  },
+  {
+    "id": "bristlemane",
+    "name": "Bristlemane",
+    "line": "bramblewolf",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "An even broader wolf with a full bristling mane of interlaced thorn-branches, its glow-markings brighter, deep near-black green fur rippling with muscle."
+  },
+  {
+    "id": "duskbramble",
+    "name": "Duskbramble",
+    "line": "bramblewolf",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "A towering alpha wolf wreathed in thick brambles down its spine and tail, its horns longer and darker, glow-markings pulsing steadily like embers in undergrowth."
+  },
+  {
+    "id": "nightbriar",
+    "name": "Nightbriar",
+    "line": "bramblewolf",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A colossal apex wolf, its whole spine a crown of interlocking thorns, near-black fur seeming to drink the light except for its brilliant glowing green-gold markings."
+  },
+  {
+    "id": "lanternfox",
+    "name": "Lanternfox",
+    "line": "lanternfox",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A slim violet fox with a flame-orange tail-tip that flickers like a lantern wick, warm amber eyes, faint ember sparks drifting from its fur."
+  },
+  {
+    "id": "brandfox",
+    "name": "Brandfox",
+    "line": "lanternfox",
+    "stage": 2,
+    "element": "fire",
+    "prompt": "A taller violet-plum fox whose whole tail now burns steady orange like a carried torch, deeper purple fur along its spine with more visible ember-sparks."
+  },
+  {
+    "id": "pyrevane",
+    "name": "Pyrevane",
+    "line": "lanternfox",
+    "stage": 3,
+    "element": "fire",
+    "prompt": "A lean, elegant fox in deep violet-black fur, its tail split into twin torch-flames of hot orange, ears rimmed in glowing embers."
+  },
+  {
+    "id": "beaconpyre",
+    "name": "Beaconpyre",
+    "line": "lanternfox",
+    "stage": 4,
+    "element": "fire",
+    "prompt": "A striking near-black fox whose entire back bears a low steady flame-crest running from head to tail, brilliant orange glow pooling at every joint."
+  },
+  {
+    "id": "beaconsire",
+    "name": "Beaconsire",
+    "line": "lanternfox",
+    "stage": 5,
+    "element": "fire",
+    "prompt": "A magnificent obsidian-violet fox crowned in a mane of true fire, its tail a blazing beacon-flame, glowing orange runes flickering faintly across its coat."
+  },
+  {
+    "id": "hootsage",
+    "name": "Hootsage",
+    "line": "hootsage",
+    "stage": 1,
+    "element": "wind",
+    "prompt": "A round, softly feathered brown owl with oversized golden eyes and a ruff of feathers like a scholar's collar, a small scroll-like curl of feather at its chest."
+  },
+  {
+    "id": "lorewing",
+    "name": "Lorewing",
+    "line": "hootsage",
+    "stage": 2,
+    "element": "wind",
+    "prompt": "A larger owl with a fuller feathered collar and longer wing-feathers fanned like open book pages, its golden eyes sharper, deepening brown plumage."
+  },
+  {
+    "id": "duskscholar",
+    "name": "Duskscholar",
+    "line": "hootsage",
+    "stage": 3,
+    "element": "wind",
+    "prompt": "A stately indigo-tinged owl with an elaborate ruff resembling stacked scrolls, its wings edged in a soft moonlit blue glow, deep gold eyes half-lidded in thought."
+  },
+  {
+    "id": "archowl",
+    "name": "Archowl",
+    "line": "hootsage",
+    "stage": 4,
+    "element": "wind",
+    "prompt": "A grand indigo-blue owl with a crown-like tuft of feathers and wide ceremonial wings patterned like open manuscripts, faint blue glow tracing every flight feather."
+  },
+  {
+    "id": "archsage",
+    "name": "Archsage",
+    "line": "hootsage",
+    "stage": 5,
+    "element": "wind",
+    "prompt": "A magnificent deep indigo owl robed in vast wing-plumage like a scholar's ceremonial cloak, crowned in luminous pale-blue glowing feather-script down each wing."
+  },
+  {
+    "id": "mosshulk",
+    "name": "Mosshulk",
+    "line": "mosshulk",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A hulking grey stone golem shape overgrown with thick moss and a crown of small mushrooms, deep-set glowing eyes, ancient and immovable."
+  },
+  {
+    "id": "cairnback",
+    "name": "Cairnback",
+    "line": "mosshulk",
+    "stage": 2,
+    "element": "nature",
+    "prompt": "A broader moss-stone golem with small balanced cairn-stones stacked along its shoulders, thicker moss coat, softly glowing eye-sockets."
+  },
+  {
+    "id": "boulderoot",
+    "name": "Boulderoot",
+    "line": "mosshulk",
+    "stage": 3,
+    "element": "nature",
+    "prompt": "A massive golem whose stone body is threaded through with thick tree-roots, moss and small ferns filling every crack, its glow deepening to a warm gold."
+  },
+  {
+    "id": "mossmonolith",
+    "name": "Mossmonolith",
+    "line": "mosshulk",
+    "stage": 4,
+    "element": "nature",
+    "prompt": "An enormous standing-stone golem, root-veined and moss-draped from crown to foot, faint golden light glowing in the deepest cracks of its mossy hide."
+  },
+  {
+    "id": "cairnsovereign",
+    "name": "Cairnsovereign",
+    "line": "mosshulk",
+    "stage": 5,
+    "element": "nature",
+    "prompt": "A towering ancient monolith wrapped floor to crown in thick roots, deep moss and small glowing flowers, warm golden light pulsing steadily through every seam like a slow heartbeat."
+  },
+  {
+    "id": "geodgloop",
+    "name": "Geodgloop",
+    "line": "geodgloop",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A small round mossy-green blob with a cracked-open geode embedded in its back, violet crystal facets glittering through the gap and a faint icy-blue glow at the core; big curious eyes peek out beneath the crystal crown."
+  },
+  {
+    "id": "geodrift",
+    "name": "Geodrift",
+    "line": "geodgloop",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A slightly larger lump-shaped blob, more of its rubbery hide replaced by cracked violet crystal plates fused down its spine, with tiny quartz nubs sprouting like knees; the same glow-blue core now peeks through two more seams."
+  },
+  {
+    "id": "geodolem",
+    "name": "Geodolem",
+    "line": "geodgloop",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "The blob rises onto four short crystal stumps, its body now half rock half jelly, deep amethyst geode facets ringing a wider cracked crown on its head, glowing pale-blue light pulsing between the seams."
+  },
+  {
+    "id": "geodwarden",
+    "name": "Geodwarden",
+    "line": "geodgloop",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A hulking crystal golem shape now dominates, jelly visible only in glowing seams between huge violet geode slabs armoured across its back and shoulders, sky-blue light blazing from its chest core like a lantern."
+  },
+  {
+    "id": "geodsovereign",
+    "name": "Geodsovereign",
+    "line": "geodgloop",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A towering geode colossus, its whole body an ornate cathedral of deep-violet crystal spires and shelves crowned in a jagged quartz halo, brilliant blue-white light pouring from countless seams as if lit from within."
+  },
+  {
+    "id": "glimfox",
+    "name": "Glimfox",
+    "line": "glimfox",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A sleek indigo-blue fox with a single sharp storm-crystal shard jutting from its brow and small cyan sparks crackling along its tail-tip; alert amber eyes, lean athletic build."
+  },
+  {
+    "id": "glintfox",
+    "name": "Glintfox",
+    "line": "glimfox",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A slightly leaner, faster-looking fox, two crystal shards now framing its brow like small antennae, its tail fur tipped in bright cyan static that visibly crackles."
+  },
+  {
+    "id": "fulgorfox",
+    "name": "Fulgorfox",
+    "line": "glimfox",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A wiry storm-fox with a crest of jagged indigo crystal running down its spine, front paws sparking with restless energy, its four-shard brow-crown glowing brighter cyan."
+  },
+  {
+    "id": "prismfox",
+    "name": "Prismfox",
+    "line": "glimfox",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A tall, rangy fox wrapped in a mane of crystal shards that splits stray light into small rainbows, its whole coat deepened to near-black indigo, eyes blazing electric cyan."
+  },
+  {
+    "id": "fulgurmane",
+    "name": "Fulgurmane",
+    "line": "glimfox",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A majestic storm-fox with a flowing mane of fused lightning-crystal spines that arcs and glows white-cyan with contained thunder, deep midnight-indigo fur, and a piercing gaze that seems to crackle."
+  },
+  {
+    "id": "shardmaw",
+    "name": "Shardmaw",
+    "line": "shardmaw",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A lean grey-violet wolf with jagged amethyst crystal shards bristling along its spine and jaw, lilac glow lighting the cracks in its teeth; sharp predatory eyes."
+  },
+  {
+    "id": "shardfang",
+    "name": "Shardfang",
+    "line": "shardmaw",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A slightly bulkier crystal wolf, more shards now fused along its jaw into a jagged crystalline muzzle, its spine-crest thicker and glowing a richer lavender."
+  },
+  {
+    "id": "shardhowler",
+    "name": "Shardhowler",
+    "line": "shardmaw",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A powerful wolf whose whole back bristles with a ridge of long amethyst crystal blades, deep slate-violet fur, muzzle wreathed in glowing lavender light when it howls."
+  },
+  {
+    "id": "quartzmaw",
+    "name": "Quartzmaw",
+    "line": "shardmaw",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A large, muscular crystal wolf built to be ridden, its spine-blades grown into a towering armoured crest, deep charcoal-violet fur, jaw and crest glowing bright lilac-white."
+  },
+  {
+    "id": "shardking",
+    "name": "Shardking",
+    "line": "shardmaw",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "A magnificent alpha crystal wolf, nearly black-violet fur beneath an immense crown of fused amethyst blades from skull to tail, every shard blazing radiant white-lavender light."
+  },
+  {
+    "id": "prismbat",
+    "name": "Prismbat",
+    "line": "prismbat",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A small violet-blue bat with a single glinting crystal shard for a nose-leaf and pale cyan-lit wing membranes threaded with faint light-lines; big round curious eyes."
+  },
+  {
+    "id": "prismwing",
+    "name": "Prismwing",
+    "line": "prismbat",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A slightly bigger bat with two small crystal shards flanking its nose, its thin wing membranes now shimmering with visible rainbow refractions along the veins, deepened indigo fur."
+  },
+  {
+    "id": "chromawing",
+    "name": "Chromawing",
+    "line": "prismbat",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A sleek violet bat whose wing membranes have become stained-glass panes of shifting colour, a crown of small crystal spikes along its head, eyes glowing bright cyan."
+  },
+  {
+    "id": "radiantwing",
+    "name": "Radiantwing",
+    "line": "prismbat",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A striking bat with broad prism-glass wings that scatter full rainbows in flight, a ridge of luminous crystal spines down its back, deep indigo fur fading almost to black, wings edged in bright light."
+  },
+  {
+    "id": "luxwing",
+    "name": "Luxwing",
+    "line": "prismbat",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A radiant crystal bat whose vast stained-glass wings blaze with captured light in every colour, an elaborate crown of fused prism spires on its head, deep near-black indigo fur, and eyes like twin lanterns."
+  },
+  {
+    "id": "quartzback",
+    "name": "Quartzback",
+    "line": "quartzback",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A sturdy stegosaur-like creature with lavender-grey hide and a row of pale quartz plates down its spine, each one glowing faint sky-blue at the base; broad calm face, thick stocky legs."
+  },
+  {
+    "id": "quartzhide",
+    "name": "Quartzhide",
+    "line": "quartzback",
+    "stage": 2,
+    "element": "earth",
+    "prompt": "A slightly bulkier stegosaur with its spinal plates now solid milky quartz, glowing a brighter blue where they meet its lavender hide, thicker armoured legs."
+  },
+  {
+    "id": "quartzridge",
+    "name": "Quartzridge",
+    "line": "quartzback",
+    "stage": 3,
+    "element": "earth",
+    "prompt": "A broad-backed tank whose quartz plates have grown into a jagged ridge from neck to tail, each plate glowing pale blue, hide deepened to dusky violet-grey."
+  },
+  {
+    "id": "quartzbastion",
+    "name": "Quartzbastion",
+    "line": "quartzback",
+    "stage": 4,
+    "element": "earth",
+    "prompt": "A massive armoured quartz-back with towering plate formations fused into overlapping shield-shelves, deep violet hide, plates blazing near-white with inner light."
+  },
+  {
+    "id": "quartzmonarch",
+    "name": "Quartzmonarch",
+    "line": "quartzback",
+    "stage": 5,
+    "element": "earth",
+    "prompt": "An immense crystal-armoured colossus whose spine carries a cathedral of fused quartz plates crowned at the shoulders, deep amethyst hide, every seam blazing brilliant white-blue light like a living geode."
+  },
+  {
+    "id": "stormhowl",
+    "name": "Stormhowl",
+    "line": "stormhowl",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A pale storm-white wolf with a crackling mane of pale-gold static and sharp lightning-blue eyes, lean muscular build built for the high ridgelines."
+  },
+  {
+    "id": "thunderfang",
+    "name": "Thunderfang",
+    "line": "stormhowl",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A slightly larger storm-white wolf, its mane now visibly forked with small lightning branches, fangs glinting faint gold, storm-blue eyes narrowed and fierce."
+  },
+  {
+    "id": "tempestmane",
+    "name": "Tempestmane",
+    "line": "stormhowl",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A powerful wolf whose entire mane has become a crown of living static arcs in pale gold, coat deepening toward a stormy blue-white, muscular chest built for the charge."
+  },
+  {
+    "id": "skyfang",
+    "name": "Skyfang",
+    "line": "stormhowl",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A tall, rangy storm-wolf wreathed in crackling lightning that runs constantly along its spine and legs, mane blazing near-white gold, eyes like twin bolts."
+  },
+  {
+    "id": "tempestlord",
+    "name": "Tempestlord",
+    "line": "stormhowl",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "A majestic storm-wolf the size of a summit boulder, its whole mane and tail a permanent corona of blinding white-gold lightning, deep storm-blue coat rippling with static, eyes burning like the eye of a thunderhead."
+  },
+  {
+    "id": "stormray",
+    "name": "Stormray",
+    "line": "stormray",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A flat, wide indigo manta-ray-like creature gliding with wing-fins tipped in pale storm-gold, small sparks flickering off its trailing tail, bright alert eyes on a smooth rounded head."
+  },
+  {
+    "id": "squallray",
+    "name": "Squallray",
+    "line": "stormray",
+    "stage": 2,
+    "element": "storm",
+    "prompt": "A slightly broader indigo ray with brighter gold static crackling along its wing edges, its tail now trailing a faint spark-trail as it glides."
+  },
+  {
+    "id": "thunderfin",
+    "name": "Thunderfin",
+    "line": "stormray",
+    "stage": 3,
+    "element": "storm",
+    "prompt": "A sleek deep-indigo ray whose wing-fins have grown longer and sharper, laced with visible branching lightning along the leading edge, gold sparks streaming off every wingbeat."
+  },
+  {
+    "id": "zephyrmanta",
+    "name": "Zephyrmanta",
+    "line": "stormray",
+    "stage": 4,
+    "element": "storm",
+    "prompt": "A large glowing ray, deep near-black indigo, its vast wings now edged in a constant crown of crackling gold-white lightning, twin light-trails streaming from its wingtips in flight."
+  },
+  {
+    "id": "maelray",
+    "name": "Maelray",
+    "line": "stormray",
+    "stage": 5,
+    "element": "storm",
+    "prompt": "An immense storm-ray gliding like a living thundercloud, deep indigo-black body wreathed head to tail in blinding white-gold lightning arcs, wings so wide they seem to blot out the sky behind them."
+  },
+  {
+    "id": "haloling",
+    "name": "Haloling",
+    "line": "haloling",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A small pale ghost-light drifting in a soft cream-gold glow, a thin halo ring floating just above it, faint wisps trailing like a candle flame; two gentle glowing eyes."
+  },
+  {
+    "id": "haloglow",
+    "name": "Haloglow",
+    "line": "haloling",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly larger drifting ghost-light, its halo ring now solid and brighter gold, its cream-white form trailing longer wisps of warm light."
+  },
+  {
+    "id": "sanctilume",
+    "name": "Sanctilume",
+    "line": "haloling",
+    "stage": 3,
+    "element": "void",
+    "prompt": "A softly glowing spirit with a wider, more defined golden halo and two smaller light-rings orbiting its trailing wisps, its form a richer warm gold-cream."
+  },
+  {
+    "id": "seraphume",
+    "name": "Seraphume",
+    "line": "haloling",
+    "stage": 4,
+    "element": "void",
+    "prompt": "An elegant light-spirit wreathed in three nested golden halo rings and long trailing streamers of warm light, its glowing core now a deep radiant gold."
+  },
+  {
+    "id": "empyrion",
+    "name": "Empyrion",
+    "line": "haloling",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A magnificent being of layered golden halos and streaming light-wings, its core blazing like a captured sunrise, trailing warmth and soft radiance in every direction."
+  },
+  {
+    "id": "wardenshade",
+    "name": "Wardenshade",
+    "line": "wardenshade",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A tall spectral armoured warrior, pale blue-white plate armour over a translucent ghostly frame, wielding a glowing cyan blade, faint mist trailing from its cloak; steady glowing eyes beneath a worn helm."
+  },
+  {
+    "id": "wardenwraith",
+    "name": "Wardenwraith",
+    "line": "wardenshade",
+    "stage": 2,
+    "element": "void",
+    "prompt": "A slightly taller spectral knight, its pale armour now etched with faint glowing cyan runes, cloak trailing longer wisps of mist, blade burning a touch brighter."
+  },
+  {
+    "id": "sentinelshade",
+    "name": "Sentinelshade",
+    "line": "wardenshade",
+    "stage": 3,
+    "element": "void",
+    "prompt": "An imposing armoured spirit with a more ornate pale helm and pauldrons traced in glowing cyan sigils, its whole form more solid yet still edged in drifting mist, blade wreathed in light."
+  },
+  {
+    "id": "highward",
+    "name": "Highward",
+    "line": "wardenshade",
+    "stage": 4,
+    "element": "void",
+    "prompt": "A towering armoured guardian spirit in elaborate pale-violet plate etched entirely in luminous cyan sigils, a long ghostly cloak streaming like banners, blade blazing bright and steady."
+  },
+  {
+    "id": "duskwarden",
+    "name": "Duskwarden",
+    "line": "wardenshade",
+    "stage": 5,
+    "element": "void",
+    "prompt": "A magnificent spectral warden in resplendent violet-silver armour wreathed in glowing cyan runes from helm to greaves, a vast trailing cloak of living mist, and a blade that burns like captured starlight."
+  },
+  {
+    "id": "tidesinger",
+    "name": "Tidesinger",
+    "line": "tidesinger",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A serene jellyfish spirit floating upright, a translucent cyan-white bell trailing long luminous ribbon-tendrils that curl like sheet music, and a faint halo of sea-glass light above its crown — its whole body glows softly from within like moonlight caught on water."
+  },
+  {
+    "id": "sylvan_hart",
+    "name": "Sylvan Hart",
+    "line": "sylvan_hart",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A radiant white-gold stag with antlers of living light branching into soft mint-green leaf clusters and a pale cream coat dappled with faint sun-dapples, walking as if trailing pollen with every step — gentler and more luminous than Mossbuck, closer to a blessing than a beast."
+  },
+  {
+    "id": "prism_wyrm",
+    "name": "Prism Wyrm",
+    "line": "prism_wyrm",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A slender violet-blue dragon whose body is faceted like cut crystal, with wings of translucent prism-glass that split light into faint rainbows and a crown of pale quartz shards over its brow, trailing broken shards of light behind it."
+  },
+  {
+    "id": "verdant_rex",
+    "name": "Verdant Rex",
+    "line": "verdant_rex",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A small, round-bodied dino spirit wrapped in soft moss and new spring leaves with huge gentle amber eyes and a faint green nimbus around its rounded back — the forest's kindness given a shy, huggable shape."
+  },
+  {
+    "id": "ember_totem",
+    "name": "Ember Totem",
+    "line": "ember_totem",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A carved wooden tribal mask given life, glowing amber cracks running through dark bark-like skin, with twin plumes of gentle orange flame rising from its crown like feathers — warm and ancestral rather than fierce."
+  },
+  {
+    "id": "deepcaller",
+    "name": "Deepcaller",
+    "line": "deepcaller",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A stately blue-skinned sea sovereign with a finned crest and long trailing fins like ceremonial robes, glowing turquoise runes pulsing along its arms in time with an unheard song, built broad and calm enough to ride."
+  },
+  {
+    "id": "mire_prince",
+    "name": "Mire Prince",
+    "line": "mire_prince",
+    "stage": 1,
+    "element": "void",
+    "prompt": "A regal indigo frog-prince draped in tattered violet lantern-light with a faint drowned-lantern glow along its throat and fingertips and a crown woven from marsh reeds — melancholy and elegant rather than menacing."
+  },
+  {
+    "id": "dune_titan",
+    "name": "Dune Titan",
+    "line": "dune_titan",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A broad ochre-skinned desert titan built like an old standing stone, sand perpetually sifting off its shoulders in a slow golden veil, with small glowing cracks of amber light along its knuckles and brow."
+  },
+  {
+    "id": "storm_seraph",
+    "name": "Storm Seraph",
+    "line": "storm_seraph",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A winged golden wraith wrapped in a tattered storm-cloud cloak, a faint crackling halo of lightning behind its skull-light head — softly glowing gold where Stormcrown burns jagged and cold."
+  },
+  {
+    "id": "thornjaw",
+    "name": "Thornjaw Rex",
+    "line": "thornjaw",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A towering forest-green dinosaur bristling with thorned vines fused into its hide and a maw ringed in wooden spikes, roaring with pollen bursting from its throat — the Vale's fury given teeth, dwarfing any evolved line."
+  },
+  {
+    "id": "ashen_totem",
+    "name": "Ashen Totem",
+    "line": "ashen_totem",
+    "stage": 1,
+    "element": "fire",
+    "prompt": "A house-sized tribal mask of cracked grey ash-wood, glowing ember-orange fissures spider-webbing across its face and twin curling horns of smouldering charcoal, radiating a constant heat-shimmer."
+  },
+  {
+    "id": "abyssal_tyrant",
+    "name": "Abyssal Tyrant",
+    "line": "abyssal_tyrant",
+    "stage": 1,
+    "element": "water",
+    "prompt": "A hulking indigo-blue demon of the deep lake, rows of pale bioluminescent markings down a scaled hide, with an unsettling second reflection of itself shimmering just behind its silhouette."
+  },
+  {
+    "id": "bog_sovereign",
+    "name": "Bog Sovereign",
+    "line": "bog_sovereign",
+    "stage": 1,
+    "element": "void",
+    "prompt": "An ancient crowned frog-king the size of a house, moss-green hide streaked with drowned-lantern violet glow, a crown of waterlogged lanterns ringing its brow — sat low and heavy, like a throne given legs."
+  },
+  {
+    "id": "sandjaw",
+    "name": "Sandjaw Colossus",
+    "line": "sandjaw",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A colossal sand-gold tyrannosaur crusted in fossilised dune-stone plating, jaws wide enough to swallow a caravan, trailing a perpetual sandstorm off its spine and tail."
+  },
+  {
+    "id": "stormcrown",
+    "name": "Stormcrown",
+    "line": "stormcrown",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A vast crowned wraith of storm-cloud and bone, a jagged golden crown fused to a skull-white head, lightning forking permanently between its ribs and its trailing cloak."
+  },
+  {
+    "id": "bellwyrm",
+    "name": "Bellwyrm",
+    "line": "bellwyrm",
+    "stage": 1,
+    "element": "water",
+    "prompt": "An immense deep-blue serpent-guardian armoured in barnacle-crusted plates, bronze drowned bells growing from its spine that seem to sway on their own, glowing teal fins fanned like sails along its length."
+  },
+  {
+    "id": "elder_stag",
+    "name": "Elder Stag",
+    "line": "elder_stag",
+    "stage": 1,
+    "element": "nature",
+    "prompt": "A towering ancient stag with bark-brown fur and antlers vast enough to hold up a canopy, moss and mushrooms and a lime-green glow clustered through the rack where Mossbuck's antlers only hint at it — the great-grandparent of every forest deer in the Vale."
+  },
+  {
+    "id": "geode_colossus",
+    "name": "Geode Colossus",
+    "line": "geode_colossus",
+    "stage": 1,
+    "element": "earth",
+    "prompt": "A mountain-sized slate-violet golem whose entire back has cracked open into one vast geode, bristling with cyan and gold crystal formations that crackle faintly with storm-light through the stone joints."
+  },
+  {
+    "id": "aether_sovereign",
+    "name": "Aether Sovereign",
+    "line": "aether_sovereign",
+    "stage": 1,
+    "element": "storm",
+    "prompt": "A colossal indigo storm-dragon crowned in pale gold horns and a floating halo, its body plated in glowing amber crystal shards that drift and orbit it like a private storm system — the calm, terrible authority of something that has judged every Guardian before it."
+  }
+]

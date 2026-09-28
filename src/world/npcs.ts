@@ -23,6 +23,7 @@ import { notify } from '../game/rewards';
 import * as Towns from './towns';
 import type { Interactable } from './towns';
 import { GateBarriers } from './gates';
+import { queueBust } from './busts';
 import type { Overworld } from './world';
 
 // ── rigs ──────────────────────────────────────────────────────────────────────
@@ -319,6 +320,8 @@ export class NpcActors {
     a.rig = rig;
     a.holder.add(rig.root);
     a.mark.position.y = rig.height * (a.def.scale ?? 1) + 0.62;
+    const def = a.def;
+    queueBust(def.id, () => { const r = rigFor(def.rig); if (r && def.tint) tintRig(r.root, def.tint); return r; }); // dialog portrait
     return true;
   }
 

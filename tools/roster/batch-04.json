@@ -1,0 +1,113 @@
+{
+  "lines": [
+    {
+      "id": "sandgloop",
+      "branch": null,
+      "stages": ["sandgloop", "duneglop", "glazeback", "glasshide", "sandglass"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "duneglop", "name": "Duneglop", "element": "earth", "hp": 74, "atk": 15, "def": 18, "spd": 10, "height": 1.1, "model": "Green Blob", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [10, "tremor"], [16, "boulder_slam"]], "rarity": "rare", "catchRate": 0.25, "tint": "#c8a060", "abilities": ["bedrock", "thick_hide"], "lore": "Rolls itself into every dune at sunset, just to feel the sand cool." },
+        { "id": "glazeback", "name": "Glazeback", "element": "earth", "hp": 84, "atk": 17, "def": 21, "spd": 11, "height": 1.3, "model": "Green Blob", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "tremor"], [16, "boulder_slam"], [22, "geode_shell"]], "rarity": "rare", "catchRate": 0.18, "tint": "#b8894a", "abilities": ["bedrock", "thick_hide"], "lore": "The desert sun baked its back into a shell of glass, and it wears the cracks proudly." },
+        { "id": "glasshide", "name": "Glasshide", "element": "earth", "hp": 96, "atk": 20, "def": 24, "spd": 12, "height": 1.6, "model": "Green Blob", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "tremor"], [16, "boulder_slam"], [22, "geode_shell"], [28, "crystal_lance"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a8703a", "tintGlow": "#fff6d0", "abilities": ["bedrock", "sturdy"], "lore": "Its whole hide has fused to glass now; it chimes softly with every step." },
+        { "id": "sandglass", "name": "Sandglass", "element": "earth", "hp": 108, "atk": 23, "def": 27, "spd": 13, "height": 2.0, "model": "Green Blob", "learnset": [[1, "rock_toss"], [1, "tremor"], [1, "boulder_slam"], [22, "geode_shell"], [28, "crystal_lance"], [40, "prism_ray"]], "rarity": "epic", "catchRate": 0.06, "tint": "#8a5a2e", "tintGlow": "#e8f7ff", "abilities": ["bedrock", "sturdy"], "lore": "Legends say it counts the desert's centuries one grain at a time." }
+      ]
+    },
+    {
+      "id": "frostpeck",
+      "branch": null,
+      "stages": ["frostpeck", "frostdown", "icecomb", "glacialwing", "frostmantle"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "frostdown", "name": "Frostdown", "element": "wind", "hp": 66, "atk": 17, "def": 16, "spd": 16, "height": 1.1, "model": "Chicken", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [11, "cyclone"], [16, "frost_breath"]], "rarity": "rare", "catchRate": 0.25, "tint": "#9fd8ff", "abilities": ["frostbite", "keen_eye"], "lore": "Puffs up twice its size when the first snow falls, mostly to look important." },
+        { "id": "icecomb", "name": "Icecomb", "element": "wind", "hp": 75, "atk": 20, "def": 18, "spd": 18, "height": 1.3, "model": "Chicken", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [1, "cyclone"], [16, "frost_breath"], [22, "tailwind"]], "rarity": "rare", "catchRate": 0.18, "tint": "#7ac4f0", "abilities": ["frostbite", "keen_eye"], "lore": "Its comb froze mid-crow one winter and simply never thawed back." },
+        { "id": "glacialwing", "name": "Glacialwing", "element": "wind", "hp": 86, "atk": 23, "def": 21, "spd": 21, "height": 1.6, "model": "Chicken", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [1, "cyclone"], [16, "frost_breath"], [22, "tailwind"], [28, "gust_dive"]], "rarity": "epic", "catchRate": 0.1, "tint": "#5aa8e0", "tintGlow": "#eaffff", "abilities": ["frostbite", "tailwind_soul"], "lore": "Glides on wings of packed frost, leaving a trail of glittering powder." },
+        { "id": "frostmantle", "name": "Frostmantle", "element": "wind", "hp": 97, "atk": 26, "def": 24, "spd": 24, "height": 2.0, "model": "Chicken", "learnset": [[1, "gale_cut"], [1, "cyclone"], [1, "frost_breath"], [22, "tailwind"], [28, "gust_dive"], [40, "aether_gale"]], "rarity": "epic", "catchRate": 0.06, "tint": "#3a86c8", "tintGlow": "#d8f4ff", "rideable": true, "abilities": ["frostbite", "tailwind_soul"], "lore": "Wears the first snowfall of every winter like a cloak, and never lets it melt." }
+      ]
+    },
+    {
+      "id": "ashwing",
+      "branch": null,
+      "stages": ["ashwing", "cinderwing", "charhawk", "scarhawk", "ashphoenix"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "cinderwing", "name": "Cinderwing", "element": "fire", "hp": 58, "atk": 18, "def": 10, "spd": 21, "height": 1.1, "model": "Birb", "learnset": [[1, "ember_bite"], [1, "feather_dart"], [10, "flare_burst"], [16, "flame_wheel"]], "rarity": "rare", "catchRate": 0.25, "tint": "#6a3a3a", "tintGlow": "#ff6a1a", "abilities": ["flame_body", "swift"], "lore": "Leaves a trail of drifting embers wherever it flies, and insists it is not showing off." },
+        { "id": "charhawk", "name": "Charhawk", "element": "fire", "hp": 67, "atk": 21, "def": 11, "spd": 24, "height": 1.3, "model": "Birb", "learnset": [[1, "ember_bite"], [1, "feather_dart"], [1, "flare_burst"], [16, "flame_wheel"], [22, "kindle"]], "rarity": "rare", "catchRate": 0.18, "tint": "#5a2e2e", "tintGlow": "#ff7a2a", "abilities": ["flame_body", "swift"], "lore": "Finally looks like the hawk it always claimed to be, wreathed in curling smoke." },
+        { "id": "scarhawk", "name": "Scarhawk", "element": "fire", "hp": 76, "atk": 24, "def": 13, "spd": 27, "height": 1.6, "model": "Birb", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [16, "flame_wheel"], [22, "kindle"], [28, "cinder_claw"]], "rarity": "epic", "catchRate": 0.1, "tint": "#4a2424", "tintGlow": "#ff8a3a", "abilities": ["blaze", "swift"], "lore": "Nests in the hottest cliffs of the Ember Scar and dares anything to complain about the heat." },
+        { "id": "ashphoenix", "name": "Ashphoenix", "element": "fire", "hp": 87, "atk": 28, "def": 15, "spd": 30, "height": 1.9, "model": "Birb", "learnset": [[1, "ember_bite"], [1, "flame_wheel"], [22, "kindle"], [28, "cinder_claw"], [40, "meteor_fang"]], "rarity": "epic", "catchRate": 0.06, "tint": "#3a1c1c", "tintGlow": "#ffb04a", "rideable": true, "abilities": ["blaze", "swift"], "lore": "When it finally rests, it settles into its own ashes and calls it a nap." }
+      ]
+    },
+    {
+      "id": "moonhop",
+      "branch": null,
+      "stages": ["moonhop", "duskhop", "nightspring", "voidhare", "eclipsehare"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "duskhop", "name": "Duskhop", "element": "void", "hp": 66, "atk": 18, "def": 12, "spd": 21, "height": 1.6, "model": "Bunny", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [12, "umbral_wave"], [16, "hypno_glow"]], "rarity": "rare", "catchRate": 0.25, "tint": "#4a3a8a", "tintGlow": "#b89aff", "abilities": ["umbra", "swift"], "lore": "Waits for the sky to purple before it dares to leave its burrow." },
+        { "id": "nightspring", "name": "Nightspring", "element": "void", "hp": 75, "atk": 21, "def": 14, "spd": 24, "height": 1.8, "model": "Bunny", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "umbral_wave"], [16, "hypno_glow"], [22, "ink_cloud"]], "rarity": "rare", "catchRate": 0.18, "tint": "#3a2c70", "tintGlow": "#a888ff", "abilities": ["umbra", "swift"], "lore": "Leaps between shadows so quickly the moths lose track of it." },
+        { "id": "voidhare", "name": "Voidhare", "element": "void", "hp": 85, "atk": 24, "def": 16, "spd": 27, "height": 2.2, "model": "Bunny", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [16, "hypno_glow"], [22, "ink_cloud"], [28, "venom_fang"]], "rarity": "epic", "catchRate": 0.1, "tint": "#2c1f5c", "tintGlow": "#c8a8ff", "rideable": true, "abilities": ["umbra", "opportunist"], "lore": "Its shadow moves a half-second before it does, and neither ever explains why." },
+        { "id": "eclipsehare", "name": "Eclipsehare", "element": "void", "hp": 96, "atk": 27, "def": 18, "spd": 30, "height": 2.6, "model": "Bunny", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [22, "ink_cloud"], [28, "venom_fang"], [40, "toxic_mist"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1f1548", "tintGlow": "#e0c0ff", "rideable": true, "abilities": ["umbra", "opportunist"], "lore": "Only shows itself during a full eclipse, and grants one perfect wish of silence." }
+      ]
+    },
+    {
+      "id": "mirecroak",
+      "branch": null,
+      "stages": ["mirecroak", "bogling", "mudlurker", "bogmaw", "miredredge"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "bogling", "name": "Bogling", "element": "void", "hp": 78, "atk": 18, "def": 17, "spd": 14, "height": 1.6, "model": "Frog", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [12, "riptide"], [16, "toxic_mist"]], "rarity": "rare", "catchRate": 0.25, "tint": "#3a5a2a", "tintGlow": "#9a5aff", "abilities": ["poison_touch", "umbra"], "lore": "Croaks in three different pitches and none of them are reassuring." },
+        { "id": "mudlurker", "name": "Mudlurker", "element": "void", "hp": 90, "atk": 21, "def": 20, "spd": 16, "height": 1.8, "model": "Frog", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "riptide"], [16, "toxic_mist"], [22, "venom_fang"]], "rarity": "rare", "catchRate": 0.18, "tint": "#2e4a20", "tintGlow": "#8a4aff", "abilities": ["poison_touch", "umbra"], "lore": "Waits so still in the mud that herons mistake it for a log, once." },
+        { "id": "bogmaw", "name": "Bogmaw", "element": "void", "hp": 103, "atk": 24, "def": 23, "spd": 18, "height": 2.2, "model": "Frog", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [16, "toxic_mist"], [22, "venom_fang"], [28, "umbral_wave"]], "rarity": "epic", "catchRate": 0.1, "tint": "#223a18", "tintGlow": "#a868ff", "rideable": true, "abilities": ["poison_touch", "opportunist"], "lore": "Its throat-pouch glows just enough to lure curious will-o'-wisps close." },
+        { "id": "miredredge", "name": "Miredredge", "element": "void", "hp": 111, "atk": 27, "def": 26, "spd": 20, "height": 2.6, "model": "Frog", "learnset": [[1, "shadow_claw"], [1, "toxic_mist"], [22, "venom_fang"], [28, "umbral_wave"], [40, "hypno_glow"]], "rarity": "epic", "catchRate": 0.06, "tint": "#16280f", "tintGlow": "#c08aff", "rideable": true, "abilities": ["poison_touch", "opportunist"], "lore": "Every lantern in Mistveil Marsh dims a little when it finally surfaces." }
+      ]
+    },
+    {
+      "id": "dunecat",
+      "branch": null,
+      "stages": ["dunecat", "dustpaw", "sandlynx", "dunestalker", "sandmane"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "dustpaw", "name": "Dustpaw", "element": "earth", "hp": 62, "atk": 18, "def": 14, "spd": 22, "height": 1.1, "model": "Cat", "learnset": [[1, "rock_toss"], [1, "overcharge"], [10, "tremor"], [16, "boulder_slam"]], "rarity": "rare", "catchRate": 0.25, "tint": "#d8a860", "abilities": ["bedrock", "lucky"], "lore": "Kicks up a small sandstorm every time it pounces, entirely on purpose." },
+        { "id": "sandlynx", "name": "Sandlynx", "element": "earth", "hp": 71, "atk": 21, "def": 16, "spd": 25, "height": 1.3, "model": "Cat", "learnset": [[1, "rock_toss"], [1, "overcharge"], [1, "tremor"], [16, "boulder_slam"], [22, "stone_skin"]], "rarity": "rare", "catchRate": 0.18, "tint": "#c8944a", "abilities": ["bedrock", "lucky"], "lore": "Its tufted ears can hear a beetle shift under three feet of sand." },
+        { "id": "dunestalker", "name": "Dunestalker", "element": "earth", "hp": 81, "atk": 24, "def": 18, "spd": 29, "height": 1.6, "model": "Cat", "learnset": [[1, "rock_toss"], [1, "overcharge"], [16, "boulder_slam"], [22, "stone_skin"], [28, "geode_shell"]], "rarity": "epic", "catchRate": 0.1, "tint": "#b8803a", "tintGlow": "#fff0c0", "abilities": ["bedrock", "intimidate"], "lore": "Stalks the dune ridges at dusk, leaving perfectly tidy pawprints and no warning at all." },
+        { "id": "sandmane", "name": "Sandmane", "element": "earth", "hp": 92, "atk": 27, "def": 21, "spd": 30, "height": 2.0, "model": "Cat", "learnset": [[1, "rock_toss"], [1, "boulder_slam"], [22, "stone_skin"], [28, "geode_shell"], [40, "crystal_lance"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a86a2a", "tintGlow": "#ffe89a", "rideable": true, "abilities": ["bedrock", "intimidate"], "lore": "Its mane holds the whole day's heat, so the pride always naps in its shadow instead." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "sandgloop", "name": "Sandgloop", "line": "sandgloop", "stage": 1, "element": "earth", "prompt": "A squat, sand-colored blob with a lumpy, granular hide like packed dune-sand, small round eyes, and a faint ripple where it oozes; warm ochre-gold body fading paler at its underside." },
+    { "id": "duneglop", "name": "Duneglop", "line": "sandgloop", "stage": 2, "element": "earth", "prompt": "A larger, rounder sand blob with visible wind-ripple ridges across its back and tiny sand-grain sparkles catching the light; the same ochre-gold hue as before but with a subtly hardening, sun-cracked crust starting to form along its top." },
+    { "id": "glazeback", "name": "Glazeback", "line": "sandgloop", "stage": 3, "element": "earth", "prompt": "A broad sand blob whose upper crust has fused into a warm amber-glass shell, sun-glazed cracks glowing faintly along its spine, still soft and wobbling underneath the hardened dome; richer bronze-gold coloring." },
+    { "id": "glasshide", "name": "Glasshide", "line": "sandgloop", "stage": 4, "element": "earth", "prompt": "A humanoid-postured glass-sand golem, its entire body now a thick smoky-amber glass carapace over a soft ochre core glowing dimly within, faceted shoulder ridges, pale glassy highlights catching the light like heat-shimmer." },
+    { "id": "sandglass", "name": "Sandglass", "line": "sandgloop", "stage": 5, "element": "earth", "prompt": "A towering desert colossus entirely encased in deep bronze-amber glass, ornate hourglass-shaped ridges spiraling down its body, glowing pale blue-white cracks of trapped light threading through its glass hide like frozen lightning, a commanding, ancient silhouette." },
+
+    { "id": "frostpeck", "name": "Frostpeck", "line": "frostpeck", "stage": 1, "element": "wind", "prompt": "A round, fluffy snow-white chicken with thick powder-blue down, tiny stub wings, bright button eyes, and a dusting of frost crystals across its back like sugar." },
+    { "id": "frostdown", "name": "Frostdown", "line": "frostpeck", "stage": 2, "element": "wind", "prompt": "A larger, puffier snow chicken with a thick ring of frost-blue down around its neck like a ruff, small icy specks glinting on its wingtips, the same round cheerful silhouette but plumper." },
+    { "id": "icecomb", "name": "Icecomb", "line": "frostpeck", "stage": 3, "element": "wind", "prompt": "A proud frost hen with a crystalline pale-blue ice comb curling atop its head like frozen fire, frost-down cascading down its neck, deepening sky-blue plumage." },
+    { "id": "glacialwing", "name": "Glacialwing", "line": "frostpeck", "stage": 4, "element": "wind", "prompt": "A sleek glacier-blue bird with wide frost-feathered wings edged in sharp ice crystals, its ice comb now a jagged crown, pale glowing frost patterns tracing its feathers." },
+    { "id": "frostmantle", "name": "Frostmantle", "line": "frostpeck", "stage": 5, "element": "wind", "prompt": "A majestic snow bird with an enormous trailing mantle of frozen plumage that shimmers like an aurora, deep glacier-blue body, glowing icy-white cracks of light threading through its crest and wings, a regal, wind-swept final form." },
+
+    { "id": "ashwing", "name": "Ashwing", "line": "ashwing", "stage": 1, "element": "fire", "prompt": "A small round bird with dark charcoal-red feathers and glowing ember-orange wingtips, tiny smoke wisps trailing from its tail, bright eager eyes, a chick-like silhouette that still insists on looking fierce." },
+    { "id": "cinderwing", "name": "Cinderwing", "line": "ashwing", "stage": 2, "element": "fire", "prompt": "A sleeker soot-red bird with longer ember-orange flight feathers that leave a faint trail of drifting sparks, a slightly sharper beak, the same dark ash body deepening toward charcoal." },
+    { "id": "charhawk", "name": "Charhawk", "line": "ashwing", "stage": 3, "element": "fire", "prompt": "A proper hawk-shaped bird now, charcoal-black plumage licked with curling smoke, fierce orange eyes, its wingtips smoldering like dying coals, a hooked beak and confident predator stance." },
+    { "id": "scarhawk", "name": "Scarhawk", "line": "ashwing", "stage": 4, "element": "fire", "prompt": "A battle-worn ash hawk with jagged charcoal feathers and cracked, glowing ember seams along its wings, talons wreathed in low flame, a scar-like streak of bright orange across one wing." },
+    { "id": "ashphoenix", "name": "Ashphoenix", "line": "ashwing", "stage": 5, "element": "fire", "prompt": "A magnificent ash-black phoenix with a long trailing tail of curling smoke and molten-orange flame, wings edged in bright glowing cinder-light, glowing cracks of fire threading through its charcoal plumage like a creature reborn from its own ashes." },
+
+    { "id": "moonhop", "name": "Moonhop", "line": "moonhop", "stage": 1, "element": "void", "prompt": "A slender indigo-violet hare with oversized ears fading to pale lavender at the tips, faint glowing moon-shaped markings along its haunches, huge dark eyes reflecting starlight." },
+    { "id": "duskhop", "name": "Duskhop", "line": "moonhop", "stage": 2, "element": "void", "prompt": "A slightly larger violet hare with longer ears trailing wisps of shadow, its moon-marking now a soft glowing crescent on its forehead, deepening indigo fur with a faint starry dust across its back." },
+    { "id": "nightspring", "name": "Nightspring", "line": "moonhop", "stage": 3, "element": "void", "prompt": "A lean, coiled-for-leaping hare with smoky violet fur and ghostly translucent afterimages trailing its powerful hind legs, glowing lavender crescent markings now running down both flanks." },
+    { "id": "voidhare", "name": "Voidhare", "line": "moonhop", "stage": 4, "element": "void", "prompt": "A tall, rangy hare wrapped in near-black void fur, its ears long ribbons of drifting shadow, glowing violet eclipse-rings circling each eye, a faint star-flecked aura shimmering around its silhouette." },
+    { "id": "eclipsehare", "name": "Eclipsehare", "line": "moonhop", "stage": 5, "element": "void", "prompt": "A towering, regal void hare cloaked in deep black-violet fur that fades into starry mist at the edges, a luminous eclipse-ring crown hovering above its head, glowing lavender-white light bleeding from cracks along its long ears and haunches." },
+
+    { "id": "mirecroak", "name": "Mirecroak", "line": "mirecroak", "stage": 1, "element": "void", "prompt": "A squat, murky-green bog frog with a dark violet throat sac that pulses faintly, warty mottled skin, and wide glowing amber eyes half-lidded in the muck." },
+    { "id": "bogling", "name": "Bogling", "line": "mirecroak", "stage": 2, "element": "void", "prompt": "A slightly larger swamp frog with deeper moss-green skin and thicker warts along its back, a bigger violet throat pouch that glows softly when it croaks, faint purple mist curling from its nostrils." },
+    { "id": "mudlurker", "name": "Mudlurker", "line": "mirecroak", "stage": 3, "element": "void", "prompt": "A broad, low-crouching bog toad caked in dried mud plates, its violet throat glow now spreading in faint veins across its chest, murky green skin darkening toward black at the edges." },
+    { "id": "bogmaw", "name": "Bogmaw", "line": "mirecroak", "stage": 4, "element": "void", "prompt": "A hulking swamp toad with an enormous glowing violet throat pouch and wide lantern-lure eyes, cracked mud-armor skin, faint wisps of purple vapor drifting from its wide mouth." },
+    { "id": "miredredge", "name": "Miredredge", "line": "mirecroak", "stage": 5, "element": "void", "prompt": "A colossal ancient bog king wreathed in dripping moss and near-black swamp hide, its chest ablaze with a massive glowing violet lantern-throat, faint ghostly will-o'-wisp lights orbiting its hunched, moss-crowned silhouette." },
+
+    { "id": "dunecat", "name": "Dunecat", "line": "dunecat", "stage": 1, "element": "earth", "prompt": "A small sand-gold cat with faint darker tabby stripes, tufted ear-tips, a stubby tail, and sleepy half-lidded eyes, dozing in a curl of warm dune-colored fur." },
+    { "id": "dustpaw", "name": "Dustpaw", "line": "dunecat", "stage": 2, "element": "earth", "prompt": "A leaner sand-gold cat with slightly longer legs and dusty paw-tufts that puff sand with every step, sharper tabby markings, alert amber eyes." },
+    { "id": "sandlynx", "name": "Sandlynx", "line": "dunecat", "stage": 3, "element": "earth", "prompt": "A rangy desert lynx with long tufted ears, a short bobbed tail, deepening tan-gold fur with bold dark stripes down its back, powerful haunches built for pouncing." },
+    { "id": "dunestalker", "name": "Dunestalker", "line": "dunecat", "stage": 4, "element": "earth", "prompt": "A lean, muscular desert predator cat with a low prowling stance, burnt-amber fur streaked in dark bands, glowing pale eyes, a small sand-toned mane starting to form at its neck and shoulders." },
+    { "id": "sandmane", "name": "Sandmane", "line": "dunecat", "stage": 5, "element": "earth", "prompt": "A majestic sand-lion with a huge sun-gold mane that ripples like heat-shimmer, richly burnished amber fur, powerful shoulders, glowing warm-gold eyes, an unmistakably regal, sun-crowned desert guardian silhouette." }
+  ]
+}

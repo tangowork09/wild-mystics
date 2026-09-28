@@ -2,6 +2,7 @@
 """Turn a painted creature image (flat grey studio background) into a 2.5D game sprite.
 
     python3 tools/add-sprite.py <species-id> <image.png> [--facing left|right]
+    python3 tools/add-sprite.py --cut-only <image.png> <out.webp> [--max 512]   (UI art, not a sprite)
 
 Cuts the background (flood fill from the border + soft, colour-decontaminated edge), trims to the
 creature, writes public/assets/sprites/<id>.webp (+ <id>-portrait.webp) and registers it under
@@ -79,6 +80,17 @@ def main():
     if len(args) < 2:
         print(__doc__)
         sys.exit(1)
+    if args[0] == '--cut-only':  # UI art: cut out + trim only, no sprite registration
+        src, dst = Path(args[1]).expanduser(), Path(args[2])
+        side = int(args[args.index('--max') + 1]) if '--max' in args else 512
+        img = cut(src)
+        s = side / max(img.size)
+        if s < 1:
+            img = img.resize((round(img.width * s), round(img.height * s)), Image.LANCZOS)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        img.save(dst, 'WEBP', quality=88, alpha_quality=92, method=6)
+        print(f'{dst.name}: {img.width}x{img.height}, {dst.stat().st_size // 1024} KB')
+        return
     sid, src = args[0], Path(args[1]).expanduser()
     facing = 'right'
     if '--facing' in args:

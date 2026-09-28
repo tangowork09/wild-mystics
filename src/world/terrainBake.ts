@@ -8,7 +8,7 @@ export const RES = 512;
 export const CRES = 128; // colour-field resolution (zones blend smoothly, so this can be coarse)
 const HALF = WORLD_SIZE / 2;
 const CELL = WORLD_SIZE / (RES - 1);
-export const BAKE_VERSION = 4;
+export const BAKE_VERSION = 5;
 
 const n1 = makeNoise2D(1337);
 const n2 = makeNoise2D(4242);
@@ -252,7 +252,7 @@ function bakeColorMap(f: Fields, weights: number[][], progress?: (f: number) => 
       if (w[marshIdx] > 0.05) { const wet = smooth(WATER_LEVEL + 1.6, WATER_LEVEL + 0.2, h) * w[marshIdx]; mix(acc, [0.027, 0.047, 0.022], wet * 0.55); }
       mix(acc, snow, smooth(26, 36, h + nA * 6) * (w[peaksIdx] ?? 0));
       mix(acc, rock, smooth(0.7, 1.4, slope) * 0.85);
-      mix(acc, sand, smooth(WATER_LEVEL + 1.4, WATER_LEVEL + 0.3, h) * 0.8);
+      mix(acc, sand, smooth(WATER_LEVEL + 0.7, WATER_LEVEL + 0.1, h) * 0.6); // v3:look — a thin damp bank; the grass runs down to the water
       const td = 1 - tall * 0.22;
       acc[0] *= td; acc[1] *= td; acc[2] *= td;
       mix(acc, dirt.map((c) => c * (0.9 + nB * 0.2)), path * 0.92);

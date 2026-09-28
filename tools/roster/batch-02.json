@@ -1,0 +1,178 @@
+{
+  "lines": [
+    {
+      "id": "impling",
+      "branch": null,
+      "stages": ["impling", "hellion", "brimlord", "direlord", "archdemon"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "brimlord", "name": "Brimlord", "element": "fire", "hp": 78, "atk": 23, "def": 17, "spd": 20, "height": 2.28, "model": "Demon:elite", "learnset": [[1, "ember_bite"], [1, "kindle"], [1, "flare_burst"], [14, "cinder_claw"], [22, "flame_wheel"]], "rarity": "rare", "catchRate": 0.1, "tint": "#c8321a", "abilities": ["blaze", "flame_body"], "lore": "Its pitchfork got an upgrade. So did the mischief." },
+        { "id": "direlord", "name": "Direlord", "element": "fire", "hp": 90, "atk": 26, "def": 20, "spd": 23, "height": 2.74, "model": "Demon:elite", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [1, "cinder_claw"], [22, "flame_wheel"], [28, "meteor_fang"]], "rarity": "epic", "catchRate": 0.07, "tint": "#a8220e", "abilities": ["blaze", "flame_body"], "lore": "Commands lesser implings with a single raised eyebrow." },
+        { "id": "archdemon", "name": "Archdemon", "element": "fire", "hp": 103, "atk": 29, "def": 23, "spd": 26, "height": 3.29, "model": "Demon:elite", "learnset": [[1, "ember_bite"], [1, "cinder_claw"], [1, "flame_wheel"], [28, "meteor_fang"], [34, "lantern_flare"]], "rarity": "epic", "catchRate": 0.04, "tint": "#8a1608", "tintGlow": "#ff6a3a", "abilities": ["blaze", "rage"], "lore": "Ember Scar's oldest joke: it started as a prank, and the prank became a kingdom." }
+      ]
+    },
+    {
+      "id": "gloomling",
+      "branch": null,
+      "stages": ["gloomling", "gloomlord", "duskgloom", "nightgloom", "umbragloom"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "duskgloom", "name": "Duskgloom", "element": "void", "hp": 81, "atk": 23, "def": 18, "spd": 21, "height": 2.04, "model": "Goleling Evolved", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "umbral_wave"], [16, "static_field"], [22, "hypno_glow"]], "rarity": "rare", "catchRate": 0.08, "tint": "#8a6ac8", "abilities": ["umbra", "opportunist"], "lore": "Wears its crown a little crooked, on purpose, to seem more approachable." },
+        { "id": "nightgloom", "name": "Nightgloom", "element": "void", "hp": 93, "atk": 26, "def": 22, "spd": 24, "height": 2.45, "model": "Goleling Evolved", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "hypno_glow"], [28, "toxic_mist"], [34, "ink_cloud"]], "rarity": "epic", "catchRate": 0.05, "tint": "#6a4aa8", "abilities": ["umbra", "opportunist"], "lore": "Whole caves fall quiet when it passes, out of respect or dread — it's never entirely sure which." },
+        { "id": "umbragloom", "name": "Umbragloom", "element": "void", "hp": 106, "atk": 29, "def": 25, "spd": 27, "height": 2.94, "model": "Goleling Evolved", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "toxic_mist"], [34, "ink_cloud"], [40, "warden_edge"]], "rarity": "epic", "catchRate": 0.03, "tint": "#4a2e88", "tintGlow": "#c9a8ff", "abilities": ["umbra", "intimidate"], "lore": "The deepest hollow in Mistveil Marsh has always belonged to it. The marsh just took a while to admit it." }
+      ]
+    },
+    {
+      "id": "grunt",
+      "branch": null,
+      "stages": ["grunt", "warlord", "warbrute", "warkhan", "warmonarch"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "warbrute", "name": "Warbrute", "element": "earth", "hp": 89, "atk": 23, "def": 21, "spd": 14, "height": 2.3, "model": "Orc", "learnset": [[1, "rock_toss"], [1, "boulder_slam"], [1, "tremor"], [22, "stone_skin"]], "rarity": "rare", "catchRate": 0.09, "tint": "#b8823a", "abilities": ["bedrock", "sturdy"], "lore": "Leads by example, mostly the example of hitting things very hard." },
+        { "id": "warkhan", "name": "Warkhan", "element": "earth", "hp": 99, "atk": 26, "def": 24, "spd": 16, "height": 2.65, "model": "Orc", "learnset": [[1, "rock_toss"], [1, "tremor"], [1, "stone_skin"], [28, "geode_shell"]], "rarity": "epic", "catchRate": 0.06, "tint": "#96642a", "abilities": ["bedrock", "sturdy"], "lore": "Every scar has a story. It has stopped telling most of them, out of mercy for the listener." },
+        { "id": "warmonarch", "name": "Warmonarch", "element": "earth", "hp": 110, "atk": 29, "def": 27, "spd": 19, "height": 3.04, "model": "Orc", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "geode_shell"], [34, "boulder_slam"], [40, "tremor"]], "rarity": "epic", "catchRate": 0.035, "tint": "#78501e", "abilities": ["bedrock", "intimidate"], "lore": "United every orc camp in the Scar under one banner: whichever one it happened to be holding." }
+      ]
+    },
+    {
+      "id": "cinderquid",
+      "branch": null,
+      "stages": ["cinderquid", "scorchquid", "magmaquid", "infernoquid", "cinderkraken"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "scorchquid", "name": "Scorchquid", "element": "fire", "hp": 64, "atk": 20, "def": 14, "spd": 17, "height": 1.44, "model": "Squidle", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [1, "kindle"], [22, "flame_wheel"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["blaze", "flame_body"], "lore": "Its ink is basically hot sauce at this point. Nobody's tested how hot." },
+        { "id": "magmaquid", "name": "Magmaquid", "element": "fire", "hp": 74, "atk": 23, "def": 16, "spd": 20, "height": 1.73, "model": "Squidle", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [1, "flame_wheel"], [28, "cinder_claw"]], "rarity": "rare", "catchRate": 0.18, "tint": "#e8481a", "abilities": ["blaze", "flame_body"], "lore": "Eight arms, eight tiny trails of molten glass wherever it swims." },
+        { "id": "infernoquid", "name": "Infernoquid", "element": "fire", "hp": 85, "atk": 26, "def": 18, "spd": 23, "height": 2.16, "model": "Squidle", "learnset": [[1, "ember_bite"], [1, "flame_wheel"], [1, "cinder_claw"], [34, "meteor_fang"]], "rarity": "epic", "catchRate": 0.1, "tint": "#c8340e", "abilities": ["blaze", "flame_body"], "lore": "Local smiths swear the best-tempered blades cooled in a pool it recently visited." },
+        { "id": "cinderkraken", "name": "Cinderkraken", "element": "fire", "hp": 98, "atk": 29, "def": 21, "spd": 26, "height": 2.81, "model": "Squidle", "learnset": [[1, "ember_bite"], [1, "cinder_claw"], [1, "meteor_fang"], [40, "flare_burst"], [45, "lantern_flare"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a82408", "tintGlow": "#ff8a4a", "abilities": ["blaze", "opportunist"], "lore": "The Ember Scar's lava lakes have a current now, and the current has a temper." }
+      ]
+    },
+    {
+      "id": "zapbee",
+      "branch": null,
+      "stages": ["zapbee", "voltarmor", "voltguard", "stormguard", "voltsovereign"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "voltguard", "name": "Voltguard", "element": "storm", "hp": 81, "atk": 22, "def": 20, "spd": 22, "height": 1.92, "model": "Armabee Evolved", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "static_field"], [14, "thunderclap"], [22, "spark_storm"]], "rarity": "rare", "catchRate": 0.09, "tint": "#e8c020", "abilities": ["surge", "static"], "lore": "Its plating hardened into proper armor. Still stings first, apologises never." },
+        { "id": "stormguard", "name": "Stormguard", "element": "storm", "hp": 94, "atk": 26, "def": 23, "spd": 26, "height": 2.3, "model": "Armabee Evolved", "learnset": [[1, "spark_jab"], [1, "static_field"], [1, "thunderclap"], [28, "spark_storm"], [34, "crystal_lance"]], "rarity": "epic", "catchRate": 0.06, "tint": "#c8a010", "abilities": ["surge", "static"], "lore": "Patrols Stormreach's ridgelines in a hum you feel before you hear." },
+        { "id": "voltsovereign", "name": "Voltsovereign", "element": "storm", "hp": 108, "atk": 29, "def": 26, "spd": 29, "height": 2.88, "model": "Armabee Evolved", "learnset": [[1, "spark_jab"], [1, "thunderclap"], [1, "spark_storm"], [34, "crystal_lance"], [40, "overcharge"]], "rarity": "epic", "catchRate": 0.035, "tint": "#a88400", "tintGlow": "#fff17a", "abilities": ["surge", "breaker"], "lore": "The hive answers to it completely, and it answers only to the next thunderhead." }
+      ]
+    },
+    {
+      "id": "zorp",
+      "branch": null,
+      "stages": ["zorp", "xenobolt", "voltxen", "starxen", "cosmarch"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "voltxen", "name": "Voltxen", "element": "storm", "hp": 81, "atk": 23, "def": 18, "spd": 21, "height": 2.28, "model": "Alien:elite", "learnset": [[1, "spark_jab"], [1, "static_field"], [1, "thunderclap"], [22, "overcharge"]], "rarity": "rare", "catchRate": 0.08, "tint": "#e0b81a", "abilities": ["surge", "static"], "lore": "Built a bigger antenna. Still hasn't picked up a signal home." },
+        { "id": "starxen", "name": "Starxen", "element": "storm", "hp": 93, "atk": 26, "def": 22, "spd": 24, "height": 2.74, "model": "Alien:elite", "learnset": [[1, "spark_jab"], [1, "thunderclap"], [1, "overcharge"], [28, "spark_storm"]], "rarity": "epic", "catchRate": 0.05, "tint": "#c09a0a", "abilities": ["surge", "static"], "lore": "Has started mapping the storms instead, just in case one of them is the way back." },
+        { "id": "cosmarch", "name": "Cosmarch", "element": "storm", "hp": 106, "atk": 29, "def": 25, "spd": 27, "height": 3.29, "model": "Alien:elite", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "spark_storm"], [34, "crystal_lance"], [40, "thunderclap"]], "rarity": "epic", "catchRate": 0.03, "tint": "#a07c00", "tintGlow": "#fff17a", "abilities": ["surge", "focus"], "lore": "Stopped looking for home and started building one; Stormreach's peaks now answer to its call." }
+      ]
+    },
+    {
+      "id": "frostling",
+      "branch": null,
+      "stages": ["frostling", "glaciator", "glacilord", "frostgiant", "frostmonarch"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "glacilord", "name": "Glacilord", "element": "wind", "hp": 92, "atk": 23, "def": 22, "spd": 14, "height": 2.52, "model": "Yeti:elite", "learnset": [[1, "gale_cut"], [1, "bubble_veil"], [1, "cyclone"], [16, "boulder_slam"], [22, "frost_breath"]], "rarity": "rare", "catchRate": 0.08, "tint": "#bfe8ff", "abilities": ["tailwind_soul", "swift"], "lore": "Built a proper ice-fort. Snowball fights are now a formal event." },
+        { "id": "frostgiant", "name": "Frostgiant", "element": "wind", "hp": 101, "atk": 26, "def": 25, "spd": 17, "height": 3.02, "model": "Yeti:elite", "learnset": [[1, "gale_cut"], [1, "cyclone"], [1, "frost_breath"], [28, "boulder_slam"], [34, "tailwind"]], "rarity": "epic", "catchRate": 0.05, "tint": "#9fd8ff", "rideable": true, "abilities": ["tailwind_soul", "swift"], "lore": "Its footsteps carve the paths every winter caravan follows without knowing why." },
+        { "id": "frostmonarch", "name": "Frostmonarch", "element": "wind", "hp": 111, "atk": 29, "def": 28, "spd": 20, "height": 3.38, "model": "Yeti:elite", "learnset": [[1, "gale_cut"], [1, "frost_breath"], [1, "boulder_slam"], [34, "cyclone"], [40, "aether_gale"]], "rarity": "epic", "catchRate": 0.03, "tint": "#7fc8ff", "tintGlow": "#eafcff", "rideable": true, "abilities": ["tailwind_soul", "thick_hide"], "lore": "Stormreach's worst blizzards are just it, having a particularly good day." }
+      ]
+    },
+    {
+      "id": "shadekin",
+      "branch": null,
+      "stages": ["shadekin", "shinobi", "shadowblade", "nightfang", "kagesoul"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "shadowblade", "name": "Shadowblade", "element": "wind", "hp": 77, "atk": 24, "def": 16, "spd": 25, "height": 2.16, "model": "Ninja:elite", "learnset": [[1, "gale_cut"], [1, "shadow_claw"], [1, "feather_dart"], [15, "cyclone"], [22, "gust_dive"]], "rarity": "rare", "catchRate": 0.08, "tint": "#2a8a80", "abilities": ["tailwind_soul", "swift"], "lore": "Trained under actual shadows. The shadows are reportedly impressed." },
+        { "id": "nightfang", "name": "Nightfang", "element": "wind", "hp": 89, "atk": 26, "def": 19, "spd": 27, "height": 2.59, "model": "Ninja:elite", "learnset": [[1, "gale_cut"], [1, "feather_dart"], [1, "gust_dive"], [28, "cyclone"], [34, "frost_breath"]], "rarity": "epic", "catchRate": 0.05, "tint": "#1a6a60", "abilities": ["tailwind_soul", "swift"], "lore": "Strikes between one heartbeat and the next, then is gone before the second." },
+        { "id": "kagesoul", "name": "Kagesoul", "element": "wind", "hp": 101, "atk": 29, "def": 22, "spd": 29, "height": 3.11, "model": "Ninja:elite", "learnset": [[1, "gale_cut"], [1, "gust_dive"], [1, "frost_breath"], [34, "shadow_claw"], [40, "aether_gale"]], "rarity": "epic", "catchRate": 0.03, "tint": "#0e4e46", "tintGlow": "#7affe0", "abilities": ["tailwind_soul", "focus"], "lore": "Some Wayfarers swear they've felt it pass. None have ever managed to see it." }
+      ]
+    },
+    {
+      "id": "sparkmage",
+      "branch": null,
+      "stages": ["sparkmage", "voltmage", "stormsage", "tempestmage", "archtempest"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "voltmage", "name": "Voltmage", "element": "storm", "hp": 62, "atk": 21, "def": 13, "spd": 17, "height": 1.2, "model": "Wizard", "learnset": [[1, "spark_jab"], [1, "thunder_wave"], [1, "static_field"], [10, "spark_storm"], [14, "thunderclap"], [22, "overcharge"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["surge", "static"], "lore": "Finally found a textbook. It was mostly wrong, which somehow helped." },
+        { "id": "stormsage", "name": "Stormsage", "element": "storm", "hp": 71, "atk": 24, "def": 15, "spd": 20, "height": 1.44, "model": "Wizard", "learnset": [[1, "spark_jab"], [1, "static_field"], [1, "spark_storm"], [14, "thunderclap"], [22, "overcharge"], [28, "crystal_lance"]], "rarity": "rare", "catchRate": 0.18, "tint": "#e8c020", "abilities": ["surge", "static"], "lore": "Teaches lightning theory to anyone who'll stand close enough to listen (and survive)." },
+        { "id": "tempestmage", "name": "Tempestmage", "element": "storm", "hp": 82, "atk": 28, "def": 17, "spd": 23, "height": 1.8, "model": "Wizard", "learnset": [[1, "spark_jab"], [1, "spark_storm"], [1, "overcharge"], [28, "crystal_lance"], [34, "thunderclap"]], "rarity": "epic", "catchRate": 0.1, "tint": "#c8a010", "abilities": ["surge", "focus"], "lore": "Argues with actual thunderheads about the correct pronunciation of 'cumulonimbus'." },
+        { "id": "archtempest", "name": "Archtempest", "element": "storm", "hp": 93, "atk": 30, "def": 20, "spd": 26, "height": 2.34, "model": "Wizard", "learnset": [[1, "spark_jab"], [1, "overcharge"], [1, "crystal_lance"], [34, "spark_storm"], [40, "prism_ray"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a88400", "tintGlow": "#fff17a", "abilities": ["surge", "focus"], "lore": "The school may be gone, but its best and only graduate never stopped adding to the syllabus." }
+      ]
+    },
+    {
+      "id": "wisp",
+      "branch": null,
+      "stages": ["wisp", "willowisp", "moorwisp", "ladylantern", "soulguide"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "willowisp", "name": "Willowisp", "element": "void", "hp": 60, "atk": 20, "def": 13, "spd": 21, "height": 1.32, "model": "Ghost", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [8, "soul_siphon"], [12, "toxic_mist"], [22, "umbral_wave"]], "rarity": "rare", "catchRate": 0.15, "abilities": ["umbra", "opportunist"], "lore": "Leads travelers home by the longest, prettiest possible route. No one seems to mind." },
+        { "id": "moorwisp", "name": "Moorwisp", "element": "void", "hp": 69, "atk": 23, "def": 15, "spd": 24, "height": 1.58, "model": "Ghost", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "soul_siphon"], [12, "toxic_mist"], [22, "umbral_wave"], [28, "ink_cloud"]], "rarity": "rare", "catchRate": 0.1, "tint": "#c9b8ff", "abilities": ["umbra", "opportunist"], "lore": "Two lights now drift where one used to — it's teaching a younger wisp the paths." },
+        { "id": "ladylantern", "name": "Ladylantern", "element": "void", "hp": 79, "atk": 26, "def": 17, "spd": 28, "height": 1.98, "model": "Ghost", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "umbral_wave"], [28, "ink_cloud"], [34, "hypno_glow"]], "rarity": "epic", "catchRate": 0.06, "tint": "#e8dcff", "abilities": ["umbra", "regenerator"], "lore": "Marsh-folk leave a candle out for her on foggy nights, out of habit and gratitude both." },
+        { "id": "soulguide", "name": "Soulguide", "element": "void", "hp": 90, "atk": 29, "def": 20, "spd": 30, "height": 2.57, "model": "Ghost", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "ink_cloud"], [34, "soul_siphon"], [40, "warden_edge"]], "rarity": "epic", "catchRate": 0.03, "tint": "#fff6e0", "tintGlow": "#ffe89a", "abilities": ["umbra", "regenerator"], "lore": "Every lost path in Mistveil Marsh eventually leads somewhere warm, because of her." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "impling", "name": "Impling", "line": "impling", "stage": 1, "element": "fire", "prompt": "A small mischievous imp with tiny bat wings and a miniature pitchfork, dusky red skin and a wide impish grin." },
+    { "id": "hellion", "name": "Hellion", "line": "impling", "stage": 2, "element": "fire", "prompt": "A taller horned demon with bigger wings and a crackling laugh, deeper red skin with dark markings, pitchfork now properly sized." },
+    { "id": "brimlord", "name": "Brimlord", "line": "impling", "stage": 3, "element": "fire", "prompt": "A broader demon with curling ram-like horns and wings edged in ember-light, deep crimson skin patterned with glowing cracks like cooling lava." },
+    { "id": "direlord", "name": "Direlord", "line": "impling", "stage": 4, "element": "fire", "prompt": "An imposing horned demon lord with an ornate bone pitchfork and wide leathery wings, dark garnet skin glowing at every crack, a commanding smirk." },
+    { "id": "archdemon", "name": "Archdemon", "line": "impling", "stage": 5, "element": "fire", "prompt": "A towering demon sovereign with vast wings of flame-edged leather and a crown of curling horns, near-black crimson skin blazing with molten fissures, its grin equal parts menace and delight." },
+
+    { "id": "gloomling", "name": "Gloomling", "line": "gloomling", "stage": 1, "element": "void", "prompt": "A small imp-like creature hanging upside down from a branch, violet-grey skin and wide glowing eyes, giggling at nothing in particular." },
+    { "id": "gloomlord", "name": "Gloomlord", "line": "gloomling", "stage": 2, "element": "void", "prompt": "A taller goblin-like figure with a crooked little crown and clawed hands, deeper violet skin with faint glowing veins, a sly knowing grin." },
+    { "id": "duskgloom", "name": "Duskgloom", "line": "gloomling", "stage": 3, "element": "void", "prompt": "A broader goblin lord with a more ornate bone crown and longer claws, deep violet-grey skin glowing faintly along its veins, still grinning slyly." },
+    { "id": "nightgloom", "name": "Nightgloom", "line": "gloomling", "stage": 4, "element": "void", "prompt": "An imposing shadow-wreathed figure with a jagged crown and a trailing cloak of living darkness, indigo skin marked with glowing violet runes." },
+    { "id": "umbragloom", "name": "Umbragloom", "line": "gloomling", "stage": 5, "element": "void", "prompt": "A towering void sovereign draped in shifting shadow-cloth and crowned in curling dark horns, deep violet-black skin glowing with slow-pulsing runic light." },
+
+    { "id": "grunt", "name": "Grunt", "line": "grunt", "stage": 1, "element": "earth", "prompt": "A small stocky orc with a crude wooden club and a determined scowl, dusty tan-green skin and simple leather straps." },
+    { "id": "warlord", "name": "Warlord", "line": "grunt", "stage": 2, "element": "earth", "prompt": "A broader orc warrior with a proper stone axe and battle-worn armor, deeper olive skin with scars, a commanding stance." },
+    { "id": "warbrute", "name": "Warbrute", "line": "grunt", "stage": 3, "element": "earth", "prompt": "A heavily muscled orc brute with a massive rock-headed maul and layered hide armor, weathered bronze-green skin marked with war-paint." },
+    { "id": "warkhan", "name": "Warkhan", "line": "grunt", "stage": 4, "element": "earth", "prompt": "An imposing orc chieftain in spiked stone armor with a trophy-hung belt, deep umber-green skin crossed with old scars, a steady commanding gaze." },
+    { "id": "warmonarch", "name": "Warmonarch", "line": "grunt", "stage": 5, "element": "earth", "prompt": "A towering orc warmonarch in ornate boulder-plate armor and a banner-topped horned helm, rich earthen bronze skin, radiating the authority of a hundred won battles." },
+
+    { "id": "cinderquid", "name": "Cinderquid", "line": "cinderquid", "stage": 1, "element": "fire", "prompt": "A small squid with stubby glowing tentacles trailing faint smoke, deep red-orange body with a soft round mantle." },
+    { "id": "scorchquid", "name": "Scorchquid", "line": "cinderquid", "stage": 2, "element": "fire", "prompt": "A slightly larger squid whose tentacle-tips now flicker with tiny flames, richer red mantle with brighter ember-glow patterns." },
+    { "id": "magmaquid", "name": "Magmaquid", "line": "cinderquid", "stage": 3, "element": "fire", "prompt": "A broader squid with longer tentacles trailing continuous embers, deep magma-red mantle cracked with glowing orange seams." },
+    { "id": "infernoquid", "name": "Infernoquid", "line": "cinderquid", "stage": 4, "element": "fire", "prompt": "A powerful squid whose whole mantle glows like a coal, its many tentacles wreathed in drifting flame, dark ember-red skin veined in gold light." },
+    { "id": "cinderkraken", "name": "Cinderkraken", "line": "cinderquid", "stage": 5, "element": "fire", "prompt": "A colossal lava-kraken with a crown of massive flame-wreathed tentacles and a mantle like cooling obsidian, glowing gold fissures pulsing across its whole body." },
+
+    { "id": "zapbee", "name": "Zapbee", "line": "zapbee", "stage": 1, "element": "storm", "prompt": "A small round bee with thin crackling wings and a soft yellow-black striped body, tiny spark-flecks trailing from its stinger." },
+    { "id": "voltarmor", "name": "Voltarmor", "line": "zapbee", "stage": 2, "element": "storm", "prompt": "A larger armored bee with plated chitin and buzzing lightning-fast wings, deeper gold-black striping with a hardened glossy shell." },
+    { "id": "voltguard", "name": "Voltguard", "line": "zapbee", "stage": 3, "element": "storm", "prompt": "A sturdier armored bee with thicker plate segments along its thorax and crackling wing-edges, rich gold-bronze chitin with darker battle stripes." },
+    { "id": "stormguard", "name": "Stormguard", "line": "zapbee", "stage": 4, "element": "storm", "prompt": "An imposing sentinel-bee with heavy layered armor plates and wings that leave visible spark-trails, deep bronze-gold shell veined with glowing lightning cracks." },
+    { "id": "voltsovereign", "name": "Voltsovereign", "line": "zapbee", "stage": 5, "element": "storm", "prompt": "A magnificent armored bee sovereign crowned in crystalline plate and trailing constant arcs of lightning from every wing-edge, radiant gold-bronze chitin glowing at every seam." },
+
+    { "id": "zorp", "name": "Zorp", "line": "zorp", "stage": 1, "element": "storm", "prompt": "A small grey alien with a stubby antenna and huge curious eyes, smooth pale lavender-grey skin crackling faintly with static." },
+    { "id": "xenobolt", "name": "Xenobolt", "line": "zorp", "stage": 2, "element": "storm", "prompt": "A taller alien with a longer antenna and slender limbs, deeper grey-violet skin marked with faint circuit-like lightning patterns." },
+    { "id": "voltxen", "name": "Voltxen", "line": "zorp", "stage": 3, "element": "storm", "prompt": "A leaner alien with an elaborate branching antenna array and glowing circuit-patterns across its limbs, cool slate-violet skin crackling at the fingertips." },
+    { "id": "starxen", "name": "Starxen", "line": "zorp", "stage": 4, "element": "storm", "prompt": "An imposing alien with a crown-like antenna cluster and skin patterned in constellations of tiny glowing dots, deep indigo-grey and faintly luminous." },
+    { "id": "cosmarch", "name": "Cosmarch", "line": "zorp", "stage": 5, "element": "storm", "prompt": "A regal alien sovereign with a radiant crown of branching antennae like captured lightning, deep cosmic-violet skin glowing with slow-drifting star-like patterns across every limb." },
+
+    { "id": "frostling", "name": "Frostling", "line": "frostling", "stage": 1, "element": "wind", "prompt": "A small round yeti cub with shaggy white fur and stubby arms, rosy cheeks and bright curious eyes peeking through the fluff." },
+    { "id": "glaciator", "name": "Glaciator", "line": "frostling", "stage": 2, "element": "wind", "prompt": "A bulkier young yeti with thick shaggy fur and sturdy limbs, pale blue-white coat with a determined, snowball-ready stance." },
+    { "id": "glacilord", "name": "Glacilord", "line": "frostling", "stage": 3, "element": "wind", "prompt": "A broader yeti with denser fur and small ice-crystal formations along its shoulders, frost-pale coat glinting faintly blue in the cold." },
+    { "id": "frostgiant", "name": "Frostgiant", "line": "frostling", "stage": 4, "element": "wind", "prompt": "A towering yeti giant with heavy ice-plated shoulders and a thick frosted mane, pale icy-blue fur crusted with glittering frost patterns." },
+    { "id": "frostmonarch", "name": "Frostmonarch", "line": "frostling", "stage": 5, "element": "wind", "prompt": "A colossal yeti sovereign crowned in a jagged ice-crown and draped in frost-crusted fur, radiant pale blue-white coat glittering like fresh snow under its own cold light." },
+
+    { "id": "shadekin", "name": "Shadekin", "line": "shadekin", "stage": 1, "element": "wind", "prompt": "A small lean ninja-shaped creature in a dark hood, teal-grey cloth wrappings and sharp watchful eyes, barely a shadow's outline." },
+    { "id": "shinobi", "name": "Shinobi", "line": "shadekin", "stage": 2, "element": "wind", "prompt": "A taller, more agile ninja figure with a flowing scarf and twin blades, deeper slate-teal wrappings and a poised, silent stance." },
+    { "id": "shadowblade", "name": "Shadowblade", "line": "shadekin", "stage": 3, "element": "wind", "prompt": "A leaner, faster ninja with a longer trailing scarf and a single curved blade, dark teal-grey wrappings blending into shifting shadow at the edges." },
+    { "id": "nightfang", "name": "Nightfang", "line": "shadekin", "stage": 4, "element": "wind", "prompt": "An elite shadow-warrior wrapped in wind-torn cloth with twin glinting blades, near-black teal garb that seems to blur at the edges mid-motion." },
+    { "id": "kagesoul", "name": "Kagesoul", "line": "shadekin", "stage": 5, "element": "wind", "prompt": "A legendary shadow-master barely more than a suggestion of movement, dark storm-teal wrappings trailing like smoke, twin blades catching light that shouldn't be there." },
+
+    { "id": "sparkmage", "name": "Sparkmage", "line": "sparkmage", "stage": 1, "element": "storm", "prompt": "A slim robed figure crackling with static, holding a crooked wooden staff topped with a small spark, pale grey robes with yellow lightning trim." },
+    { "id": "voltmage", "name": "Voltmage", "line": "sparkmage", "stage": 2, "element": "storm", "prompt": "A more composed robed spellcaster with a sturdier staff and a small floating spark-orb, richer grey-gold robes crackling faintly at the hem." },
+    { "id": "stormsage", "name": "Stormsage", "line": "sparkmage", "stage": 3, "element": "storm", "prompt": "A confident storm-scholar in layered robes with a crystal-topped staff, deep charcoal-gold robes patterned with faint lightning-bolt embroidery." },
+    { "id": "tempestmage", "name": "Tempestmage", "line": "sparkmage", "stage": 4, "element": "storm", "prompt": "A powerful storm mage wreathed in a faint crackling aura, ornate gold-trimmed robes billowing as if caught in a permanent squall, staff topped with a captured storm cloud." },
+    { "id": "archtempest", "name": "Archtempest", "line": "sparkmage", "stage": 5, "element": "storm", "prompt": "A magnificent archmage of the storm, robes of deep stormcloud-grey and gold lightning trim swirling around them, staff crowned with a permanently crackling miniature thundercloud." },
+
+    { "id": "wisp", "name": "Wisp", "line": "wisp", "stage": 1, "element": "void", "prompt": "A small drifting flame-light with a faint humanoid shimmer inside, soft violet-white glow trailing thin wisps of light." },
+    { "id": "willowisp", "name": "Willowisp", "line": "wisp", "stage": 2, "element": "void", "prompt": "A slightly larger drifting light with a clearer flickering silhouette inside, warmer pale gold-violet glow trailing longer light-ribbons." },
+    { "id": "moorwisp", "name": "Moorwisp", "line": "wisp", "stage": 3, "element": "void", "prompt": "A brighter wandering light trailing a second smaller spark beside it, soft lilac-gold glow with a more defined gentle silhouette." },
+    { "id": "ladylantern", "name": "Ladylantern", "line": "wisp", "stage": 4, "element": "void", "prompt": "An elegant glowing figure wrapped in trailing light like a lantern-lit gown, warm cream-gold glow with a serene, motherly presence." },
+    { "id": "soulguide", "name": "Soulguide", "line": "wisp", "stage": 5, "element": "void", "prompt": "A radiant guiding spirit crowned in soft golden light with long flowing ribbons of glow trailing like a comet's tail, its warm presence lighting the whole marsh path ahead." }
+  ]
+}

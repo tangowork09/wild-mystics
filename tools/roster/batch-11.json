@@ -1,0 +1,387 @@
+{
+  "lines": [
+    {
+      "id": "jestfin",
+      "branch": null,
+      "stages": ["jestfin", "quipfin", "harlequill", "masquerfin", "harlequeen"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "quipfin", "name": "Quipfin", "element": "water",
+          "hp": 59, "atk": 16, "def": 14, "spd": 19,
+          "height": 0.84, "model": "R2:Clownfish__f28280ed.glb",
+          "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [8, "aqua_jet"], [12, "mend_rain"], [22, "riptide"]],
+          "rarity": "rare", "catchRate": 0.25, "swim": true,
+          "abilities": ["lucky", "regenerator"],
+          "lore": "Its stripes rearrange themselves whenever it thinks of a better punchline."
+        },
+        {
+          "id": "harlequill", "name": "Harlequill", "element": "water",
+          "hp": 67, "atk": 18, "def": 16, "spd": 22,
+          "height": 1.0, "model": "R2:Clownfish__f28280ed.glb",
+          "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "aqua_jet"], [12, "mend_rain"], [22, "riptide"], [28, "scald"]],
+          "rarity": "rare", "catchRate": 0.18, "swim": true, "tint": "#2a6fc4",
+          "abilities": ["torrent", "lucky"],
+          "lore": "Wears a fin like a jester's cap and absolutely will not explain the joke."
+        },
+        {
+          "id": "masquerfin", "name": "Masquerfin", "element": "water",
+          "hp": 76, "atk": 21, "def": 18, "spd": 25,
+          "height": 1.2, "model": "R2:Clownfish__f28280ed.glb",
+          "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "aqua_jet"], [1, "mend_rain"], [22, "riptide"], [28, "scald"], [34, "brine_lance"]],
+          "rarity": "epic", "catchRate": 0.1, "swim": true, "tint": "#4a3a9a",
+          "abilities": ["torrent", "focus"],
+          "lore": "Every mask it grows is a different joke; the reef keeps score."
+        },
+        {
+          "id": "harlequeen", "name": "Harlequeen", "element": "water",
+          "hp": 87, "atk": 24, "def": 21, "spd": 28,
+          "height": 1.44, "model": "R2:Clownfish__f28280ed.glb",
+          "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "aqua_jet"], [1, "mend_rain"], [1, "riptide"], [28, "scald"], [34, "brine_lance"], [40, "purify"]],
+          "rarity": "epic", "catchRate": 0.06, "swim": true, "tint": "#8a2a7a", "tintGlow": "#ffd76a",
+          "abilities": ["torrent", "guardian_aura"],
+          "lore": "Crowns itself ringmaster of the reef and, frankly, the reef agrees."
+        }
+      ]
+    },
+    {
+      "id": "lancefin",
+      "branch": null,
+      "stages": ["lancefin", "sabrefin", "rapierjaw", "bladewake", "tidelance"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "sabrefin", "name": "Sabrefin", "element": "water",
+          "hp": 73, "atk": 23, "def": 15, "spd": 22,
+          "height": 1.8, "model": "R2:Swordfish__4400228c.glb",
+          "learnset": [[1, "aqua_jet"], [1, "brine_lance"], [10, "tide_lash"], [14, "riptide"], [18, "scald"], [22, "bubble_veil"]],
+          "rarity": "rare", "catchRate": 0.25, "swim": true, "tint": "#2a5fb0",
+          "abilities": ["focus", "torrent"],
+          "lore": "Practices its lunge on passing shadows and has never once missed."
+        },
+        {
+          "id": "rapierjaw", "name": "Rapierjaw", "element": "water",
+          "hp": 84, "atk": 25, "def": 17, "spd": 24,
+          "height": 2.16, "model": "R2:Swordfish__4400228c.glb",
+          "learnset": [[1, "aqua_jet"], [1, "brine_lance"], [1, "tide_lash"], [14, "riptide"], [18, "scald"], [22, "bubble_veil"], [28, "shell_guard"]],
+          "rarity": "rare", "catchRate": 0.18, "swim": true, "tint": "#1a4a95",
+          "abilities": ["focus", "torrent"],
+          "lore": "Its blade-nose can part a current in two clean halves."
+        },
+        {
+          "id": "bladewake", "name": "Bladewake", "element": "water",
+          "hp": 96, "atk": 27, "def": 20, "spd": 27,
+          "height": 2.59, "model": "R2:Swordfish__4400228c.glb",
+          "learnset": [[1, "aqua_jet"], [1, "brine_lance"], [1, "tide_lash"], [1, "riptide"], [18, "scald"], [22, "bubble_veil"], [28, "shell_guard"], [34, "mend_rain"]],
+          "rarity": "epic", "catchRate": 0.1, "swim": true, "tint": "#123a7a",
+          "abilities": ["focus", "breaker"],
+          "lore": "Leaves a wake shaped like a fencer's flourish, bow included."
+        },
+        {
+          "id": "tidelance", "name": "Tidelance", "element": "water",
+          "hp": 110, "atk": 29, "def": 23, "spd": 30,
+          "height": 3.11, "model": "R2:Swordfish__4400228c.glb",
+          "learnset": [[1, "aqua_jet"], [1, "brine_lance"], [1, "tide_lash"], [1, "riptide"], [1, "scald"], [28, "shell_guard"], [34, "mend_rain"], [40, "purify"]],
+          "rarity": "epic", "catchRate": 0.06, "swim": true, "tint": "#0a2a5f", "tintGlow": "#8fd8ff",
+          "abilities": ["breaker", "torrent"],
+          "lore": "The undisputed champion of the reef's oldest duelling ground; nothing has beaten it twice."
+        }
+      ]
+    },
+    {
+      "id": "inkwhirl",
+      "branch": null,
+      "stages": ["inkwhirl", "inkdrift", "versewhirl", "sonnetide", "inkmuse"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "inkdrift", "name": "Inkdrift", "element": "void",
+          "hp": 79, "atk": 20, "def": 18, "spd": 17,
+          "height": 1.56, "model": "V3:octopus.glb",
+          "learnset": [[1, "shadow_claw"], [1, "ink_cloud"], [8, "tide_lash"], [12, "hypno_glow"], [16, "umbral_wave"], [22, "soul_siphon"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "abilities": ["opportunist", "absorb"],
+          "lore": "Writes longer poems now; the tide erases them just as fast."
+        },
+        {
+          "id": "versewhirl", "name": "Versewhirl", "element": "void",
+          "hp": 89, "atk": 23, "def": 21, "spd": 20,
+          "height": 1.87, "model": "V3:octopus.glb",
+          "learnset": [[1, "shadow_claw"], [1, "ink_cloud"], [1, "tide_lash"], [12, "hypno_glow"], [16, "umbral_wave"], [22, "soul_siphon"], [28, "toxic_mist"]],
+          "rarity": "rare", "catchRate": 0.18, "tint": "#7a4fd0",
+          "abilities": ["opportunist", "absorb"],
+          "lore": "Its ink-clouds curl into shapes that almost look like words."
+        },
+        {
+          "id": "sonnetide", "name": "Sonnetide", "element": "void",
+          "hp": 100, "atk": 26, "def": 24, "spd": 23,
+          "height": 2.24, "model": "V3:octopus.glb",
+          "learnset": [[1, "shadow_claw"], [1, "ink_cloud"], [1, "tide_lash"], [1, "hypno_glow"], [16, "umbral_wave"], [22, "soul_siphon"], [28, "toxic_mist"], [34, "venom_fang"]],
+          "rarity": "epic", "catchRate": 0.1, "tint": "#5a2fb0", "tintGlow": "#c89aff",
+          "abilities": ["umbra", "opportunist"],
+          "lore": "Scholars swear its ink-trails scan like verse, if you squint at low tide."
+        },
+        {
+          "id": "inkmuse", "name": "Inkmuse", "element": "void",
+          "hp": 112, "atk": 29, "def": 28, "spd": 28,
+          "height": 2.69, "model": "V3:octopus.glb",
+          "learnset": [[1, "shadow_claw"], [1, "ink_cloud"], [1, "tide_lash"], [1, "hypno_glow"], [1, "umbral_wave"], [28, "toxic_mist"], [34, "venom_fang"], [40, "warden_edge"]],
+          "rarity": "epic", "catchRate": 0.06, "tint": "#3a1a8a", "tintGlow": "#c89aff",
+          "abilities": ["umbra", "opportunist"],
+          "lore": "Every poet on the coast claims it whispered their best line first."
+        }
+      ]
+    },
+    {
+      "id": "fawnlet",
+      "branch": null,
+      "stages": ["fawnlet", "mossbuck", "thicketbuck", "grovemonarch", "canopyheart"],
+      "existingCount": 2,
+      "newForms": [
+        {
+          "id": "thicketbuck", "name": "Thicketbuck", "element": "nature",
+          "hp": 90, "atk": 24, "def": 21, "spd": 21,
+          "height": 2.5, "model": "A:Deer",
+          "learnset": [[1, "thorn_volley"], [1, "pounce"], [1, "vine_snare"], [22, "grove_wrath"], [28, "bloom"], [34, "thorn_howl"]],
+          "rarity": "rare", "catchRate": 0.18, "rideable": true, "tint": "#5f7a3a",
+          "abilities": ["overgrow", "guardian_aura"],
+          "lore": "Whole thickets take root in its antlers before it even notices."
+        },
+        {
+          "id": "grovemonarch", "name": "Grovemonarch", "element": "nature",
+          "hp": 101, "atk": 27, "def": 24, "spd": 24,
+          "height": 2.9, "model": "A:Deer",
+          "learnset": [[1, "thorn_volley"], [1, "pounce"], [1, "vine_snare"], [1, "grove_wrath"], [28, "bloom"], [34, "thorn_howl"], [40, "sleep_spore"]],
+          "rarity": "epic", "catchRate": 0.1, "rideable": true, "tint": "#4a6a2a",
+          "abilities": ["overgrow", "guardian_aura"],
+          "lore": "Younger deer bow when it passes; the moss on its antlers is older than the trail."
+        },
+        {
+          "id": "canopyheart", "name": "Canopyheart", "element": "nature",
+          "hp": 112, "atk": 30, "def": 28, "spd": 28,
+          "height": 3.3, "model": "A:Deer",
+          "learnset": [[1, "thorn_volley"], [1, "pounce"], [1, "vine_snare"], [1, "grove_wrath"], [1, "bloom"], [34, "thorn_howl"], [40, "sleep_spore"], [45, "tailwind"]],
+          "rarity": "epic", "catchRate": 0.06, "rideable": true, "tint": "#3a5a1a", "tintGlow": "#d8ff8a",
+          "abilities": ["overgrow", "guardian_aura"],
+          "lore": "Its antlers have become the forest's own canopy; birds nest there and never leave."
+        }
+      ]
+    },
+    {
+      "id": "bramblewolf",
+      "branch": null,
+      "stages": ["bramblewolf", "thornfang", "bristlemane", "duskbramble", "nightbriar"],
+      "existingCount": 2,
+      "newForms": [
+        {
+          "id": "bristlemane", "name": "Bristlemane", "element": "nature",
+          "hp": 92, "atk": 27, "def": 21, "spd": 23,
+          "height": 2.28, "model": "A:Wolf",
+          "learnset": [[1, "pounce"], [1, "thorn_howl"], [1, "venom_fang"], [24, "grove_wrath"], [30, "shadow_claw"], [34, "vine_snare"]],
+          "rarity": "rare", "catchRate": 0.18, "rideable": true, "tint": "#243a1e",
+          "abilities": ["intimidate", "opportunist"],
+          "lore": "Its mane has gone to thorns; cub and stranger alike learn to knock before visiting."
+        },
+        {
+          "id": "duskbramble", "name": "Duskbramble", "element": "nature",
+          "hp": 101, "atk": 29, "def": 25, "spd": 26,
+          "height": 2.7, "model": "A:Wolf",
+          "learnset": [[1, "pounce"], [1, "thorn_howl"], [1, "venom_fang"], [1, "grove_wrath"], [30, "shadow_claw"], [34, "vine_snare"], [40, "thorn_volley"]],
+          "rarity": "epic", "catchRate": 0.1, "rideable": true, "tint": "#1a2e14",
+          "abilities": ["intimidate", "opportunist"],
+          "lore": "Leads the pack out at first dusk and nothing in the thicket argues."
+        },
+        {
+          "id": "nightbriar", "name": "Nightbriar", "element": "nature",
+          "hp": 110, "atk": 30, "def": 29, "spd": 29,
+          "height": 3.2, "model": "A:Wolf",
+          "learnset": [[1, "pounce"], [1, "thorn_howl"], [1, "venom_fang"], [1, "grove_wrath"], [1, "shadow_claw"], [34, "vine_snare"], [40, "thorn_volley"], [45, "umbral_wave"]],
+          "rarity": "epic", "catchRate": 0.06, "rideable": true, "tint": "#12220e", "tintGlow": "#b8ff8a",
+          "abilities": ["intimidate", "rage"],
+          "lore": "The whole forest goes quiet when it walks; even the thorns seem to lean out of its way."
+        }
+      ]
+    },
+    {
+      "id": "lanternfox",
+      "branch": null,
+      "stages": ["lanternfox", "brandfox", "pyrevane", "beaconpyre", "beaconsire"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "brandfox", "name": "Brandfox", "element": "fire",
+          "hp": 67, "atk": 21, "def": 14, "spd": 22,
+          "height": 1.2, "model": "A:Fox",
+          "learnset": [[1, "ember_bite"], [1, "lantern_flare"], [8, "hypno_glow"], [12, "pounce"], [16, "flare_burst"], [20, "kindle"], [22, "flame_wheel"]],
+          "rarity": "rare", "catchRate": 0.25, "tint": "#5a3a7a", "tintGlow": "#ffa040",
+          "abilities": ["flame_body", "keen_eye"],
+          "lore": "Carries a coal in its chest that never quite goes out, even in the rain."
+        },
+        {
+          "id": "pyrevane", "name": "Pyrevane", "element": "fire",
+          "hp": 78, "atk": 24, "def": 17, "spd": 24,
+          "height": 1.44, "model": "A:Fox",
+          "learnset": [[1, "ember_bite"], [1, "lantern_flare"], [1, "hypno_glow"], [12, "pounce"], [16, "flare_burst"], [20, "kindle"], [22, "flame_wheel"], [28, "cinder_claw"]],
+          "rarity": "rare", "catchRate": 0.18, "tint": "#4a2a6a", "tintGlow": "#ff9030",
+          "abilities": ["flame_body", "blaze"],
+          "lore": "Turns to face the wind before it turns to face you; the flame decides first."
+        },
+        {
+          "id": "beaconpyre", "name": "Beaconpyre", "element": "fire",
+          "hp": 90, "atk": 27, "def": 20, "spd": 27,
+          "height": 1.73, "model": "A:Fox",
+          "learnset": [[1, "ember_bite"], [1, "lantern_flare"], [1, "hypno_glow"], [1, "pounce"], [16, "flare_burst"], [20, "kindle"], [22, "flame_wheel"], [28, "cinder_claw"], [34, "meteor_fang"]],
+          "rarity": "epic", "catchRate": 0.1, "tint": "#3a1e5a", "tintGlow": "#ff8020",
+          "abilities": ["blaze", "focus"],
+          "lore": "Wayfarers say its tail-flame burns brighter the more lost you are."
+        },
+        {
+          "id": "beaconsire", "name": "Beaconsire", "element": "fire",
+          "hp": 105, "atk": 30, "def": 24, "spd": 30,
+          "height": 2.07, "model": "A:Fox",
+          "learnset": [[1, "ember_bite"], [1, "lantern_flare"], [1, "hypno_glow"], [1, "pounce"], [1, "flare_burst"], [20, "kindle"], [22, "flame_wheel"], [28, "cinder_claw"], [34, "meteor_fang"], [45, "moon_hoot"]],
+          "rarity": "epic", "catchRate": 0.06, "tint": "#2a144a", "tintGlow": "#ff7010",
+          "abilities": ["blaze", "focus"],
+          "lore": "The old guide-light of the Elderwood; every lost path finds its way back through it eventually."
+        }
+      ]
+    },
+    {
+      "id": "hootsage",
+      "branch": null,
+      "stages": ["hootsage", "lorewing", "duskscholar", "archowl", "archsage"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "lorewing", "name": "Lorewing", "element": "wind",
+          "hp": 77, "atk": 20, "def": 19, "spd": 18,
+          "height": 1.32, "model": "V3:owl.glb",
+          "learnset": [[1, "gale_cut"], [1, "moon_hoot"], [8, "feather_dart"], [12, "hypno_glow"], [16, "cyclone"], [22, "tailwind"], [24, "gust_dive"]],
+          "rarity": "rare", "catchRate": 0.25,
+          "abilities": ["keen_eye", "focus"],
+          "lore": "Has opinions about every scroll in Elderhollow and shares them, unsolicited, at 3am."
+        },
+        {
+          "id": "duskscholar", "name": "Duskscholar", "element": "wind",
+          "hp": 87, "atk": 23, "def": 22, "spd": 21,
+          "height": 1.58, "model": "V3:owl.glb",
+          "learnset": [[1, "gale_cut"], [1, "moon_hoot"], [1, "feather_dart"], [12, "hypno_glow"], [16, "cyclone"], [22, "tailwind"], [24, "gust_dive"], [30, "frost_breath"]],
+          "rarity": "rare", "catchRate": 0.18, "tint": "#3a4a8a",
+          "abilities": ["keen_eye", "focus"],
+          "lore": "Keeps a library in the hollow of an old oak and lends books it fully expects back."
+        },
+        {
+          "id": "archowl", "name": "Archowl", "element": "wind",
+          "hp": 98, "atk": 26, "def": 25, "spd": 24,
+          "height": 1.9, "model": "V3:owl.glb",
+          "learnset": [[1, "gale_cut"], [1, "moon_hoot"], [1, "feather_dart"], [1, "hypno_glow"], [16, "cyclone"], [22, "tailwind"], [24, "gust_dive"], [30, "frost_breath"], [36, "aether_gale"]],
+          "rarity": "epic", "catchRate": 0.1, "rideable": true, "tint": "#2a3a7a",
+          "abilities": ["keen_eye", "tailwind_soul"],
+          "lore": "Footnotes its own hoots. Nobody has ever asked it to stop."
+        },
+        {
+          "id": "archsage", "name": "Archsage", "element": "wind",
+          "hp": 111, "atk": 30, "def": 29, "spd": 28,
+          "height": 2.28, "model": "V3:owl.glb",
+          "learnset": [[1, "gale_cut"], [1, "moon_hoot"], [1, "feather_dart"], [1, "hypno_glow"], [1, "cyclone"], [1, "tailwind"], [30, "frost_breath"], [36, "aether_gale"], [45, "umbral_wave"]],
+          "rarity": "epic", "catchRate": 0.06, "rideable": true, "tint": "#1a2a6a", "tintGlow": "#c8d8ff",
+          "abilities": ["focus", "tailwind_soul"],
+          "lore": "The Elderwood's oldest living index; ask it anything and wait for the very long answer."
+        }
+      ]
+    },
+    {
+      "id": "mosshulk",
+      "branch": null,
+      "stages": ["mosshulk", "cairnback", "boulderoot", "mossmonolith", "cairnsovereign"],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "cairnback", "name": "Cairnback", "element": "nature",
+          "hp": 93, "atk": 22, "def": 25, "spd": 9,
+          "height": 2.3, "model": "V3:golem.glb",
+          "learnset": [[1, "rock_toss"], [1, "stone_skin"], [8, "vine_snare"], [14, "boulder_slam"], [20, "grove_wrath"], [24, "thorn_volley"]],
+          "rarity": "rare", "catchRate": 0.25, "tint": "#4a6a3a", "tintAll": true, "tintL": 0.2,
+          "abilities": ["sturdy", "thick_hide"],
+          "lore": "Small stones stack themselves on its shoulders overnight; it never seems to mind."
+        },
+        {
+          "id": "boulderoot", "name": "Boulderoot", "element": "nature",
+          "hp": 99, "atk": 24, "def": 26, "spd": 10,
+          "height": 2.65, "model": "V3:golem.glb",
+          "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "vine_snare"], [14, "boulder_slam"], [20, "grove_wrath"], [24, "thorn_volley"], [30, "bloom"]],
+          "rarity": "rare", "catchRate": 0.18, "tint": "#3a5a2e", "tintAll": true, "tintL": 0.2,
+          "abilities": ["sturdy", "thick_hide"],
+          "lore": "Roots have grown clean through it and out the other side, and it calls them ribs now."
+        },
+        {
+          "id": "mossmonolith", "name": "Mossmonolith", "element": "nature",
+          "hp": 105, "atk": 26, "def": 27, "spd": 11,
+          "height": 3.0, "model": "V3:golem.glb",
+          "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "vine_snare"], [1, "boulder_slam"], [20, "grove_wrath"], [24, "thorn_volley"], [30, "bloom"], [36, "sleep_spore"]],
+          "rarity": "epic", "catchRate": 0.1, "tint": "#2e4a24", "tintAll": true, "tintL": 0.2,
+          "abilities": ["thick_hide", "guardian_aura"],
+          "lore": "Hikers use it as a landmark. It has learned to hold very, very still for photographs."
+        },
+        {
+          "id": "cairnsovereign", "name": "Cairnsovereign", "element": "nature",
+          "hp": 111, "atk": 29, "def": 28, "spd": 12,
+          "height": 3.4, "model": "V3:golem.glb",
+          "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "vine_snare"], [1, "boulder_slam"], [1, "grove_wrath"], [24, "thorn_volley"], [30, "bloom"], [36, "sleep_spore"], [42, "thorn_howl"]],
+          "rarity": "epic", "catchRate": 0.06, "tint": "#22381c", "tintGlow": "#bfe08a", "tintAll": true, "tintL": 0.2,
+          "abilities": ["sturdy", "guardian_aura"],
+          "lore": "The oldest boundary marker in the Elderwood, older than the borders it once marked."
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "jestfin", "name": "Jestfin", "line": "jestfin", "stage": 1, "element": "water", "prompt": "A small round clownfish in bold orange-and-white bands with a mischievous gap-toothed grin, translucent frilled fins flicking like a jester's sleeves." },
+    { "id": "quipfin", "name": "Quipfin", "line": "jestfin", "stage": 2, "element": "water", "prompt": "A slightly bigger clownfish whose fin-frills have grown into a ruffled collar of orange and cream, with one eye perpetually mid-wink." },
+    { "id": "harlequill", "name": "Harlequill", "line": "jestfin", "stage": 3, "element": "water", "prompt": "Its collar has become a proper diamond-patterned jester ruff in orange, cream and a new deep sapphire-violet tint, with long quill-like dorsal spines that wiggle when it laughs." },
+    { "id": "masquerfin", "name": "Masquerfin", "line": "jestfin", "stage": 4, "element": "water", "prompt": "A showy carnival fish trailing ribbon-fins in violet and gold, a painted mask-pattern spreading across its face in the same orange-and-cream bands as ever, only bolder." },
+    { "id": "harlequeen", "name": "Harlequeen", "line": "jestfin", "stage": 5, "element": "water", "prompt": "A resplendent reef monarch crowned in flowing magenta-and-gold ribbon fins shaped like a jester's crown, its original orange-and-cream bands now glowing faintly gold along every seam." },
+
+    { "id": "lancefin", "name": "Lancefin", "line": "lancefin", "stage": 1, "element": "water", "prompt": "A sleek cobalt-blue swordfish with a long silver rostrum blade and a proud, focused stare, dorsal fin raised like a raised visor." },
+    { "id": "sabrefin", "name": "Sabrefin", "line": "lancefin", "stage": 2, "element": "water", "prompt": "A leaner, longer swordfish in deepening blue, its rostrum now a proper twin-edged sabre and its dorsal fin fanned like a cape." },
+    { "id": "rapierjaw", "name": "Rapierjaw", "line": "lancefin", "stage": 3, "element": "water", "prompt": "Darker indigo-blue plating along its spine, a needle-fine rostrum held forward like a fencer's rapier, fins trimmed sharp and precise." },
+    { "id": "bladewake", "name": "Bladewake", "line": "lancefin", "stage": 4, "element": "water", "prompt": "A long, powerful duelist in near-navy blue with faint steel highlights, its wake curling into blade-shaped ripples behind it." },
+    { "id": "tidelance", "name": "Tidelance", "line": "lancefin", "stage": 5, "element": "water", "prompt": "A midnight-blue champion swordfish crowned in a faint silver-blue glow along every fin edge, its rostrum gleaming like a legendary blade held high." },
+
+    { "id": "inkwhirl", "name": "Inkwhirl", "line": "inkwhirl", "stage": 1, "element": "void", "prompt": "A dusky violet octopus-like Mystic with long curling tentacles arranged in elegant loops, faint constellations of ink-dot freckles across its mantle." },
+    { "id": "inkdrift", "name": "Inkdrift", "line": "inkwhirl", "stage": 2, "element": "void", "prompt": "A larger tentacled Mystic in deepening violet, its ink trails drifting into soft looping shapes behind it as it moves." },
+    { "id": "versewhirl", "name": "Versewhirl", "line": "inkwhirl", "stage": 3, "element": "void", "prompt": "Its mantle has darkened to a rich indigo-violet with faint glowing dot-patterns, tentacles now curling into deliberate, elegant script-like shapes." },
+    { "id": "sonnetide", "name": "Sonnetide", "line": "inkwhirl", "stage": 4, "element": "void", "prompt": "A stately deep-violet ink dancer, tentacles trailing in long ribboned arcs, its dot-markings now glowing soft lilac like scattered stars." },
+    { "id": "inkmuse", "name": "Inkmuse", "line": "inkwhirl", "stage": 5, "element": "void", "prompt": "A magnificent violet-black muse crowned in glowing lilac ink-patterns, its many tentacles sweeping in a slow, hypnotic, poem-like flourish." },
+
+    { "id": "fawnlet", "name": "Fawnlet", "line": "fawnlet", "stage": 1, "element": "nature", "prompt": "A small dappled fawn in warm honey-brown with soft cream spots like scattered sunlight, tiny velvet nubs just starting to bud into antlers." },
+    { "id": "mossbuck", "name": "Mossbuck", "line": "fawnlet", "stage": 2, "element": "nature", "prompt": "A tall moss-and-antler stag with sprawling branch-like antlers draped in ferns, tiny mushrooms and white flowers, glowing leaf-shaped eye markings down its flank, golden-brown fur fading to a cream belly." },
+    { "id": "thicketbuck", "name": "Thicketbuck", "line": "fawnlet", "stage": 3, "element": "nature", "prompt": "An even broader stag whose antlers have grown a second tangle of living thicket, deeper moss-green fur now shot through with the same glowing leaf markings, more mushrooms clustered at the base of each antler." },
+    { "id": "grovemonarch", "name": "Grovemonarch", "line": "fawnlet", "stage": 4, "element": "nature", "prompt": "A towering forest monarch whose antlers form a near-complete canopy of branches, leaves and hanging vines, its glowing leaf-markings now a steady soft light along its spine, deep mossy green fur with a rich cream mane." },
+    { "id": "canopyheart", "name": "Canopyheart", "line": "fawnlet", "stage": 5, "element": "nature", "prompt": "A majestic elder stag whose full canopy-antlers shelter small glowing motes of golden light like fireflies, its deep forest-green coat crowned in a rich cream mane, every glowing leaf-mark blazing gently gold." },
+
+    { "id": "bramblewolf", "name": "Bramblewolf", "line": "bramblewolf", "stage": 1, "element": "nature", "prompt": "A lean grey-green wolf bristling with small thorny brambles along its back and tail, sharp amber eyes, a low predatory crouch." },
+    { "id": "thornfang", "name": "Thornfang", "line": "bramblewolf", "stage": 2, "element": "nature", "prompt": "A larger, darker wolf whose thorn-bramble mane has thickened into a spiked ruff, faint yellow-green glow along its markings, ivory horns curving back from its brow." },
+    { "id": "bristlemane", "name": "Bristlemane", "line": "bramblewolf", "stage": 3, "element": "nature", "prompt": "An even broader wolf with a full bristling mane of interlaced thorn-branches, its glow-markings brighter, deep near-black green fur rippling with muscle." },
+    { "id": "duskbramble", "name": "Duskbramble", "line": "bramblewolf", "stage": 4, "element": "nature", "prompt": "A towering alpha wolf wreathed in thick brambles down its spine and tail, its horns longer and darker, glow-markings pulsing steadily like embers in undergrowth." },
+    { "id": "nightbriar", "name": "Nightbriar", "line": "bramblewolf", "stage": 5, "element": "nature", "prompt": "A colossal apex wolf, its whole spine a crown of interlocking thorns, near-black fur seeming to drink the light except for its brilliant glowing green-gold markings." },
+
+    { "id": "lanternfox", "name": "Lanternfox", "line": "lanternfox", "stage": 1, "element": "fire", "prompt": "A slim violet fox with a flame-orange tail-tip that flickers like a lantern wick, warm amber eyes, faint ember sparks drifting from its fur." },
+    { "id": "brandfox", "name": "Brandfox", "line": "lanternfox", "stage": 2, "element": "fire", "prompt": "A taller violet-plum fox whose whole tail now burns steady orange like a carried torch, deeper purple fur along its spine with more visible ember-sparks." },
+    { "id": "pyrevane", "name": "Pyrevane", "line": "lanternfox", "stage": 3, "element": "fire", "prompt": "A lean, elegant fox in deep violet-black fur, its tail split into twin torch-flames of hot orange, ears rimmed in glowing embers." },
+    { "id": "beaconpyre", "name": "Beaconpyre", "line": "lanternfox", "stage": 4, "element": "fire", "prompt": "A striking near-black fox whose entire back bears a low steady flame-crest running from head to tail, brilliant orange glow pooling at every joint." },
+    { "id": "beaconsire", "name": "Beaconsire", "line": "lanternfox", "stage": 5, "element": "fire", "prompt": "A magnificent obsidian-violet fox crowned in a mane of true fire, its tail a blazing beacon-flame, glowing orange runes flickering faintly across its coat." },
+
+    { "id": "hootsage", "name": "Hootsage", "line": "hootsage", "stage": 1, "element": "wind", "prompt": "A round, softly feathered brown owl with oversized golden eyes and a ruff of feathers like a scholar's collar, a small scroll-like curl of feather at its chest." },
+    { "id": "lorewing", "name": "Lorewing", "line": "hootsage", "stage": 2, "element": "wind", "prompt": "A larger owl with a fuller feathered collar and longer wing-feathers fanned like open book pages, its golden eyes sharper, deepening brown plumage." },
+    { "id": "duskscholar", "name": "Duskscholar", "line": "hootsage", "stage": 3, "element": "wind", "prompt": "A stately indigo-tinged owl with an elaborate ruff resembling stacked scrolls, its wings edged in a soft moonlit blue glow, deep gold eyes half-lidded in thought." },
+    { "id": "archowl", "name": "Archowl", "line": "hootsage", "stage": 4, "element": "wind", "prompt": "A grand indigo-blue owl with a crown-like tuft of feathers and wide ceremonial wings patterned like open manuscripts, faint blue glow tracing every flight feather." },
+    { "id": "archsage", "name": "Archsage", "line": "hootsage", "stage": 5, "element": "wind", "prompt": "A magnificent deep indigo owl robed in vast wing-plumage like a scholar's ceremonial cloak, crowned in luminous pale-blue glowing feather-script down each wing." },
+
+    { "id": "mosshulk", "name": "Mosshulk", "line": "mosshulk", "stage": 1, "element": "nature", "prompt": "A hulking grey stone golem shape overgrown with thick moss and a crown of small mushrooms, deep-set glowing eyes, ancient and immovable." },
+    { "id": "cairnback", "name": "Cairnback", "line": "mosshulk", "stage": 2, "element": "nature", "prompt": "A broader moss-stone golem with small balanced cairn-stones stacked along its shoulders, thicker moss coat, softly glowing eye-sockets." },
+    { "id": "boulderoot", "name": "Boulderoot", "line": "mosshulk", "stage": 3, "element": "nature", "prompt": "A massive golem whose stone body is threaded through with thick tree-roots, moss and small ferns filling every crack, its glow deepening to a warm gold." },
+    { "id": "mossmonolith", "name": "Mossmonolith", "line": "mosshulk", "stage": 4, "element": "nature", "prompt": "An enormous standing-stone golem, root-veined and moss-draped from crown to foot, faint golden light glowing in the deepest cracks of its mossy hide." },
+    { "id": "cairnsovereign", "name": "Cairnsovereign", "line": "mosshulk", "stage": 5, "element": "nature", "prompt": "A towering ancient monolith wrapped floor to crown in thick roots, deep moss and small glowing flowers, warm golden light pulsing steadily through every seam like a slow heartbeat." }
+  ]
+}

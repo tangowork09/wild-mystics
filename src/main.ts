@@ -35,7 +35,8 @@ import { openJournal, closeJournal, journalOpen, journalTab, type JournalHooks, 
 import { openService, type ServiceHooks } from './ui/services';
 import { BaseBuilder } from './ui/basebuild';
 import type { TravelPoint } from './ui/minimap';
-import { toast, titleCard, flash, clearFlash, modal, modalOpen, confirmBox, el } from './ui/dom';
+import { toast, titleCard, flash, clearFlash, modal, modalOpen, el } from './ui/dom';
+import { confirmChallenge, confirmLogout, confirmNewJourney } from './ui/confirm';
 import { renderSettings } from './ui/tabs/profile';
 import { icon } from './ui/icons';
 import { restoreSession, listLocalProfiles, cloudAvailable, logout, playAsGuest, AuthError, type Account } from './net/auth';
@@ -119,7 +120,7 @@ const journalHooks: JournalHooks = {
   travel: (p) => void fastTravel(p),
   account: () => ({ mode: game.account.mode, name: game.account.username, sync: sync.status }),
   logout: async () => {
-    if (!(await confirmBox('Sign out?', game.account.mode === 'guest' ? 'Guest progress stays on this device — sign in as guest again to continue it.' : 'Your journey is saved to your account.', 'Sign out'))) return;
+    if (!(await confirmLogout(game.account.mode === 'guest'))) return;
     state.pos = [game.world.playerPos.x, game.world.playerPos.z];
     save();
     await flushSync();
@@ -278,7 +279,7 @@ async function boot() {
     if (choice === 'guide') { await screens.guide(input.isTouch); continue; }
     if (choice === 'settings') { await settingsModal(); continue; }
     if (choice === 'switch') { save(); await flushSync(); await logout(); location.reload(); return; }
-    if (choice === 'new' && hasSave && !(await confirmBox('Start a new journey?', 'Your current journey on this account will be erased. This cannot be undone.', 'Start over', true))) continue;
+    if (choice === 'new' && hasSave && !(await confirmNewJourney())) continue;
     await begin(choice === 'new');
     break;
   }
@@ -537,7 +538,7 @@ async function interact(it: Interactable) {
       const sp = SPECIES[it.zone.boss.species];
       const lead = Math.max(...state.team.map((c) => c.level));
       game.busy = true;
-      const ok = await confirmBox(`Challenge ${sp?.name ?? 'the Guardian'}?`, `Guardian of ${it.zone.name} · Lv ${it.zone.boss.level}. ${lead < it.zone.boss.level - 3 ? '<b class="warn">Your team may be under-levelled.</b> ' : ''}Guardian battles can’t be fled.`, 'Challenge');
+      const ok = await confirmChallenge({ species: it.zone.boss.species, name: sp?.name ?? 'the Guardian', zone: it.zone.name, level: it.zone.boss.level, underLevelled: lead < it.zone.boss.level - 3 });
       game.busy = false;
       if (ok) await startBossBattle(it.zone);
       return;

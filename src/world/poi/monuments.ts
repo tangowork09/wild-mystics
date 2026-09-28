@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { type Col, C, shade, T } from './kit';
 import { type TownCtx } from './town';
 import { signBoard } from './parts';
-import { windowAt, type Palette } from './arch';
+import { windowAt, wallLantern, gableRoof, type Palette } from './arch';
 import { toTown } from './houses';
 
 const spireMats: Record<string, THREE.Material> = {};
@@ -109,18 +109,60 @@ export function gateArch(ctx: TownCtx, x: number, z: number, rot: number, width:
   b.push().translate(x, y, z).rotY(rot);
   switch (style) {
     case 'timber': {
+      // v3:look — storybook gatehouse: coursed stone piers, timber lintel, clay-tile gable roof,
+      // ivy over the eaves and down one pier, lanterns and compass banners on the road faces
+      const rnd = ctx.rnd;
+      const px = hw + 0.62, courseH = 0.44, courses = 6;
       for (const s of [-1, 1]) {
-        b.box('solid', s * (hw + 0.55), 0.3, 0, 1.3, 1.0, 1.3, shade(stone, 0.9), { shade: [0.7, 1] });
-        b.box('solid', s * (hw + 0.55), 1.9, 0, 1.05, 2.4, 1.05, stone, { shade: [0.85, 1.05] });
-        b.box('solid', s * (hw + 0.55), 3.15, 0, 1.2, 0.18, 1.2, shade(stone, 1.1));
-        b.box('solid', s * (hw + 0.2), 3.55, 0, 0.26, 0.8, 0.26, wood);
+        b.box('solid', s * px, 0.25, 0, 1.5, 0.72, 1.5, shade(stone, 0.8), { shade: [0.7, 1] });
+        b.box('solid', s * px, 0.6 + (courses * courseH) / 2, 0, 1.12, courses * courseH, 1.12, shade(stone, 0.55)); // mortar core
+        for (let c = 0; c < courses; c++) {
+          const cy = 0.6 + c * courseH + courseH / 2;
+          const split = c % 2 === 0 ? 0.56 : 0.44;
+          const w1 = 1.22 * split, w2 = 1.22 * (1 - split);
+          const k1 = 0.86 + rnd() * 0.22, k2 = 0.86 + rnd() * 0.22;
+          b.box('solid', s * px - 0.61 + w1 / 2, cy, 0, w1 - 0.035, courseH - 0.04, 1.22, shade(stone, k1), { shade: [0.82, 1.04] });
+          b.box('solid', s * px - 0.61 + w1 + w2 / 2, cy, 0, w2 - 0.035, courseH - 0.04, 1.22, shade(stone, k2), { shade: [0.82, 1.04] });
+        }
+        b.box('solid', s * px, 0.6 + courses * courseH + 0.11, 0, 1.42, 0.22, 1.42, shade(stone, 1.14));
+        b.box('solid', s * (hw + 0.2), 3.62, 0, 0.26, 0.66, 0.26, wood);
+        // lanterns on both road faces
+        for (const f of [-1, 1]) {
+          b.push().translate(s * px, 0, f * 0.62).rotY(f > 0 ? 0 : Math.PI);
+          wallLantern(b, 0, 2.62, -0.2);
+          b.pop();
+          // compass banner under the lantern
+          b.box('cloth', s * px, 1.7, f * 0.63, 0.66, 1.3, 0.03, '#2c4c96');
+          b.box('metal', s * px, 2.38, f * 0.645, 0.78, 0.06, 0.06, '#c9a24a');
+          b.box('cloth', s * px, 1.06, f * 0.64, 0.66, 0.07, 0.035, '#d9b25f');
+          b.box('metal', s * px, 1.78, f * 0.655, 0.2, 0.2, 0.02, '#e8c060', { rz: Math.PI / 4 });
+          b.box('metal', s * px, 1.78, f * 0.655, 0.05, 0.42, 0.02, '#e8c060');
+          b.box('metal', s * px, 1.78, f * 0.655, 0.42, 0.05, 0.02, '#e8c060');
+        }
       }
-      b.box('solid', 0, 3.95, 0, width + 2.6, 0.32, 0.4, wood);
-      for (const s of [-1, 1]) b.beam('solid', [s * (hw - 0.4), 3.8, 0], [s * (hw - 1.4), 3.25, 0], 0.16, wood);
-      // little shingled roof
-      for (const s of [-1, 1]) b.box('solid', 0, 4.55, s * 0.45, width + 3.1, 0.12, 1.25, shade(roof, 0.95 + s * 0.05), { rx: s * 0.62 });
-      b.box('solid', 0, 4.93, 0, width + 3.2, 0.16, 0.2, shade(roof, 0.7));
-      for (const s of [-1, 1]) b.prism('solid', s * (hw + 1.2), 4.1, 0, 1.5, 0.75, 0.1, shade(stone, 1.05), { ry: Math.PI / 2 });
+      b.box('solid', 0, 3.98, 0, width + 2.7, 0.34, 0.44, wood);
+      b.box('solid', 0, 3.72, 0, width + 0.2, 0.12, 0.3, shade(wood, 0.8));
+      for (const s of [-1, 1]) b.beam('solid', [s * (hw - 0.4), 3.82, 0], [s * (hw - 1.5), 3.22, 0], 0.16, wood);
+      b.push().translate(0, 0, 0);
+      gableRoof(b, 4.12, width + 2.4, 1.3, 0.72, roof, { overhang: 0.42, thick: 0.14, rows: 4, ridge: shade(roof, 0.72), jitter: rnd });
+      b.pop();
+      // ivy: overlapping leaf masses spilling over the eave corners and cascading down the left pier
+      const leafC = () => shade('#4f8d38', 0.74 + rnd() * 0.36);
+      const clump = (cx: number, cy: number, cz: number, sx: number, sy: number, n: number, rMin: number, rMax: number) => {
+        for (let i = 0; i < n; i++) {
+          const r = rMin + rnd() * (rMax - rMin);
+          b.sphere('leaf', cx + (rnd() - 0.5) * sx, cy + (rnd() - 0.5) * sy, cz + (rnd() - 0.5) * 0.12, r, r * 0.8, r * 0.62, leafC(), { w: 8, h: 6 });
+        }
+      };
+      for (const f of [-1, 1]) {
+        clump(-hw - 0.95, 3.95, f * 1.05, 1.0, 0.35, 12, 0.14, 0.26);
+        clump(-hw + 1.3, 4.05, f * 1.04, 0.7, 0.18, 6, 0.1, 0.18);
+        clump(hw + 0.8, 4.0, f * 1.05, 0.8, 0.28, 9, 0.12, 0.22);
+      }
+      for (let i = 0; i < 16; i++) {
+        const t = i / 15;
+        clump(-px + 0.25 * Math.sin(t * 5.5) - 0.15, 3.7 - t * 2.5, 0.64, 0.35, 0.2, 2, 0.13, 0.22 - t * 0.06);
+      }
       beamY = 3.8;
       break;
     }

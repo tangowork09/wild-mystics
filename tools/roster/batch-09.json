@@ -1,0 +1,162 @@
+{
+  "lines": [
+    {
+      "id": "weblin",
+      "branch": null,
+      "stages": ["weblin", "silkfen", "duskweaver", "nightloom", "fatewoven"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "silkfen", "name": "Silkfen", "element": "void", "hp": 62, "atk": 17, "def": 15, "spd": 16, "height": 0.84, "model": "R2:Spider__4259fbdb.glb", "learnset": [[1, "shadow_claw"], [1, "vine_snare"], [8, "venom_fang"], [12, "sleep_spore"], [16, "toxic_mist"], [22, "ink_cloud"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["poison_touch", "opportunist"], "lore": "Strings silk between marsh reeds so fine that fireflies mistake it for starlight." },
+        { "id": "duskweaver", "name": "Duskweaver", "element": "void", "hp": 71, "atk": 20, "def": 17, "spd": 18, "height": 1.0, "model": "R2:Spider__4259fbdb.glb", "learnset": [[1, "shadow_claw"], [1, "vine_snare"], [1, "venom_fang"], [12, "sleep_spore"], [16, "toxic_mist"], [22, "ink_cloud"], [28, "hypno_glow"]], "rarity": "rare", "catchRate": 0.18, "tint": "#7a5ad0", "abilities": ["poison_touch", "opportunist"], "lore": "Weaves at dusk only; unravel one thread and the whole web hums a warning." },
+        { "id": "nightloom", "name": "Nightloom", "element": "void", "hp": 82, "atk": 23, "def": 20, "spd": 21, "height": 1.25, "model": "R2:Spider__4259fbdb.glb", "learnset": [[1, "shadow_claw"], [1, "venom_fang"], [1, "sleep_spore"], [16, "toxic_mist"], [22, "ink_cloud"], [28, "hypno_glow"], [34, "umbral_wave"]], "rarity": "epic", "catchRate": 0.1, "tint": "#5a3aa8", "abilities": ["umbra", "opportunist"], "lore": "Its web spans the whole hollow now, and everything caught in it dreams the same dream." },
+        { "id": "fatewoven", "name": "Fatewoven", "element": "void", "hp": 94, "atk": 27, "def": 23, "spd": 24, "height": 1.6, "model": "R2:Spider__4259fbdb.glb", "learnset": [[1, "shadow_claw"], [1, "toxic_mist"], [1, "ink_cloud"], [22, "hypno_glow"], [28, "umbral_wave"], [34, "soul_siphon"], [40, "warden_edge"]], "rarity": "epic", "catchRate": 0.06, "tint": "#3a2270", "tintGlow": "#b89aff", "abilities": ["umbra", "opportunist"], "lore": "Marsh elders say it doesn't catch prey — it catches the moment prey was always going to wander in." }
+      ]
+    },
+    {
+      "id": "skullbop",
+      "branch": null,
+      "stages": ["skullbop", "rattlecap", "jawknell", "direknell", "grimcrown"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "rattlecap", "name": "Rattlecap", "element": "void", "hp": 58, "atk": 18, "def": 14, "spd": 17, "height": 0.96, "model": "R2:Skull_Enemy__9d87fc71.glb", "learnset": [[1, "shadow_claw"], [1, "rock_toss"], [8, "hypno_glow"], [12, "umbral_wave"], [22, "toxic_mist"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["sturdy", "rage"], "lore": "Learned to bounce off gravestones for extra echo. The graveyard now has excellent acoustics." },
+        { "id": "jawknell", "name": "Jawknell", "element": "void", "hp": 67, "atk": 21, "def": 16, "spd": 20, "height": 1.15, "model": "R2:Skull_Enemy__9d87fc71.glb", "learnset": [[1, "shadow_claw"], [1, "rock_toss"], [1, "hypno_glow"], [12, "umbral_wave"], [22, "toxic_mist"], [28, "soul_siphon"]], "rarity": "rare", "catchRate": 0.18, "tint": "#8a6ac0", "abilities": ["sturdy", "rage"], "lore": "Its jaw unhinges to ring like a bell; three rings means run." },
+        { "id": "direknell", "name": "Direknell", "element": "void", "hp": 77, "atk": 24, "def": 18, "spd": 23, "height": 1.44, "model": "R2:Skull_Enemy__9d87fc71.glb", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "umbral_wave"], [22, "toxic_mist"], [28, "soul_siphon"], [34, "venom_fang"]], "rarity": "epic", "catchRate": 0.1, "tint": "#5a4a90", "abilities": ["rage", "intimidate"], "lore": "Leads a whole chorus of clattering bones through the marsh at midnight." },
+        { "id": "grimcrown", "name": "Grimcrown", "element": "void", "hp": 88, "atk": 27, "def": 21, "spd": 26, "height": 1.87, "model": "R2:Skull_Enemy__9d87fc71.glb", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "soul_siphon"], [28, "toxic_mist"], [34, "venom_fang"], [40, "warden_edge"]], "rarity": "epic", "catchRate": 0.06, "tint": "#3a2a66", "tintGlow": "#c9a8ff", "abilities": ["rage", "intimidate"], "lore": "Wears the jawbones of every skull that ever tried to out-rattle it, like a crown." }
+      ]
+    },
+    {
+      "id": "blorp",
+      "branch": null,
+      "stages": ["blorp", "gobblorp", "lampmaw", "moonmaw", "duskgorge"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "lampmaw", "name": "Lampmaw", "element": "void", "hp": 87, "atk": 21, "def": 21, "spd": 13, "height": 1.68, "model": "R2:Slime_Enemy__93e6c3e3.glb", "learnset": [[1, "shadow_claw"], [1, "toxic_mist"], [1, "venom_fang"], [18, "umbral_wave"], [24, "soul_siphon"], [28, "hypno_glow"]], "rarity": "rare", "catchRate": 0.18, "tint": "#5a2a86", "tintGlow": "#c86bff", "abilities": ["absorb", "poison_touch"], "lore": "Swallowed a whole lantern once. Still hasn't worked out how to put it down." },
+        { "id": "moonmaw", "name": "Moonmaw", "element": "void", "hp": 99, "atk": 24, "def": 24, "spd": 15, "height": 2.1, "model": "R2:Slime_Enemy__93e6c3e3.glb", "learnset": [[1, "shadow_claw"], [1, "venom_fang"], [1, "umbral_wave"], [24, "soul_siphon"], [28, "hypno_glow"], [34, "ink_cloud"]], "rarity": "epic", "catchRate": 0.1, "tint": "#48206e", "tintGlow": "#d88bff", "abilities": ["absorb", "poison_touch"], "lore": "Waits under bridges on full-moon nights for wayfarers who forgot to bring a light of their own." },
+        { "id": "duskgorge", "name": "Duskgorge", "element": "void", "hp": 112, "atk": 27, "def": 27, "spd": 17, "height": 2.73, "model": "R2:Slime_Enemy__93e6c3e3.glb", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "soul_siphon"], [28, "hypno_glow"], [34, "ink_cloud"], [40, "warden_edge"]], "rarity": "epic", "catchRate": 0.06, "tint": "#301050", "tintGlow": "#e8a8ff", "abilities": ["absorb", "umbra"], "lore": "Every lantern in Mistveil Marsh is lit a little dimmer, because this is where the missing light goes." }
+      ]
+    },
+    {
+      "id": "gildfin",
+      "branch": null,
+      "stages": ["gildfin", "mirrorscale", "glimmerkoi", "astralkoi", "mirrorwyrm"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "glimmerkoi", "name": "Glimmerkoi", "element": "water", "hp": 81, "atk": 19, "def": 18, "spd": 18, "height": 1.68, "model": "R2:Koi__d2ba96af.glb", "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "aqua_jet"], [18, "riptide"], [24, "purify"], [28, "brine_lance"]], "rarity": "rare", "catchRate": 0.18, "tint": "#8ab8ff", "swim": true, "abilities": ["torrent", "regenerator"], "lore": "Leaps highest at twilight, just to see how many colours it can catch on its scales at once." },
+        { "id": "astralkoi", "name": "Astralkoi", "element": "water", "hp": 92, "atk": 21, "def": 20, "spd": 20, "height": 2.1, "model": "R2:Koi__d2ba96af.glb", "learnset": [[1, "tide_lash"], [1, "aqua_jet"], [1, "riptide"], [24, "purify"], [28, "brine_lance"], [34, "mend_rain"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a8d0ff", "swim": true, "abilities": ["torrent", "regenerator"], "lore": "Local Wayfarers swear it swims in slow circles that trace the constellations overhead." },
+        { "id": "mirrorwyrm", "name": "Mirrorwyrm", "element": "water", "hp": 104, "atk": 24, "def": 23, "spd": 23, "height": 2.73, "model": "R2:Koi__d2ba96af.glb", "learnset": [[1, "tide_lash"], [1, "riptide"], [1, "purify"], [28, "brine_lance"], [34, "mend_rain"], [40, "scald"]], "rarity": "epic", "catchRate": 0.06, "tint": "#c8e8ff", "tintGlow": "#fff6d0", "swim": true, "abilities": ["torrent", "focus"], "lore": "A river spirit grown long as the lake is wide; the stars it mirrors are the same ones that named it." }
+      ]
+    },
+    {
+      "id": "gildfin__magmascale",
+      "branch": { "from": "gildfin", "item": "fire_stone" },
+      "stages": ["gildfin", "magmascale", "cinderkoi", "pyrokoi", "magmawyrm"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "cinderkoi", "name": "Cinderkoi", "element": "fire", "hp": 82, "atk": 23, "def": 17, "spd": 18, "height": 1.68, "model": "R2:Koi__d2ba96af.glb", "learnset": [[1, "ember_bite"], [1, "scald"], [1, "flame_wheel"], [18, "flare_burst"], [24, "meteor_fang"], [28, "cinder_claw"]], "rarity": "epic", "catchRate": 0.08, "tint": "#f0501a", "tintGlow": "#ff7a3a", "swim": true, "abilities": ["flame_body", "blaze"], "lore": "Swims lava seams like rivers; the water-koi it left behind still don't believe the stories." },
+        { "id": "pyrokoi", "name": "Pyrokoi", "element": "fire", "hp": 93, "atk": 26, "def": 19, "spd": 21, "height": 2.1, "model": "R2:Koi__d2ba96af.glb", "learnset": [[1, "ember_bite"], [1, "flame_wheel"], [1, "flare_burst"], [24, "meteor_fang"], [28, "cinder_claw"], [34, "kindle"]], "rarity": "epic", "catchRate": 0.05, "tint": "#d8400e", "tintGlow": "#ff8a4a", "swim": true, "abilities": ["flame_body", "blaze"], "lore": "Leaves a trail of glassy, cooled scale-flakes wherever it surfaces from the magma." },
+        { "id": "magmawyrm", "name": "Magmawyrm", "element": "fire", "hp": 105, "atk": 29, "def": 21, "spd": 24, "height": 2.73, "model": "R2:Koi__d2ba96af.glb", "learnset": [[1, "ember_bite"], [1, "flare_burst"], [1, "meteor_fang"], [28, "cinder_claw"], [34, "kindle"], [40, "lantern_flare"]], "rarity": "exotic", "catchRate": 0.03, "tint": "#b8300a", "tintGlow": "#ffae6a", "swim": true, "abilities": ["flame_body", "rage"], "lore": "A river of molten gold given the shape of a dragon-koi; the Scar's deepest vents are just where it exhales." }
+      ]
+    },
+    {
+      "id": "quillpuff",
+      "branch": null,
+      "stages": ["quillpuff", "sunbasker", "solscale", "coronafin", "sovereignsun"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "solscale", "name": "Solscale", "element": "water", "hp": 92, "atk": 18, "def": 21, "spd": 10, "height": 2.16, "model": "R2:Sunfish__b8176c6b.glb", "learnset": [[1, "tide_lash"], [1, "bubble_veil"], [1, "mend_rain"], [20, "riptide"], [26, "purify"], [30, "brine_lance"]], "rarity": "rare", "catchRate": 0.16, "tint": "#ffd76a", "swim": true, "abilities": ["regenerator", "thick_hide"], "lore": "Basks so long in one spot that Wayfarers use it to tell the time of day." },
+        { "id": "coronafin", "name": "Coronafin", "element": "water", "hp": 101, "atk": 21, "def": 24, "spd": 12, "height": 2.59, "model": "R2:Sunfish__b8176c6b.glb", "learnset": [[1, "tide_lash"], [1, "mend_rain"], [1, "riptide"], [26, "purify"], [30, "brine_lance"], [36, "shell_guard"]], "rarity": "epic", "catchRate": 0.1, "tint": "#ffcf4a", "swim": true, "abilities": ["regenerator", "thick_hide"], "lore": "Its fin-shadow alone is enough to cool a whole stretch of lake on the hottest afternoon." },
+        { "id": "sovereignsun", "name": "Sovereignsun", "element": "water", "hp": 111, "atk": 24, "def": 27, "spd": 14, "height": 3.24, "model": "R2:Sunfish__b8176c6b.glb", "learnset": [[1, "tide_lash"], [1, "riptide"], [1, "purify"], [30, "brine_lance"], [36, "shell_guard"], [42, "scald"]], "rarity": "epic", "catchRate": 0.06, "tint": "#ffc428", "tintGlow": "#fff6c0", "swim": true, "abilities": ["regenerator", "guardian_aura"], "lore": "Elder Wayfarers say the lake has two suns on the brightest days, and only one of them sets." }
+      ]
+    },
+    {
+      "id": "chompsy",
+      "branch": null,
+      "stages": ["chompsy", "grinfin", "ripjaw", "direfin", "leviagrin"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "ripjaw", "name": "Ripjaw", "element": "water", "hp": 83, "atk": 25, "def": 17, "spd": 20, "height": 1.92, "model": "R2:Shark__fdcb48e0.glb", "learnset": [[1, "aqua_jet"], [1, "shadow_claw"], [1, "kindle"], [20, "riptide"], [28, "scald"], [32, "brine_lance"]], "rarity": "rare", "catchRate": 0.13, "tint": "#2a6ab0", "swim": true, "abilities": ["intimidate", "opportunist"], "lore": "Its grin got a second row of teeth. Nobody has asked why." },
+        { "id": "direfin", "name": "Direfin", "element": "water", "hp": 95, "atk": 28, "def": 20, "spd": 23, "height": 2.4, "model": "R2:Shark__fdcb48e0.glb", "learnset": [[1, "aqua_jet"], [1, "kindle"], [1, "riptide"], [28, "scald"], [32, "brine_lance"], [38, "tide_lash"]], "rarity": "epic", "catchRate": 0.08, "tint": "#1a5090", "swim": true, "abilities": ["intimidate", "opportunist"], "lore": "Leads hunting packs of lesser sharks by grinning first and explaining never." },
+        { "id": "leviagrin", "name": "Leviagrin", "element": "water", "hp": 107, "atk": 30, "def": 22, "spd": 25, "height": 3.12, "model": "R2:Shark__fdcb48e0.glb", "learnset": [[1, "aqua_jet"], [1, "riptide"], [1, "scald"], [32, "brine_lance"], [38, "tide_lash"], [44, "bubble_veil"]], "rarity": "epic", "catchRate": 0.05, "tint": "#0e3a70", "tintGlow": "#7ad8ff", "swim": true, "abilities": ["intimidate", "breaker"], "lore": "The old lake-captains say something the size of a fishing boat still grins back from the deep, and it is always, always hungry." }
+      ]
+    },
+    {
+      "id": "lanterngulp",
+      "branch": null,
+      "stages": ["lanterngulp", "duskangler", "gloomlure", "abysslure", "voidmaw"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "duskangler", "name": "Duskangler", "element": "void", "hp": 89, "atk": 24, "def": 19, "spd": 14, "height": 1.56, "model": "R2:Anglerfish__0c4802f0.glb", "learnset": [[1, "shadow_claw"], [1, "hypno_glow"], [1, "soul_siphon"], [18, "umbral_wave"], [24, "toxic_mist"], [28, "ink_cloud"]], "rarity": "exotic", "catchRate": 0.05, "tint": "#8a6ad0", "swim": true, "abilities": ["umbra", "opportunist"], "lore": "Its lure burns a little brighter now, and a little more curious things go looking for it." },
+        { "id": "gloomlure", "name": "Gloomlure", "element": "void", "hp": 96, "atk": 26, "def": 22, "spd": 16, "height": 1.87, "model": "R2:Anglerfish__0c4802f0.glb", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "umbral_wave"], [24, "toxic_mist"], [28, "ink_cloud"], [34, "venom_fang"]], "rarity": "exotic", "catchRate": 0.04, "tint": "#6a4ab0", "swim": true, "abilities": ["umbra", "opportunist"], "lore": "Anchors itself to sunken driftwood and waits so still that its lure becomes the only light for miles." },
+        { "id": "abysslure", "name": "Abysslure", "element": "void", "hp": 104, "atk": 28, "def": 25, "spd": 18, "height": 2.34, "model": "R2:Anglerfish__0c4802f0.glb", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "toxic_mist"], [28, "ink_cloud"], [34, "venom_fang"], [40, "warden_edge"]], "rarity": "exotic", "catchRate": 0.03, "tint": "#4a3090", "swim": true, "abilities": ["umbra", "opportunist"], "lore": "Deep lake fishers have a rule: if the light down there is moving toward you, reel in and go home." },
+        { "id": "voidmaw", "name": "Voidmaw", "element": "void", "hp": 112, "atk": 30, "def": 28, "spd": 20, "height": 3.04, "model": "R2:Anglerfish__0c4802f0.glb", "learnset": [[1, "shadow_claw"], [1, "ink_cloud"], [1, "venom_fang"], [28, "umbral_wave"], [34, "warden_edge"], [44, "soul_siphon"]], "rarity": "exotic", "catchRate": 0.02, "tint": "#301a70", "tintGlow": "#ffe89a", "swim": true, "abilities": ["umbra", "intimidate"], "lore": "The oldest thing in the deepest lake. Its lure hasn't gone out in longer than anyone can remember." }
+      ]
+    },
+    {
+      "id": "hobsnap",
+      "branch": null,
+      "stages": ["hobsnap", "springjaw", "vaultjaw", "clampfiend", "doomlatch"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "springjaw", "name": "Springjaw", "element": "void", "hp": 85, "atk": 25, "def": 19, "spd": 20, "height": 1.44, "model": "R2:Goblin_Shark__35cd5001.glb", "learnset": [[1, "shadow_claw"], [1, "aqua_jet"], [1, "venom_fang"], [20, "umbral_wave"], [26, "soul_siphon"], [30, "ink_cloud"]], "rarity": "exotic", "catchRate": 0.045, "tint": "#8a6ad0", "swim": true, "abilities": ["opportunist", "intimidate"], "lore": "Its jaw-hinge got a little faster. The 'stuck drawer' sound is now a 'mousetrap' sound." },
+        { "id": "vaultjaw", "name": "Vaultjaw", "element": "void", "hp": 93, "atk": 27, "def": 22, "spd": 23, "height": 1.73, "model": "R2:Goblin_Shark__35cd5001.glb", "learnset": [[1, "shadow_claw"], [1, "venom_fang"], [1, "umbral_wave"], [26, "soul_siphon"], [30, "ink_cloud"], [36, "toxic_mist"]], "rarity": "exotic", "catchRate": 0.035, "tint": "#6a4ab0", "swim": true, "abilities": ["opportunist", "intimidate"], "lore": "Clamps down so hard that local Wayfarers use its old, shed teeth as boat anchors." },
+        { "id": "clampfiend", "name": "Clampfiend", "element": "void", "hp": 102, "atk": 28, "def": 26, "spd": 26, "height": 2.16, "model": "R2:Goblin_Shark__35cd5001.glb", "learnset": [[1, "shadow_claw"], [1, "umbral_wave"], [1, "soul_siphon"], [30, "ink_cloud"], [36, "toxic_mist"], [42, "hypno_glow"]], "rarity": "exotic", "catchRate": 0.025, "tint": "#4a3090", "swim": true, "abilities": ["opportunist", "breaker"], "lore": "Nothing that gets caught in that jaw tells the story twice." },
+        { "id": "doomlatch", "name": "Doomlatch", "element": "void", "hp": 112, "atk": 30, "def": 30, "spd": 29, "height": 2.81, "model": "R2:Goblin_Shark__35cd5001.glb", "learnset": [[1, "shadow_claw"], [1, "soul_siphon"], [1, "ink_cloud"], [36, "toxic_mist"], [42, "hypno_glow"], [46, "warden_edge"]], "rarity": "exotic", "catchRate": 0.015, "tint": "#2a1868", "tintGlow": "#ff8a3a", "swim": true, "abilities": ["opportunist", "breaker"], "lore": "The deepest trench in Mirror Lakes has a name, and the name is a warning about what's down there waiting with its jaw cocked." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "weblin", "name": "Weblin", "line": "weblin", "stage": 1, "element": "void", "prompt": "A small round spider with eight glinting violet eyes and thin glassy legs, spinning a web that shimmers faintly with caught dewdrops; dark plum body with pale lilac joints." },
+    { "id": "silkfen", "name": "Silkfen", "line": "weblin", "stage": 2, "element": "void", "prompt": "Grows a second row of eyes and longer, silk-draped legs trailing loose threads like ribbons; same plum-and-lilac colouring, now with faint glowing thread patterns along its back." },
+    { "id": "duskweaver", "name": "Duskweaver", "line": "weblin", "stage": 3, "element": "void", "prompt": "A broader abdomen patterned like a woven web, with glowing violet thread-lines pulsing along each leg; the same many-eyed face, now framed by a ruff of spun silk." },
+    { "id": "nightloom", "name": "Nightloom", "line": "weblin", "stage": 4, "element": "void", "prompt": "Looms over its own web platform on long, elegant legs, trailing veils of silk like a gown; deep violet body glows faintly at every joint where thread meets chitin." },
+    { "id": "fatewoven", "name": "Fatewoven", "line": "weblin", "stage": 5, "element": "void", "prompt": "A majestic web-matriarch with an ornate crown of spun silk and glowing thread-patterns forming constellations across its abdomen; the same ancient many-eyed gaze, now serene and vast, ruling a web the size of a hollow." },
+
+    { "id": "skullbop", "name": "Skullbop", "line": "skullbop", "stage": 1, "element": "void", "prompt": "A small bouncing skull with hollow violet-glowing eye sockets and a chattering jaw, chipped ivory-white bone with faint moss stains." },
+    { "id": "rattlecap", "name": "Rattlecap", "line": "skullbop", "stage": 2, "element": "void", "prompt": "A slightly larger skull now trailing a wisp of dark smoke beneath its jaw, ivory bone deepening toward grey, eye-glow a touch brighter violet." },
+    { "id": "jawknell", "name": "Jawknell", "line": "skullbop", "stage": 3, "element": "void", "prompt": "Its jaw has grown an extra hinge and small bone spurs ring its crown like a jester's cap; smoky wisps thicken into a trailing tail." },
+    { "id": "direknell", "name": "Direknell", "line": "skullbop", "stage": 4, "element": "void", "prompt": "A cluster of smaller rattling bone-shards now orbits its skull, jaw wide and ornate with carved grooves that glow violet when it chatters." },
+    { "id": "grimcrown", "name": "Grimcrown", "line": "skullbop", "stage": 5, "element": "void", "prompt": "A towering ceremonial skull crowned with interlocking jawbones and a swirling cloak of violet smoke, eye sockets blazing like twin lanterns over the whole graveyard." },
+
+    { "id": "blorp", "name": "Blorp", "line": "blorp", "stage": 1, "element": "void", "prompt": "A squat, bulging purple slime with a wide gummy grin and two stubby horn-nubs, faintly glowing veins running through its jelly body." },
+    { "id": "gobblorp", "name": "Gobblorp", "line": "blorp", "stage": 2, "element": "void", "prompt": "A bigger slime with two curling horns and a wide lantern-swallowing jaw, deep violet body glowing brighter along its veins, faint magenta glow around its grin." },
+    { "id": "lampmaw", "name": "Lampmaw", "line": "blorp", "stage": 3, "element": "void", "prompt": "A taller slime now with three curling horns and a permanently open jaw ringed in tiny lantern-flame lights it's swallowed, deepening violet jelly with brighter magenta veins." },
+    { "id": "moonmaw", "name": "Moonmaw", "line": "blorp", "stage": 4, "element": "void", "prompt": "Looms wide and toothy with a crescent-shaped horn crown and a chest full of dimly glowing swallowed lanterns visible through translucent jelly." },
+    { "id": "duskgorge", "name": "Duskgorge", "line": "blorp", "stage": 5, "element": "void", "prompt": "An enormous, regal slime sovereign whose whole body is a lantern-lit night sky under violet jelly skin, crowned in branching horns and trailing wisps of stolen light." },
+
+    { "id": "gildfin", "name": "Gildfin", "line": "gildfin", "stage": 1, "element": "water", "prompt": "A small round goldfish with stubby fins and huge round eyes, bright orange-gold scales with a faint shimmer." },
+    { "id": "mirrorscale", "name": "Mirrorscale", "line": "gildfin", "stage": 2, "element": "water", "prompt": "A sleek koi with flowing fins and pearlescent scales that catch the sky's colours, gold fading into soft blue along its back." },
+    { "id": "glimmerkoi", "name": "Glimmerkoi", "line": "gildfin", "stage": 3, "element": "water", "prompt": "Longer and more elegant with trailing ribbon fins, scales shifting from gold to silvery-blue and catching glints of light like a mirror in motion." },
+    { "id": "astralkoi", "name": "Astralkoi", "line": "gildfin", "stage": 4, "element": "water", "prompt": "A graceful, elongating koi whose fins trail like comet tails and whose pale blue scales now hold faint star-like sparkle points." },
+    { "id": "mirrorwyrm", "name": "Mirrorwyrm", "line": "gildfin", "stage": 5, "element": "water", "prompt": "A majestic serpentine koi-dragon with flowing starlit fins and scales like liquid moonlight, its long body arcing through the air trailing a faint galaxy-glow." },
+
+    { "id": "gildfin", "name": "Gildfin", "line": "gildfin__magmascale", "stage": 1, "element": "water", "prompt": "A small round goldfish with stubby fins and huge round eyes, bright orange-gold scales with a faint shimmer." },
+    { "id": "magmascale", "name": "Magmascale", "line": "gildfin__magmascale", "stage": 2, "element": "fire", "prompt": "A koi wreathed in heat-shimmer, orange-red scales glowing at the edges like cooling lava, fins trailing faint embers." },
+    { "id": "cinderkoi", "name": "Cinderkoi", "line": "gildfin__magmascale", "stage": 3, "element": "fire", "prompt": "A longer, more muscular lava-koi with cracked-magma scale patterns glowing brighter at the seams, fins now edged in true flame." },
+    { "id": "pyrokoi", "name": "Pyrokoi", "line": "gildfin__magmascale", "stage": 4, "element": "fire", "prompt": "An imposing fire-koi whose whole spine glows like a lava seam, trailing streams of drifting cinders from every fin." },
+    { "id": "magmawyrm", "name": "Magmawyrm", "line": "gildfin__magmascale", "stage": 5, "element": "fire", "prompt": "A colossal molten dragon-koi, scales like cooling obsidian veined with glowing gold, its mane and fins a constant wreath of rolling flame." },
+
+    { "id": "quillpuff", "name": "Quillpuff", "line": "quillpuff", "stage": 1, "element": "water", "prompt": "A small round puffed-up fish covered in soft spines, pale blue-white body with a worried, wide-eyed expression." },
+    { "id": "sunbasker", "name": "Sunbasker", "line": "quillpuff", "stage": 2, "element": "water", "prompt": "A huge flat sunfish drifting sideways at the surface, pale gold-cream body with soft blue fin edges and a serene half-lidded expression, small birds perched along its back." },
+    { "id": "solscale", "name": "Solscale", "line": "quillpuff", "stage": 3, "element": "water", "prompt": "A broader, more radiant sunfish with a faint golden sheen spreading across its pale body and brighter blue-gold fin edges, still drifting serenely at the surface." },
+    { "id": "coronafin", "name": "Coronafin", "line": "quillpuff", "stage": 4, "element": "water", "prompt": "A grand golden sunfish whose fin-edges now flare like solar rays, pale cream body glowing faintly warm, its half-lidded eyes calm as still water." },
+    { "id": "sovereignsun", "name": "Sovereignsun", "line": "quillpuff", "stage": 5, "element": "water", "prompt": "An immense radiant sunfish crowned in flaring golden fin-rays like a corona, glowing softly gold all over with serene half-lidded eyes; where it surfaces, the whole lake seems to shine." },
+
+    { "id": "chompsy", "name": "Chompsy", "line": "chompsy", "stage": 1, "element": "water", "prompt": "A small fierce piranha with an oversized toothy grin and bright red-orange scales, fins flared aggressively." },
+    { "id": "grinfin", "name": "Grinfin", "line": "chompsy", "stage": 2, "element": "water", "prompt": "A sleek grey-blue shark with a permanent wide grin full of teeth, powerful fins and a confident, predatory glide." },
+    { "id": "ripjaw", "name": "Ripjaw", "line": "chompsy", "stage": 3, "element": "water", "prompt": "A bulkier shark with a jagged double row of teeth and battle-scarred fins, grey-blue skin deepening toward a colder slate tone." },
+    { "id": "direfin", "name": "Direfin", "line": "chompsy", "stage": 4, "element": "water", "prompt": "A broad-shouldered apex shark with reinforced ridged fins and rows of glinting teeth, its slate-blue hide darkening with faint predatory markings." },
+    { "id": "leviagrin", "name": "Leviagrin", "line": "chompsy", "stage": 5, "element": "water", "prompt": "A colossal ancient leviathan shark, its cavernous grin ringed in glowing teeth and its dark, storm-blue hide scarred like a warship's hull, trailing a wake wherever it turns." },
+
+    { "id": "lanterngulp", "name": "Lanterngulp", "line": "lanterngulp", "stage": 1, "element": "void", "prompt": "A round, dark anglerfish with a huge toothy grin and a tiny glowing lure dangling above its head, deep violet-black body with faint star-like speckles." },
+    { "id": "duskangler", "name": "Duskangler", "line": "lanterngulp", "stage": 2, "element": "void", "prompt": "A slightly longer anglerfish with a brighter, warmer lure-glow and small fin-spines, its violet-black hide now flecked with faint constellations." },
+    { "id": "gloomlure", "name": "Gloomlure", "line": "lanterngulp", "stage": 3, "element": "void", "prompt": "A broader, more patient-looking anglerfish with a longer glowing lure-stalk and ridged fins, deep indigo body dotted with soft starlight speckles." },
+    { "id": "abysslure", "name": "Abysslure", "line": "lanterngulp", "stage": 4, "element": "void", "prompt": "A large, imposing anglerfish with an ornate branching lure crowned in warm light and heavier armoured fins, near-black body glittering like a night sky." },
+    { "id": "voidmaw", "name": "Voidmaw", "line": "lanterngulp", "stage": 5, "element": "void", "prompt": "A massive ancient anglerfish sovereign of the deep, its huge crowned lure blazing like a captive star above a cavernous jaw, body a void-black expanse glittering with true constellations." },
+
+    { "id": "hobsnap", "name": "Hobsnap", "line": "hobsnap", "stage": 1, "element": "void", "prompt": "A dark, sleek goblin shark with a long flattened snout and a jaw that juts forward on display, deep violet-grey hide with faint glowing gill-markings." },
+    { "id": "springjaw", "name": "Springjaw", "line": "hobsnap", "stage": 2, "element": "void", "prompt": "A slightly bulkier goblin shark whose jaw now snaps forward with visible mechanical speed, hide deepening toward indigo with brighter glowing gill-lines." },
+    { "id": "vaultjaw", "name": "Vaultjaw", "line": "hobsnap", "stage": 3, "element": "void", "prompt": "A broader, more armoured goblin shark with reinforced jaw-plates and longer fins, deep indigo-violet skin marked with glowing amber gill-streaks." },
+    { "id": "clampfiend", "name": "Clampfiend", "line": "hobsnap", "stage": 4, "element": "void", "prompt": "A heavily built predator shark whose jaw has grown segmented, trap-like plating, its near-black hide glowing amber along every fin edge and gill slit." },
+    { "id": "doomlatch", "name": "Doomlatch", "line": "hobsnap", "stage": 5, "element": "void", "prompt": "A colossal ancient goblin shark whose crowned, segmented jaw looks forged rather than grown, void-black hide blazing with amber glow-lines like a living machine of the deep." }
+  ]
+}

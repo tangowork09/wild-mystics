@@ -1,0 +1,160 @@
+{
+  "lines": [
+    {
+      "id": "trotlet",
+      "branch": null,
+      "stages": ["trotlet", "loamstrider", "clodrunner", "ploughmane", "earthmarch"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "clodrunner", "name": "Clodrunner", "element": "earth", "hp": 87, "atk": 22, "def": 19, "spd": 21, "height": 2.4, "model": "R2:Horse__d37dbc87.glb", "learnset": [[1, "rock_toss"], [1, "tailwind"], [12, "boulder_slam"], [16, "tremor"], [22, "stone_skin"], [24, "geode_shell"]], "rarity": "rare", "catchRate": 0.18, "abilities": ["bedrock", "sturdy"], "lore": "Ploughs a straight furrow at a dead sprint. Don't ask how." },
+        { "id": "ploughmane", "name": "Ploughmane", "element": "earth", "hp": 99, "atk": 25, "def": 22, "spd": 24, "height": 2.9, "model": "R2:Horse__d37dbc87.glb", "learnset": [[1, "rock_toss"], [1, "tailwind"], [1, "boulder_slam"], [16, "tremor"], [22, "stone_skin"], [24, "geode_shell"]], "rarity": "epic", "catchRate": 0.1, "tint": "#8a6a3a", "rideable": true, "abilities": ["bedrock", "rage"], "lore": "Its mane looks like tilled soil because, functionally, it is." },
+        { "id": "earthmarch", "name": "Earthmarch", "element": "earth", "hp": 111, "atk": 28, "def": 25, "spd": 27, "height": 3.4, "model": "R2:Horse__d37dbc87.glb", "learnset": [[1, "rock_toss"], [1, "tailwind"], [1, "boulder_slam"], [16, "tremor"], [22, "stone_skin"], [24, "geode_shell"]], "rarity": "epic", "catchRate": 0.06, "tint": "#5a4522", "rideable": true, "abilities": ["bedrock", "intimidate"], "lore": "Villages reroute roads around where it likes to walk." }
+      ]
+    },
+    {
+      "id": "trotlet__skymane",
+      "branch": { "from": "trotlet", "item": "wind_stone" },
+      "stages": ["trotlet", "skymane", "cloudmane", "galemane", "zephyrsteed"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "cloudmane", "name": "Cloudmane", "element": "wind", "hp": 83, "atk": 20, "def": 16, "spd": 24, "height": 2.5, "model": "R2:White_Horse__3edc2bd9.glb", "learnset": [[1, "gale_cut"], [1, "tailwind"], [10, "feather_dart"], [16, "cyclone"], [22, "frost_breath"], [24, "gust_dive"]], "rarity": "rare", "catchRate": 0.18, "tint": "#d8ecff", "tintGlow": "#a8ddff", "rideable": true, "abilities": ["tailwind_soul", "swift"], "lore": "Gallops so lightly its hoofprints don't survive the landing." },
+        { "id": "galemane", "name": "Galemane", "element": "wind", "hp": 96, "atk": 23, "def": 18, "spd": 27, "height": 3.0, "model": "R2:White_Horse__3edc2bd9.glb", "learnset": [[1, "gale_cut"], [1, "tailwind"], [1, "feather_dart"], [16, "cyclone"], [22, "frost_breath"], [24, "gust_dive"], [30, "aether_gale"]], "rarity": "epic", "catchRate": 0.1, "tint": "#c0e4ff", "tintGlow": "#8fd8ff", "rideable": true, "abilities": ["tailwind_soul", "focus"], "lore": "Outruns storms it starts by running." },
+        { "id": "zephyrsteed", "name": "Zephyrsteed", "element": "wind", "hp": 111, "atk": 26, "def": 20, "spd": 30, "height": 3.4, "model": "R2:White_Horse__3edc2bd9.glb", "learnset": [[1, "gale_cut"], [1, "tailwind"], [1, "feather_dart"], [16, "cyclone"], [22, "frost_breath"], [24, "gust_dive"], [30, "aether_gale"], [36, "moon_hoot"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a8d8ff", "tintGlow": "#eaffff", "rideable": true, "abilities": ["tailwind_soul", "focus"], "lore": "The wind doesn't carry it. It carries the wind." }
+      ]
+    },
+    {
+      "id": "moolet",
+      "branch": null,
+      "stages": ["moolet", "bullwark", "ironhoof", "grandbull", "titanbull"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "ironhoof", "name": "Ironhoof", "element": "earth", "hp": 93, "atk": 22, "def": 24, "spd": 11, "height": 2.3, "model": "R2:Bull__5704ef69.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [12, "boulder_slam"], [18, "tremor"], [24, "kindle"], [26, "geode_shell"]], "rarity": "rare", "catchRate": 0.18, "tint": "#6a5a4a", "rideable": true, "abilities": ["rage", "intimidate"], "lore": "Every step sounds like a door slamming. On purpose." },
+        { "id": "grandbull", "name": "Grandbull", "element": "earth", "hp": 103, "atk": 25, "def": 27, "spd": 12, "height": 2.8, "model": "R2:Bull__5704ef69.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [18, "tremor"], [24, "kindle"], [26, "geode_shell"]], "rarity": "epic", "catchRate": 0.1, "tint": "#4a3f34", "rideable": true, "abilities": ["rage", "thick_hide"], "lore": "The Vale's biggest plough pulls itself now, thanks." },
+        { "id": "titanbull", "name": "Titanbull", "element": "earth", "hp": 112, "atk": 28, "def": 30, "spd": 13, "height": 3.3, "model": "R2:Bull__5704ef69.glb", "learnset": [[1, "rock_toss"], [1, "stone_skin"], [1, "boulder_slam"], [18, "tremor"], [24, "kindle"], [26, "geode_shell"]], "rarity": "epic", "catchRate": 0.06, "tint": "#2f271f", "rideable": true, "abilities": ["rage", "guardian_aura"], "lore": "When it puts its head down, smart Mystics reconsider their plans." }
+      ]
+    },
+    {
+      "id": "moolet__pyrox",
+      "branch": { "from": "moolet", "item": "fire_stone" },
+      "stages": ["moolet", "pyrox", "cinderox", "forgeox", "vulcanox"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "cinderox", "name": "Cinderox", "element": "fire", "hp": 88, "atk": 25, "def": 19, "spd": 15, "height": 2.4, "model": "R2:Bull__5704ef69.glb", "learnset": [[1, "ember_bite"], [1, "kindle"], [10, "flame_wheel"], [16, "cinder_claw"], [24, "flare_burst"], [26, "meteor_fang"]], "rarity": "rare", "catchRate": 0.18, "tint": "#b83a18", "tintGlow": "#ff6a2a", "rideable": true, "abilities": ["blaze", "rage"], "lore": "Its snort comes out as a small localized weather event." },
+        { "id": "forgeox", "name": "Forgeox", "element": "fire", "hp": 99, "atk": 27, "def": 21, "spd": 17, "height": 2.9, "model": "R2:Bull__5704ef69.glb", "learnset": [[1, "ember_bite"], [1, "kindle"], [1, "flame_wheel"], [16, "cinder_claw"], [24, "flare_burst"], [26, "meteor_fang"], [32, "lantern_flare"]], "rarity": "epic", "catchRate": 0.1, "tint": "#9a2e12", "tintGlow": "#ff7a3a", "rideable": true, "abilities": ["blaze", "intimidate"], "lore": "Blacksmiths pay well just to stand near it on cold mornings." },
+        { "id": "vulcanox", "name": "Vulcanox", "element": "fire", "hp": 111, "atk": 30, "def": 23, "spd": 19, "height": 3.4, "model": "R2:Bull__5704ef69.glb", "learnset": [[1, "ember_bite"], [1, "kindle"], [1, "flame_wheel"], [16, "cinder_claw"], [24, "flare_burst"], [26, "meteor_fang"], [32, "lantern_flare"]], "rarity": "epic", "catchRate": 0.06, "tint": "#7a2208", "tintGlow": "#ff8a3a", "rideable": true, "abilities": ["blaze", "intimidate"], "lore": "Legends disagree on whether it started the Scar's fires or just refuses to let them go out." }
+      ]
+    },
+    {
+      "id": "truffly",
+      "branch": null,
+      "stages": ["truffly", "trufflenose", "boarloam", "goldtusker", "trufflemonarch"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "trufflenose", "name": "Trufflenose", "element": "nature", "hp": 69, "atk": 15, "def": 16, "spd": 13, "height": 0.95, "model": "R2:Pig__665ee586.glb", "learnset": [[1, "thorn_volley"], [1, "bloom"], [8, "vine_snare"], [12, "sleep_spore"], [16, "grove_wrath"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["pickup", "overgrow"], "lore": "Can smell a good mushroom through solid rock. Probably." },
+        { "id": "boarloam", "name": "Boarloam", "element": "nature", "hp": 79, "atk": 17, "def": 18, "spd": 15, "height": 1.2, "model": "R2:Pig__665ee586.glb", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [12, "sleep_spore"], [16, "grove_wrath"], [22, "pounce"]], "rarity": "rare", "catchRate": 0.18, "tint": "#6a4a2a", "abilities": ["pickup", "thick_hide"], "lore": "Digs treasure pits so tidy the diggers get complimented." },
+        { "id": "goldtusker", "name": "Goldtusker", "element": "nature", "hp": 90, "atk": 20, "def": 21, "spd": 17, "height": 1.5, "model": "R2:Pig__665ee586.glb", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [1, "sleep_spore"], [16, "grove_wrath"], [22, "pounce"], [28, "thorn_howl"]], "rarity": "epic", "catchRate": 0.1, "tint": "#8a6a2a", "abilities": ["pickup", "thick_hide"], "lore": "Its tusks have found more lost rings than the lost-and-found." },
+        { "id": "trufflemonarch", "name": "Trufflemonarch", "element": "nature", "hp": 102, "atk": 23, "def": 24, "spd": 19, "height": 1.85, "model": "R2:Pig__665ee586.glb", "learnset": [[1, "thorn_volley"], [1, "bloom"], [1, "vine_snare"], [1, "sleep_spore"], [16, "grove_wrath"], [22, "pounce"], [28, "thorn_howl"]], "rarity": "epic", "catchRate": 0.06, "tint": "#a6842a", "abilities": ["pickup", "guardian_aura"], "lore": "Every good mushroom in the Vale is, technically, on loan from it." }
+      ]
+    },
+    {
+      "id": "dozewool",
+      "branch": null,
+      "stages": ["dozewool", "slumberfleece", "dreamwool", "reverieram", "dreamshepherd"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "slumberfleece", "name": "Slumberfleece", "element": "nature", "hp": 69, "atk": 14, "def": 18, "spd": 11, "height": 1.15, "model": "R2:Sheep__a4bd2c4e.glb", "learnset": [[1, "thorn_volley"], [1, "sleep_spore"], [7, "bloom"], [11, "hypno_glow"], [16, "vine_snare"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["sleep_spores", "thick_hide"], "lore": "Its wool is so soft that shears fall asleep mid-cut." },
+        { "id": "dreamwool", "name": "Dreamwool", "element": "nature", "hp": 79, "atk": 16, "def": 21, "spd": 12, "height": 1.4, "model": "R2:Sheep__a4bd2c4e.glb", "learnset": [[1, "thorn_volley"], [1, "sleep_spore"], [1, "bloom"], [11, "hypno_glow"], [16, "vine_snare"], [22, "grove_wrath"]], "rarity": "rare", "catchRate": 0.18, "tint": "#c8b8e0", "abilities": ["sleep_spores", "regenerator"], "lore": "Naps standing up, sitting down, and occasionally mid-stride." },
+        { "id": "reverieram", "name": "Reverieram", "element": "nature", "hp": 90, "atk": 18, "def": 25, "spd": 13, "height": 1.7, "model": "R2:Sheep__a4bd2c4e.glb", "learnset": [[1, "thorn_volley"], [1, "sleep_spore"], [1, "bloom"], [1, "hypno_glow"], [16, "vine_snare"], [22, "grove_wrath"], [28, "thorn_howl"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a898d0", "rideable": true, "abilities": ["sleep_spores", "regenerator"], "lore": "Butts heads only in dreams. The dreams are very convincing." },
+        { "id": "dreamshepherd", "name": "Dreamshepherd", "element": "nature", "hp": 102, "atk": 20, "def": 28, "spd": 14, "height": 2.05, "model": "R2:Sheep__a4bd2c4e.glb", "learnset": [[1, "thorn_volley"], [1, "sleep_spore"], [1, "bloom"], [1, "hypno_glow"], [16, "vine_snare"], [22, "grove_wrath"], [28, "thorn_howl"]], "rarity": "epic", "catchRate": 0.06, "tint": "#8878b8", "rideable": true, "abilities": ["sleep_spores", "guardian_aura"], "lore": "Herds other Mystics into naps for their own good. Mostly works." }
+      ]
+    },
+    {
+      "id": "snubbit",
+      "branch": null,
+      "stages": ["snubbit", "gustail", "blizzarf", "permarf", "aurorarf"],
+      "existingCount": 3,
+      "newForms": [
+        { "id": "permarf", "name": "Permarf", "element": "wind", "hp": 97, "atk": 26, "def": 20, "spd": 24, "height": 2.1, "model": "R2:Husky__611d25c7.glb", "learnset": [[1, "gale_cut"], [1, "frost_breath"], [14, "cyclone"], [20, "tailwind"], [28, "boulder_slam"], [30, "gust_dive"]], "rarity": "epic", "catchRate": 0.1, "tint": "#a8d8f0", "rideable": true, "abilities": ["frostbite", "intimidate"], "lore": "Its howl starts blizzards. Its wag ends friendships with anyone downwind." },
+        { "id": "aurorarf", "name": "Aurorarf", "element": "wind", "hp": 109, "atk": 30, "def": 23, "spd": 28, "height": 2.6, "model": "R2:Husky__611d25c7.glb", "learnset": [[1, "gale_cut"], [1, "frost_breath"], [1, "cyclone"], [20, "tailwind"], [28, "boulder_slam"], [30, "gust_dive"], [36, "aether_gale"]], "rarity": "epic", "catchRate": 0.06, "tint": "#8fc8ea", "tintGlow": "#eaffff", "rideable": true, "abilities": ["frostbite", "focus"], "lore": "Runs so far north the sky starts putting on a show for it specifically." }
+      ]
+    },
+    {
+      "id": "honeybuzz",
+      "branch": null,
+      "stages": ["honeybuzz", "thornet", "barbnet", "venomnet", "hivemonarch"],
+      "existingCount": 2,
+      "newForms": [
+        { "id": "barbnet", "name": "Barbnet", "element": "nature", "hp": 77, "atk": 22, "def": 15, "spd": 25, "height": 1.65, "model": "R2:Wasp__71cadefd.glb", "learnset": [[1, "thorn_volley"], [1, "venom_fang"], [10, "vine_snare"], [14, "toxic_mist"], [20, "grove_wrath"], [26, "pounce"]], "rarity": "rare", "catchRate": 0.18, "tint": "#3a5a1a", "abilities": ["poison_touch", "swift"], "lore": "Its stinger now has a stinger. Don't ask, just don't." },
+        { "id": "venomnet", "name": "Venomnet", "element": "nature", "hp": 89, "atk": 25, "def": 17, "spd": 29, "height": 2.05, "model": "R2:Wasp__71cadefd.glb", "learnset": [[1, "thorn_volley"], [1, "venom_fang"], [1, "vine_snare"], [14, "toxic_mist"], [20, "grove_wrath"], [26, "pounce"], [32, "thorn_howl"]], "rarity": "epic", "catchRate": 0.1, "tint": "#2a4a10", "abilities": ["poison_touch", "opportunist"], "lore": "Its hive hums a warning long before it does." },
+        { "id": "hivemonarch", "name": "Hivemonarch", "element": "nature", "hp": 103, "atk": 29, "def": 20, "spd": 30, "height": 2.5, "model": "R2:Wasp__71cadefd.glb", "learnset": [[1, "thorn_volley"], [1, "venom_fang"], [1, "vine_snare"], [14, "toxic_mist"], [20, "grove_wrath"], [26, "pounce"], [32, "thorn_howl"]], "rarity": "epic", "catchRate": 0.06, "tint": "#1a3a08", "tintGlow": "#9aff4a", "abilities": ["poison_touch", "focus"], "lore": "Every stinger in the Vale answers to one buzz from it." }
+      ]
+    },
+    {
+      "id": "nibblet",
+      "branch": null,
+      "stages": ["nibblet", "gnawglint", "hoardrat", "vaultgnaw", "coinlord"],
+      "existingCount": 1,
+      "newForms": [
+        { "id": "gnawglint", "name": "Gnawglint", "element": "earth", "hp": 60, "atk": 16, "def": 13, "spd": 21, "height": 0.85, "model": "R2:Rat__64cb7150.glb", "learnset": [[1, "rock_toss"], [1, "venom_fang"], [8, "stone_skin"], [12, "tremor"], [16, "boulder_slam"]], "rarity": "rare", "catchRate": 0.25, "abilities": ["pickup", "lucky"], "lore": "Its cheeks are 40% storage space, 60% opinions about shiny objects." },
+        { "id": "hoardrat", "name": "Hoardrat", "element": "earth", "hp": 69, "atk": 18, "def": 15, "spd": 24, "height": 1.05, "model": "R2:Rat__64cb7150.glb", "learnset": [[1, "rock_toss"], [1, "venom_fang"], [1, "stone_skin"], [12, "tremor"], [16, "boulder_slam"], [22, "geode_shell"]], "rarity": "rare", "catchRate": 0.18, "tint": "#8a7048", "abilities": ["pickup", "lucky"], "lore": "Its burrow has more rooms than most inns, all of them full." },
+        { "id": "vaultgnaw", "name": "Vaultgnaw", "element": "earth", "hp": 79, "atk": 21, "def": 18, "spd": 27, "height": 1.3, "model": "R2:Rat__64cb7150.glb", "learnset": [[1, "rock_toss"], [1, "venom_fang"], [1, "stone_skin"], [1, "tremor"], [16, "boulder_slam"], [22, "geode_shell"]], "rarity": "epic", "catchRate": 0.1, "tint": "#6a5636", "abilities": ["pickup", "sturdy"], "lore": "Digs vaults so secure even it sometimes forgets the way in." },
+        { "id": "coinlord", "name": "Coinlord", "element": "earth", "hp": 90, "atk": 24, "def": 21, "spd": 30, "height": 1.6, "model": "R2:Rat__64cb7150.glb", "learnset": [[1, "rock_toss"], [1, "venom_fang"], [1, "stone_skin"], [1, "tremor"], [16, "boulder_slam"], [22, "geode_shell"]], "rarity": "epic", "catchRate": 0.06, "tint": "#4a3a24", "abilities": ["pickup", "lucky"], "lore": "Sits on a throne of found coins and mismatched buttons like it's the Vale's Crown Jewels." }
+      ]
+    }
+  ],
+  "prompts": [
+    { "id": "trotlet", "name": "Trotlet", "line": "trotlet", "stage": 1, "element": "earth", "prompt": "A stocky young foal with stubby legs and a sandy-brown coat, kicking up small clods of dirt as it trots in wobbly circles, pleased with itself." },
+    { "id": "loamstrider", "name": "Loamstrider", "line": "trotlet", "stage": 2, "element": "earth", "prompt": "A sturdy working horse with a broad chest and deep umber coat, powerful legs built for hauling, calm intelligent eyes and dust always clinging to its fetlocks." },
+    { "id": "clodrunner", "name": "Clodrunner", "line": "trotlet", "stage": 3, "element": "earth", "prompt": "A leaner, faster-built horse with a rich brown coat and rocky nodules embedded along its fetlocks like natural horseshoes, throwing up a visible trail of clods at a run." },
+    { "id": "ploughmane", "name": "Ploughmane", "line": "trotlet", "stage": 4, "element": "earth", "prompt": "A grand draft horse with a heavy mane textured like tilled furrows of dark soil, deep brown coat and stone-plated fetlocks, radiating calm working-class strength." },
+    { "id": "earthmarch", "name": "Earthmarch", "line": "trotlet", "stage": 5, "element": "earth", "prompt": "A colossal earthen warhorse whose furrowed soil-mane has become a rolling ridge of stone and root down its neck, deep umber-bronze coat with glowing amber seams in its hooves, each stride leaving the ground visibly reshaped." },
+
+    { "id": "trotlet", "name": "Trotlet", "line": "trotlet__skymane", "stage": 1, "element": "earth", "prompt": "A stocky young foal with stubby legs and a sandy-brown coat, kicking up small clods of dirt as it trots in wobbly circles, pleased with itself." },
+    { "id": "skymane", "name": "Skymane", "line": "trotlet__skymane", "stage": 2, "element": "wind", "prompt": "A pale, elegant horse whose mane drifts like trailing cloud, near-white coat with a faint sky-blue sheen, hooves that barely seem to touch the ground." },
+    { "id": "cloudmane", "name": "Cloudmane", "line": "trotlet__skymane", "stage": 3, "element": "wind", "prompt": "A leaner sky-horse whose cloud-mane now billows constantly around its neck and shoulders, pale blue-white coat brightening at the edges, cantering just above the grass." },
+    { "id": "galemane", "name": "Galemane", "line": "trotlet__skymane", "stage": 4, "element": "wind", "prompt": "A powerful sky-steed with a full flowing mane of living cloud-wisp, bright pale-blue coat streaked in glowing cyan along its flanks, a constant soft gale trailing its gallop." },
+    { "id": "zephyrsteed", "name": "Zephyrsteed", "line": "trotlet__skymane", "stage": 5, "element": "wind", "prompt": "A majestic sky-sovereign horse wreathed in a swirling mane and tail of living wind and cloud, luminous pale coat glowing faintly cyan at every edge, seeming to gallop just above the world entirely." },
+
+    { "id": "moolet", "name": "Moolet", "line": "moolet", "stage": 1, "element": "earth", "prompt": "A round young calf with short blunt horns and a warm caramel-brown hide, sturdy little legs and a contented expression, chewing thoughtfully." },
+    { "id": "bullwark", "name": "Bullwark", "line": "moolet", "stage": 2, "element": "earth", "prompt": "A broad, muscular bull with thick curved horns and a deep umber hide, planted stance and a stubborn, immovable presence." },
+    { "id": "ironhoof", "name": "Ironhoof", "line": "moolet", "stage": 3, "element": "earth", "prompt": "An even broader bull whose hooves and horn-bases have hardened into iron-grey stone plating, dark umber hide with a heavier, more deliberate stance." },
+    { "id": "grandbull", "name": "Grandbull", "line": "moolet", "stage": 4, "element": "earth", "prompt": "A massive bull armoured across its shoulders and horns in overlapping grey stone plates, near-black umber hide, radiating slow unstoppable weight." },
+    { "id": "titanbull", "name": "Titanbull", "line": "moolet", "stage": 5, "element": "earth", "prompt": "A mountainous bull titan fully plated in dark fused stone across its head and shoulders, near-black hide glowing faintly at the seams, horns like carved standing stones — the ground itself seems to brace when it moves." },
+
+    { "id": "moolet", "name": "Moolet", "line": "moolet__pyrox", "stage": 1, "element": "earth", "prompt": "A round young calf with short blunt horns and a warm caramel-brown hide, sturdy little legs and a contented expression, chewing thoughtfully." },
+    { "id": "pyrox", "name": "Pyrox", "line": "moolet__pyrox", "stage": 2, "element": "fire", "prompt": "A stout bull whose hide has scorched to a deep rust-red, horns smouldering faintly at the tips, snorting small curls of smoke." },
+    { "id": "cinderox", "name": "Cinderox", "line": "moolet__pyrox", "stage": 3, "element": "fire", "prompt": "A broader rust-red bull with cracked-ember patterning across its hide and brighter smouldering horns, faint heat-shimmer rising off its back." },
+    { "id": "forgeox", "name": "Forgeox", "line": "moolet__pyrox", "stage": 4, "element": "fire", "prompt": "A powerful bull armoured across its shoulders in dark cracked plates glowing orange at the seams like a forge, horns burning steadily, heat visibly rolling off it." },
+    { "id": "vulcanox", "name": "Vulcanox", "line": "moolet__pyrox", "stage": 5, "element": "fire", "prompt": "A titanic volcanic bull whose obsidian-dark hide is seamed with rivers of glowing molten orange, horns wreathed in constant flame, radiating heat like a standing furnace." },
+
+    { "id": "truffly", "name": "Truffly", "line": "truffly", "stage": 1, "element": "nature", "prompt": "A round little piglet creature with a big sniffing snout and floppy ears, mossy brown fur speckled with dirt, nose buried in the undergrowth." },
+    { "id": "trufflenose", "name": "Trufflenose", "line": "truffly", "stage": 2, "element": "nature", "prompt": "A slightly bigger piglet with an even more prominent snout and small curling tusks just starting to show, mossy brown fur, digging with real enthusiasm." },
+    { "id": "boarloam", "name": "Boarloam", "line": "truffly", "stage": 3, "element": "nature", "prompt": "A sturdy young boar with visible curling tusks and thicker bristled fur in mottled brown and moss-green, snout permanently caked in rich soil." },
+    { "id": "goldtusker", "name": "Goldtusker", "line": "truffly", "stage": 4, "element": "nature", "prompt": "A hefty boar with long, gleaming tusks and a dense mane of bristled brown-green fur, small glints of gold and treasure visible caught in its coat." },
+    { "id": "trufflemonarch", "name": "Trufflemonarch", "line": "truffly", "stage": 5, "element": "nature", "prompt": "A magnificent forest boar crowned in curling golden-sheened tusks and a thick regal mane of deep moss-brown bristles, draped faintly in trailing roots and tiny mushrooms like jewellery it earned." },
+
+    { "id": "dozewool", "name": "Dozewool", "line": "dozewool", "stage": 1, "element": "nature", "prompt": "A round, heavy-fleeced sheep creature with half-closed dreamy eyes and thick curling cream wool, moving at an unhurried drowsy pace." },
+    { "id": "slumberfleece", "name": "Slumberfleece", "line": "dozewool", "stage": 2, "element": "nature", "prompt": "A slightly larger sheep with even thicker, softer cream wool now tinged pale lavender at the curls, eyes perpetually half-lidded and content." },
+    { "id": "dreamwool", "name": "Dreamwool", "line": "dozewool", "stage": 3, "element": "nature", "prompt": "A plush, heavy-bodied sheep whose lavender-cream wool has grown into deep drifting curls, faint dream-like sparkles drifting from its fleece as it dozes on its feet." },
+    { "id": "reverieram", "name": "Reverieram", "line": "dozewool", "stage": 4, "element": "nature", "prompt": "A grand ram with a magnificent curled horn pair and dense violet-cream fleece that seems to shimmer faintly like it's still half a dream, drowsy but immense." },
+    { "id": "dreamshepherd", "name": "Dreamshepherd", "line": "dozewool", "stage": 5, "element": "nature", "prompt": "A towering, gentle ram-giant draped in luxuriant deep-violet wool that drifts with faint glowing motes like captured stardust, huge curled horns and half-lidded knowing eyes, radiating calm the way a hearth radiates warmth." },
+
+    { "id": "snubbit", "name": "Snubbit", "line": "snubbit", "stage": 1, "element": "wind", "prompt": "A small stout pug-like creature with a wrinkled snub nose and pale cream fur, snoring softly even while awake, a faint breeze curling off its stubby tail." },
+    { "id": "gustail", "name": "Gustail", "line": "snubbit", "stage": 2, "element": "wind", "prompt": "A leaner, more athletic pug-dog with tan-and-cream fur and a tail that leaves small dust-devils spinning behind it, chasing itself with real enthusiasm." },
+    { "id": "blizzarf", "name": "Blizzarf", "line": "snubbit", "stage": 3, "element": "wind", "prompt": "A sturdy husky-like dog with thick white-and-grey fur and icy-blue markings, breath visibly fogging, standing ready to pull a sled or start a blizzard." },
+    { "id": "permarf", "name": "Permarf", "line": "snubbit", "stage": 4, "element": "wind", "prompt": "A powerful husky with a dense frost-pale coat and deeper icy-blue markings down its back, small drifts of snow swirling around its paws as it moves." },
+    { "id": "aurorarf", "name": "Aurorarf", "line": "snubbit", "stage": 5, "element": "wind", "prompt": "A magnificent arctic wolf-dog whose thick white coat is streaked in glowing pale-cyan aurora patterns down its spine and tail, trailing swirling snow and faint colour with every bound." },
+
+    { "id": "honeybuzz", "name": "Honeybuzz", "line": "honeybuzz", "stage": 1, "element": "nature", "prompt": "A small round bee-like creature with fuzzy golden-and-green stripes and translucent wings, trailing a faint sweet-smelling glimmer of pollen." },
+    { "id": "thornet", "name": "Thornet", "line": "honeybuzz", "stage": 2, "element": "nature", "prompt": "A leaner wasp-like creature with sharper golden-green banding and a visible thorn-shaped stinger, wings buzzing with quicker, sharper energy." },
+    { "id": "barbnet", "name": "Barbnet", "line": "honeybuzz", "stage": 3, "element": "nature", "prompt": "A sleeker wasp with deep green-and-gold banding and a longer, barbed thorn-stinger, wings edged faintly translucent-violet, poised and quick." },
+    { "id": "venomnet", "name": "Venomnet", "line": "honeybuzz", "stage": 4, "element": "nature", "prompt": "A striking wasp with bold dark-green armoured banding and a wicked curved stinger dripping faint toxin-glow, wings a blur of violet-tinted motion." },
+    { "id": "hivemonarch", "name": "Hivemonarch", "line": "honeybuzz", "stage": 5, "element": "nature", "prompt": "A commanding hive-sovereign wasp in deep emerald-and-gold armoured banding, a huge curved glowing stinger and wings that shimmer violet-green, radiating quiet, absolute authority over every smaller stinger nearby." },
+
+    { "id": "nibblet", "name": "Nibblet", "line": "nibblet", "stage": 1, "element": "earth", "prompt": "A small round rat creature with bright inquisitive eyes and cheeks visibly stuffed full, sandy-brown fur and a long curious tail, clutching a shiny pebble." },
+    { "id": "gnawglint", "name": "Gnawglint", "line": "nibblet", "stage": 2, "element": "earth", "prompt": "A slightly bigger rat with a glinting, alert gleam in its eye and even fuller cheeks, sandy-brown fur, sorting a small pile of shiny trinkets." },
+    { "id": "hoardrat", "name": "Hoardrat", "line": "nibblet", "stage": 3, "element": "earth", "prompt": "A stocky, well-fed rat with rich earthy-brown fur and a small mound of hoarded shinies always nearby, whiskers twitching with constant appraisal." },
+    { "id": "vaultgnaw", "name": "Vaultgnaw", "line": "nibblet", "stage": 4, "element": "earth", "prompt": "A hefty, burly rat with thick digging claws and dense umber fur, small glints of buried treasure caught in its fur, radiating the quiet confidence of a creature that owns a lot of tunnels." },
+    { "id": "coinlord", "name": "Coinlord", "line": "nibblet", "stage": 5, "element": "earth", "prompt": "A magnificently plump rat-sovereign draped in a rattling mantle of found coins, buttons and polished stones, deep umber-gold fur and sharp glinting eyes, sitting like royalty atop its own hoard." }
+  ]
+}

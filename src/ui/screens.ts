@@ -19,6 +19,7 @@ import { el, modal, uiRoot, reducedMotion } from './dom';
 import { elementBadge, esc, mysticFace, rarityTag } from './kit';
 import { icon, glyph } from './icons';
 import { faceHTML } from './portraits';
+import { ensureOrnamentDefs, MARK, CORNERS, MEDAL } from './ornaments';
 import { dailyCapsules } from './tabs/profile';
 import { rewardChips } from './tabs/quests';
 
@@ -363,8 +364,10 @@ export function levelUp(opts: { kind: 'rank' | 'mystic'; level: number; title?: 
 // ── Dialog: portrait, typewriter text, choices, skip ─────────────────────────
 export function dialog(opts: DialogSpec): Promise<number> {
   return new Promise((resolve) => {
-    const d = el('div', 'dialog-box', `<div class="dg-panel stk">
-        <div class="dg-face">${faceHTML(opts.face, opts.name, 92)}</div>
+    ensureOrnamentDefs();
+    const d = el('div', 'dialog-box', `<div class="dg-panel">
+        ${MARK}${CORNERS}
+        <div class="dg-medal" aria-hidden="true">${MEDAL}<div class="dg-face">${faceHTML(opts.face, opts.name, 150)}</div></div>
         <div class="dg-plate"><b>${esc(opts.name)}</b>${opts.title ? `<small>${esc(opts.title)}</small>` : ''}</div>
         <button class="dg-skip" aria-label="Skip to the end">${glyph('skip')}<span>Skip</span></button>
         <p class="dg-text" aria-live="polite"></p>
@@ -373,6 +376,9 @@ export function dialog(opts: DialogSpec): Promise<number> {
     d.setAttribute('role', 'dialog');
     d.setAttribute('aria-label', `${opts.name} is talking`);
     uiRoot().appendChild(d);
+    // an NPC bust that finishes rendering while they talk swaps in for the stand-in avatar
+    const onBust = (e: Event) => { if ((e as CustomEvent<string>).detail === opts.face) (d.querySelector('.dg-face') as HTMLElement).innerHTML = faceHTML(opts.face, opts.name, 150); };
+    addEventListener('wm-bust', onBust);
     requestAnimationFrame(() => d.classList.add('in'));
     const text = d.querySelector('.dg-text') as HTMLElement;
     const choices = d.querySelector('.dg-choices') as HTMLElement;
@@ -393,7 +399,7 @@ export function dialog(opts: DialogSpec): Promise<number> {
       if (line < lines.length - 1) { d.classList.add('more'); return; }
       d.classList.add('ask');
       const list = opts.choices?.length ? opts.choices : ['Continue'];
-      choices.innerHTML = list.map((c, i) => `<button class="btn ${i === 0 ? 'primary' : 'ghost'} small" data-c="${i}">${list.length > 1 ? `<kbd>${i + 1}</kbd>` : ''}${esc(c)}${i === 0 && list.length === 1 ? ' <kbd>Enter</kbd>' : ''}</button>`).join('');
+      choices.innerHTML = list.map((c, i) => `<button class="dg-c ${i === 0 ? 'yes' : 'no'}" data-c="${i}">${list.length > 1 ? `<kbd>${i + 1}</kbd>` : ''}${esc(c)}</button>`).join('');
       choices.querySelectorAll<HTMLElement>('[data-c]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); finish(Number(b.dataset.c)); }));
       (choices.querySelector('[data-c]') as HTMLElement | null)?.focus({ preventScroll: true });
     };
@@ -416,6 +422,7 @@ export function dialog(opts: DialogSpec): Promise<number> {
     };
     const finish = (i: number) => {
       removeEventListener('keydown', key, true);
+      removeEventListener('wm-bust', onBust);
       clearInterval(typing);
       sfx(i === 0 ? 'select' : 'back');
       d.classList.remove('in');

@@ -1,0 +1,1264 @@
+{
+  "lines": [
+    {
+      "id": "magmaglub",
+      "branch": null,
+      "stages": [
+        "magmaglub",
+        "magmawallow",
+        "magmordant",
+        "magmarauger",
+        "magmalossus"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "magmawallow",
+          "name": "Magmawallow",
+          "element": "fire",
+          "hp": 69,
+          "atk": 17,
+          "def": 16,
+          "spd": 14,
+          "height": 1.2,
+          "model": "Glub",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "kindle"
+            ],
+            [
+              12,
+              "flare_burst"
+            ],
+            [
+              16,
+              "cinder_claw"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.25,
+          "abilities": [
+            "flame_body",
+            "blaze"
+          ],
+          "tint": "#e8481a",
+          "lore": "Rolls through cooling lava just to feel it crackle underfoot."
+        },
+        {
+          "id": "magmordant",
+          "name": "Magmordant",
+          "element": "fire",
+          "hp": 79,
+          "atk": 20,
+          "def": 19,
+          "spd": 16,
+          "height": 1.5,
+          "model": "Glub",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "cinder_claw"
+            ],
+            [
+              12,
+              "flare_burst"
+            ],
+            [
+              22,
+              "flame_wheel"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "abilities": [
+            "flame_body",
+            "blaze"
+          ],
+          "tint": "#d43a14",
+          "tintGlow": "#ff6a1a",
+          "lore": "Its yawns melt whatever it was napping on."
+        },
+        {
+          "id": "magmarauger",
+          "name": "Magmarauger",
+          "element": "fire",
+          "hp": 91,
+          "atk": 23,
+          "def": 22,
+          "spd": 18,
+          "height": 1.9,
+          "model": "Glub",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              12,
+              "flare_burst"
+            ],
+            [
+              28,
+              "meteor_fang"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "abilities": [
+            "flame_body",
+            "rage"
+          ],
+          "tint": "#b8300f",
+          "tintGlow": "#ff7a2a",
+          "lore": "Charges through obsidian fields and leaves fresh rivers behind it."
+        },
+        {
+          "id": "magmalossus",
+          "name": "Magmalossus",
+          "element": "fire",
+          "hp": 105,
+          "atk": 27,
+          "def": 26,
+          "spd": 20,
+          "height": 2.4,
+          "model": "Glub",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              12,
+              "flare_burst"
+            ],
+            [
+              34,
+              "lantern_flare"
+            ],
+            [
+              40,
+              "meteor_fang"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "abilities": [
+            "blaze",
+            "intimidate"
+          ],
+          "tint": "#8f2408",
+          "tintGlow": "#ffae3a",
+          "lore": "Mountains quietly reshape themselves around wherever it decides to sleep."
+        }
+      ]
+    },
+    {
+      "id": "sunbee",
+      "branch": null,
+      "stages": [
+        "sunbee",
+        "sunstinger",
+        "sunhornet",
+        "solarwing",
+        "solarion"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "sunstinger",
+          "name": "Sunstinger",
+          "element": "fire",
+          "hp": 60,
+          "atk": 18,
+          "def": 12,
+          "spd": 21,
+          "height": 1.1,
+          "model": "Armabee",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "overcharge"
+            ],
+            [
+              11,
+              "flare_burst"
+            ],
+            [
+              15,
+              "cinder_claw"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.24,
+          "abilities": [
+            "blaze",
+            "swift"
+          ],
+          "tint": "#ff9a2a",
+          "lore": "Its stinger glows red-hot by noon, and it always apologises with a lit torch."
+        },
+        {
+          "id": "sunhornet",
+          "name": "Sunhornet",
+          "element": "fire",
+          "hp": 69,
+          "atk": 21,
+          "def": 14,
+          "spd": 24,
+          "height": 1.4,
+          "model": "Armabee",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "cinder_claw"
+            ],
+            [
+              11,
+              "flare_burst"
+            ],
+            [
+              22,
+              "flame_wheel"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.17,
+          "abilities": [
+            "blaze",
+            "swift"
+          ],
+          "tint": "#ff8414",
+          "tintGlow": "#ffcf6a",
+          "lore": "Builds hives from hardened amber where the dunes burn hottest."
+        },
+        {
+          "id": "solarwing",
+          "name": "Solarwing",
+          "element": "fire",
+          "hp": 79,
+          "atk": 24,
+          "def": 16,
+          "spd": 27,
+          "height": 1.7,
+          "model": "Armabee",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              11,
+              "flare_burst"
+            ],
+            [
+              28,
+              "meteor_fang"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.09,
+          "abilities": [
+            "blaze",
+            "focus"
+          ],
+          "tint": "#f26a0a",
+          "tintGlow": "#ffd84a",
+          "lore": "Outraces its own shadow every single noon."
+        },
+        {
+          "id": "solarion",
+          "name": "Solarion",
+          "element": "fire",
+          "hp": 91,
+          "atk": 28,
+          "def": 18,
+          "spd": 30,
+          "height": 2.1,
+          "model": "Armabee",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "meteor_fang"
+            ],
+            [
+              11,
+              "flare_burst"
+            ],
+            [
+              34,
+              "lantern_flare"
+            ],
+            [
+              40,
+              "kindle"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.05,
+          "abilities": [
+            "blaze",
+            "lucky"
+          ],
+          "tint": "#d94e04",
+          "tintGlow": "#fff08a",
+          "lore": "Crowned queen of every hive that ever squinted back at the sun."
+        }
+      ]
+    },
+    {
+      "id": "dustwhirl",
+      "branch": null,
+      "stages": [
+        "dustwhirl",
+        "dustdevil",
+        "duneswirl",
+        "sandcyclone",
+        "simoom"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "dustdevil",
+          "name": "Dustdevil",
+          "element": "wind",
+          "hp": 62,
+          "atk": 17,
+          "def": 13,
+          "spd": 21,
+          "height": 1.4,
+          "model": "Hywirl",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "rock_toss"
+            ],
+            [
+              12,
+              "cyclone"
+            ],
+            [
+              16,
+              "feather_dart"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.26,
+          "abilities": [
+            "tailwind_soul",
+            "swift"
+          ],
+          "tint": "#cf9f58",
+          "lore": "Spins tighter whenever something interesting blows past."
+        },
+        {
+          "id": "duneswirl",
+          "name": "Duneswirl",
+          "element": "wind",
+          "hp": 71,
+          "atk": 20,
+          "def": 15,
+          "spd": 23,
+          "height": 1.8,
+          "model": "Hywirl",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "feather_dart"
+            ],
+            [
+              12,
+              "cyclone"
+            ],
+            [
+              22,
+              "tailwind"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.18,
+          "abilities": [
+            "tailwind_soul",
+            "swift"
+          ],
+          "tint": "#c08a42",
+          "tintGlow": "#ffe0a0",
+          "lore": "Carves fresh dune ridges just passing through, then admires the view."
+        },
+        {
+          "id": "sandcyclone",
+          "name": "Sandcyclone",
+          "element": "wind",
+          "hp": 82,
+          "atk": 23,
+          "def": 17,
+          "spd": 26,
+          "height": 2.2,
+          "model": "Hywirl",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "tailwind"
+            ],
+            [
+              12,
+              "cyclone"
+            ],
+            [
+              28,
+              "gust_dive"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "abilities": [
+            "tailwind_soul",
+            "momentum"
+          ],
+          "tint": "#a86f2e",
+          "tintGlow": "#ffd27a",
+          "lore": "Swallows whole tumbleweed caravans and spits out tiny sand sculptures."
+        },
+        {
+          "id": "simoom",
+          "name": "Simoom",
+          "element": "wind",
+          "hp": 94,
+          "atk": 26,
+          "def": 19,
+          "spd": 29,
+          "height": 2.7,
+          "model": "Hywirl",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "gust_dive"
+            ],
+            [
+              12,
+              "cyclone"
+            ],
+            [
+              34,
+              "aether_gale"
+            ],
+            [
+              40,
+              "moon_hoot"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.06,
+          "abilities": [
+            "tailwind_soul",
+            "focus"
+          ],
+          "tint": "#8f5a20",
+          "tintGlow": "#ffcf6a",
+          "lore": "When the horizon turns copper and the wind starts howling, caravans already know to kneel."
+        }
+      ]
+    },
+    {
+      "id": "frostwisp",
+      "branch": null,
+      "stages": [
+        "frostwisp",
+        "frostwill",
+        "rimewisp",
+        "glacewraith",
+        "hoarwraith"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "frostwill",
+          "name": "Frostwill",
+          "element": "wind",
+          "hp": 61,
+          "atk": 19,
+          "def": 13,
+          "spd": 20,
+          "height": 1.3,
+          "model": "Ghost",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "soul_siphon"
+            ],
+            [
+              14,
+              "cyclone"
+            ],
+            [
+              18,
+              "frost_breath"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.14,
+          "abilities": [
+            "frostbite",
+            "keen_eye"
+          ],
+          "tint": "#9fe0ff",
+          "lore": "Leads lost travellers toward warmth, then quietly follows them home anyway."
+        },
+        {
+          "id": "rimewisp",
+          "name": "Rimewisp",
+          "element": "wind",
+          "hp": 72,
+          "atk": 22,
+          "def": 15,
+          "spd": 22,
+          "height": 1.6,
+          "model": "Ghost",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "frost_breath"
+            ],
+            [
+              14,
+              "cyclone"
+            ],
+            [
+              22,
+              "moon_hoot"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.1,
+          "abilities": [
+            "frostbite",
+            "keen_eye"
+          ],
+          "tint": "#7ad0ff",
+          "tintGlow": "#e0faff",
+          "lore": "Frost blooms wherever it lingers, even in high summer."
+        },
+        {
+          "id": "glacewraith",
+          "name": "Glacewraith",
+          "element": "wind",
+          "hp": 85,
+          "atk": 25,
+          "def": 17,
+          "spd": 25,
+          "height": 2,
+          "model": "Ghost",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "moon_hoot"
+            ],
+            [
+              14,
+              "cyclone"
+            ],
+            [
+              28,
+              "gust_dive"
+            ]
+          ],
+          "rarity": "exotic",
+          "catchRate": 0.06,
+          "abilities": [
+            "frostbite",
+            "focus"
+          ],
+          "tint": "#4ab8f0",
+          "tintGlow": "#eafcff",
+          "lore": "Its passing breath turns waterfalls into silent staircases of ice."
+        },
+        {
+          "id": "hoarwraith",
+          "name": "Hoarwraith",
+          "element": "wind",
+          "hp": 100,
+          "atk": 28,
+          "def": 20,
+          "spd": 28,
+          "height": 2.5,
+          "model": "Ghost",
+          "learnset": [
+            [
+              1,
+              "gale_cut"
+            ],
+            [
+              1,
+              "gust_dive"
+            ],
+            [
+              14,
+              "cyclone"
+            ],
+            [
+              34,
+              "aether_gale"
+            ],
+            [
+              40,
+              "frost_breath"
+            ]
+          ],
+          "rarity": "exotic",
+          "catchRate": 0.04,
+          "abilities": [
+            "frostbite",
+            "intimidate"
+          ],
+          "tint": "#2a98e0",
+          "tintGlow": "#ffffff",
+          "lore": "The oldest winters still remember its name, even when no one else does."
+        }
+      ]
+    },
+    {
+      "id": "glowcap",
+      "branch": null,
+      "stages": [
+        "glowcap",
+        "glowshroom",
+        "duskcap",
+        "umbrashroom",
+        "umbracap"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "glowshroom",
+          "name": "Glowshroom",
+          "element": "void",
+          "hp": 70,
+          "atk": 16,
+          "def": 16,
+          "spd": 14,
+          "height": 1.2,
+          "model": "Mushnub",
+          "learnset": [
+            [
+              1,
+              "shadow_claw"
+            ],
+            [
+              1,
+              "bloom"
+            ],
+            [
+              12,
+              "sleep_spore"
+            ],
+            [
+              16,
+              "hypno_glow"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.13,
+          "abilities": [
+            "sleep_spores",
+            "umbra"
+          ],
+          "tint": "#5a3aef",
+          "lore": "Pulses brighter the moment it senses something about to go wrong."
+        },
+        {
+          "id": "duskcap",
+          "name": "Duskcap",
+          "element": "void",
+          "hp": 81,
+          "atk": 18,
+          "def": 19,
+          "spd": 16,
+          "height": 1.5,
+          "model": "Mushnub",
+          "learnset": [
+            [
+              1,
+              "shadow_claw"
+            ],
+            [
+              1,
+              "hypno_glow"
+            ],
+            [
+              14,
+              "bloom"
+            ],
+            [
+              22,
+              "toxic_mist"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.09,
+          "abilities": [
+            "sleep_spores",
+            "umbra"
+          ],
+          "tint": "#4a2ad8",
+          "tintGlow": "#b89aff",
+          "lore": "Opens its cap only after sundown, and the whole marsh goes quiet to listen."
+        },
+        {
+          "id": "umbrashroom",
+          "name": "Umbrashroom",
+          "element": "void",
+          "hp": 94,
+          "atk": 21,
+          "def": 22,
+          "spd": 18,
+          "height": 1.9,
+          "model": "Mushnub",
+          "learnset": [
+            [
+              1,
+              "shadow_claw"
+            ],
+            [
+              1,
+              "toxic_mist"
+            ],
+            [
+              14,
+              "bloom"
+            ],
+            [
+              28,
+              "umbral_wave"
+            ]
+          ],
+          "rarity": "exotic",
+          "catchRate": 0.05,
+          "abilities": [
+            "umbra",
+            "regenerator"
+          ],
+          "rideable": true,
+          "tint": "#3a1fb0",
+          "tintGlow": "#c8aeff",
+          "lore": "Every spore it releases carries a tiny piece of the dark it grew up in."
+        },
+        {
+          "id": "umbracap",
+          "name": "Umbracap",
+          "element": "void",
+          "hp": 109,
+          "atk": 24,
+          "def": 26,
+          "spd": 20,
+          "height": 2.4,
+          "model": "Mushnub",
+          "learnset": [
+            [
+              1,
+              "shadow_claw"
+            ],
+            [
+              1,
+              "umbral_wave"
+            ],
+            [
+              14,
+              "bloom"
+            ],
+            [
+              34,
+              "venom_fang"
+            ],
+            [
+              40,
+              "warden_edge"
+            ]
+          ],
+          "rarity": "exotic",
+          "catchRate": 0.03,
+          "abilities": [
+            "umbra",
+            "guardian_aura"
+          ],
+          "rideable": true,
+          "tint": "#2a1590",
+          "tintGlow": "#e0d0ff",
+          "lore": "The whole marsh dims a little when it finally exhales."
+        }
+      ]
+    },
+    {
+      "id": "emberjaw",
+      "branch": null,
+      "stages": [
+        "emberjaw",
+        "cinderjaw",
+        "scorchjaw",
+        "scorchmane",
+        "pyromane"
+      ],
+      "existingCount": 1,
+      "newForms": [
+        {
+          "id": "cinderjaw",
+          "name": "Cinderjaw",
+          "element": "fire",
+          "hp": 76,
+          "atk": 21,
+          "def": 17,
+          "spd": 15,
+          "height": 1.8,
+          "model": "Monkroose",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "cinder_claw"
+            ],
+            [
+              13,
+              "flare_burst"
+            ],
+            [
+              17,
+              "flame_wheel"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.23,
+          "abilities": [
+            "flame_body",
+            "rage"
+          ],
+          "tint": "#7a2f20",
+          "lore": "Juggles live coals now, and has only dropped one. Once."
+        },
+        {
+          "id": "scorchjaw",
+          "name": "Scorchjaw",
+          "element": "fire",
+          "hp": 87,
+          "atk": 24,
+          "def": 20,
+          "spd": 17,
+          "height": 2.2,
+          "model": "Monkroose",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "flame_wheel"
+            ],
+            [
+              13,
+              "flare_burst"
+            ],
+            [
+              22,
+              "kindle"
+            ]
+          ],
+          "rarity": "rare",
+          "catchRate": 0.16,
+          "abilities": [
+            "flame_body",
+            "rage"
+          ],
+          "tint": "#6a2618",
+          "tintGlow": "#ff7a2a",
+          "lore": "Its knuckle-drags leave scorch marks that take a season to fade."
+        },
+        {
+          "id": "scorchmane",
+          "name": "Scorchmane",
+          "element": "fire",
+          "hp": 98,
+          "atk": 27,
+          "def": 23,
+          "spd": 19,
+          "height": 2.6,
+          "model": "Monkroose",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "kindle"
+            ],
+            [
+              13,
+              "flare_burst"
+            ],
+            [
+              28,
+              "cinder_claw"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.09,
+          "abilities": [
+            "flame_body",
+            "intimidate"
+          ],
+          "rideable": true,
+          "tint": "#551d10",
+          "tintGlow": "#ff8a3a",
+          "lore": "Grew a mane of living flame that never singes a single hair on the rest of it."
+        },
+        {
+          "id": "pyromane",
+          "name": "Pyromane",
+          "element": "fire",
+          "hp": 110,
+          "atk": 30,
+          "def": 26,
+          "spd": 22,
+          "height": 3.1,
+          "model": "Monkroose",
+          "learnset": [
+            [
+              1,
+              "ember_bite"
+            ],
+            [
+              1,
+              "cinder_claw"
+            ],
+            [
+              13,
+              "flare_burst"
+            ],
+            [
+              34,
+              "meteor_fang"
+            ],
+            [
+              40,
+              "lantern_flare"
+            ]
+          ],
+          "rarity": "epic",
+          "catchRate": 0.05,
+          "abilities": [
+            "rage",
+            "breaker"
+          ],
+          "rideable": true,
+          "tint": "#401508",
+          "tintGlow": "#ffa54a",
+          "lore": "When it beats its chest, the whole ridge lights up like dawn."
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "magmaglub",
+      "name": "Magmaglub",
+      "line": "magmaglub",
+      "stage": 1,
+      "element": "fire",
+      "prompt": "A small round lava-toad blob, glossy magma-orange skin with a molten crimson glow along its seams, stubby limbs, wide amber eyes, faint heat shimmer rippling off its back."
+    },
+    {
+      "id": "magmawallow",
+      "name": "Magmawallow",
+      "line": "magmaglub",
+      "stage": 2,
+      "element": "fire",
+      "prompt": "A slightly larger, lumpier lava blob-toad, deep ember-red hide with dark cooling-rock patches starting to crust over its back, the same amber eyes now flanked by tiny heat-cracks that pulse like embers."
+    },
+    {
+      "id": "magmordant",
+      "name": "Magmordant",
+      "line": "magmaglub",
+      "stage": 3,
+      "element": "fire",
+      "prompt": "A leaner, more upright molten toad-beast standing on stronger hind legs, its hide a dark red-black crust webbed with glowing orange fissures, a ridge of hardened magma spikes running down its spine, amber eyes narrowed and fierce."
+    },
+    {
+      "id": "magmarauger",
+      "name": "Magmarauger",
+      "line": "magmaglub",
+      "stage": 4,
+      "element": "fire",
+      "prompt": "A hulking bipedal lava beast with broad shoulders and clawed forelimbs, obsidian-black hide cracked all over with bright molten seams, a mane of hardened magma spikes down its neck and back, glowing orange eyes."
+    },
+    {
+      "id": "magmalossus",
+      "name": "Magmalossus",
+      "line": "magmaglub",
+      "stage": 5,
+      "element": "fire",
+      "prompt": "A towering, colossal lava titan, its cooled-obsidian hide fissured everywhere with brilliant molten-gold cracks that pulse like a heartbeat, massive spiked magma ridges crowning its back and shoulders like a crown, huge glowing amber eyes, radiating heat haze — the final, mountain-sized form of the line."
+    },
+    {
+      "id": "sunbee",
+      "name": "Sunbee",
+      "line": "sunbee",
+      "stage": 1,
+      "element": "fire",
+      "prompt": "A small armored bee with a sun-gold carapace fading to deep amber at the wingtips, warm honey-coloured eyes, faint heat-shimmer trailing off its wings."
+    },
+    {
+      "id": "sunstinger",
+      "name": "Sunstinger",
+      "line": "sunbee",
+      "stage": 2,
+      "element": "fire",
+      "prompt": "A slightly larger armored bee, its carapace now a richer burnt-orange with a glowing ember-red stinger tip, wings edged in gold, the same warm amber eyes."
+    },
+    {
+      "id": "sunhornet",
+      "name": "Sunhornet",
+      "line": "sunbee",
+      "stage": 3,
+      "element": "fire",
+      "prompt": "A leaner hornet-shaped Mystic with a burnished copper-orange exoskeleton, twin translucent wings streaked with gold veins, a longer glowing stinger, and sharp amber eyes."
+    },
+    {
+      "id": "solarwing",
+      "name": "Solarwing",
+      "line": "sunbee",
+      "stage": 4,
+      "element": "fire",
+      "prompt": "A striking sun-hornet with wide gilded wings that catch light like stained glass, deep vermilion-and-gold banded carapace, a crown of small spines behind its head, glowing amber eyes."
+    },
+    {
+      "id": "solarion",
+      "name": "Solarion",
+      "line": "sunbee",
+      "stage": 5,
+      "element": "fire",
+      "prompt": "A radiant, regal hornet-queen wreathed in shimmering golden light, wings like fanned sun-rays edged in molten copper, an ornate crest of glowing spines crowning its head, huge warm amber eyes — the final, sovereign form of the line."
+    },
+    {
+      "id": "dustwhirl",
+      "name": "Dustwhirl",
+      "line": "dustwhirl",
+      "stage": 1,
+      "element": "wind",
+      "prompt": "A small spinning column of sand given a face, tawny dust-tan body swirling like a mini tornado, two bright eyes peeking from the vortex, loose grit trailing off its edges."
+    },
+    {
+      "id": "dustdevil",
+      "name": "Dustdevil",
+      "line": "dustwhirl",
+      "stage": 2,
+      "element": "wind",
+      "prompt": "A slightly taller sand-vortex creature, its swirling body a deeper bronze-tan with faint spiraling wind-lines, small stony fragments orbiting near its base, sharp curious eyes."
+    },
+    {
+      "id": "duneswirl",
+      "name": "Duneswirl",
+      "line": "dustwhirl",
+      "stage": 3,
+      "element": "wind",
+      "prompt": "A broader, more defined dust-vortex with a rippling ochre-brown funnel body, small dune-ridge patterns etched into its swirling form, orbiting pebbles and dried thorns caught in its spin, keen amber eyes."
+    },
+    {
+      "id": "sandcyclone",
+      "name": "Sandcyclone",
+      "line": "dustwhirl",
+      "stage": 4,
+      "element": "wind",
+      "prompt": "A towering sandstorm funnel with a rich burnt-umber body streaked with golden dust-lines, jagged rock shards and sun-bleached bones caught spinning around its base, a faint golden glow pulsing at its core, piercing eyes."
+    },
+    {
+      "id": "simoom",
+      "name": "Simoom",
+      "line": "dustwhirl",
+      "stage": 5,
+      "element": "wind",
+      "prompt": "A massive, roaring sandstorm titan whose funnel-body is a deep burnt-copper haze crackling with bright golden dust-energy at its core, ancient wind-carved rock spires embedded and orbiting within its swirl, huge glowing amber eyes at its heart — the final, horizon-swallowing form of the line."
+    },
+    {
+      "id": "frostwisp",
+      "name": "Frostwisp",
+      "line": "frostwisp",
+      "stage": 1,
+      "element": "wind",
+      "prompt": "A small pale-cyan lantern-flame ghost, its wispy body flickering like frozen mist, faint icy glow at its core, two soft glowing eyes."
+    },
+    {
+      "id": "frostwill",
+      "name": "Frostwill",
+      "line": "frostwisp",
+      "stage": 2,
+      "element": "wind",
+      "prompt": "A slightly larger ice-blue wisp, its flickering form now trailing thin curls of frost-mist, small icicle shards drifting around it, glowing pale eyes."
+    },
+    {
+      "id": "rimewisp",
+      "name": "Rimewisp",
+      "line": "frostwisp",
+      "stage": 3,
+      "element": "wind",
+      "prompt": "A brighter, more defined frost-spirit with a swirling icy-blue body rimmed in delicate frost patterns, tiny suspended snowflakes orbiting it, luminous eyes glowing through the chill."
+    },
+    {
+      "id": "glacewraith",
+      "name": "Glacewraith",
+      "line": "frostwisp",
+      "stage": 4,
+      "element": "wind",
+      "prompt": "A tall, elegant ice-wraith with a flowing glacial-blue body like living frozen smoke, jagged translucent ice shards forming a crown and trailing cloak, bright glowing eyes cutting through a faint white mist."
+    },
+    {
+      "id": "hoarwraith",
+      "name": "Hoarwraith",
+      "line": "frostwisp",
+      "stage": 5,
+      "element": "wind",
+      "prompt": "A majestic, ancient ice-wraith, its towering form a deep glacial-blue haze crowned with great translucent icicle spires like a frozen halo, a brilliant white glow radiating from its core through curling frost-mist, piercing luminous eyes — the final, winter-sovereign form of the line."
+    },
+    {
+      "id": "glowcap",
+      "name": "Glowcap",
+      "line": "glowcap",
+      "stage": 1,
+      "element": "void",
+      "prompt": "A small violet mushroom creature with a glowing indigo cap dotted with faint luminous spots, stubby limbs, warm round eyes peeking from beneath the cap’s rim, soft purple bioluminescence."
+    },
+    {
+      "id": "glowshroom",
+      "name": "Glowshroom",
+      "line": "glowcap",
+      "stage": 2,
+      "element": "void",
+      "prompt": "A slightly taller violet mushroom, its glowing cap now larger with brighter luminous spots trailing faint spore-motes, deeper indigo stem, the same warm round eyes."
+    },
+    {
+      "id": "duskcap",
+      "name": "Duskcap",
+      "line": "glowcap",
+      "stage": 3,
+      "element": "void",
+      "prompt": "A broader mushroom Mystic with a rich violet-black cap rimmed in glowing purple gills, faint wisps of shadow curling from its edges, luminous spore-dust drifting around it, calm glowing eyes."
+    },
+    {
+      "id": "umbrashroom",
+      "name": "Umbrashroom",
+      "line": "glowcap",
+      "stage": 4,
+      "element": "void",
+      "prompt": "A large, imposing mushroom titan with a deep indigo-black cap edged in brilliant violet glow, shadowy tendrils of spore-mist trailing from its gills, small luminous mushrooms sprouting along its stem, glowing eyes watching from the gloom."
+    },
+    {
+      "id": "umbracap",
+      "name": "Umbracap",
+      "line": "glowcap",
+      "stage": 5,
+      "element": "void",
+      "prompt": "A towering, regal fungal sovereign whose vast cap glows with a pale violet-white bioluminescent crown of gills, deep indigo-black stem wreathed in drifting shadow-spores and luminous motes, huge calm glowing eyes — the final, marsh-ruling form of the line, ornate and majestic rather than sinister."
+    },
+    {
+      "id": "emberjaw",
+      "name": "Emberjaw",
+      "line": "emberjaw",
+      "stage": 1,
+      "element": "fire",
+      "prompt": "A stocky fire-toned ape-beast with dark rust-brown fur, glowing orange embers smoldering along its knuckles and jaw, a short mane starting to flicker with flame, warm amber eyes."
+    },
+    {
+      "id": "cinderjaw",
+      "name": "Cinderjaw",
+      "line": "emberjaw",
+      "stage": 2,
+      "element": "fire",
+      "prompt": "A slightly bulkier fire-ape with deeper red-brown fur, small licks of flame now trailing from its forearms and jaw, a thicker smoldering mane at its neck, fierce amber eyes."
+    },
+    {
+      "id": "scorchjaw",
+      "name": "Scorchjaw",
+      "line": "emberjaw",
+      "stage": 3,
+      "element": "fire",
+      "prompt": "A broader, more muscular fire-ape with charred umber fur streaked in glowing cinder-lines, a fuller mane of low flame around its neck and shoulders, its jaw wreathed in a faint ember-glow, intense amber eyes."
+    },
+    {
+      "id": "scorchmane",
+      "name": "Scorchmane",
+      "line": "emberjaw",
+      "stage": 4,
+      "element": "fire",
+      "prompt": "A powerful, towering fire-ape with near-black charred fur, a blazing orange mane of true fire cascading down its neck and back, glowing fissures across its knuckles and chest, piercing amber eyes."
+    },
+    {
+      "id": "pyromane",
+      "name": "Pyromane",
+      "line": "emberjaw",
+      "stage": 5,
+      "element": "fire",
+      "prompt": "A colossal, magnificent fire-ape titan, its charcoal-black fur wreathed in a brilliant blazing gold-orange mane that flows like living fire down its back and shoulders, glowing ember-cracks across its powerful frame, huge fierce amber eyes — the final, ridge-lighting form of the line."
+    }
+  ]
+}
