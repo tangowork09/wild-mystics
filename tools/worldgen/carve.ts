@@ -61,6 +61,9 @@ export function enforceWalls(h: Grid, spur: LineField, lowland: Grid) {
       const x = h.xOf(i), k = j * n + i;
       const low = lowland.sample(x, z);
       if (low < SEA - 0.5) continue; // sea: arms stand as sea cliffs already
+      const base = Math.max(low, SEA);
+      // arm band / foot
+      let armRaise = -1e9, armCap = 1e9, armCore = false;
       const L = sampleLine(spur, x, z);
       if (L.id >= 0) {
         const Ls = SPUR_LINES[L.id];
@@ -69,37 +72,36 @@ export function enforceWalls(h: Grid, spur: LineField, lowland: Grid) {
           const q = armLateral(L.lat, x, z);
           const T = P.F + P.B;
           const cliffEnd = P.Wtop + P.B / P.k;
-          const base = Math.max(low, SEA);
-          if (q < cliffEnd && q > P.Wtop - 6) {
-            const want = base + Math.min(T, T - (q - P.Wtop) * P.k);
-            if (h.data[k] < want) h.data[k] = want;
-          } else if (q >= cliffEnd && q < cliffEnd + P.Wf + 4) {
-            // the foothill may never rise above its designed ramp (keeps the full B-high step)
+          armCore = q < cliffEnd + 2;
+          if (q < cliffEnd && q > P.Wtop - 6) armRaise = base + Math.min(T, T - (q - P.Wtop) * P.k);
+          else if (q >= cliffEnd && q < cliffEnd + P.Wf + 4) {
             const t = clamp((q - cliffEnd) / P.Wf, 0, 1);
-            const cap = base + P.F * (1 - t * t * (3 - 2 * t)) + 0.6;
-            if (h.data[k] > cap) h.data[k] = cap;
+            armCap = base + P.F * (1 - t * t * (3 - 2 * t)) + 0.6;
           }
         }
       }
-      // rampart
+      // rampart band / apron (not inside the Crown valley)
+      let rampRaise = -1e9, rampCap = 1e9, rampCore = false;
       const dx = x - MC[0], dz = z - MC[1];
       const d = Math.hypot(dx, dz);
-      if (d > 200 && d < 420) {
-        if (Math.abs(x) < 70 && z > 100) continue; // Crown valley
+      if (d > 200 && d < 440 && !(Math.abs(x) < 70 && z > 100)) {
         const dFoot = skirtRadius(bearingOf(dx, dz));
         const aprTop = dFoot - 42; // APRON_W
         const S = 10 + 22; // APRON_F + min rampart height
         const inner = aprTop - (S - 10) / 2.4;
-        const base = Math.max(low, SEA);
-        if (d < aprTop && d > inner - 6) {
-          const want = base + Math.min(S, S - (d - inner) * 2.4);
-          if (h.data[k] < want) h.data[k] = want;
-        } else if (d >= aprTop && d < aprTop + 46) {
+        rampCore = d < aprTop + 2;
+        if (d < aprTop && d > inner - 6) rampRaise = base + Math.min(S, S - (d - inner) * 2.4);
+        else if (d >= aprTop && d < aprTop + 46) {
           const t = clamp((d - aprTop) / 42, 0, 1);
-          const cap = base + 10 * (1 - t * t * (3 - 2 * t)) + 0.6;
-          if (h.data[k] > cap) h.data[k] = cap;
+          rampCap = base + 10 * (1 - t * t * (3 - 2 * t)) + 0.6;
         }
       }
+      // caps first (each skipped where the other structure owns the cell), then raises
+      let v = h.data[k];
+      if (!rampCore && armCap < v) v = armCap;
+      if (!armCore && rampCap < v) v = rampCap;
+      v = Math.max(v, armRaise, rampRaise);
+      h.data[k] = v;
     }
   }
 }

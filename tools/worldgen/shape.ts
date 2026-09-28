@@ -235,8 +235,9 @@ export function armParams(i: number, s: number): ArmP {
   const mid = Math.exp(-(((s - L.sCoast * (0.45 + 0.06 * (i % 3))) / (L.sCoast * 0.28)) ** 2));
   const Wtop = Math.max(7, 12 + 14 * mid + 7 * nA(120, 3) + 8 * smooth(L.sCoast - 80, L.sCoast, s));
   const F = 5 + 8 * (nA(80, 5) * 0.5 + 0.5);
-  const B = 14 + 8 * (nA(60, 8) * 0.5 + 0.5);
-  const k = 2.5 + 0.6 * (nA(50, 11) * 0.5 + 0.5);
+  const B = 18 + 8 * (nA(60, 8) * 0.5 + 0.5);
+  // ~2:1 over a 9–13 m wide band: reads as a cliff and measures > 1.35 on the 2 m slope grid
+  const k = 1.9 + 0.35 * (nA(50, 11) * 0.5 + 0.5);
   const Wf = lerp(14, 34, smooth(0, L.sCoast * 0.5, s)) * (0.7 + 0.6 * (nA(100, 13) * 0.5 + 0.5));
   Hc = Math.max(Hc, F + B + 10);
   return { Hc, Wtop, B, k, F, Wf };
