@@ -1,84 +1,97 @@
-// Full-screen flows: loading, sign-in, main menu, starter pick, cinematics (evolve / hatch),
-// NPC dialog, fishing minigame, daily login and the field guide.
+// Full-screen flows: loading, sign-in, title, starter choice, dialog, cinematics (evolve / hatch),
+// fishing, daily capsules, field guide, pause, rewards and level-up. All fit every target size.
 import { portrait } from '../assets/manifest';
 import { sfx } from '../core/audio';
 import { haptic } from '../core/haptics';
 import { settings } from '../core/settings';
 import { isTouch } from '../core/device';
 import { ELEMENTS } from '../data/elements';
-import { LOGIN_REWARDS } from '../data/progression';
+import { LOGIN_REWARDS, type Reward } from '../data/progression';
 import { SPECIES, STARTERS } from '../data/species';
 import { ABILITIES } from '../data/traits';
 import { displayName, geneGrade, statsOf, type Creature } from '../game/creature';
+import type { DialogSpec } from '../game/contracts';
 import { state } from '../game/state';
 import { claimLogin, pendingLogin } from '../game/progress';
 import { AuthError, login, playAsGuest, signup, type Account } from '../net/auth';
-import { el, modal, uiRoot } from './dom';
+import { el, modal, uiRoot, reducedMotion } from './dom';
 import { elementBadge, esc, mysticFace, rarityTag } from './kit';
-import { icon } from './icons';
+import { icon, glyph } from './icons';
+import { faceHTML } from './portraits';
+import { dailyCapsules } from './tabs/profile';
+import { rewardChips } from './tabs/quests';
 
 const TIPS = [
-  'Strike a wild Mystic first (F) and the battle starts with it staggered.',
+  'Strike a wild Mystic first and the battle starts with it staggered.',
   'Parry every hit of an attack to trigger a counter.',
   'Gold strikes must be jumped. Red strikes can only be dodged.',
   'Some Mystics only appear at night. Rest at an inn to pass the time.',
-  'Shiny Mystics sparkle in the wild — about 1 in 300.',
-  'Waystones let you fast travel once attuned. Look for glowing obelisks.',
+  'Shiny Mystics sparkle in the wild: about 1 in 300.',
+  'Attune Waystones to fast travel from the map.',
   'Tall grass hides Mystics you will never see roaming.',
-  'Your Homestead produces materials while you explore.',
+  'Follow the magenta diamond: it always points at your tracked quest.',
   'Awaken duplicates with Mystic Essence for extra stars.',
-  'Double jump by pressing Space again in mid-air.',
+  'Double jump by jumping again in mid-air.',
 ];
 
+export const logoHTML = (cls = '') => `<div class="logo ${cls}" role="img" aria-label="Wild Mystics"><span class="lg-wild">Wild</span><span class="lg-mystics">Mystics</span></div>`;
+
+// ── Loading ─────────────────────────────────────────────────────────────────
 export function loading(msg: string, frac?: number) {
   let l = document.getElementById('loading');
   if (!l) {
-    l = el('div', '', `<div class="ld-sky"></div><div class="ld-mark"><div class="ld-kicker">A creature-collecting expedition</div><div class="ld-title">Wild <em>Mystics</em></div></div>
-      <div class="ld-foot"><div class="ld-bar"><i></i></div><div class="ld-msg"></div><div class="ld-tip"></div></div>`);
+    l = el('div', 'screen loading-screen', `<div class="ls-bg"></div>
+      <div class="ls-mark">${logoHTML('big')}<p class="ls-tag">A creature-collecting expedition</p></div>
+      <div class="ls-foot"><div class="ls-bar" role="progressbar" aria-label="Loading"><i></i><span class="ls-pct tnum">0%</span></div><div class="ls-msg"></div><div class="ls-tip"></div></div>`);
     l.id = 'loading';
     document.body.appendChild(l);
-    const tip = l.querySelector('.ld-tip') as HTMLElement;
+    const tip = l.querySelector('.ls-tip') as HTMLElement;
     let i = Math.floor(Math.random() * TIPS.length);
-    const next = () => { tip.innerHTML = `${icon('compass')} ${TIPS[i++ % TIPS.length]}`; };
+    const next = () => { tip.innerHTML = `<span class="ls-tip-ic">${icon('compass')}</span><span>${TIPS[i++ % TIPS.length]}</span>`; tip.classList.remove('in'); void tip.offsetWidth; tip.classList.add('in'); };
     next();
     const t = setInterval(() => { if (!document.getElementById('loading')) clearInterval(t); else next(); }, 4200);
   }
-  (l.querySelector('.ld-msg') as HTMLElement).textContent = msg;
-  if (frac !== undefined) (l.querySelector('.ld-bar i') as HTMLElement).style.setProperty('--p', String(Math.max(0, Math.min(1, frac))));
+  (l.querySelector('.ls-msg') as HTMLElement).textContent = msg;
+  if (frac !== undefined) {
+    const f = Math.max(0, Math.min(1, frac));
+    (l.querySelector('.ls-bar i') as HTMLElement).style.setProperty('--p', String(f));
+    (l.querySelector('.ls-pct') as HTMLElement).textContent = `${Math.round(f * 100)}%`;
+    l.querySelector('.ls-bar')!.setAttribute('aria-valuenow', String(Math.round(f * 100)));
+  }
 }
 export function hideLoading() {
   const l = document.getElementById('loading');
   if (!l) return;
   l.classList.add('out');
-  setTimeout(() => l.remove(), 900);
+  setTimeout(() => l.remove(), 700);
 }
 
 // ── Sign in / sign up / guest ───────────────────────────────────────────────
 export function authScreen(opts: { cloud: boolean; profiles: Account[]; mode?: 'signin' | 'signup'; cancellable?: boolean }): Promise<Account | null> {
   return new Promise((resolve) => {
     let mode: 'signin' | 'signup' = opts.mode ?? (opts.profiles.some((p) => p.mode !== 'guest') ? 'signin' : 'signup');
-    const s = el('div', 'auth-screen');
+    const s = el('div', 'screen auth-screen');
     document.body.appendChild(s); // above #loading (the #ui layer sits below it)
     const draw = (prefill: { login?: string } = {}) => {
       const locals = opts.profiles.filter((p) => p.mode !== 'guest');
-      s.innerHTML = `<div class="auth-sky"></div>
-        <div class="auth-mark"><div class="ld-kicker">A creature-collecting expedition</div><h1>Wild <em>Mystics</em></h1></div>
+      s.innerHTML = `<div class="ls-bg"></div>
+        <div class="auth-side">${logoHTML('big')}<p class="ls-tag">A creature-collecting expedition</p>
+          <div class="auth-trio">${STARTERS.map((id) => mysticFace(id, false, 76)).join('')}</div></div>
         <form class="auth-card" novalidate>
-          <div class="auth-tabs" role="tablist"><button type="button" class="${mode === 'signin' ? 'on' : ''}" data-mode="signin">Sign in</button><button type="button" class="${mode === 'signup' ? 'on' : ''}" data-mode="signup">Create account</button></div>
-          <p class="auth-status ${opts.cloud ? 'online' : 'offline'}">${icon(opts.cloud ? 'cloud' : 'lock')} ${opts.cloud ? 'Cloud saves online — play on any device.' : 'Offline mode — accounts are kept on this device.'}</p>
-          ${mode === 'signin' ? `
+          <div class="seg auth-tabs" role="tablist"><button type="button" role="tab" class="${mode === 'signin' ? 'on' : ''}" data-mode="signin">Sign in</button><button type="button" role="tab" class="${mode === 'signup' ? 'on' : ''}" data-mode="signup">Create account</button></div>
+          <p class="auth-status ${opts.cloud ? 'online' : 'offline'}">${icon(opts.cloud ? 'cloud' : 'lock')}<span>${opts.cloud ? 'Cloud saves are online: play on any device.' : 'Offline: accounts are kept on this device.'}</span></p>
+          <div class="auth-fields ${mode}">${mode === 'signin' ? `
             <label class="fld"><span>Username or email</span><input name="login" autocomplete="username" required value="${esc(prefill.login ?? '')}"><em data-err="login"></em></label>
-            <label class="fld"><span>Password</span><div class="pw"><input name="password" type="password" autocomplete="current-password" required><button type="button" class="pw-eye" aria-label="Show password">${icon('eye')}</button></div><em data-err="password"></em></label>`
-          : `
+            <label class="fld"><span>Password</span><span class="pw"><input name="password" type="password" autocomplete="current-password" required><button type="button" class="pw-eye" aria-label="Show password">${icon('eye')}</button></span><em data-err="password"></em></label>`
+            : `
             <label class="fld"><span>Wayfarer name</span><input name="username" autocomplete="username" maxlength="20" required placeholder="3–20 letters, numbers or _"><em data-err="username"></em></label>
-            <label class="fld"><span>Email <small>(optional, for recovery)</small></span><input name="email" type="email" autocomplete="email"><em data-err="email"></em></label>
-            <label class="fld"><span>Password</span><div class="pw"><input name="password" type="password" autocomplete="new-password" required placeholder="At least 8 characters"><button type="button" class="pw-eye" aria-label="Show password">${icon('eye')}</button></div><em data-err="password"></em></label>`}
+            <label class="fld"><span>Email <small>(optional)</small></span><input name="email" type="email" autocomplete="email" placeholder="For account recovery"><em data-err="email"></em></label>
+            <label class="fld wide"><span>Password</span><span class="pw"><input name="password" type="password" autocomplete="new-password" required placeholder="At least 8 characters"><button type="button" class="pw-eye" aria-label="Show password">${icon('eye')}</button></span><em data-err="password"></em></label>`}</div>
           <p class="auth-err" role="alert"></p>
-          <button class="btn primary big wide" type="submit">${mode === 'signin' ? 'Sign in' : 'Create account'}</button>
-          <div class="auth-or"><span>or</span></div>
-          ${opts.cancellable ? '<button type="button" class="btn ghost wide" data-cancel>Not now</button>' : `<button type="button" class="btn ghost wide" data-guest>${icon('user_profile')} Play as guest</button>`}
-          ${locals.length ? `<div class="auth-profiles"><small>On this device</small>${locals.map((p) => `<button type="button" class="chip" data-prof="${esc(p.username)}">${icon(p.mode === 'cloud' ? 'cloud' : 'lock')} ${esc(p.username)}</button>`).join('')}</div>` : ''}
-          <p class="auth-fine">Guests can create an account later from Profile. Passwords are hashed and never stored in plain text.</p>
+          <div class="auth-go"><button class="btn primary big" type="submit">${mode === 'signin' ? 'Sign in' : 'Create account'}</button>
+            ${opts.cancellable ? '<button type="button" class="btn ghost" data-cancel>Not now</button>' : `<button type="button" class="btn ghost" data-guest>${icon('user_profile')} Play as guest</button>`}</div>
+          ${locals.length ? `<div class="auth-profiles"><small>On this device</small>${locals.slice(0, 4).map((p) => `<button type="button" class="chip" data-prof="${esc(p.username)}">${icon(p.mode === 'cloud' ? 'cloud' : 'lock')} ${esc(p.username)}</button>`).join('')}</div>` : ''}
+          <p class="auth-fine">Guests can create an account later from Profile. Passwords are hashed, never stored in plain text.</p>
         </form>`;
       const form = s.querySelector('form') as HTMLFormElement;
       const errBox = s.querySelector('.auth-err') as HTMLElement;
@@ -88,6 +101,7 @@ export function authScreen(opts: { cloud: boolean; profiles: Account[]; mode?: '
         const inp = b.previousElementSibling as HTMLInputElement;
         inp.type = inp.type === 'password' ? 'text' : 'password';
         b.classList.toggle('on', inp.type === 'text');
+        b.setAttribute('aria-label', inp.type === 'text' ? 'Hide password' : 'Show password');
       }));
       s.querySelectorAll<HTMLElement>('[data-prof]').forEach((b) => b.addEventListener('click', () => { mode = 'signin'; draw({ login: b.dataset.prof }); (s.querySelector('[name=password]') as HTMLInputElement)?.focus(); }));
       const busy = (on: boolean) => { submit.disabled = on; submit.classList.toggle('loading', on); s.querySelectorAll<HTMLButtonElement>('button').forEach((b) => { if (b !== submit) b.disabled = on; }); };
@@ -103,7 +117,7 @@ export function authScreen(opts: { cloud: boolean; profiles: Account[]; mode?: '
       const done = (a: Account): void => {
         sfx('captured');
         s.classList.add('out');
-        setTimeout(() => s.remove(), 600);
+        setTimeout(() => s.remove(), 500);
         resolve(a);
       };
       form.addEventListener('submit', async (e) => {
@@ -124,7 +138,7 @@ export function authScreen(opts: { cloud: boolean; profiles: Account[]; mode?: '
       s.querySelector('[data-cancel]')?.addEventListener('click', () => {
         sfx('back');
         s.classList.add('out');
-        setTimeout(() => s.remove(), 600);
+        setTimeout(() => s.remove(), 500);
         resolve(null);
       });
       // desktop only: on phones an autofocus pops the soft keyboard over the whole screen
@@ -135,20 +149,23 @@ export function authScreen(opts: { cloud: boolean; profiles: Account[]; mode?: '
   });
 }
 
-// ── Main menu (over the live world) ─────────────────────────────────────────
+// ── Title / main menu (over the live world) ─────────────────────────────────
 export type MenuChoice = 'continue' | 'new' | 'guide' | 'settings' | 'switch';
 export function mainMenu(info: { account: Account; hasSave: boolean }): Promise<MenuChoice> {
   return new Promise((resolve) => {
     const caught = Object.values(state.dex).filter((d) => d.caught > 0).length;
     const lead = state.team[0];
-    const m = el('div', 'main-menu', `
-      <div class="mm-mark"><div class="ld-kicker">A creature-collecting expedition</div><h1>Wild <em>Mystics</em></h1><div class="ts-rule"><span></span>${icon('sparkles')}<span></span></div></div>
-      <div class="mm-menu">
-        ${info.hasSave ? `<button class="mm-continue" data-a="continue">${lead ? mysticFace(lead.species, lead.shiny, 58) : ''}<span><b>Continue journey</b><small>${esc(state.profile.name)} · Rank ${state.rank.level} · ${caught} Mystics · Day ${state.day}</small></span><kbd>Enter</kbd></button>` : ''}
-        <button class="btn ${info.hasSave ? '' : 'primary'} big" data-a="new">${icon('compass')} ${info.hasSave ? 'New journey' : 'Begin your journey'}</button>
-        <div class="mm-row"><button class="btn ghost" data-a="guide">${icon('book')} Field guide</button><button class="btn ghost" data-a="settings">${icon('gear_settings')} Settings</button></div>
+    const m = el('div', 'main-menu screen', `
+      <div class="mm-scrim"></div>
+      <div class="mm-col">
+        ${logoHTML('big')}
+        <div class="mm-menu">
+          ${info.hasSave ? `<button class="mm-continue" data-a="continue">${lead ? mysticFace(lead.species, lead.shiny, 56) : ''}<span class="mm-cb"><b>Continue journey</b><small>${esc(state.profile.name)} · Rank ${state.rank.level} · ${caught} Mystics · Day ${state.day}</small></span><kbd>Enter</kbd></button>` : ''}
+          <button class="btn ${info.hasSave ? 'light' : 'primary'} big" data-a="new">${icon('compass')} ${info.hasSave ? 'New journey' : 'Begin your journey'}${info.hasSave ? '' : ' <kbd>Enter</kbd>'}</button>
+          <div class="mm-row"><button class="btn ghost" data-a="guide">${icon('book')} Field guide</button><button class="btn ghost" data-a="settings">${icon('gear_settings')} Settings</button></div>
+        </div>
       </div>
-      <div class="mm-foot"><span class="mm-acct">${icon(info.account.mode === 'cloud' ? 'cloud' : info.account.mode === 'local' ? 'lock' : 'user_profile')} ${esc(info.account.username)} <button class="linkish" data-a="switch">Switch account</button></span><span>v2 · CC0 art: Quaternius · KayKit · Kenney · Poly Haven · icons game-icons.net</span></div>`);
+      <div class="mm-foot"><span class="mm-acct">${icon(info.account.mode === 'cloud' ? 'cloud' : info.account.mode === 'local' ? 'lock' : 'user_profile')} ${esc(info.account.username)} <button class="linkish" data-a="switch">Switch account</button></span><span class="mm-credits">v3 · Art: Quaternius, KayKit, Kenney, Poly Haven · Icons: game-icons.net</span></div>`);
     uiRoot().appendChild(m);
     requestAnimationFrame(() => m.classList.add('in'));
     let closed = false;
@@ -166,82 +183,119 @@ export function mainMenu(info: { account: Account; hasSave: boolean }): Promise<
     };
     function cleanup(remove: boolean) {
       removeEventListener('keydown', key);
-      if (remove) { m.classList.remove('in'); setTimeout(() => m.remove(), 600); } else m.remove();
+      if (remove) { m.classList.remove('in'); setTimeout(() => m.remove(), 500); } else m.remove();
     }
     addEventListener('keydown', key);
     m.querySelectorAll<HTMLElement>('[data-a]').forEach((b) => b.addEventListener('click', () => go(b.dataset.a as MenuChoice)));
   });
 }
 
-// ── Starter pick (with Wayfarer name) ───────────────────────────────────────
-export function chooseStarter(): Promise<{ starter: string; name: string }> {
+// ── Starter choice: three capsules on the shelf, one pops open ──────────────
+export interface StarterOpts {
+  /** Species to offer (default: Emberling, Finnik, Sporelet). */
+  starters?: string[];
+  /** Ask for the Wayfarer's name too (default true). */
+  askName?: boolean;
+  /** Who is offering (shown in the subtitle), e.g. "Elder Maple". */
+  host?: string;
+}
+const ROLES: Record<string, [string, string]> = { emberling: ['Striker', 'Relentless attacker'], finnik: ['Support', 'Heals and shields allies'], sporelet: ['Guardian', 'Sturdy, breaks guards'] };
+
+export function chooseStarter(opts: StarterOpts = {}): Promise<{ starter: string; name: string }> {
   return new Promise((resolve) => {
-    const roles: Record<string, string> = { emberling: 'Striker · relentless attacker', finnik: 'Support · heals & shields allies', sporelet: 'Guardian · sturdy, breaks guards' };
+    const list = (opts.starters ?? STARTERS).filter((id) => SPECIES[id]);
+    const askName = opts.askName ?? true;
     const max = { hp: 80, atk: 22, def: 22, spd: 22 };
-    const s = el('div', 'starter-screen', `<div class="st-head"><div class="st-kicker">Chapter I · First Bond</div><h2>Choose your first companion</h2><p>They will walk every road beside you.</p>
-      <label class="st-name-in"><span>Your name, Wayfarer</span><input maxlength="18" value="${esc(state.profile.name && state.profile.name !== 'Wayfarer' ? state.profile.name : '')}" placeholder="Wayfarer"></label></div>
-      <div class="st-cards">${STARTERS.map((id, i) => {
+    let sel = -1;
+    const s = el('div', 'starter-screen screen', `<div class="st-bg"></div>
+      <header class="st-head"><h2 class="display">Choose your first companion</h2><p>${opts.host ? `${esc(opts.host)} sets three capsules on the table. ` : ''}Whoever you choose will walk every road beside you.</p></header>
+      <div class="st-shelf">${list.map((id, i) => {
         const sp = SPECIES[id];
         const e = ELEMENTS[sp.element];
-        return `<button class="st-card" data-id="${id}" style="--el:${e.color}">
-          <div class="st-glow"></div>${mysticFace(id, false, 150)}
-          <div class="st-tags">${elementBadge(sp.element, true)}${rarityTag(id)}</div>
-          <div class="st-name">${sp.name}</div><div class="st-role">${roles[id] ?? ''}</div>
-          <div class="st-stats">${(['hp', 'atk', 'def', 'spd'] as const).map((k) => `<div><span>${k.toUpperCase()}</span><i style="--w:${Math.min(100, (sp.base[k] / max[k]) * 100)}%"></i></div>`).join('')}</div>
-          <p class="st-ab">${icon('star')} ${sp.abilities.map((a) => ABILITIES[a].name).join(' / ')}</p>
-          <p class="st-lore">${sp.lore}</p><kbd class="st-key">${i + 1}</kbd></button>`;
-      }).join('')}</div>`);
+        const [role, blurb] = ROLES[id] ?? ['Companion', ''];
+        return `<button class="st-pod" data-i="${i}" style="--el:${e.color}" aria-label="${sp.name}, ${e.name} ${role}">
+          <span class="st-num">${i + 1}</span>
+          <span class="st-capsule"><span class="st-dome"></span><img src="${portrait(id)}" alt=""><span class="st-base"></span></span>
+          <span class="st-name display">${sp.name}</span>
+          <span class="st-tags">${elementBadge(sp.element, true)}<span class="tag">${role}</span></span>
+          <span class="st-blurb">${blurb}</span>
+          <span class="st-stats">${(['hp', 'atk', 'def', 'spd'] as const).map((k) => `<span class="st-stat"><small>${k.toUpperCase()}</small><i style="--w:${Math.min(1, sp.base[k] / max[k]).toFixed(3)}"></i></span>`).join('')}</span>
+          <span class="st-ab">${icon('star')} ${sp.abilities.map((a) => ABILITIES[a].name).join(' / ')}</span>
+        </button>`;
+      }).join('')}</div>
+      <footer class="st-foot">${askName ? `<label class="fld st-name-in"><span>Your name, Wayfarer</span><input maxlength="18" value="${esc(state.profile.name && state.profile.name !== 'Wayfarer' ? state.profile.name : '')}" placeholder="Wayfarer"></label>` : '<span></span>'}
+        <button class="btn primary big st-go" disabled>Pick a capsule</button></footer>`);
     uiRoot().appendChild(s);
     requestAnimationFrame(() => s.classList.add('in'));
-    const nameIn = s.querySelector('input') as HTMLInputElement;
-    const key = (e: KeyboardEvent) => {
-      if (document.activeElement === nameIn) { if (e.key === 'Enter') nameIn.blur(); return; }
-      const n = Number(e.key);
-      if (n >= 1 && n <= STARTERS.length) pick(STARTERS[n - 1]);
+    const nameIn = s.querySelector('.st-name-in input') as HTMLInputElement | null;
+    const goBtn = s.querySelector('.st-go') as HTMLButtonElement;
+    const pods = Array.from(s.querySelectorAll<HTMLElement>('.st-pod'));
+    const focus = (i: number) => {
+      if (i < 0 || i >= list.length) return;
+      if (i !== sel) { sfx('select'); haptic('light'); }
+      sel = i;
+      pods.forEach((p, k) => { p.classList.toggle('sel', k === i); p.setAttribute('aria-pressed', String(k === i)); });
+      s.classList.add('has-sel');
+      goBtn.disabled = false;
+      goBtn.innerHTML = `Choose ${SPECIES[list[i]].name} <kbd>Enter</kbd>`;
     };
-    addEventListener('keydown', key);
-    s.querySelectorAll<HTMLElement>('.st-card').forEach((c) => c.addEventListener('click', () => pick(c.dataset.id!)));
     let picked = false;
-    const pick = (id: string) => {
-      if (picked) return;
+    const pick = () => {
+      if (picked || sel < 0) return;
       picked = true;
-      removeEventListener('keydown', key);
+      removeEventListener('keydown', key, true);
       sfx('captured');
       haptic('success');
       s.classList.add('chosen');
-      s.querySelectorAll<HTMLElement>('.st-card').forEach((c) => c.classList.toggle('picked', c.dataset.id === id));
-      setTimeout(() => { s.classList.remove('in'); setTimeout(() => s.remove(), 600); resolve({ starter: id, name: nameIn.value.trim().slice(0, 18) || 'Wayfarer' }); }, 1000);
+      pods[sel].classList.add('open');
+      goBtn.disabled = true;
+      setTimeout(() => { s.classList.remove('in'); setTimeout(() => s.remove(), 500); resolve({ starter: list[sel], name: nameIn?.value.trim().slice(0, 18) || state.profile.name || 'Wayfarer' }); }, reducedMotion() ? 200 : 1300);
     };
+    const key = (e: KeyboardEvent) => {
+      if (nameIn && document.activeElement === nameIn) { if (e.key === 'Enter') { nameIn.blur(); if (sel >= 0) pick(); } return; }
+      const n = Number(e.key);
+      if (n >= 1 && n <= list.length) { focus(n - 1); e.preventDefault(); }
+      else if (e.key === 'ArrowRight') { focus(Math.min(list.length - 1, sel + 1)); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { focus(Math.max(0, sel < 0 ? 0 : sel - 1)); e.preventDefault(); }
+      else if (e.key === 'Enter' && sel >= 0) { pick(); e.preventDefault(); }
+    };
+    addEventListener('keydown', key, true);
+    pods.forEach((p, i) => p.addEventListener('click', () => { if (sel === i) pick(); else focus(i); }));
+    goBtn.addEventListener('click', pick);
   });
 }
 
 // ── Cinematics ──────────────────────────────────────────────────────────────
 function cinematicClose(o: HTMLElement, resolve: () => void) {
-  const key = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); close(); } };
-  const close = () => { removeEventListener('keydown', key, true); o.classList.remove('in'); setTimeout(() => o.remove(), 500); resolve(); };
+  const key = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); close(); } };
+  const close = () => { removeEventListener('keydown', key, true); o.classList.remove('in'); setTimeout(() => o.remove(), 400); resolve(); };
   addEventListener('keydown', key, true);
-  o.querySelector('.cine-go')?.addEventListener('click', close);
+  const go = o.querySelector('.cine-go') as HTMLElement | null;
+  go?.addEventListener('click', close);
+  go?.focus({ preventScroll: true });
 }
 
 export function evolution(c: Creature, fromId: string, toId: string): Promise<void> {
   return new Promise((resolve) => {
     const e = ELEMENTS[SPECIES[toId].element];
+    const src = (id: string) => portrait(id, c.shiny);
     const o = el('div', 'cine evo', `<div class="cine-rays" style="--el:${e.color}"></div>
-      <div class="cine-text">What? <b>${SPECIES[fromId].name}</b> is evolving!</div>
-      <div class="evo-stage" style="--el:${e.color}"><img class="from" src="${portrait(fromId, c.shiny)}" alt=""><img class="to" src="${portrait(toId, c.shiny)}" alt=""></div>
+      <p class="cine-text">Oh? <b>${esc(c.nickname ?? SPECIES[fromId].name)}</b> is evolving!</p>
+      <div class="cine-stage" style="--el:${e.color}"><span class="cine-cap"><span class="cc-dome"></span><img class="from" src="${src(fromId)}" alt=""><img class="to" src="${src(toId)}" alt=""><span class="cc-base"></span></span></div>
       <div class="cine-sub"></div>`);
     uiRoot().appendChild(o);
     requestAnimationFrame(() => o.classList.add('in'));
     sfx('capture');
     haptic('medium');
-    setTimeout(() => o.classList.add('morph'), 900);
+    const t = reducedMotion() ? 0.2 : 1;
+    setTimeout(() => o.classList.add('morph'), 900 * t);
     setTimeout(() => {
       o.classList.add('done');
       sfx('evolve'); haptic('success');
-      (o.querySelector('.cine-text') as HTMLElement).innerHTML = `Congratulations! ${esc(c.nickname ?? SPECIES[fromId].name)} became <b>${SPECIES[toId].name}</b>!`;
-      (o.querySelector('.cine-sub') as HTMLElement).innerHTML = `<div class="hatch-info">${elementBadge(SPECIES[toId].element, true)} ${rarityTag(toId)} · ${statsOf(c).maxHp} HP</div><button class="btn primary cine-go">Continue</button>`;
+      (o.querySelector('.cine-text') as HTMLElement).innerHTML = `<b>${esc(c.nickname ?? SPECIES[fromId].name)}</b> became <b class="hl">${SPECIES[toId].name}</b>!`;
+      (o.querySelector('.cine-sub') as HTMLElement).innerHTML = `<div class="cine-info">${elementBadge(SPECIES[toId].element, true)}${rarityTag(toId)}<span class="tag tnum">${statsOf(c).maxHp} HP</span></div><button class="btn primary big cine-go">Continue <kbd>Enter</kbd></button>`;
       cinematicClose(o, resolve);
-    }, 4200);
+    }, 4000 * t);
   });
 }
 
@@ -249,67 +303,121 @@ export function hatch(c: Creature): Promise<void> {
   return new Promise((resolve) => {
     const sp = SPECIES[c.species];
     const e = ELEMENTS[sp.element];
+    const src = portrait(c.species, c.shiny);
     const o = el('div', `cine hatch ${c.shiny ? 'shiny' : ''}`, `<div class="cine-rays" style="--el:${e.color}"></div>
-      <div class="cine-text">Oh? Your egg is hatching!</div>
-      <div class="egg-stage"><div class="egg" style="--el:${e.color}"><i></i><i></i><i></i></div><img class="born" src="${portrait(c.species, c.shiny)}" alt=""></div>
+      <p class="cine-text">Your egg is hatching!</p>
+      <div class="cine-stage" style="--el:${e.color}"><div class="egg"><i></i><i></i><i></i></div><img class="born" src="${src}" alt=""></div>
       <div class="cine-sub"></div>`);
     uiRoot().appendChild(o);
     requestAnimationFrame(() => o.classList.add('in'));
-    setTimeout(() => { o.classList.add('crack'); sfx('orb'); haptic('light'); }, 1400);
-    setTimeout(() => { sfx('orb'); haptic('light'); }, 2000);
+    const t = reducedMotion() ? 0.2 : 1;
+    setTimeout(() => { o.classList.add('crack'); sfx('orb'); haptic('light'); }, 1300 * t);
+    setTimeout(() => { sfx('orb'); haptic('light'); }, 1900 * t);
     setTimeout(() => {
       o.classList.add('done');
       sfx('captured'); haptic('success');
-      (o.querySelector('.cine-text') as HTMLElement).innerHTML = `${c.shiny ? `${icon('sparkle')} A shimmering ` : ''}<b>${esc(displayName(c))}</b> hatched!`;
-      (o.querySelector('.cine-sub') as HTMLElement).innerHTML = `<div class="hatch-info">${elementBadge(sp.element, true)} ${rarityTag(c.species)} · Genes <b>${geneGrade(c.genes)}</b> · ${statsOf(c).maxHp} HP</div><button class="btn primary cine-go">Welcome!</button>`;
+      (o.querySelector('.cine-text') as HTMLElement).innerHTML = `${c.shiny ? `<span class="holo-t">${icon('sparkles')} A shimmering</span> ` : ''}<b class="hl">${esc(displayName(c))}</b> hatched!`;
+      (o.querySelector('.cine-sub') as HTMLElement).innerHTML = `<div class="cine-info">${elementBadge(sp.element, true)}${rarityTag(c.species)}<span class="tag">Genes ${geneGrade(c.genes)}</span><span class="tag tnum">${statsOf(c).maxHp} HP</span></div><button class="btn primary big cine-go">Welcome! <kbd>Enter</kbd></button>`;
       cinematicClose(o, resolve);
-    }, 2900);
+    }, 2800 * t);
   });
 }
 
-// ── NPC dialog (tamers, townsfolk) ──────────────────────────────────────────
-export function dialog(opts: { name: string; title?: string; face?: string; lines: string[]; choices?: string[] }): Promise<number> {
+/** Reward reveal (quest turn-ins, chests): capsules pop open one by one. */
+export function rewards(opts: { title: string; sub?: string; reward: Reward }): Promise<void> {
   return new Promise((resolve) => {
-    const d = el('div', 'dialog-box', `<div class="dg-face">${opts.face && SPECIES[opts.face] ? mysticFace(opts.face, false, 84) : `<span class="dg-ic">${icon('user_profile')}</span>`}</div>
-      <div class="dg-body"><div class="dg-name"><b>${esc(opts.name)}</b>${opts.title ? `<small>${esc(opts.title)}</small>` : ''}</div><p class="dg-text"></p><div class="dg-choices"></div><span class="dg-next">${icon('sparkle')}</span></div>`);
+    const o = el('div', 'cine rewards', `<div class="cine-rays" style="--el:var(--coin)"></div>
+      <h2 class="cine-title display">${esc(opts.title)}</h2>${opts.sub ? `<p class="cine-text">${esc(opts.sub)}</p>` : ''}
+      <div class="rw-drop">${rewardChips(opts.reward) || '<span class="muted">Gratitude</span>'}</div>
+      <div class="cine-sub"><button class="btn gold big cine-go">Collect <kbd>Enter</kbd></button></div>`);
+    uiRoot().appendChild(o);
+    o.querySelectorAll<HTMLElement>('.rw').forEach((r, i) => r.style.setProperty('--d', `${0.25 + i * 0.12}s`));
+    requestAnimationFrame(() => o.classList.add('in', 'done'));
+    sfx('captured');
+    haptic('success');
+    cinematicClose(o, resolve);
+  });
+}
+
+/** Level-up stamp: player rank or a Mystic's level. */
+export function levelUp(opts: { kind: 'rank' | 'mystic'; level: number; title?: string; sub?: string; species?: string; shiny?: boolean }): Promise<void> {
+  return new Promise((resolve) => {
+    const art = opts.kind === 'mystic' && opts.species ? mysticFace(opts.species, !!opts.shiny, 110) : `<span class="lv-medal">${icon('crown')}</span>`;
+    const o = el('div', `cine levelup ${opts.kind}`, `<div class="cine-rays" style="--el:var(--magenta)"></div>
+      <div class="lv-stamp">${art}<span class="lv-word display">${opts.kind === 'rank' ? 'Rank up' : 'Level up'}</span><span class="lv-num display tnum">${opts.level}</span></div>
+      ${opts.title ? `<p class="cine-text"><b class="hl">${esc(opts.title)}</b></p>` : ''}${opts.sub ? `<p class="lv-sub">${esc(opts.sub)}</p>` : ''}
+      <div class="cine-sub"><button class="btn primary big cine-go">Continue <kbd>Enter</kbd></button></div>`);
+    uiRoot().appendChild(o);
+    requestAnimationFrame(() => o.classList.add('in', 'done'));
+    sfx('levelup');
+    haptic('success');
+    cinematicClose(o, resolve);
+  });
+}
+
+// ── Dialog: portrait, typewriter text, choices, skip ─────────────────────────
+export function dialog(opts: DialogSpec): Promise<number> {
+  return new Promise((resolve) => {
+    const d = el('div', 'dialog-box', `<div class="dg-panel stk">
+        <div class="dg-face">${faceHTML(opts.face, opts.name, 92)}</div>
+        <div class="dg-plate"><b>${esc(opts.name)}</b>${opts.title ? `<small>${esc(opts.title)}</small>` : ''}</div>
+        <button class="dg-skip" aria-label="Skip to the end">${glyph('skip')}<span>Skip</span></button>
+        <p class="dg-text" aria-live="polite"></p>
+        <div class="dg-foot"><span class="dg-count tnum"></span><div class="dg-choices"></div><span class="dg-next" aria-hidden="true">${glyph('chevD')}</span></div>
+      </div>`);
+    d.setAttribute('role', 'dialog');
+    d.setAttribute('aria-label', `${opts.name} is talking`);
     uiRoot().appendChild(d);
     requestAnimationFrame(() => d.classList.add('in'));
     const text = d.querySelector('.dg-text') as HTMLElement;
     const choices = d.querySelector('.dg-choices') as HTMLElement;
+    const count = d.querySelector('.dg-count') as HTMLElement;
+    const lines = opts.lines.length ? opts.lines : [''];
     let line = 0, typing = 0, full = '';
+    const speed = reducedMotion() ? 999 : 2;
     const type = () => {
-      full = opts.lines[line];
+      full = lines[line];
       let i = 0;
       clearInterval(typing);
       text.textContent = '';
-      typing = window.setInterval(() => { i += 2; text.textContent = full.slice(0, i); if (i >= full.length) { clearInterval(typing); typing = 0; showChoices(); } }, 18);
+      count.textContent = lines.length > 1 ? `${line + 1}/${lines.length}` : '';
+      d.classList.remove('more', 'ask');
+      typing = window.setInterval(() => { i += speed; text.textContent = full.slice(0, i); if (i >= full.length) { clearInterval(typing); typing = 0; showChoices(); } }, 18);
     };
     const showChoices = () => {
-      if (line < opts.lines.length - 1) { d.classList.add('more'); return; }
-      d.classList.remove('more');
-      const list = opts.choices ?? ['Continue'];
-      choices.innerHTML = list.map((c, i) => `<button class="btn ${i === 0 ? 'primary' : 'ghost'}" data-c="${i}">${c}${i === 0 ? ' <kbd>Enter</kbd>' : ''}</button>`).join('');
+      if (line < lines.length - 1) { d.classList.add('more'); return; }
+      d.classList.add('ask');
+      const list = opts.choices?.length ? opts.choices : ['Continue'];
+      choices.innerHTML = list.map((c, i) => `<button class="btn ${i === 0 ? 'primary' : 'ghost'} small" data-c="${i}">${list.length > 1 ? `<kbd>${i + 1}</kbd>` : ''}${esc(c)}${i === 0 && list.length === 1 ? ' <kbd>Enter</kbd>' : ''}</button>`).join('');
       choices.querySelectorAll<HTMLElement>('[data-c]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); finish(Number(b.dataset.c)); }));
+      (choices.querySelector('[data-c]') as HTMLElement | null)?.focus({ preventScroll: true });
     };
     const advance = () => {
       if (typing) { clearInterval(typing); typing = 0; text.textContent = full; showChoices(); return; }
-      if (line < opts.lines.length - 1) { line++; d.classList.remove('more'); sfx('select'); type(); }
+      if (line < lines.length - 1) { line++; sfx('select'); type(); }
     };
+    const skip = () => { clearInterval(typing); typing = 0; line = lines.length - 1; full = lines[line]; text.textContent = full; count.textContent = lines.length > 1 ? `${line + 1}/${lines.length}` : ''; d.classList.remove('more'); showChoices(); };
     const key = (e: KeyboardEvent) => {
       const k = e.key;
+      const n = Number(k);
+      if (d.classList.contains('ask') && n >= 1 && n <= (opts.choices?.length ?? 1)) { e.preventDefault(); e.stopImmediatePropagation(); finish(n - 1); return; }
       if (k === 'Enter' || k === ' ' || k === 'e' || k === 'E') {
         e.preventDefault(); e.stopImmediatePropagation();
-        if (!typing && line >= opts.lines.length - 1) finish(0); else advance();
-      } else if (k === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); finish((opts.choices?.length ?? 1) - 1); }
+        if (!typing && line >= lines.length - 1) {
+          const f = document.activeElement as HTMLElement | null;
+          finish(f?.dataset.c ? Number(f.dataset.c) : 0);
+        } else advance();
+      } else if (k === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); if (line < lines.length - 1 || typing) skip(); else finish((opts.choices?.length ?? 1) - 1); }
     };
     const finish = (i: number) => {
       removeEventListener('keydown', key, true);
       clearInterval(typing);
       sfx(i === 0 ? 'select' : 'back');
       d.classList.remove('in');
-      setTimeout(() => d.remove(), 300);
+      setTimeout(() => d.remove(), 260);
       resolve(i);
     };
+    d.querySelector('.dg-skip')!.addEventListener('click', (e) => { e.stopPropagation(); skip(); });
     d.addEventListener('click', advance);
     addEventListener('keydown', key, true);
     type();
@@ -319,9 +427,10 @@ export function dialog(opts: { name: string; title?: string; face?: string; line
 // ── Fishing minigame: wait for the bite, then keep the fish inside your reel zone ──
 export function fishing(): Promise<boolean> {
   return new Promise((resolve) => {
-    const o = el('div', 'fishing', `<div class="fs-panel"><div class="fs-title">${icon('fish')} <b>Fishing</b><small>Wait for the bite…</small></div>
-      <div class="fs-water"><div class="fs-bobber"></div><div class="fs-bang">!</div></div>
-      <div class="fs-reel"><div class="fs-track"><div class="fs-zone"></div><div class="fs-fish">${icon('fish')}</div></div><div class="fs-prog"><i></i></div></div>
+    const o = el('div', 'fishing', `<div class="fs-panel stk">
+      <div class="fs-title">${icon('fish')}<b>Fishing</b><small>Wait for the bite…</small></div>
+      <div class="fs-play"><div class="fs-water"><div class="fs-ring"></div><div class="fs-bobber"></div><div class="fs-bang">${glyph('bang')}</div></div>
+        <div class="fs-reel"><div class="fs-track"><div class="fs-zone"></div><div class="fs-fish">${icon('fish')}</div></div><div class="fs-prog"><i></i></div></div></div>
       <p class="fs-hint">${isTouch ? 'Tap when the bobber dips!' : 'Press <kbd>Space</kbd> when the bobber dips!'}</p>
       <button class="btn ghost small fs-quit">Reel in</button></div>`);
     uiRoot().appendChild(o);
@@ -346,7 +455,6 @@ export function fishing(): Promise<boolean> {
       haptic('medium');
       setTimeout(() => { if (phase === 'bite') end(false, 'It got away…'); }, biteWindow);
     }, 1400 + Math.random() * 2600);
-    // reel state (0..1 along the track)
     let zPos = 0.35, zVel = 0, fPos = 0.5, fTarget = 0.5, progress = 0.3, last = 0;
     const zSize = 0.26 * (settings.qteAssist ? 1.35 : 1);
     const startReel = () => {
@@ -354,7 +462,7 @@ export function fishing(): Promise<boolean> {
       o.classList.remove('bite');
       o.classList.add('reel');
       sub.textContent = 'Keep the fish in the glow!';
-      hint.innerHTML = isTouch ? 'Hold to raise the reel zone.' : 'Hold <kbd>Space</kbd> (or the mouse) to raise the reel zone.';
+      hint.innerHTML = isTouch ? 'Hold to raise the reel zone.' : 'Hold <kbd>Space</kbd> or the mouse to raise the reel zone.';
       sfx('orb');
       last = performance.now();
       raf = requestAnimationFrame(tick);
@@ -369,17 +477,17 @@ export function fishing(): Promise<boolean> {
       fPos += (fTarget - fPos) * Math.min(1, dt * 2.6);
       const inside = fPos >= zPos && fPos <= zPos + zSize;
       progress = Math.max(0, Math.min(1, progress + (inside ? 0.32 : -0.22) * dt));
-      zone.style.bottom = `${zPos * 100}%`;
+      zone.style.transform = `translateY(${(-zPos * 100 / zSize).toFixed(2)}%)`;
       zone.style.height = `${zSize * 100}%`;
       zone.classList.toggle('on', inside);
-      fishEl.style.bottom = `calc(${fPos * 100}% - 12px)`;
+      fishEl.style.bottom = `calc(${(fPos * 100).toFixed(2)}% - 12px)`;
       prog.style.setProperty('--p', String(progress));
       if (progress >= 1) return end(true, 'Caught!');
       if (progress <= 0) return end(false, 'The line went slack…');
       raf = requestAnimationFrame(tick);
     };
     const press = (down: boolean) => {
-      if (phase === 'wait' && down) { end(false, 'Too early — the fish swam off.'); return; }
+      if (phase === 'wait' && down) { end(false, 'Too early. The fish swam off.'); return; }
       if (phase === 'bite' && down) { if (performance.now() - biteAt <= biteWindow) startReel(); return; }
       if (phase === 'reel') holding = down;
     };
@@ -388,10 +496,10 @@ export function fishing(): Promise<boolean> {
       if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); end(false, 'You reel in your line.'); }
     };
     const keyUp = (e: KeyboardEvent) => { if (e.key === ' ' || e.key === 'Enter' || e.key === 'e' || e.key === 'E') press(false); };
-    const water = o.querySelector('.fs-panel') as HTMLElement;
+    const panel = o.querySelector('.fs-panel') as HTMLElement;
     const pd = (e: PointerEvent) => { if ((e.target as HTMLElement).closest('.fs-quit')) return; e.preventDefault(); press(true); };
     const pu = () => press(false);
-    water.addEventListener('pointerdown', pd);
+    panel.addEventListener('pointerdown', pd);
     addEventListener('pointerup', pu);
     addEventListener('keydown', key, true);
     addEventListener('keyup', keyUp, true);
@@ -413,50 +521,72 @@ export function fishing(): Promise<boolean> {
   });
 }
 
-// ── Daily login calendar ────────────────────────────────────────────────────
+// ── Daily capsules ─────────────────────────────────────────────────────────
 export function dailyLogin(): Promise<void> {
   const idx = pendingLogin();
   if (idx === null) return Promise.resolve();
   return modal('daily', (b, close) => {
-    b.innerHTML = `<h2>${icon('gift')} Daily Reward</h2><p class="muted">Log in every day to climb the calendar. Day 7 is a big one.</p>
-      <div class="login-cal">${LOGIN_REWARDS.map((r, i) => `<div class="lc ${i < idx ? 'got' : i === idx ? 'today' : ''}"><small>Day ${i + 1}</small>${icon(i === 6 ? 'chest' : 'gift')}<b>${r.label}</b></div>`).join('')}</div>
-      <div class="row-center"><button class="btn gold big" data-claim>Claim ${LOGIN_REWARDS[idx].label}</button></div>`;
+    b.innerHTML = `<h2>${icon('gift')} Daily capsules</h2><p class="lead">Come back each day to climb the week. Day 7 is a big one.</p>
+      ${dailyCapsules(idx)}
+      <div class="row-center"><button class="btn gold big" data-claim>${icon('gift')} Claim ${LOGIN_REWARDS[idx].label}</button></div>`;
     b.querySelector('[data-claim]')!.addEventListener('click', () => {
       const r = claimLogin();
       if (r) { sfx('captured'); haptic('success'); }
       close();
     });
+    requestAnimationFrame(() => (b.querySelector('[data-claim]') as HTMLElement).focus({ preventScroll: true }));
   });
 }
 
-// ── Field guide ─────────────────────────────────────────────────────────────
+// ── Field guide: sections on the left, one page at a time ───────────────────
 export function guide(touch: boolean): Promise<void> {
   let key: ((e: KeyboardEvent) => void) | null = null;
+  const K = (k: string) => `<kbd>${k}</kbd>`;
+  const pages: { id: string; title: string; ic: string; html: string }[] = [
+    { id: 'go', title: 'Where to go', ic: 'compass', html: `<p>Your <b>tracked quest</b> sits under your party. The <b class="mag">magenta diamond</b> marks its objective everywhere: on the compass at the top, on the minimap, on the map, and floating over the world with its distance.</p><p>When the objective is behind you, an arrow on the edge of the screen points the way, and chevrons on the ground lead you there.</p><p>Change which quest you follow in the Quest log${touch ? '' : ` (${K('Q')})`}.</p>` },
+    { id: 'explore', title: 'Exploring', ic: 'footprint', html: touch ? '<p><b>Left thumb</b> moves, <b>right thumb</b> looks, <b>pinch</b> zooms.</p><p>Tap <b>Jump</b>, then again mid-air to double jump. <b>Strike</b> a wild Mystic to start with the advantage. <b>Ride</b> appears once you own a rideable Mystic.</p><p>Walk through <b>tall grass</b>, search <b>glimmering nests</b> and <b>fish</b> at ripples to find Mystics that never roam.</p>' : `<p>${K('W A S D')} move · ${K('Shift')} sprint · drag to look · wheel to zoom.</p><p>${K('Space')} jump, again mid-air to double jump. ${K('F')} strike a wild Mystic so it starts staggered. ${K('R')} ride · ${K('E')} interact.</p><p>Walk through <b>tall grass</b>, search <b>glimmering nests</b> and <b>fish</b> at ripples to find Mystics that never roam.</p>` },
+    { id: 'battle', title: 'Battle', ic: 'sword', html: `<p>Turns follow <b>speed</b>. Attacks earn <b>AP</b>; skills spend it. ${touch ? 'Tap' : `Press ${K('Space')}`} as the ring closes for a <b>Perfect</b> hit.</p><p>Enemy strikes: ${touch ? '<b>Parry</b>, <b>Dodge</b> and <b>Jump</b> buttons' : `${K('E')} parry · ${K('Q')} dodge · ${K('W')} jump`}. Parry every hit to <b>counter</b>. <b class="bad">Red</b> strikes can only be dodged; <b class="gold">gold</b> ones must be jumped.</p><p>Fill the <b>Break</b> bar to stun. A full <b>Burst</b> gauge unleashes an ultimate. Weaken a wild Mystic, then <b>Capture</b> it with the right orb.</p>` },
+    { id: 'towns', title: 'Towns', ic: 'house_base', html: '<p><b>Sanctuary</b> heals and lets you rest until day or night. <b>Outfitter</b> and specialty shops buy and sell. <b>Hatchery</b> breeds eggs. <b>Elementum Shrine</b> infuses power. <b>Move Master</b> sharpens moves. <b>Quest boards</b> post requests. The <b>Wishing Spire</b> summons.</p>' },
+    { id: 'travel', title: 'Travel', ic: 'map', html: `<p>Touch a <b>Waystone</b> to attune it, then fast travel from the Map${touch ? '' : ` (${K('M')})`}. Each land has its own Mystics, weather and Guardian.</p><p>Sealed <b>Warden Gates</b> open when you answer the neighbouring land’s Guardian. Unexplored land stays under cloud on the map until you walk it.</p>` },
+    { id: 'home', title: 'Homestead', ic: 'hammer_build', html: `<p>East of Hearthwick. Build mills, quarries, habitats and a forge${touch ? '' : ` (${K('H')} when you are there)`}. Production piles up while you explore; collect it any time.</p>` },
+  ];
+  let cur = pages[0].id;
   return modal('guide', (b, close) => {
-    const K = (k: string) => `<kbd>${k}</kbd>`;
-    b.innerHTML = `<h2>Field Guide</h2>
-      <div class="guide-grid">
-        <section><h3>${icon('compass')} Exploring</h3>
-          ${touch ? '<p><b>Left thumb</b> move · <b>right thumb</b> look · <b>pinch</b> zoom</p><p><b>Jump</b> button — tap again mid-air to <b>double jump</b></p><p><b>Strike</b> near a wild Mystic to start with the advantage · <b>Ride</b> a rideable Mystic</p>'
-          : `<p>${K('W A S D')} move · ${K('Shift')} sprint · <b>drag</b> look · <b>wheel</b> zoom</p><p>${K('Space')} jump · again mid-air to <b>double jump</b></p><p>${K('F')} strike a wild Mystic first — it starts <b>staggered</b> · ${K('R')} ride · ${K('E')} interact</p>`}
-          <p>Walk through <b>tall grass</b>, search <b>glimmering nests</b> and <b>fish</b> at ripples to find Mystics that never roam. Some only appear <b>at night</b>. ${icon('sparkle')} <b>Shiny</b> Mystics sparkle — about 1 in 300.</p></section>
-        <section><h3>${icon('sword')} Battle</h3>
-          <p>Turn order follows <b>speed</b>. Attacks earn <b>AP</b>; skills spend it. Hit ${touch ? '<b>tap</b>' : K('Space')} as the ring closes for <b>Perfect</b> damage.</p>
-          <p>Enemy strikes: ${touch ? '<b>PARRY</b> / <b>DODGE</b> / <b>JUMP</b> buttons' : `${K('E')} parry · ${K('Q')} dodge · ${K('W')} jump`}. Parry every hit to <b>counter</b>. <span class="red">Red</span> can only be dodged; <span class="gold">gold</span> must be jumped.</p>
-          <p>Fill the <b>Break</b> bar to stun. Full <b>Burst</b> gauge unleashes an element ultimate. Weaken, then <b>Capture</b> with the right orb. ${touch ? '' : `${K('A')} auto · ${K('X')} speed`}</p></section>
-        <section><h3>${icon('house_base')} Towns</h3>
-          <p><b>Sanctuary</b> heals & rests · <b>Outfitter</b> sells orbs, items & stones · <b>Hatchery</b> breeds eggs · <b>Shrine</b> infuses Elementum & swaps abilities · <b>Move Master</b> enhances moves · <b>Quest Board</b> posts side quests · <b>Wishing Spire</b> summons.</p></section>
-        <section><h3>${icon('map')} Travel</h3>
-          <p>Touch ${icon('waypoint_obelisk')} <b>Waystones</b> to attune them, then fast travel from the Map${touch ? '' : ` (${K('M')})`}. Each land has its own Mystics, weather and Guardian.</p></section>
-        <section><h3>${icon('hammer_build')} Homestead</h3>
-          <p>East of Hearthwick. Build mills, quarries, habitats and a forge. Production accrues while you explore — collect it any time.</p></section>
-        <section><h3>${icon('book')} Journal</h3>
-          <p>${touch ? 'Tap the menu buttons' : `${K('J')} journal · ${K('T')} team · ${K('C')} dex · ${K('B')} bag · ${K('Q')} quests · ${K('G')} summon · ${K('M')} map · ${K('Esc')} menu`}.</p></section>
-      </div>
-      <div class="row-center"><button class="btn primary big" data-go>Let’s go <kbd>Enter</kbd></button></div>`;
-    b.querySelector('[data-go]')!.addEventListener('click', close);
-    key = (e: KeyboardEvent) => { if (e.key === 'Enter') close(); };
+    const draw = () => {
+      const p = pages.find((x) => x.id === cur)!;
+      b.innerHTML = `<h2>${icon('book')} Field guide</h2>
+        <div class="guide-md"><nav class="set-cats" role="tablist">${pages.map((x) => `<button role="tab" data-p="${x.id}" class="${x.id === cur ? 'on' : ''}" aria-selected="${x.id === cur}"><span class="sc-ic">${icon(x.ic)}</span><span class="sc-l">${x.title}</span></button>`).join('')}</nav>
+        <article class="guide-page"><h3>${p.title}</h3>${p.html}</article></div>
+        <div class="row-end"><button class="btn primary" data-go>Let’s go <kbd>Enter</kbd></button></div>`;
+      b.querySelectorAll<HTMLElement>('[data-p]').forEach((x) => x.addEventListener('click', () => { cur = x.dataset.p!; sfx('select'); draw(); }));
+      b.querySelector('[data-go]')!.addEventListener('click', close);
+    };
+    draw();
+    key = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') close();
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { const i = pages.findIndex((x) => x.id === cur); cur = pages[(i + (e.key === 'ArrowDown' ? 1 : pages.length - 1)) % pages.length].id; draw(); e.preventDefault(); }
+    };
     addEventListener('keydown', key);
   }, () => { if (key) removeEventListener('keydown', key); });
 }
 
+// ── Pause ───────────────────────────────────────────────────────────────────
+export type PauseChoice = 'resume' | 'journal' | 'settings' | 'guide' | 'profile' | 'title';
+export function pause(info: { name: string; rank: number; day: number; sync: string }): Promise<PauseChoice> {
+  return new Promise((resolve) => {
+    let choice: PauseChoice = 'resume';
+    void modal('pause', (b, close) => {
+      b.innerHTML = `<h2 class="display pz-t">Paused</h2><p class="pz-info">${esc(info.name)} · Rank ${info.rank} · Day ${info.day}<br><span class="muted">${esc(info.sync)}</span></p>
+        <div class="pz-grid">
+          <button class="btn primary big pz-resume" data-a="resume">${glyph('play')} Resume <kbd>Esc</kbd></button>
+          <button class="btn" data-a="journal">${icon('book')} Journal</button>
+          <button class="btn" data-a="settings">${icon('gear_settings')} Settings</button>
+          <button class="btn" data-a="guide">${icon('compass')} Field guide</button>
+          <button class="btn" data-a="profile">${icon('user_profile')} Profile</button>
+          <button class="btn ghost pz-quit" data-a="title">${icon('logout_door')} Save &amp; quit to title</button>
+        </div>`;
+      b.querySelectorAll<HTMLElement>('[data-a]').forEach((x) => x.addEventListener('click', () => { choice = x.dataset.a as PauseChoice; close(); }));
+      requestAnimationFrame(() => (b.querySelector('.pz-resume') as HTMLElement).focus({ preventScroll: true }));
+    }, () => resolve(choice));
+  });
+}

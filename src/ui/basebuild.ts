@@ -15,9 +15,10 @@ import {
 import { displayName, statsOf, xpToNext } from '../game/creature';
 import type { Overworld } from '../world/world';
 import { modal, toast, confirmBox, el, uiRoot } from './dom';
-import { bar, costList, esc, mysticFace } from './kit';
-import { icon } from './icons';
+import { bar, costList, esc, mysticFace, emptyState } from './kit';
+import { icon, glyph } from './icons';
 import { pickCreature } from './pickers';
+import { Pager } from './pager';
 import type { JournalTab } from './journal';
 
 export interface BuildHooks {
@@ -37,10 +38,11 @@ const CATS: { id: StructureCategory; label: string; ic: string }[] = [
   { id: 'crafting', label: 'Crafting', ic: 'anvil' }, { id: 'decor', label: 'Decor', ic: 'flag' },
 ];
 const RES_ICON: Record<string, string> = { gold: 'coin', aether: 'gem', wood: 'log_wood', stone: 'stone', ore: 'ore', crystal: 'crystal_cluster', fiber: 'fiber' };
-const resList = (r: Partial<Record<string, number>>) => Object.entries(r).filter(([, v]) => (v ?? 0) > 0).map(([k, v]) => `<span class="cost-i">${icon(RES_ICON[k] ?? 'gem')}${v}</span>`).join('') || '<span class="muted small">nothing yet</span>';
+const resList = (r: Partial<Record<string, number>>) => Object.entries(r).filter(([, v]) => (v ?? 0) > 0).map(([k, v]) => `<span class="cost-i">${icon(RES_ICON[k] ?? 'gem')}${v}</span>`).join('') || '<span class="muted">Nothing yet</span>';
 
 export class BaseBuilder {
   private ui: HTMLElement | null = null;
+  private pager: Pager<StructureDef> | null = null;
   private cat: StructureCategory = 'production';
   private placing: { def: StructureDef; uid?: string; rot: number; x: number; z: number; locked: boolean; reason: string | null } | null = null;
   private down: { x: number; y: number } | null = null;
@@ -71,6 +73,8 @@ export class BaseBuilder {
   exit() {
     if (!this.ui) return;
     this.cancelPlacing();
+    this.pager?.destroy();
+    this.pager = null;
     const w = this.hooks.world;
     w.buildMode = false;
     removeEventListener('keydown', this.keyH, true);
@@ -85,25 +89,29 @@ export class BaseBuilder {
 
   private drawPalette() {
     if (!this.ui) return;
+    this.pager?.destroy();
+    this.pager = null;
     const list = STRUCTURES.filter((s) => s.category === this.cat);
     this.ui.className = 'build-ui in palette';
-    this.ui.innerHTML = `<div class="bu-top"><div class="bu-title">${icon('hammer_build')}<div><b>Homestead · Build mode</b><small>Pick a structure, then place it inside the golden ring.</small></div></div>
-        <div class="bu-mats">${(Object.keys(MATERIALS) as MaterialId[]).map((m) => `<span class="cost-i">${icon(RES_ICON[m])}${state.inv.materials[m]}</span>`).join('')}<span class="cost-i">${icon('coin')}${state.inv.gold.toLocaleString()}</span></div>
-        <button class="btn primary" data-done>Done <kbd>Esc</kbd></button></div>
-      <div class="bu-palette"><div class="chips">${CATS.map((c) => `<button class="chip ${this.cat === c.id ? 'on' : ''}" data-cat="${c.id}">${icon(c.ic)} ${c.label}</button>`).join('')}</div>
-        <div class="bu-cards">${list.map((d) => {
-          const why = buildReason(d);
-          return `<button class="bu-card ${why ? 'off' : ''}" data-type="${d.id}" title="${why ?? d.desc}"><span class="bu-ic">${icon(TYPE_ICON[d.id] ?? 'house_base')}</span><b>${d.name}</b><small>${d.desc}</small>
-            ${d.produces ? `<em class="bu-prod">${resList(d.produces)}/h</em>` : ''}${costList(costOf(d))}<i class="bu-count">${builtCount(d.id)}/${d.max}</i>${why ? `<span class="bu-why">${why}</span>` : ''}</button>`;
-        }).join('')}</div></div>`;
+    this.ui.innerHTML = `<div class="bu-top stk"><span class="bu-ic">${icon('hammer_build')}</span><div class="bu-title"><b>Build mode</b><small>Pick a structure, then place it inside the golden ring.</small></div>
+        <div class="bu-mats">${(Object.keys(MATERIALS) as MaterialId[]).map((m) => `<span class="cost-i" title="${MATERIALS[m].name}">${icon(RES_ICON[m])}${state.inv.materials[m]}</span>`).join('')}<span class="cost-i" title="Gold">${icon('coin')}${state.inv.gold.toLocaleString()}</span></div>
+        <button class="btn primary small" data-done>Done <kbd>Esc</kbd></button></div>
+      <div class="bu-sheet stk"><div class="seg bu-cats">${CATS.map((c) => `<button class="${this.cat === c.id ? 'on' : ''}" data-cat="${c.id}">${icon(c.ic)} ${c.label}</button>`).join('')}</div><div class="bu-cards"></div></div>`;
     this.ui.querySelector('[data-done]')!.addEventListener('click', () => this.exit());
     this.ui.querySelectorAll<HTMLElement>('[data-cat]').forEach((b) => b.addEventListener('click', () => { this.cat = b.dataset.cat as StructureCategory; sfx('select'); this.drawPalette(); }));
-    this.ui.querySelectorAll<HTMLElement>('[data-type]').forEach((b) => b.addEventListener('click', () => {
-      const d = structureDef(b.dataset.type!);
-      const why = buildReason(d);
-      if (why) { sfx('error'); toast(why, 'bad'); return; }
-      this.startPlacing(d);
-    }));
+    this.pager = new Pager<StructureDef>(this.ui.querySelector('.bu-cards') as HTMLElement, {
+      items: list, cell: { w: 190, h: 96 }, gap: 8, maxRows: 1, primary: true, label: 'Structures',
+      onPick: (d) => {
+        const why = buildReason(d);
+        if (why) { sfx('error'); toast(why, 'bad'); return; }
+        this.startPlacing(d);
+      },
+      render: (d) => {
+        const why = buildReason(d);
+        return `<span class="bu-card ${why ? 'off' : ''}" title="${esc(why ?? d.desc)}"><span class="bu-ic">${icon(TYPE_ICON[d.id] ?? 'house_base')}</span><span class="bu-b"><b class="ell">${d.name}</b><small class="ell">${why ?? d.desc}</small>
+          <span class="bu-cost">${costList(costOf(d))}${d.produces ? `<em class="bu-prod">${resList(d.produces)}/h</em>` : ''}</span></span><i class="bu-count tnum">${builtCount(d.id)}/${d.max}</i></span>`;
+      },
+    });
   }
 
   private startPlacing(def: StructureDef, uid?: string) {
@@ -118,11 +126,13 @@ export class BaseBuilder {
 
   private drawPlacing() {
     if (!this.ui || !this.placing) return;
+    this.pager?.destroy();
+    this.pager = null;
     const p = this.placing;
     this.ui.className = 'build-ui in placing';
-    this.ui.innerHTML = `<div class="bu-place"><span class="bu-ic">${icon(TYPE_ICON[p.def.id] ?? 'house_base')}</span><div class="bu-pt"><b>${p.uid ? 'Moving' : 'Placing'}: ${p.def.name}</b><small class="bu-reason"></small></div>
-      <button class="btn" data-rot title="Rotate (R)">⟳ <span>Rotate</span></button>
-      <button class="btn ghost" data-cancel>Cancel</button>
+    this.ui.innerHTML = `<div class="bu-place stk"><span class="bu-ic">${icon(TYPE_ICON[p.def.id] ?? 'house_base')}</span><div class="bu-pt"><b>${p.uid ? 'Moving' : 'Placing'} ${p.def.name}</b><small class="bu-reason"></small></div>
+      <button class="btn small round" data-rot title="Rotate (R)" aria-label="Rotate">${glyph('rotate')}</button>
+      <button class="btn small ghost" data-cancel>Cancel</button>
       <button class="btn primary" data-place>${p.uid ? 'Move here' : 'Build'} ${p.uid ? '' : costList(costOf(p.def))}</button></div>
       <p class="bu-hint">${input.isTouch ? 'Tap the ground to position · drag to look around' : 'Click the ground or walk to position · <kbd>R</kbd> rotate · <kbd>Enter</kbd> confirm · <kbd>Esc</kbd> cancel'}</p>`;
     this.ui.querySelector('[data-rot]')!.addEventListener('click', () => this.rotate());
@@ -228,22 +238,30 @@ export class BaseBuilder {
 
   // ── panels ──────────────────────────────────────────────────────────────
   openOverview(): Promise<void> {
+    let pager: Pager<BaseStructure> | null = null;
     return modal('structure homestead-ov', (b, close) => {
       const draw = () => {
+        pager?.destroy();
         const list = state.base.structures;
         const prod = list.filter((s) => structureDef(s.type).produces);
         const total: Record<string, number> = {};
         for (const s of prod) for (const [k, v] of Object.entries(pending(s))) total[k] = (total[k] ?? 0) + (v ?? 0);
-        b.innerHTML = `<div class="svc-head" style="--c:#6aa84a"><span class="svc-icon">${icon('house_base')}</span><div class="svc-t"><h2>Your Homestead</h2><small>${list.length} structures · production stockpiles up to 8 hours</small></div></div>
-          ${list.length ? '' : `<p class="svc-say">“A fine plot of land. Timber and stone are all it takes to start — build a Lumber Mill and a Quarry first.”</p>`}
-          <div class="ov-grid">${list.map((s) => {
+        b.innerHTML = `<header class="svc-head" style="--c:var(--good)"><span class="svc-icon">${icon('house_base')}</span><div class="svc-t"><h2 class="display">Your Homestead</h2><small>${list.length} structures · production piles up for 8 hours</small></div></header>
+          ${list.length ? '' : '<p class="svc-say">A fine plot of land. Timber and stone are all it takes to start: build a Lumber Mill and a Quarry first.</p>'}
+          <div class="ov-grid"></div>
+          <div class="row-end"><button class="btn gold" data-all ${Object.values(total).some((v) => v > 0) ? '' : 'disabled'}>${icon('gift')} Collect all <span class="cost">${resList(total)}</span></button>
+          <button class="btn primary" data-build>${icon('hammer_build')} Build mode</button></div>`;
+        pager = new Pager<BaseStructure>(b.querySelector('.ov-grid') as HTMLElement, {
+          items: list, cell: { w: 150, h: 86 }, gap: 8, primary: true, label: 'Structures',
+          onPick: (s) => { close(); void this.openStructure(s.uid); },
+          render: (s) => {
             const d = structureDef(s.type);
             const pend = pending(s);
             const ready = Object.values(pend).some((v) => (v ?? 0) > 0);
-            return `<button class="ov-s ${ready ? 'ready' : ''}" data-uid="${s.uid}"><span class="bu-ic">${icon(TYPE_ICON[s.type] ?? 'house_base')}</span><b>${d.name}</b><small>Lv ${s.level}${d.produces ? ` · ${resList(pend)}` : ''}</small></button>`;
-          }).join('')}</div>
-          <div class="row-center"><button class="btn gold" data-all ${Object.values(total).some((v) => v > 0) ? '' : 'disabled'}>${icon('gift')} Collect all ${resList(total)}</button>
-          <button class="btn primary" data-build>${icon('hammer_build')} Build mode</button></div>`;
+            return `<span class="ov-s ${ready ? 'ready' : ''}"><span class="bu-ic">${icon(TYPE_ICON[s.type] ?? 'house_base')}</span><b class="ell">${d.name}</b><small class="tnum">Lv ${s.level}${d.produces ? ` · ${resList(pend)}` : ''}</small></span>`;
+          },
+          empty: emptyState('Nothing built yet', 'Open build mode to place your first structure.', 'hammer_build'),
+        });
         b.querySelector('[data-all]')?.addEventListener('click', () => {
           const got = collectAll();
           sfx('coin');
@@ -252,10 +270,9 @@ export class BaseBuilder {
           draw();
         });
         b.querySelector('[data-build]')?.addEventListener('click', () => { close(); this.enter(); });
-        b.querySelectorAll<HTMLElement>('[data-uid]').forEach((x) => x.addEventListener('click', () => { close(); void this.openStructure(x.dataset.uid!); }));
       };
       draw();
-    });
+    }, () => pager?.destroy());
   }
 
   openStructure(uid: string): Promise<void> {
@@ -265,11 +282,11 @@ export class BaseBuilder {
         if (!s) { close(); return; }
         const d = structureDef(s.type);
         const up = s.level < d.maxLevel ? costOf(d, s.level + 1) : null;
-        b.innerHTML = `<div class="svc-head" style="--c:#8a6a3a"><span class="svc-icon">${icon(TYPE_ICON[s.type] ?? 'house_base')}</span><div class="svc-t"><h2>${d.name}</h2><small>Level ${s.level}/${d.maxLevel} · ${d.desc}</small></div></div>
+        b.innerHTML = `<header class="svc-head" style="--c:var(--el-earth)"><span class="svc-icon">${icon(TYPE_ICON[s.type] ?? 'house_base')}</span><div class="svc-t"><h2 class="display">${d.name}</h2><small>Level ${s.level}/${d.maxLevel} · ${d.desc}</small></div></header>
           <div class="st-body">${this.body(s, d)}</div>
           <div class="st-foot">
             ${up ? `<button class="btn ${canPay(up) ? 'primary' : ''}" data-up ${canPay(up) ? '' : 'disabled'}>${icon('hammer_build')} Upgrade to Lv ${s.level + 1} ${costList(up)}</button>` : ''}
-            <button class="btn ghost" data-move>${icon('compass')} Move</button>
+            <button class="btn ghost" data-move>${glyph('swap')} Move</button>
             <button class="btn danger" data-demo>Demolish</button></div>`;
         b.querySelector('[data-up]')?.addEventListener('click', () => {
           if (upgrade(uid)) { sfx('levelup'); haptic('success'); toast(`${d.name} upgraded to level ${s.level}!`, 'good'); this.hooks.world.homestead.sync(); this.hooks.changed(); } else sfx('error');
@@ -303,31 +320,31 @@ export class BaseBuilder {
       case 'habitat': {
         const res = residents(s);
         const slots = habitatSlots(s);
-        parts.push(`<div class="sec-h">${icon('paw')}<span>Residents</span><small>${res.length}/${slots} · residents gain XP over time (collect to apply)</small></div>
+        parts.push(`<header class="sec-h"><b>Residents</b><span class="sec-n">${res.length}/${slots}</span><small>They gain XP while you explore</small></header>
           <div class="res-list">${res.map((c) => `<div class="res">${mysticFace(c.species, c.shiny, 52)}<b>${esc(displayName(c))}</b><small>Lv ${c.level}</small><button class="btn tiny ghost" data-unassign="${c.uid}">Remove</button></div>`).join('')}
-          ${res.length < slots ? `<button class="res add" data-assign><span class="plus">+</span><small>Add from storage</small></button>` : ''}</div>`);
+          ${res.length < slots ? `<button class="res add" data-assign><span class="bs-plus">${glyph('plus')}</span><small>Add from storage</small></button>` : ''}</div>`);
         parts.push(`<div class="row-center"><button class="btn gold" data-collect-xp>${icon('sparkles')} Gather resident XP</button></div>`);
         break;
       }
       case 'forge':
-        parts.push(`<div class="sec-h">${icon('anvil')}<span>Crafting</span></div><div class="recipes">${RECIPES.map((r, i) => {
-          const art = r.out.orb ? `<span class="orbdot" style="background:radial-gradient(circle at 35% 30%, #fff, ${ORBS[r.out.orb].color} 45%, #1a1020)"></span>` : icon(ITEMS[r.out.item as keyof typeof ITEMS]?.icon ?? 'potion');
+        parts.push(`<header class="sec-h"><b>Crafting</b></header><div class="recipes">${RECIPES.map((r, i) => {
+          const art = r.out.orb ? `<span class="orb-art" style="--c:${ORBS[r.out.orb].color};--b:${ORBS[r.out.orb].band}"></span>` : `<span class="item-art">${icon(ITEMS[r.out.item as keyof typeof ITEMS]?.icon ?? 'potion')}</span>`;
           return `<div class="recipe">${art}<b>${r.name}</b>${costList(r.cost)}<button class="btn tiny ${canPay(r.cost) ? 'primary' : ''}" data-craft="${i}" ${canPay(r.cost) ? '' : 'disabled'}>Craft</button></div>`;
         }).join('')}</div><div class="row-center"><button class="btn ghost" data-relics>${icon('crown')} Upgrade relics</button></div>`);
         break;
       case 'training_hall':
-        parts.push(`<div class="sec-h">${icon('sword')}<span>Train your team</span><small>Instant XP for gold</small></div><div class="train-list">${state.team.map((c, i) => {
+        parts.push(`<header class="sec-h"><b>Train your team</b><small>Instant XP for gold</small></header><div class="train-list">${state.team.map((c, i) => {
           const cost = trainCost(c);
           return `<div class="tr">${mysticFace(c.species, c.shiny, 48)}<div><b>${esc(displayName(c))}</b><small>Lv ${c.level}</small>${bar(c.xp / xpToNext(c.level), 'xp')}</div><button class="btn tiny ${state.inv.gold >= cost ? 'primary' : ''}" data-train="${i}" ${state.inv.gold >= cost ? '' : 'disabled'}>${icon('coin')} ${cost}</button></div>`;
         }).join('')}</div>`);
         break;
       case 'healing_well': {
         const hurt = [...state.team, ...state.box].filter((c) => c.hp < statsOf(c).maxHp).length;
-        parts.push(`<p class="svc-say">“Cool water, drawn from deep beneath the Vale.”</p><div class="row-center"><button class="btn primary big" data-heal ${hurt ? '' : 'disabled'}>${icon('heart')} ${hurt ? 'Rest at the well' : 'Everyone is healthy'}</button></div>`);
+        parts.push(`<p class="svc-say">Cool water, drawn from deep beneath the Vale.</p><div class="row-center"><button class="btn primary big" data-heal ${hurt ? '' : 'disabled'}>${icon('heart')} ${hurt ? 'Rest at the well' : 'Everyone is healthy'}</button></div>`);
         break;
       }
       case 'market':
-        parts.push(`<div class="sec-h">${icon('coin')}<span>Sell materials</span></div><div class="sell-list">${(Object.keys(MATERIALS) as MaterialId[]).map((m) => {
+        parts.push(`<header class="sec-h"><b>Sell materials</b></header><div class="sell-list">${(Object.keys(MATERIALS) as MaterialId[]).map((m) => {
           const have = state.inv.materials[m];
           return `<div class="sell" style="--c:${MATERIALS[m].color}">${icon(RES_ICON[m])}<b>${MATERIALS[m].name}</b><small>×${have} · ${SELL_PRICES[m]}g each</small>
             <button class="btn tiny" data-sell="${m}" data-n="10" ${have >= 10 ? '' : 'disabled'}>×10</button><button class="btn tiny" data-sell="${m}" data-n="${have}" ${have ? '' : 'disabled'}>All</button></div>`;

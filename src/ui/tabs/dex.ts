@@ -1,12 +1,17 @@
-import { SPECIES, evolutionStages } from '../../data/species';
+// Mystidex: the series lineup card. Numbered capsules (silhouettes until seen), filters in popovers,
+// and a detail card with lore, habitats, base stats and the evolution line.
+import { SPECIES, evolutionStages, type Species } from '../../data/species';
 import { ELEMENTS, type Element } from '../../data/elements';
 import { ABILITIES, RARITY, RARITY_ORDER, type Rarity } from '../../data/traits';
 import { ZONES, type SpawnMethod } from '../../data/zones';
 import { ITEMS } from '../../data/items';
 import { state } from '../../game/state';
 import { sfx } from '../../core/audio';
-import { bar, elementBadge, mysticFace, rarityTag } from '../kit';
-import { icon } from '../icons';
+import { popover } from '../dom';
+import { bar, elementBadge, mysticFace, rarityTag, emptyState } from '../kit';
+import { icon, glyph } from '../icons';
+import { Pager } from '../pager';
+import type { TabCleanup } from '../journal';
 
 const METHOD: Record<SpawnMethod, { label: string; ic: string }> = {
   roam: { label: 'Roaming', ic: 'footprint' }, grass: { label: 'Tall grass', ic: 'plant' }, search: { label: 'Glimmering nests', ic: 'eye' },
@@ -17,55 +22,104 @@ export function habitatsOf(id: string) {
   return ZONES.flatMap((z) => z.spawns.filter((s) => s.species === id).map((s) => ({ zone: z, method: s.method })));
 }
 
-export function renderDex(root: HTMLElement) {
+type Sub = 'info' | 'where' | 'stats' | 'evolve';
+
+export function renderDex(root: HTMLElement): TabCleanup {
   const all = Object.values(SPECIES).filter((s) => !s.boss);
-  let land = '', element = '', rarity = '', focus = all.find((s) => state.dex[s.id]?.seen)?.id ?? all[0].id;
-  const draw = () => {
-    const caught = all.filter((s) => (state.dex[s.id]?.caught ?? 0) > 0).length;
-    const seen = all.filter((s) => state.dex[s.id]?.seen).length;
-    const shinies = all.filter((s) => state.dex[s.id]?.shiny).length;
-    const list = all.filter((s) => (!element || s.element === element) && (!rarity || s.rarity === rarity) && (!land || habitatsOf(s.id).some((h) => h.zone.id === land)));
-    root.innerHTML = `<div class="dex-head"><div class="dex-count"><b>${caught}</b><small>caught</small></div><div class="dex-count"><b>${seen}</b><small>seen</small></div><div class="dex-count"><b>${shinies}</b><small>shiny</small></div><div class="dex-count"><b>${all.length}</b><small>species</small></div>${bar(caught / all.length, 'xp dexbar')}</div>
-      <div class="chips">
-        <button class="chip ${!land ? 'on' : ''}" data-land="">All lands</button>${ZONES.map((z) => `<button class="chip ${land === z.id ? 'on' : ''}" data-land="${z.id}">${z.name}</button>`).join('')}
-      </div>
-      <div class="chips">
-        <button class="chip ${!element ? 'on' : ''}" data-el="">All</button>${(Object.keys(ELEMENTS) as Element[]).map((e) => `<button class="chip el ${element === e ? 'on' : ''}" data-el="${e}" style="--el:${ELEMENTS[e].color}">${icon(e)}${ELEMENTS[e].name}</button>`).join('')}
-        <span class="chip-sep"></span>${RARITY_ORDER.map((r) => `<button class="chip ${rarity === r ? 'on' : ''}" data-rar="${r}" style="--rar:${RARITY[r].color}">${RARITY[r].name}</button>`).join('')}
-      </div>
-      <div class="dex-wrap"><div class="dex-grid">${list.map((s) => {
-        const d = state.dex[s.id];
-        const n = all.indexOf(s) + 1;
-        return `<button class="dx ${d?.caught ? 'caught' : d?.seen ? 'seen' : 'unseen'} ${focus === s.id ? 'sel' : ''}" data-id="${s.id}" style="--el:${ELEMENTS[s.element].color};--rar:${RARITY[s.rarity].color}"><span class="no">${String(n).padStart(3, '0')}</span>${mysticFace(s.id, false, 62)}<b>${d?.seen ? s.name : '???'}</b>${d?.shiny ? `<i class="dx-sh">${icon('sparkle')}</i>` : ''}</button>`;
-      }).join('')}</div>
-      <div class="dex-detail">${detail(focus)}</div></div>`;
-    root.querySelectorAll<HTMLElement>('[data-land]').forEach((b) => b.addEventListener('click', () => { land = b.dataset.land!; sfx('select'); draw(); }));
-    root.querySelectorAll<HTMLElement>('[data-el]').forEach((b) => b.addEventListener('click', () => { element = b.dataset.el!; sfx('select'); draw(); }));
-    root.querySelectorAll<HTMLElement>('[data-rar]').forEach((b) => b.addEventListener('click', () => { rarity = rarity === b.dataset.rar ? '' : (b.dataset.rar as Rarity); sfx('select'); draw(); }));
-    root.querySelectorAll<HTMLElement>('.dx').forEach((b) => b.addEventListener('click', () => { focus = b.dataset.id!; sfx('select'); draw(); }));
+  const no = new Map(all.map((s, i) => [s.id, i + 1]));
+  let land = '', element: Element | '' = '', rarity: Rarity | '' = '';
+  let focus = all.find((s) => state.dex[s.id]?.seen)?.id ?? all[0].id;
+  let sub: Sub = 'info';
+  const list = () => all.filter((s) => (!element || s.element === element) && (!rarity || s.rarity === rarity) && (!land || habitatsOf(s.id).some((h) => h.zone.id === land)));
+  const caught = all.filter((s) => (state.dex[s.id]?.caught ?? 0) > 0).length;
+  const seen = all.filter((s) => state.dex[s.id]?.seen).length;
+  const shinies = all.filter((s) => state.dex[s.id]?.shiny).length;
+
+  root.innerHTML = `<div class="dex md">
+    <div class="md-master">
+      <header class="dex-top">
+        <div class="dex-count" title="${caught} of ${all.length} caught"><b class="tnum">${caught}<small>/${all.length}</small></b>${bar(caught / all.length, 'mag')}<span class="dex-sub tnum">${seen} seen · ${shinies} shiny</span></div>
+        <div class="dex-filters"><button class="chip" data-f="land"></button><button class="chip" data-f="el"></button><button class="chip" data-f="rar"></button></div>
+      </header>
+      <div class="dex-grid"></div>
+    </div>
+    <div class="md-detail dex-detail"></div>
+  </div>`;
+  const detail = root.querySelector('.dex-detail') as HTMLElement;
+  const grid = new Pager<Species>(root.querySelector('.dex-grid') as HTMLElement, {
+    items: list(), cell: { w: 76, h: 92 }, gap: 6, label: 'Mystidex', primary: true,
+    selected: (s) => s.id === focus, onPick: (s) => { if (s.id === focus) return; focus = s.id; sfx('select'); grid.refresh(); drawDetail(); },
+    render: (s) => {
+      const d = state.dex[s.id];
+      const st = d?.caught ? 'caught' : d?.seen ? 'seen' : 'unseen';
+      return `<span class="dx ${st}"><span class="dx-no tnum">${String(no.get(s.id)).padStart(3, '0')}</span>${mysticFace(s.id, false, 50, d?.caught ? `<span class="cap-mark" title="Caught">${glyph('check')}</span>` : '', st === 'unseen' ? 'unseen' : st === 'seen' ? 'seen' : '')}<span class="dx-name ell">${d?.seen ? s.name : '???'}</span>${d?.shiny ? `<i class="dx-sh" title="Shiny caught">${icon('sparkles')}</i>` : ''}</span>`;
+    },
+    empty: emptyState('Nothing matches', 'Clear a filter to see more of the lineup.', 'codex'),
+  });
+
+  const drawFilters = () => {
+    const lb = (f: string, txt: string, on: boolean) => { const b = root.querySelector(`[data-f=${f}]`) as HTMLElement; b.innerHTML = `${txt}${glyph('chevD', 'chev')}`; b.classList.toggle('on', on); };
+    lb('land', land ? ZONES.find((z) => z.id === land)!.name : 'All lands', !!land);
+    lb('el', element ? `<span class="el-pip" style="--el:${ELEMENTS[element].color}">${icon(element)}</span>${ELEMENTS[element].name}` : 'Element', !!element);
+    lb('rar', rarity ? RARITY[rarity].name : 'Rarity', !!rarity);
   };
-  const detail = (id: string) => {
-    const s = SPECIES[id];
-    const d = state.dex[id];
-    if (!d?.seen) return `<div class="dd unseen"><div class="q">?</div><p>Not yet encountered.</p>${hint(id)}</div>`;
-    const stages = evolutionStages(id);
-    const hab = habitatsOf(id);
-    return `<div class="dd" style="--el:${ELEMENTS[s.element].color};--rar:${RARITY[s.rarity].color}">
-      ${mysticFace(id, false, 170)}
-      <div class="dd-tags">${rarityTag(id)}${elementBadge(s.element, true)}</div>
-      <h3>${s.name}</h3><p class="cd-lore">${s.lore}</p>
-      <div class="dd-sec"><h4>Where to find</h4>${hab.length ? hab.map((h) => `<div class="hab"><span>${icon(METHOD[h.method].ic)}</span><b>${h.zone.name}</b><small>${METHOD[h.method].label}</small></div>`).join('') : `<p class="muted small">${s.rarity === 'legendary' ? 'Summon or Guardian reward only.' : 'Evolve, breed or summon.'}</p>`}</div>
-      <div class="dd-sec"><h4>Evolution</h4><div class="evo-line small">${stages.map((st) => `<span class="evo-col">${st.map((x) => `<span class="evo-node ${x === id ? 'cur' : ''}">${mysticFace(x, false, 36)}<small>${state.dex[x]?.seen ? SPECIES[x].name : '???'}</small></span>`).join('')}</span>`).join('<i class="evo-arrow">›</i>')}</div>
-        ${s.evolves.map((e) => `<p class="small muted">→ ${state.dex[e.id]?.seen ? SPECIES[e.id].name : '???'}: ${[e.level ? `Lv ${e.level}` : '', e.item ? ITEMS[e.item].name : '', e.time ? `at ${e.time}` : ''].filter(Boolean).join(' · ')}</p>`).join('')}</div>
-      <div class="dd-sec"><h4>Abilities</h4>${s.abilities.map((a) => `<div class="hab"><b>${ABILITIES[a].name}</b><small>${ABILITIES[a].desc}</small></div>`).join('')}</div>
-      <div class="dd-sec"><h4>Base stats</h4><div class="cd-stats">${(['hp', 'atk', 'def', 'spd'] as const).map((k) => `<div class="stat"><span>${k.toUpperCase()}</span>${bar(s.base[k] / (k === 'hp' ? 110 : 30), 'st')}<b>${s.base[k]}</b></div>`).join('')}</div></div>
-      <div class="dd-row"><span>Caught</span><b>${d.caught}${d.shiny ? ' · ✧ shiny caught' : ''}</b></div></div>`;
+  root.querySelectorAll<HTMLElement>('[data-f]').forEach((b) => b.addEventListener('click', async () => {
+    const f = b.dataset.f;
+    if (f === 'land') {
+      const v = await popover(b, [{ value: '', label: 'All lands', on: !land }, ...ZONES.map((z) => ({ value: z.id, label: z.name, on: land === z.id }))], { cols: 2 });
+      if (v === null) return;
+      land = v;
+    } else if (f === 'el') {
+      const v = await popover(b, [{ value: '' as const, label: 'All elements', on: !element }, ...(Object.keys(ELEMENTS) as Element[]).map((k) => ({ value: k, label: ELEMENTS[k].name, on: element === k, icon: `<span class="el-pip" style="--el:${ELEMENTS[k].color}">${icon(k)}</span>` }))], { cols: 2 });
+      if (v === null) return;
+      element = v;
+    } else {
+      const v = await popover(b, [{ value: '' as const, label: 'All rarities', on: !rarity }, ...RARITY_ORDER.map((r) => ({ value: r, label: RARITY[r].name, on: rarity === r, icon: `<i class="rar-dot" style="--rar:${RARITY[r].color}"></i>` }))]);
+      if (v === null) return;
+      rarity = v;
+    }
+    sfx('select');
+    drawFilters();
+    const l = list();
+    if (l.length && !l.some((s) => s.id === focus)) focus = l[0].id;
+    grid.setItems(l, l.findIndex((s) => s.id === focus));
+    drawDetail();
+  }));
+
+  const drawDetail = () => {
+    const s = SPECIES[focus];
+    const d = state.dex[focus];
+    if (!d?.seen) {
+      const hab = habitatsOf(focus);
+      detail.innerHTML = `<div class="dd unseen"><div class="dd-hero">${mysticFace(focus, false, 96, '', 'unseen')}<div class="dd-id"><span class="dd-no tnum">No. ${String(no.get(focus)).padStart(3, '0')}</span><span class="display">???</span><p class="muted">Not yet encountered.</p></div></div>
+        <div class="dd-rumour">${icon('compass')}<p>${hab.length ? `Rumour has it something stirs in <b>${hab[0].zone.name}</b> (${METHOD[hab[0].method].label.toLowerCase()}).` : s.rarity === 'legendary' ? 'Legends say it answers only Guardians and wishes.' : 'Not found in the wild. Evolve, breed or summon it.'}</p></div></div>`;
+      return;
+    }
+    detail.style.setProperty('--el', ELEMENTS[s.element].color);
+    const subs: [Sub, string][] = [['info', 'Info'], ['where', 'Habitat'], ['stats', 'Stats'], ['evolve', 'Evolve']];
+    detail.innerHTML = `<div class="dd">
+      <div class="dd-hero">${mysticFace(focus, false, 96)}<div class="dd-id"><span class="dd-no tnum">No. ${String(no.get(focus)).padStart(3, '0')}</span><span class="display ell">${s.name}</span><div class="cd-tags">${rarityTag(focus)}${elementBadge(s.element, true)}${s.rideable ? `<span class="tag">${icon('paw')} Rideable</span>` : ''}</div>
+        <span class="dd-caught">${d.caught ? `${glyph('check')} Caught ${d.caught}×` : 'Seen, not caught'}${d.shiny ? ` · <span class="holo-t">${icon('sparkles')} shiny</span>` : ''}</span></div></div>
+      <div class="seg cd-subs" role="tablist">${subs.map(([k, l]) => `<button role="tab" data-sub="${k}" class="${k === sub ? 'on' : ''}" aria-selected="${k === sub}">${l}</button>`).join('')}</div>
+      <div class="cd-page">${page(s)}</div></div>`;
+    detail.querySelectorAll<HTMLElement>('[data-sub]').forEach((b) => b.addEventListener('click', () => { sub = b.dataset.sub as Sub; sfx('select'); drawDetail(); }));
   };
-  const hint = (id: string) => {
-    const hab = habitatsOf(id);
-    if (!hab.length) return '<p class="muted small">This Mystic is not found in the wild.</p>';
-    const h = hab[0];
-    return `<p class="muted small">Rumour: something stirs in ${h.zone.name} (${METHOD[h.method].label.toLowerCase()}).</p>`;
+
+  const page = (s: Species) => {
+    if (sub === 'info') return `<p class="dd-lore">${s.lore}</p><div class="dd-abil">${s.abilities.map((a) => `<div class="abil"><b>${ABILITIES[a].name}</b><small>${ABILITIES[a].desc}</small></div>`).join('')}</div>`;
+    if (sub === 'where') {
+      const hab = habitatsOf(s.id);
+      return hab.length ? `<div class="hab-list">${hab.slice(0, 6).map((h) => `<div class="hab"><span class="hab-ic">${icon(METHOD[h.method].ic)}</span><b class="ell">${h.zone.name}</b><small>${METHOD[h.method].label} · Lv ${h.zone.levels[0]}–${h.zone.levels[1]}</small></div>`).join('')}</div>`
+        : `<p class="muted cd-note">${s.rarity === 'legendary' ? 'Only from Guardians and summons.' : 'Not found in the wild. Evolve, breed or summon it.'}</p>`;
+    }
+    if (sub === 'stats') return `<div class="cd-stats">${(['hp', 'atk', 'def', 'spd'] as const).map((k) => `<div class="stat"><span class="st-k">${k.toUpperCase()}</span>${bar(s.base[k] / (k === 'hp' ? 110 : 30), 'st')}<b class="tnum">${s.base[k]}</b></div>`).join('')}</div>`;
+    const stages = evolutionStages(s.id);
+    return `<div class="evo-line">${stages.map((col) => `<span class="evo-col">${col.map((x) => `<span class="evo-node ${x === s.id ? 'cur' : ''}">${mysticFace(x, false, 48, '', state.dex[x]?.seen ? '' : 'unseen')}<small class="ell">${state.dex[x]?.seen ? SPECIES[x].name : '???'}</small></span>`).join('')}</span>`).join(`<i class="evo-arrow">${glyph('chevR')}</i>`)}</div>
+      ${s.evolves.length ? `<div class="evo-conds">${s.evolves.map((e) => `<span class="tag line">${glyph('chevR')}${state.dex[e.id]?.seen ? SPECIES[e.id].name : '???'} · ${[e.level ? `Lv ${e.level}` : '', e.item ? ITEMS[e.item].name : '', e.time ? `at ${e.time}` : ''].filter(Boolean).join(' · ')}</span>`).join('')}</div>` : ''}`;
   };
-  draw();
+
+  drawFilters();
+  drawDetail();
+  grid.showIndex(list().findIndex((s) => s.id === focus));
+  return () => grid.destroy();
 }

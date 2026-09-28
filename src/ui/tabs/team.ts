@@ -1,65 +1,179 @@
+// Team & storage: the four-slot team shelf and a paged storage box on the left, the selected
+// Mystic's card on the right (stats, moves, relics, evolution) with its actions pinned below.
 import { SKILLS } from '../../data/skills';
 import { SPECIES, evolutionStages } from '../../data/species';
-import { ELEMENTS } from '../../data/elements';
+import { ELEMENTS, type Element } from '../../data/elements';
 import { ABILITIES, natureById, RARITY, STATUS } from '../../data/traits';
 import { RELICS } from '../../data/relics';
 import { ITEMS } from '../../data/items';
-import {
-  displayName, geneGrade, rankedAp, speciesOf, statsOf, xpToNext, evolutionFor, relicSlots, power, type Creature,
-} from '../../game/creature';
+import { displayName, geneGrade, rankedAp, speciesOf, statsOf, xpToNext, relicSlots, power, type Creature } from '../../game/creature';
 import { state, save, TEAM_MAX } from '../../game/state';
 import { awaken, awakenCost } from '../../game/gacha';
 import { sfx } from '../../core/audio';
-import { toast, confirmBox } from '../dom';
-import { bar, creatureCard, elementBadge, esc, mysticFace, rarityTag, stars } from '../kit';
-import { icon } from '../icons';
+import { toast, confirmBox, modal, popover } from '../dom';
+import { bar, hpBar, elementBadge, esc, mysticFace, rarityTag, stars, emptyState } from '../kit';
+import { icon, glyph } from '../icons';
 import { pickRelic } from '../pickers';
-import type { JournalHooks } from '../journal';
+import { Pager } from '../pager';
+import type { JournalHooks, TabCleanup } from '../journal';
 
 const STAT_MAX = { hp: 520, atk: 120, def: 120, spd: 100 };
+type Sub = 'stats' | 'moves' | 'relics' | 'evolve';
 
 function evoRoutes(c: Creature, night: boolean) {
-  const sp = speciesOf(c);
-  return sp.evolves.map((e) => {
+  return speciesOf(c).evolves.map((e) => {
     const t = SPECIES[e.id];
     const cond = [e.level ? `Lv ${e.level}` : '', e.item ? ITEMS[e.item].name : '', e.time ? (e.time === 'night' ? 'at night' : 'by day') : ''].filter(Boolean).join(' · ');
-    const lvOk = !e.level || c.level >= e.level;
-    const itemOk = !e.item || (state.inv.items[e.item] ?? 0) > 0;
-    const timeOk = !e.time || (e.time === 'night') === night;
-    return { e, t, cond, ready: lvOk && itemOk && timeOk };
+    const ready = (!e.level || c.level >= e.level) && (!e.item || (state.inv.items[e.item] ?? 0) > 0) && (!e.time || (e.time === 'night') === night);
+    return { e, t, cond, ready };
   });
 }
 
-export function renderTeam(root: HTMLElement, hooks: JournalHooks) {
+export function askText(title: string, value: string, placeholder: string, max = 16): Promise<string | null> {
+  return new Promise((resolve) => {
+    let out: string | null = null;
+    void modal('ask', (b, close) => {
+      b.innerHTML = `<h2>${title}</h2><label class="fld"><input maxlength="${max}" value="${esc(value)}" placeholder="${esc(placeholder)}" aria-label="${esc(title)}"></label>
+        <div class="row-end"><button class="btn ghost" data-a="no">Cancel</button><button class="btn primary" data-a="ok">Save</button></div>`;
+      const inp = b.querySelector('input')!;
+      const ok = () => { out = inp.value.trim(); close(); };
+      b.querySelector('[data-a=ok]')!.addEventListener('click', ok);
+      b.querySelector('[data-a=no]')!.addEventListener('click', () => close());
+      inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') ok(); });
+      requestAnimationFrame(() => { inp.focus(); inp.select(); });
+    }, () => resolve(out));
+  });
+}
+
+export function renderTeam(root: HTMLElement, hooks: JournalHooks): TabCleanup {
   let sel: Creature | null = state.team[0] ?? state.box[0] ?? null;
-  let boxFilter = '';
-  const draw = () => {
-    const box = state.box.filter((c) => !boxFilter || displayName(c).toLowerCase().includes(boxFilter) || speciesOf(c).element === boxFilter);
-    root.innerHTML = `<div class="team-wrap">
-      <div class="team-col">
-        <div class="sec-h">${icon('paw')}<span>Team</span><small>${state.team.length}/${TEAM_MAX} · first three battle</small></div>
-        <div class="team-list">${state.team.map((c, i) => creatureCard(c, { key: `t${i}`, selected: sel === c, note: i === 0 ? 'Lead' : i >= 3 ? 'Reserve' : '' })).join('')}
-          ${Array.from({ length: TEAM_MAX - state.team.length }, () => '<div class="ccard empty">Empty slot</div>').join('')}</div>
-        <div class="sec-h">${icon('chest')}<span>Storage</span><small>${state.box.length}</small></div>
-        <div class="box-tools"><input class="search" placeholder="Search storage…" value="${esc(boxFilter)}"></div>
-        <div class="box-grid">${box.map((c) => creatureCard(c, { key: `b${state.box.indexOf(c)}`, selected: sel === c, small: true })).join('') || '<p class="muted">Captured Mystics beyond your team rest here.</p>'}</div>
-      </div>
-      <div class="detail-col">${sel ? detail(sel) : ''}</div></div>`;
-    root.querySelectorAll<HTMLElement>('[data-k]').forEach((n) => n.addEventListener('click', () => {
-      const k = n.dataset.k!;
-      sel = k.startsWith('t') ? state.team[Number(k.slice(1))] : state.box[Number(k.slice(1))];
-      sfx('select');
-      draw();
-    }));
-    const search = root.querySelector<HTMLInputElement>('.search');
-    search?.addEventListener('input', () => { boxFilter = search.value.toLowerCase(); const pos = search.selectionStart; draw(); const s2 = root.querySelector<HTMLInputElement>('.search'); s2?.focus(); s2?.setSelectionRange(pos, pos); });
-    root.querySelectorAll<HTMLElement>('[data-act]').forEach((b) => b.addEventListener('click', () => void act(b.dataset.act!, b)));
+  let filter: Element | '' = '';
+  let sub: Sub = 'stats';
+  root.innerHTML = `<div class="team md">
+    <div class="md-master">
+      <section class="sec"><header class="sec-h"><b>Team</b><span class="sec-n tm-n"></span><small>First three battle</small></header><div class="tm-slots"></div></section>
+      <section class="sec grow"><header class="sec-h"><b>Storage</b><span class="sec-n box-n"></span><button class="chip tm-filter" aria-label="Filter storage by element"></button></header><div class="tm-box"></div></section>
+    </div>
+    <div class="md-detail tm-detail"></div>
+  </div>`;
+  const slots = root.querySelector('.tm-slots') as HTMLElement;
+  const detail = root.querySelector('.tm-detail') as HTMLElement;
+  const filterBtn = root.querySelector('.tm-filter') as HTMLButtonElement;
+  const boxList = () => state.box.filter((c) => !filter || speciesOf(c).element === filter);
+  const box = new Pager<Creature>(root.querySelector('.tm-box') as HTMLElement, {
+    items: boxList(), cell: { w: 66, h: 84 }, gap: 6, label: 'Storage',
+    render: (c) => cellHTML(c), selected: (c) => c === sel, onPick: (c) => select(c),
+    empty: () => emptyState(filter ? `No ${ELEMENTS[filter].name} Mystics stored` : 'Storage is empty', filter ? 'Try another element filter.' : 'Mystics you catch beyond a full team rest here.', 'chest'),
+  });
+
+  const cellHTML = (c: Creature) => `<span class="mcell ${c.hp <= 0 ? 'ko' : ''} ${c.favorite ? 'fav' : ''}">${mysticFace(c.species, c.shiny, 46, `<span class="cap-lv">${c.level}</span>`)}<span class="mc-name ell">${esc(displayName(c))}</span></span>`;
+
+  const drawSlots = () => {
+    (root.querySelector('.tm-n') as HTMLElement).textContent = `${state.team.length}/${TEAM_MAX}`;
+    (root.querySelector('.box-n') as HTMLElement).textContent = String(state.box.length);
+    filterBtn.innerHTML = filter ? `<span class="el-pip" style="--el:${ELEMENTS[filter].color}">${icon(filter)}</span>${ELEMENTS[filter].name}` : `${glyph('filter')}All`;
+    slots.innerHTML = Array.from({ length: TEAM_MAX }, (_, i) => {
+      const c = state.team[i];
+      if (!c) return `<div class="slot empty"><span class="slot-plus">${glyph('plus')}</span><small>Empty</small></div>`;
+      const st = statsOf(c);
+      return `<button class="slot ${c === sel ? 'sel' : ''} ${c.hp <= 0 ? 'ko' : ''} ${i >= 3 ? 'reserve' : ''}" data-t="${i}" aria-label="${esc(displayName(c))}, level ${c.level}">
+        ${i === 0 ? `<span class="slot-lead" title="Lead">${icon('crown')}</span>` : ''}${mysticFace(c.species, c.shiny, 48)}
+        <span class="slot-name ell">${esc(displayName(c))}</span><span class="slot-lv">Lv ${c.level}</span>${hpBar(c.hp / st.maxHp, 'thin')}</button>`;
+    }).join('');
+    slots.querySelectorAll<HTMLElement>('[data-t]').forEach((b) => b.addEventListener('click', () => select(state.team[Number(b.dataset.t)])));
   };
 
-  const act = async (a: string, b: HTMLElement) => {
+  const select = (c: Creature) => {
+    if (c === sel) return;
+    sel = c;
+    sfx('select');
+    drawSlots();
+    box.refresh();
+    drawDetail();
+  };
+
+  const drawDetail = () => {
+    const c = sel;
+    if (!c) { detail.innerHTML = emptyState('No Mystics yet', 'Your first companion joins you in Hearthwick.', 'paw'); return; }
+    const sp = speciesOf(c);
+    const e = ELEMENTS[sp.element];
+    const st = statsOf(c);
+    const inTeam = state.team.includes(c);
+    const ti = state.team.indexOf(c);
+    detail.style.setProperty('--el', e.color);
+    detail.innerHTML = `<div class="cd">
+      <div class="cd-hero">
+        ${mysticFace(c.species, c.shiny, 104, '', 'cd-cap')}
+        <div class="cd-id">
+          <div class="cd-name"><span class="display ell">${esc(displayName(c))}</span>${c.favorite ? `<span class="cd-fav" title="Favourite">${glyph('heart')}</span>` : ''}</div>
+          <div class="cd-tags">${rarityTag(c.species)}${elementBadge(sp.element, true)}${c.nickname ? `<span class="tag line">${sp.name}</span>` : ''}${c.shiny ? `<span class="tag holo">${icon('sparkles')} Shiny</span>` : ''}${stars(c.stars)}</div>
+          <div class="cd-meter"><span class="cd-ml">Lv ${c.level}</span>${bar(c.xp / xpToNext(c.level), 'xp')}<span class="cd-mv tnum">${c.xp}/${xpToNext(c.level)} XP</span></div>
+          <div class="cd-meter"><span class="cd-ml">HP</span>${hpBar(c.hp / st.maxHp)}<span class="cd-mv tnum">${c.hp}/${st.maxHp}</span></div>
+        </div>
+        <div class="cd-power"><small>Power</small><b class="tnum">${power(c)}</b></div>
+      </div>
+      <div class="seg cd-subs" role="tablist">${(['stats', 'moves', 'relics', 'evolve'] as Sub[]).map((s) => `<button role="tab" data-sub="${s}" class="${s === sub ? 'on' : ''}" aria-selected="${s === sub}">${{ stats: 'Stats', moves: 'Moves', relics: 'Relics', evolve: 'Evolve' }[s]}</button>`).join('')}</div>
+      <div class="cd-page">${subPage(c)}</div>
+      <div class="cd-actions">${inTeam ? `
+        ${ti > 0 ? `<button class="btn small" data-act="lead" title="Make lead">${icon('crown')}<span class="lb">Lead</span></button>` : ''}
+        <button class="btn small round" data-act="up" ${ti <= 0 ? 'disabled' : ''} aria-label="Move left">${glyph('chevL')}</button>
+        <button class="btn small round" data-act="down" ${ti >= state.team.length - 1 ? 'disabled' : ''} aria-label="Move right">${glyph('chevR')}</button>
+        <button class="btn small" data-act="tobox" title="Send to storage">${icon('chest')}<span class="lb">Store</span></button>`
+        : `<button class="btn small primary" data-act="toteam">${icon('paw')}<span class="lb">To team</span></button>`}
+        ${c.stars < 5 ? `<button class="btn small gold" data-act="awaken" title="Awaken with Mystic Essence">${icon('sparkles')}<span class="lb">Awaken ${c.stars + 1}★</span><small>${awakenCost(c.stars)}</small></button>` : ''}
+        ${sp.rideable ? `<button class="btn small" data-act="ride">${icon('paw')}<span class="lb">Ride</span></button>` : ''}
+        <button class="btn small round cd-more" data-act="more" aria-label="More actions">${glyph('more')}</button>
+      </div></div>`;
+    detail.querySelectorAll<HTMLElement>('[data-sub]').forEach((b) => b.addEventListener('click', () => { sub = b.dataset.sub as Sub; sfx('select'); drawDetail(); }));
+    detail.querySelectorAll<HTMLElement>('[data-act]').forEach((b) => b.addEventListener('click', () => void act(b.dataset.act!, b)));
+  };
+
+  const subPage = (c: Creature) => {
+    const sp = speciesOf(c);
+    const st = statsOf(c);
+    const nat = natureById(c.nature);
+    if (sub === 'stats') {
+      const stat = (k: 'hp' | 'atk' | 'def' | 'spd', v: number) => `<div class="stat ${nat.up === k ? 'up' : nat.down === k ? 'down' : ''}"><span class="st-k">${k.toUpperCase()}${nat.up === k ? glyph('chevU') : nat.down === k ? glyph('chevD') : ''}</span>${bar(v / STAT_MAX[k], 'st')}<b class="tnum">${v}</b><em title="Gene ${c.genes[k]}/15">${c.genes[k]}</em></div>`;
+      const ab = ABILITIES[c.ability];
+      return `<div class="cd-stats">${stat('hp', st.maxHp)}${stat('atk', st.atk)}${stat('def', st.def)}${stat('spd', st.spd)}</div>
+        <div class="cd-facts"><span class="fact"><small>Genes</small><b class="grade g${geneGrade(c.genes)}">${geneGrade(c.genes)}</b></span><span class="fact"><small>Nature</small><b>${nat.name}</b></span>${c.infusion ? `<span class="fact"><small>Infusion</small><b>+${c.infusion * 3}%</b></span>` : ''}</div>
+        <div class="cd-ability"><b>${ab.name}</b><p>${ab.desc}</p></div>`;
+    }
+    if (sub === 'moves') {
+      return `<div class="cd-moves">${c.skills.map((s) => {
+        const sk = SKILLS[s.id];
+        if (!sk) return '';
+        return `<div class="move" style="--el:${ELEMENTS[sk.element].color}"><span class="mv-el">${icon(sk.element)}</span><span class="mv-b"><b class="ell">${sk.name}${s.rank > 1 ? ` <i class="rank">+${s.rank - 1}</i>` : ''}</b><small>${sk.desc}</small></span><span class="mv-ap tnum">${rankedAp(sk, s.rank)}<small>AP</small></span>${sk.status ? `<i class="mv-st" style="--c:${STATUS[sk.status.id].color}">${STATUS[sk.status.id].short}</i>` : ''}</div>`;
+      }).join('')}</div>`;
+    }
+    if (sub === 'relics') {
+      const slotsN = relicSlots(c);
+      return `<div class="cd-relics">${Array.from({ length: 3 }, (_, i) => {
+        if (i >= slotsN) return `<div class="rslot locked">${icon('lock')}<span><b>Locked</b><small>Opens at 3★</small></span></div>`;
+        const inst = state.relics.find((r) => r.uid === c.relics[i]);
+        const d = inst ? RELICS[inst.id] : null;
+        return `<button class="rslot ${d ? 'on' : ''}" data-act="relic:${i}" ${d ? `style="--rar:${RARITY[d.rarity].color}"` : ''}>${d ? `<span class="rs-ic">${icon(d.effect === 'element' ? d.element ?? 'gem' : 'crown')}</span><span><b>${d.name} <i class="tnum">Lv ${inst!.level}</i></b><small>${d.desc}</small></span>` : `<span class="rs-ic">${glyph('plus')}</span><span><b>Empty slot</b><small>Equip a relic</small></span>`}</button>`;
+      }).join('')}</div>`;
+    }
+    const stages = evolutionStages(c.species);
+    const routes = evoRoutes(c, hooks.isNight());
+    return `<div class="evo-line">${stages.map((col) => `<span class="evo-col">${col.map((id) => `<span class="evo-node ${id === c.species ? 'cur' : ''}">${mysticFace(id, c.shiny, 50, '', state.dex[id]?.seen || id === c.species ? '' : 'unseen')}<small class="ell">${state.dex[id]?.seen || id === c.species ? SPECIES[id].name : '???'}</small></span>`).join('')}</span>`).join(`<i class="evo-arrow">${glyph('chevR')}</i>`)}</div>
+      ${routes.length ? `<div class="evo-routes">${routes.map((r) => `<button class="btn small ${r.ready ? 'primary' : ''}" data-act="evo:${r.e.id}" ${r.ready ? '' : 'disabled'}>${icon('sparkles')}${r.t.name}<small>${r.cond}</small></button>`).join('')}</div>` : `<p class="muted cd-note">${sp.name} is a final form.</p>`}`;
+  };
+
+  const act = async (a: string, anchor: HTMLElement) => {
     if (!sel) return;
     const c = sel;
     const ti = state.team.indexOf(c), bi = state.box.indexOf(c);
+    if (a === 'more') {
+      const pick = await popover(anchor, [
+        { value: 'fav', label: c.favorite ? 'Unfavourite' : 'Favourite', icon: glyph('heart') },
+        { value: 'rename', label: 'Rename', icon: icon('scroll') },
+        ...(bi >= 0 ? [{ value: 'release', label: 'Release to the wild', icon: glyph('close'), danger: true }] : []),
+      ]);
+      if (!pick) return;
+      a = pick;
+    }
     if (a === 'lead' && ti > 0) { state.team.splice(ti, 1); state.team.unshift(c); }
     if (a === 'up' && ti > 0) [state.team[ti - 1], state.team[ti]] = [state.team[ti], state.team[ti - 1]];
     if (a === 'down' && ti >= 0 && ti < state.team.length - 1) [state.team[ti + 1], state.team[ti]] = [state.team[ti], state.team[ti + 1]];
@@ -68,26 +182,26 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks) {
       state.team.splice(ti, 1); state.box.push(c);
     }
     if (a === 'toteam' && bi >= 0) {
-      if (state.team.length >= TEAM_MAX) { toast('Team is full — move someone to storage first.', 'bad'); sfx('error'); return; }
+      if (state.team.length >= TEAM_MAX) { toast('Your team is full. Send someone to storage first.', 'bad'); sfx('error'); return; }
       state.box.splice(bi, 1); state.team.push(c);
     }
     if (a === 'fav') c.favorite = !c.favorite;
     if (a === 'release' && bi >= 0) {
       if (c.favorite) { toast('Unfavourite it first.', 'bad'); return; }
-      if (!(await confirmBox('Release?', `${esc(displayName(c))} will return to the wild. This can't be undone.`, 'Release', true))) return;
+      if (!(await confirmBox('Release to the wild?', `${esc(displayName(c))} will return to the wild. This can’t be undone. You’ll receive 5 Mystic Essence.`, 'Release', true))) return;
       state.box.splice(bi, 1);
       state.inv.essence += 5;
-      sel = state.team[0];
+      sel = state.team[0] ?? state.box[0] ?? null;
       toast('Released. You received 5 Mystic Essence.');
     }
     if (a === 'awaken') {
-      if (awaken(c)) { sfx('levelup'); toast(`${esc(displayName(c))} awakened to ${c.stars}★!`, 'good'); } else { sfx('error'); toast('Not enough Mystic Essence.', 'bad'); }
+      if (awaken(c)) { sfx('levelup'); toast(`${esc(displayName(c))} awakened to ${c.stars}★!`, 'good'); } else { sfx('error'); toast(`Awakening needs ${awakenCost(c.stars)} Mystic Essence.`, 'bad'); }
     }
     if (a === 'rename') {
-      const name = prompt('Nickname (blank to reset):', c.nickname ?? '')?.trim();
-      if (name !== undefined) c.nickname = name ? name.slice(0, 16) : undefined;
+      const name = await askText('Rename', c.nickname ?? '', speciesOf(c).name);
+      if (name !== null) c.nickname = name ? name.slice(0, 16) : undefined;
     }
-    if (a.startsWith('evo:')) { await hooks.evolve(c, a.slice(4)); }
+    if (a.startsWith('evo:')) await hooks.evolve(c, a.slice(4));
     if (a.startsWith('relic:')) {
       const slot = Number(a.slice(6));
       if (c.relics[slot]) { c.relics.splice(slot, 1); sfx('back'); }
@@ -101,60 +215,22 @@ export function renderTeam(root: HTMLElement, hooks: JournalHooks) {
       }
     }
     if (a === 'ride') { hooks.ride(c); return; }
-    void b;
     save();
-    draw();
+    drawSlots();
+    box.setItems(boxList(), sel && state.box.includes(sel) ? boxList().indexOf(sel) : undefined);
+    drawDetail();
   };
 
-  const detail = (c: Creature) => {
-    const sp = speciesOf(c);
-    const e = ELEMENTS[sp.element];
-    const st = statsOf(c);
-    const nat = natureById(c.nature);
-    const ab = ABILITIES[c.ability];
-    const inTeam = state.team.includes(c);
-    const stages = evolutionStages(c.species);
-    const routes = evoRoutes(c, hooks.isNight());
-    const stat = (k: 'hp' | 'atk' | 'def' | 'spd', v: number) => `<div class="stat ${nat.up === k ? 'up' : nat.down === k ? 'down' : ''}"><span>${k.toUpperCase()}${nat.up === k ? '▲' : nat.down === k ? '▼' : ''}</span>${bar(v / STAT_MAX[k], 'st')}<b>${v}</b><em title="Gene">${c.genes[k]}</em></div>`;
-    const slots = relicSlots(c);
-    return `<div class="cd" style="--el:${e.color};--rar:${RARITY[sp.rarity].color}">
-      <div class="cd-hero">
-        <div class="cd-art">${mysticFace(c.species, c.shiny, 190)}</div>
-        <div class="cd-id">
-          <div class="cd-tags">${rarityTag(c.species)}${elementBadge(sp.element, true)}${c.shiny ? `<span class="shiny-tag">${icon('sparkle')} Shiny</span>` : ''}${c.favorite ? `<span class="fav-tag">${icon('heart')}</span>` : ''}</div>
-          <div class="cd-name">${esc(displayName(c))}${c.nickname ? `<small>${sp.name}</small>` : ''}</div>
-          ${stars(c.stars)}
-          <div class="cd-lv">Level ${c.level} ${bar(c.xp / xpToNext(c.level), 'xp')}<small>${c.xp} / ${xpToNext(c.level)} XP · Power ${power(c)}</small></div>
-          <div class="cd-hp">HP ${c.hp} / ${st.maxHp} ${bar(c.hp / st.maxHp, 'hp')}</div>
-        </div>
-      </div>
-      <div class="cd-grid">
-        <section class="cd-card"><h4>Stats</h4><div class="cd-stats">${stat('hp', st.maxHp)}${stat('atk', st.atk)}${stat('def', st.def)}${stat('spd', st.spd)}</div>
-          <div class="cd-meta"><span>Genes <b class="grade g${geneGrade(c.genes)}">${geneGrade(c.genes)}</b></span><span>Nature <b>${nat.name}</b> <i>${nat.flavor}</i></span>${c.infusion ? `<span>Infusion <b>✦ ${c.infusion}</b></span>` : ''}</div></section>
-        <section class="cd-card"><h4>Ability</h4><div class="ability"><b>${ab.name}</b><p>${ab.desc}</p></div>
-          <h4>Relics <small>${c.relics.length}/${slots}</small></h4><div class="relic-slots">${Array.from({ length: slots }, (_, i) => {
-            const inst = state.relics.find((r) => r.uid === c.relics[i]);
-            const d = inst ? RELICS[inst.id] : null;
-            return `<button class="rslot ${d ? 'on' : ''}" data-act="relic:${i}" ${d ? `style="--rar:${RARITY[d.rarity].color}"` : ''}>${d ? `${icon('crown')}<b>${d.name}</b><small>Lv ${inst!.level} · ${d.desc}</small>` : `${icon('lock')}<small>Empty slot — tap to equip</small>`}</button>`;
-          }).join('')}${c.stars < 3 ? '<p class="muted small">A third slot unlocks at 3★.</p>' : ''}</div></section>
-        <section class="cd-card wide"><h4>Moves</h4><div class="cd-skills">${c.skills.map((s) => {
-          const sk = SKILLS[s.id];
-          if (!sk) return '';
-          const se = ELEMENTS[sk.element];
-          return `<div class="cs" style="--el:${se.color}"><span class="g">${icon(sk.element)}</span><b>${sk.name}${s.rank > 1 ? ` <i class="rank">+${s.rank - 1}</i>` : ''}${sk.status ? ` <i class="stag" style="--c:${STATUS[sk.status.id].color}">${STATUS[sk.status.id].short}</i>` : ''}</b><small>${sk.desc}</small><em>${rankedAp(sk, s.rank)} AP</em></div>`;
-        }).join('')}</div></section>
-        <section class="cd-card wide"><h4>Evolution</h4><div class="evo-line">${stages.map((st) => `<span class="evo-col">${st.map((id) => `<span class="evo-node ${id === c.species ? 'cur' : ''}">${mysticFace(id, c.shiny, 44)}<small>${state.dex[id]?.seen || id === c.species ? SPECIES[id].name : '???'}</small></span>`).join('')}</span>`).join('<i class="evo-arrow">›</i>')}</div>
-          ${routes.length ? `<div class="evo-routes">${routes.map((r) => `<button class="btn ${r.ready ? 'primary' : 'ghost'}" data-act="evo:${r.e.id}" ${r.ready ? '' : 'disabled'}>${icon('sparkles')} ${r.t.name}<small>${r.cond}</small></button>`).join('')}</div>` : '<p class="muted small">Final form.</p>'}</section>
-      </div>
-      <p class="cd-lore">${sp.lore}</p>
-      <div class="cd-actions">
-        ${inTeam ? `<button class="btn" data-act="lead">${icon('crown')} Lead</button><button class="btn" data-act="up">▲</button><button class="btn" data-act="down">▼</button><button class="btn" data-act="tobox">${icon('chest')} To storage</button>` : `<button class="btn primary" data-act="toteam">${icon('paw')} To team</button><button class="btn danger" data-act="release">Release</button>`}
-        <button class="btn" data-act="fav">${icon('heart')} ${c.favorite ? 'Unfavourite' : 'Favourite'}</button>
-        <button class="btn" data-act="rename">Rename</button>
-        ${c.stars < 5 ? `<button class="btn gold" data-act="awaken">${icon('sparkles')} Awaken ${c.stars + 1}★ <small>${awakenCost(c.stars)} essence</small></button>` : ''}
-        ${sp.rideable ? `<button class="btn" data-act="ride">${icon('paw')} Ride</button>` : ''}
-      </div></div>`;
-  };
-  void evolutionFor;
-  draw();
+  filterBtn.addEventListener('click', async () => {
+    const pick = await popover(filterBtn, [{ value: '' as const, label: 'All elements', icon: glyph('grid'), on: !filter }, ...(Object.keys(ELEMENTS) as Element[]).map((k) => ({ value: k, label: ELEMENTS[k].name, icon: `<span class="el-pip" style="--el:${ELEMENTS[k].color}">${icon(k)}</span>`, on: filter === k }))], { cols: 2 });
+    if (pick === null) return;
+    filter = pick;
+    sfx('select');
+    drawSlots();
+    box.setItems(boxList(), 0);
+  });
+
+  drawSlots();
+  drawDetail();
+  return () => box.destroy();
 }
