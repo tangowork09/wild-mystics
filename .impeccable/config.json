@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "wobble",
+        "files": [
+          "src/ui/styles.css"
+        ],
+        "createdAt": "2026-09-28T00:59:46.599Z",
+        "reason": "Claude judgment (not user-confirmed): literal motion — hatching eggs rock side to side, a creature-collector convention; not an easing curve"
+      }
+    ]
+  }
+}

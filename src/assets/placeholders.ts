@@ -4,7 +4,7 @@ import type { Look } from '../data/species';
 // Procedural stand-in models. Every creature is built from its `Look` so the roster reads
 // distinctly until real GLBs are dropped into public/assets and listed in manifest.json.
 
-export type AnimName = 'idle' | 'run' | 'walk' | 'attack' | 'hit' | 'faint' | 'cast' | 'victory' | 'interact';
+export type AnimName = 'idle' | 'run' | 'walk' | 'attack' | 'hit' | 'faint' | 'cast' | 'victory' | 'interact' | 'jump' | 'fall' | 'land' | 'gather';
 
 export interface Rig {
   root: THREE.Group;

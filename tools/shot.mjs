@@ -20,12 +20,12 @@ const browser = await puppeteer.launch({
 });
 const page = await browser.newPage();
 const errors = [];
-page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') errors.push(`[${m.type()}] ${m.text()}`); });
+page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning' || m.type() === 'warn') errors.push(`[${m.type()}] ${m.text()}`); });
 page.on('pageerror', (e) => errors.push(`[pageerror] ${e.message}`));
 const url = `http://localhost:5180/?shot=1${query ? '&' + query : ''}`;
 const t0 = Date.now();
 await page.goto(url, { waitUntil: 'domcontentloaded' });
-await page.waitForFunction(() => !document.getElementById('loading') || document.getElementById('loading').classList.contains('out'), { timeout: 120000 }).catch(() => errors.push('loading timeout'));
+await page.waitForFunction(() => !document.getElementById('loading') || document.getElementById('loading').classList.contains('out') || !!document.querySelector('.auth-screen.in'), { timeout: 120000 }).catch(() => errors.push('loading timeout'));
 const loadMs = Date.now() - t0;
 // optional scripted steps: STEPS env = JSON [{wait: ms} | {key: 'e'} | {eval: 'js'} | {shot: 'suffix'}]
 const steps = process.env.STEPS ? JSON.parse(process.env.STEPS) : [];
@@ -42,4 +42,5 @@ for (const s of steps) {
 const fps = await page.evaluate(() => new Promise((res) => { let n = 0; const t = performance.now(); const f = () => { n++; if (performance.now() - t < 1000) requestAnimationFrame(f); else res(n); }; requestAnimationFrame(f); }));
 await page.screenshot({ path: path.join(dir, `${name}.png`) });
 console.log(JSON.stringify({ name, loadMs, fps, errors: errors.slice(0, 20) }, null, 1));
-await browser.close();
+await Promise.race([browser.close(), new Promise((r) => setTimeout(r, 4000))]);
+process.exit(0);

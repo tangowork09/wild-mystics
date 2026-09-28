@@ -7,7 +7,8 @@
 
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { prune, dedup, textureCompress, resample, weld } from '@gltf-transform/functions';
+import { prune, dedup, textureCompress, resample, weld, quantize, meshopt } from '@gltf-transform/functions';
+import { MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -17,7 +18,8 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const SCOUT = path.join(ROOT, '.asset-scout');
 const X = path.join(SCOUT, '_x'); // extraction scratch
 const OUT = path.join(ROOT, 'public/assets');
-const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
+await MeshoptEncoder.ready;
+const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.encoder': MeshoptEncoder });
 
 const mk = (p) => fs.mkdirSync(p, { recursive: true });
 const log = (...a) => console.log('•', ...a);
@@ -49,7 +51,11 @@ async function optimise(doc, { tex = 1024, normalTex = 512, keepAnims = null, dr
   if (keepAnims) {
     for (const a of root.listAnimations()) {
       const nm = a.getName().split('|').pop();
-      if (!keepAnims.includes(nm)) a.dispose();
+      if (keepAnims.includes(nm)) continue;
+      // dispose samplers/channels too, otherwise their accessors survive prune()
+      for (const sm of a.listSamplers()) sm.dispose();
+      for (const ch of a.listChannels()) ch.dispose();
+      a.dispose();
     }
   }
   await doc.transform(
@@ -59,11 +65,120 @@ async function optimise(doc, { tex = 1024, normalTex = 512, keepAnims = null, dr
     prune(),
     textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [tex, tex], slots: /^(?!normal).*$/ }),
     textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [normalTex, normalTex], slots: /^normal/ }),
+    quantize(),
+    meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
   );
   return doc;
 }
 
 const manifest = { player: null, npcs: [], creatures: {}, environment: {}, buildings: {}, decor: {}, textures: {}, vfx: {}, music: {} };
+
+// ── Round-2 creature packs (.asset-scout/round2/creatures + creatures.json) ──
+// species.ts refers to them as 'R2:<exact file name>' (e.g. 'R2:Koi__d2ba96af.glb') so the several
+// "Fish" / "Shark" / "Cow" / "Horse" files stay unambiguous. Every pack names its clips differently, so
+// our clip names are matched fuzzily (same idea as tools/add-asset.mjs RULES), most specific rule first.
+const R2 = path.join(SCOUT, 'round2');
+const R2_RULES = {
+  idle: [/^idle$/i, /^[a-z]+_?idle$/i, /^swimming_normal$/i, /^swim\b/i, /flying$/i, /idle/i],
+  walk: [/^walk(ing)?(_a)?$/i, /^[a-z]+_walk(ing)?$/i, /^swimming_normal$/i, /^swim\b/i, /flying$/i],
+  run: [/^run(ning)?(_a)?$/i, /^[a-z]+_run(ning)?$/i, /^gallop$/i, /^swimming_fast$/i, /^swim\b/i, /flying$/i, /^walk(ing)?(_a)?$/i, /^[a-z]+_walk(ing)?$/i],
+  attack: [/^attack$/i, /^(?!block)[a-z]+_attack$/i, /^attack_headbutt$/i, /^bite_front$/i, /bite/i, /(^|_)punch(_a)?$/i, /^1h_melee_attack_chop$/i, /attack/i, /^[a-z]*_?jump$/i],
+  hit: [/hit_?react/i, /hit_?rec(ie|ei)ve/i, /rec(ie|ei)ve_?hit/i, /^hit_a$/i, /(^|_)hit$/i, /^swimming_impulse$/i, /(^|_)no$/i],
+  faint: [/^death(_a)?$/i, /^[a-z]+_death$/i, /death/i, /(^|_)dead$/i, /die$/i],
+  cast: [/^spellcast_shoot$/i, /spell/i, /(^|_)shoot$/i, /^attack_kick$/i, /attack_?2$/i, /(^|_)yes$/i, /^swimming_impulse$/i, /^[a-z]*_?jump$/i, /jump_?to_?idle/i],
+  victory: [/cheer/i, /(^|_)dance$/i, /victory/i, /thumbs_?up/i, /(^|_)wave$/i, /(^|_)yes$/i, /jump_?to_?idle/i, /^[a-z]*_?jump$/i, /^out_of_water$/i],
+  jump: [/^jump$/i, /^[a-z]+_jump$/i, /^jump_full_short$/i, /jump_?to_?idle/i],
+};
+const HOP = 'Hop'; // looping copy of a jump clip, for farm critters that ship without walk/run clips
+/** Models that don't face +Z like the rest (checked with a head-on render of every round-2 species). */
+const R2_ROT_Y = { 'Wasp__71cadefd.glb': -Math.PI / 2 };
+
+/**
+ * Map our anim names onto a model's clips (base names, file order). One-shot anims never reuse a
+ * looping clip: the runtime can't replay the clip it is already looping as a one-shot (it would
+ * freeze on the last frame), so e.g. a fish that only has "Swim" simply gets no attack clip.
+ */
+function mapR2Anims(clips) {
+  const pick = (rules, avoid) => {
+    for (const r of rules) {
+      const hit = clips.find((c) => r.test(c) && !avoid?.has(c));
+      if (hit) return hit;
+    }
+    return undefined;
+  };
+  const anims = { idle: pick(R2_RULES.idle) ?? clips[0] };
+  let hopFrom = null;
+  const walk = pick(R2_RULES.walk);
+  const run = pick(R2_RULES.run) ?? walk;
+  if (walk || run) {
+    anims.walk = walk ?? run;
+    anims.run = run;
+  } else if ((hopFrom = pick(R2_RULES.jump))) {
+    anims.walk = anims.run = HOP; // hop around instead of sliding in idle
+  }
+  const loops = new Set([anims.idle, anims.walk, anims.run].filter(Boolean));
+  for (const k of ['attack', 'hit', 'faint', 'cast', 'victory', 'jump']) {
+    const c = pick(R2_RULES[k], loops);
+    if (c) anims[k] = c;
+  }
+  return { anims, hopFrom };
+}
+
+/** Several packs export every clip twice ('Idle' and 'AnimalArmature|Idle'): keep the first. */
+function dedupeClips(doc) {
+  const seen = new Set();
+  for (const a of doc.getRoot().listAnimations()) {
+    const b = a.getName().split('|').pop();
+    if (!seen.has(b)) { seen.add(b); continue; }
+    for (const sm of a.listSamplers()) sm.dispose();
+    for (const ch of a.listChannels()) ch.dispose();
+    a.dispose();
+  }
+}
+
+/** Add a second clip that shares `from`'s keyframes, so it can loop while `from` stays a one-shot. */
+function cloneClip(doc, from, name) {
+  const src = doc.getRoot().listAnimations().find((a) => a.getName().split('|').pop() === from);
+  if (!src) return;
+  const anim = doc.createAnimation(name);
+  const samplers = new Map();
+  for (const s of src.listSamplers()) {
+    const ns = doc.createAnimationSampler().setInput(s.getInput()).setOutput(s.getOutput()).setInterpolation(s.getInterpolation());
+    anim.addSampler(ns);
+    samplers.set(s, ns);
+  }
+  for (const ch of src.listChannels()) {
+    anim.addChannel(doc.createAnimationChannel().setTargetNode(ch.getTargetNode()).setTargetPath(ch.getTargetPath()).setSampler(samplers.get(ch.getSampler())));
+  }
+}
+
+let r2Meta = null;
+function r2Info(file) {
+  r2Meta ??= new Map(JSON.parse(fs.readFileSync(path.join(R2, 'creatures.json'), 'utf8')).map((m) => [path.basename(m.file), m]));
+  const meta = r2Meta.get(file);
+  if (!meta) throw new Error(`round-2 model not found in creatures.json: ${file}`);
+  return meta;
+}
+
+/** Optimise one round-2 model into public/assets and return its manifest fields. */
+async function importR2(file, rel) {
+  const meta = r2Info(file);
+  const doc = await io.read(path.join(R2, 'creatures', file));
+  // A skinned mesh node's own transform is ignored when rendering (glTF spec; three binds with identity),
+  // but the runtime's Box3 height measure still applies it to the skinned bounds. The Triceratops node is
+  // tilted, which doubled its measured height and floated it off the ground, so neutralise it everywhere.
+  for (const n of doc.getRoot().listNodes()) if (n.getSkin() && n.getMesh()) n.setTranslation([0, 0, 0]).setRotation([0, 0, 0, 1]).setScale([1, 1, 1]);
+  dedupeClips(doc);
+  const clips = doc.getRoot().listAnimations().map((a) => a.getName().split('|').pop());
+  const { anims, hopFrom } = mapR2Anims(clips);
+  const keep = [...new Set(Object.values(anims).filter((c) => c !== HOP)), ...(hopFrom ? [hopFrom] : [])];
+  // KayKit packs can ship weapons as child nodes (these skeleton files don't); strip any so they fight bare-boned
+  await optimise(doc, { keepAnims: keep, dropNodes: file.startsWith('KayKit_') ? KAY_WEAPONS : [] });
+  if (hopFrom) cloneClip(doc, hopFrom, HOP); // after optimise: shares the already-resampled keyframes
+  await io.write(path.join(OUT, rel), doc);
+  const rig = /fish/i.test(meta.pack) ? 'swimmer' : meta.rig;
+  return { rig, anims, ...(R2_ROT_Y[file] ? { rotY: R2_ROT_Y[file] } : {}) };
+}
 
 // ── 1. Creatures ──────────────────────────────────────────────────────────
 async function creatures() {
@@ -93,15 +208,32 @@ async function creatures() {
     biped: { idle: 'Idle', run: 'Run', attack: 'Punch', hit: 'HitReact', faint: 'Death', cast: 'Weapon', victory: 'Wave' },
     flyer: { idle: 'Flying_Idle', run: 'Fast_Flying', attack: 'Headbutt', hit: 'HitReact', faint: 'Death', cast: 'Yes', victory: 'Yes' },
   };
+  const written = new Map();
   for (const m of src.matchAll(re)) {
     const [, id, , height, model] = m;
+    if (model.startsWith('R2:')) {
+      const file = model.slice(3);
+      const rel = `models/creatures/r2_${file.replace(/\.glb$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '_')}.glb`;
+      if (!written.has(rel)) {
+        written.set(rel, await importR2(file, rel));
+        const { rig, anims } = written.get(rel);
+        log(`creature model ${path.basename(rel, '.glb').padEnd(34)} ${rig.padEnd(9)} ${kb(path.join(OUT, rel)).padStart(7)}  ${Object.entries(anims).map(([k, v]) => `${k}=${v}`).join(' ')}`);
+      }
+      const { rig, anims, rotY } = written.get(rel);
+      manifest.creatures[id] = { model: rel, height: Number(height), ...(rotY ? { rotY } : {}), rig, anims: { ...anims } };
+      continue;
+    }
     const pm = pickModel(model);
-    const doc = await io.read(pm.file);
-    await optimise(doc);
-    const out = path.join(OUT, `models/creatures/${id}.glb`);
-    await io.write(out, doc);
-    manifest.creatures[id] = { model: `models/creatures/${id}.glb`, height: Number(height), rig: pm.rig, anims: ANIMS[pm.rig] };
-    log(`creature ${id.padEnd(13)} ← ${model.padEnd(18)} ${pm.rig.padEnd(6)} ${kb(out)}`);
+    const slug = model.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+    const rel = `models/creatures/${slug}.glb`;
+    if (!written.has(rel)) {
+      const doc = await io.read(pm.file);
+      await optimise(doc);
+      await io.write(path.join(OUT, rel), doc);
+      written.set(rel, true);
+      log(`creature model ${slug.padEnd(20)} ${pm.rig.padEnd(6)} ${kb(path.join(OUT, rel))}`);
+    }
+    manifest.creatures[id] = { model: rel, height: Number(height), rig: pm.rig, anims: ANIMS[pm.rig] };
   }
 }
 
@@ -109,21 +241,22 @@ async function creatures() {
 const KAY_WEAPONS = [/Sword/, /Shield/, /Axe/, /Crossbow/, /Knife/, /Staff/, /Wand/, /Spellbook/, /Throwable/, /Mug/, /Bow/, /Arrow/, /Quiver/, /Dagger/];
 async function characters() {
   mk(path.join(OUT, 'models/characters'));
-  const playerAnims = ['Idle', 'Walking_A', 'Running_A', 'Throw', 'Cheer', 'Hit_A', 'Use_Item', 'Interact', 'PickUp', 'Dodge_Left', 'Dodge_Right', 'Jump_Full_Short', 'Death_A', 'Spellcast_Shoot', 'Block'];
+  const playerAnims = ['Idle', 'Walking_A', 'Running_A', 'Throw', 'Cheer', 'Hit_A', 'Use_Item', 'Interact', 'PickUp', 'Dodge_Left', 'Dodge_Right', 'Jump_Full_Short', 'Jump_Start', 'Jump_Idle', 'Jump_Land', 'Death_A', 'Spellcast_Shoot', 'Block', 'Sit_Floor_Idle'];
   {
     const doc = await io.read(path.join(SCOUT, 'player/Mage.glb'));
     await optimise(doc, { keepAnims: playerAnims, dropNodes: KAY_WEAPONS });
     const out = path.join(OUT, 'models/characters/player.glb');
     await io.write(out, doc);
-    manifest.player = { model: 'models/characters/player.glb', height: 1.75, anims: { idle: 'Idle', run: 'Running_A', walk: 'Walking_A', attack: 'Throw', hit: 'Hit_A', cast: 'Spellcast_Shoot', faint: 'Death_A', victory: 'Cheer', interact: 'Interact' } };
+    manifest.player = { model: 'models/characters/player.glb', height: 1.75, anims: { idle: 'Idle', run: 'Running_A', walk: 'Walking_A', attack: 'Throw', hit: 'Hit_A', cast: 'Spellcast_Shoot', faint: 'Death_A', victory: 'Cheer', interact: 'PickUp', jump: 'Jump_Full_Short', fall: 'Jump_Idle', land: 'Jump_Land', gather: 'Interact' } };
     log(`player ← Mage ${kb(out)}`);
   }
   for (const who of ['Barbarian', 'Knight', 'Rogue', 'Rogue_Hooded']) {
     const doc = await io.read(path.join(SCOUT, `player/${who}.glb`));
-    await optimise(doc, { keepAnims: ['Idle', 'Walking_A', 'Cheer', 'Interact'], dropNodes: KAY_WEAPONS });
+    await optimise(doc, { keepAnims: [], dropNodes: KAY_WEAPONS });
     const out = path.join(OUT, `models/characters/npc_${who.toLowerCase()}.glb`);
     await io.write(out, doc);
-    manifest.npcs.push({ model: `models/characters/npc_${who.toLowerCase()}.glb`, height: 1.7, anims: { idle: 'Idle', run: 'Walking_A', cast: 'Interact', victory: 'Cheer' } });
+    // KayKit characters share one skeleton: NPCs borrow the player's clips by bone name
+    manifest.npcs.push({ model: `models/characters/npc_${who.toLowerCase()}.glb`, height: 1.7, animSource: 'models/characters/player.glb', anims: { idle: 'Idle', run: 'Walking_A', walk: 'Walking_A', cast: 'Interact', victory: 'Cheer' } });
     log(`npc ${who} ${kb(out)}`);
   }
 }
@@ -145,6 +278,7 @@ async function nature() {
     mushroom: { files: ['Mushroom_Common', 'Mushroom_Laetiporus'], height: 0.55 },
     flowers: { files: ['Flower_3_Group', 'Flower_4_Group', 'Clover_1'], height: 0.45 },
     pebbles: { files: ['Pebble_Round_1', 'Pebble_Square_2', 'Pebble_Round_4'], height: 0.25 },
+    reeds: { files: ['Grass_Wispy_Tall', 'Grass_Common_Tall', 'Plant_7_Big'], height: 1.3 },
     pathstone: { files: ['RockPath_Round_Small_1', 'RockPath_Round_Small_2', 'RockPath_Round_Wide', 'RockPath_Square_Small_1', 'RockPath_Square_Wide'], height: 0.12 },
   };
   const done = new Set();
@@ -239,7 +373,32 @@ async function misc() {
   };
   for (const [name, file] of Object.entries(MUSIC)) {
     const out = path.join(OUT, 'audio', `music_${name}.mp3`);
-    execSync(`ffmpeg -y -loglevel error -i "${path.join(SCOUT, 'audio', file)}" -ac 2 -b:a 128k "${out}"`);
+    execSync(`ffmpeg -y -loglevel error -i "${path.join(SCOUT, 'audio', file)}" -ac 2 -b:a 96k "${out}"`);
+    manifest.music[name] = `audio/music_${name}.mp3`;
+    log(`music ${name} ${kb(out)}`);
+  }
+  // Round-2 audio: jingles (Kenney Music Jingles), summon card/chip sounds (Casino Audio), UI clicks,
+  // plus land/night/summon/homestead themes (OpenGameArt CC0). Jingles picked by rising pitch contour.
+  const r2a = path.join(X, 'audio2');
+  for (const z of ['kenney_music-jingles', 'kenney_casino-audio', 'kenney_ui-audio']) unzipOnce(path.join(R2, `audio/${z}.zip`), path.join(r2a, z));
+  const SFX2 = {
+    captured: 'jingles_PIZZI02', levelup: 'jingles_PIZZI10', quest: 'jingles_PIZZI15', evolve: 'jingles_STEEL02', rare: 'jingles_STEEL12', defeat: 'jingles_PIZZI07',
+    card: 'card-slide-1', flip: 'card-place-1', chips: 'chips-stack-1', pack: 'cards-pack-open-1', click: 'click3',
+  };
+  for (const [name, file] of Object.entries(SFX2)) {
+    const src = findFile(r2a, `${file}.ogg`);
+    if (!src) { console.warn('missing r2 sfx', file); continue; }
+    execSync(`ffmpeg -y -loglevel error -i "${src}" -ac 1 -b:a 96k "${path.join(OUT, 'audio', name + '.mp3')}"`);
+  }
+  execSync(`ffmpeg -y -loglevel error -i "${path.join(R2, 'audio', 'victory-fanfare_aroachifoundonmypillow.mp3')}" -ac 2 -b:a 112k "${path.join(OUT, 'audio', 'fanfare.mp3')}"`);
+  log('round-2 sfx ✓');
+  const MUSIC2 = {
+    dunes: 'desert-theme_yd.ogg', marsh: 'happy-swamp_shggothslave.mp3', night: 'nighttime-solitude_celestialghost8.mp3',
+    summon: 'mystical-enigmatic_cleytonkauffman.mp3', homestead: 'magician-village-loop_beardalaxy.ogg',
+  };
+  for (const [name, file] of Object.entries(MUSIC2)) {
+    const out = path.join(OUT, 'audio', `music_${name}.mp3`);
+    execSync(`ffmpeg -y -loglevel error -i "${path.join(R2, 'audio', file)}" -ac 2 -b:a 96k "${out}"`);
     manifest.music[name] = `audio/music_${name}.mp3`;
     log(`music ${name} ${kb(out)}`);
   }
@@ -250,5 +409,14 @@ await characters();
 await nature();
 await town();
 await misc();
+// keep baked portraits (tools/bake-portraits.mjs) across re-imports
+try {
+  const prev = JSON.parse(fs.readFileSync(path.join(OUT, 'manifest.json'), 'utf8'));
+  for (const [id, e] of Object.entries(prev.creatures ?? {})) {
+    if (!manifest.creatures[id]) continue;
+    if (e.portrait) manifest.creatures[id].portrait = e.portrait;
+    if (e.portraitShiny) manifest.creatures[id].portraitShiny = e.portraitShiny;
+  }
+} catch { /* first run */ }
 fs.writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2));
 log('manifest.json written');

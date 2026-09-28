@@ -1,4 +1,5 @@
 import type { Element } from './elements';
+import type { StatusId } from './traits';
 
 export type SkillKind = 'attack' | 'heal' | 'buff' | 'debuff';
 export type SkillTarget = 'enemy' | 'allEnemies' | 'self' | 'ally' | 'allAllies';
@@ -10,6 +11,8 @@ export interface Strike {
   t: number;
   /** Red strike: cannot be parried, only dodged. */
   unblockable?: boolean;
+  /** Gold shockwave: must be JUMPED (parry/dodge fail). */
+  jump?: boolean;
 }
 
 export interface Skill {
@@ -29,6 +32,12 @@ export interface Skill {
   effect?: { stat: Stat; amount: number; turns: number };
   /** Enemy-side rhythm. Defaults to evenly spaced strikes, one per hit. */
   pattern?: Strike[];
+  /** Chance to inflict a status on each target. */
+  status?: { id: StatusId; chance: number };
+  /** Cures status on targets (heals). */
+  cure?: boolean;
+  /** Burst ultimate (costs a full Burst gauge, not AP). */
+  ultimate?: boolean;
   desc: string;
 }
 
@@ -39,7 +48,7 @@ export const SKILLS: Record<string, Skill> = {
   strike: S({ id: 'strike', name: 'Strike', element: 'earth', kind: 'attack', target: 'enemy', power: 10, hits: 1, ap: 0, breakPower: 8, vfx: 'slash', desc: 'Basic attack. Grants +1 AP.' }),
 
   // ── Fire ────────────────────────────────────────────────
-  ember_bite: S({ id: 'ember_bite', name: 'Ember Bite', element: 'fire', kind: 'attack', target: 'enemy', power: 16, hits: 2, ap: 2, breakPower: 10, vfx: 'slash', desc: 'Two searing bites.' }),
+  ember_bite: S({ id: 'ember_bite', name: 'Ember Bite', element: 'fire', kind: 'attack', target: 'enemy', power: 16, hits: 2, ap: 2, breakPower: 10, vfx: 'slash', status: { id: 'burn', chance: 0.1 }, desc: 'Two searing bites (10% burn).' }),
   flare_burst: S({ id: 'flare_burst', name: 'Flare Burst', element: 'fire', kind: 'attack', target: 'allEnemies', power: 18, hits: 1, ap: 4, breakPower: 14, vfx: 'burst', desc: 'Explodes, hitting every foe.' }),
   kindle: S({ id: 'kindle', name: 'Kindle', element: 'fire', kind: 'buff', target: 'self', power: 0, hits: 1, ap: 2, breakPower: 0, vfx: 'aura', effect: { stat: 'atk', amount: 0.35, turns: 3 }, desc: 'Raise own ATK for 3 turns.' }),
   meteor_fang: S({ id: 'meteor_fang', name: 'Meteor Fang', element: 'fire', kind: 'attack', target: 'enemy', power: 22, hits: 3, ap: 6, breakPower: 18, vfx: 'projectile', desc: 'Triple meteor strike.' }),
@@ -62,7 +71,7 @@ export const SKILLS: Record<string, Skill> = {
   tremor: S({ id: 'tremor', name: 'Tremor', element: 'earth', kind: 'attack', target: 'allEnemies', power: 16, hits: 2, ap: 4, breakPower: 16, vfx: 'quake', desc: 'Ground shock hits all foes.' }),
 
   // ── Storm ───────────────────────────────────────────────
-  spark_jab: S({ id: 'spark_jab', name: 'Spark Jab', element: 'storm', kind: 'attack', target: 'enemy', power: 10, hits: 4, ap: 2, breakPower: 6, vfx: 'slash', desc: 'Four lightning-fast jabs.' }),
+  spark_jab: S({ id: 'spark_jab', name: 'Spark Jab', element: 'storm', kind: 'attack', target: 'enemy', power: 10, hits: 4, ap: 2, breakPower: 6, vfx: 'slash', status: { id: 'paralyze', chance: 0.06 }, desc: 'Four lightning-fast jabs.' }),
   thunderclap: S({ id: 'thunderclap', name: 'Thunderclap', element: 'storm', kind: 'attack', target: 'allEnemies', power: 19, hits: 1, ap: 4, breakPower: 12, vfx: 'beam', desc: 'A bolt splits across all foes.' }),
   overcharge: S({ id: 'overcharge', name: 'Overcharge', element: 'storm', kind: 'buff', target: 'self', power: 0, hits: 1, ap: 2, breakPower: 0, vfx: 'aura', effect: { stat: 'spd', amount: 0.5, turns: 3 }, desc: 'Greatly raise own SPD.' }),
 
@@ -80,6 +89,34 @@ export const SKILLS: Record<string, Skill> = {
   shadow_claw: S({ id: 'shadow_claw', name: 'Shadow Claw', element: 'void', kind: 'attack', target: 'enemy', power: 15, hits: 2, ap: 2, breakPower: 11, vfx: 'slash', desc: 'Claws from the unseen.' }),
   umbral_wave: S({ id: 'umbral_wave', name: 'Umbral Wave', element: 'void', kind: 'attack', target: 'allEnemies', power: 15, hits: 2, ap: 4, breakPower: 10, vfx: 'beam', desc: 'A wave of shadow washes over all foes.' }),
   soul_siphon: S({ id: 'soul_siphon', name: 'Soul Siphon', element: 'void', kind: 'heal', target: 'self', power: 30, hits: 1, ap: 3, breakPower: 0, vfx: 'heal', desc: 'Drain the air of life to mend yourself.' }),
+
+  // ── Status & utility moves ──────────────────────────────
+  sleep_spore: S({ id: 'sleep_spore', name: 'Sleep Spore', element: 'nature', kind: 'debuff', target: 'enemy', power: 0, hits: 1, ap: 3, breakPower: 6, vfx: 'burst', status: { id: 'sleep', chance: 0.75 }, desc: 'Lulls a foe to sleep (75%).' }),
+  toxic_mist: S({ id: 'toxic_mist', name: 'Toxic Mist', element: 'void', kind: 'attack', target: 'allEnemies', power: 8, hits: 1, ap: 3, breakPower: 6, vfx: 'burst', status: { id: 'poison', chance: 0.6 }, desc: 'Poisonous fog over all foes (60% poison).' }),
+  scald: S({ id: 'scald', name: 'Scald', element: 'water', kind: 'attack', target: 'enemy', power: 22, hits: 1, ap: 3, breakPower: 12, vfx: 'beam', status: { id: 'burn', chance: 0.3 }, desc: 'Boiling water (30% burn).' }),
+  frost_breath: S({ id: 'frost_breath', name: 'Frost Breath', element: 'wind', kind: 'attack', target: 'enemy', power: 14, hits: 2, ap: 3, breakPower: 10, vfx: 'beam', status: { id: 'freeze', chance: 0.15 }, desc: 'Freezing gusts (15% freeze).' }),
+  thunder_wave: S({ id: 'thunder_wave', name: 'Thunder Wave', element: 'storm', kind: 'debuff', target: 'enemy', power: 0, hits: 1, ap: 2, breakPower: 8, vfx: 'beam', status: { id: 'paralyze', chance: 0.85 }, desc: 'Paralyses a foe (85%).' }),
+  hypno_glow: S({ id: 'hypno_glow', name: 'Hypno Glow', element: 'void', kind: 'debuff', target: 'enemy', power: 0, hits: 1, ap: 2, breakPower: 8, vfx: 'aura', status: { id: 'confuse', chance: 0.75 }, desc: 'Confuses a foe (75%).' }),
+  purify: S({ id: 'purify', name: 'Purifying Rain', element: 'water', kind: 'heal', target: 'allAllies', power: 14, hits: 1, ap: 3, breakPower: 0, vfx: 'heal', cure: true, desc: 'Heals the team and cures status.' }),
+  flame_wheel: S({ id: 'flame_wheel', name: 'Flame Wheel', element: 'fire', kind: 'attack', target: 'enemy', power: 17, hits: 2, ap: 3, breakPower: 12, vfx: 'slash', status: { id: 'burn', chance: 0.2 }, desc: 'Rolling fire (20% burn).' }),
+  venom_fang: S({ id: 'venom_fang', name: 'Venom Fang', element: 'void', kind: 'attack', target: 'enemy', power: 16, hits: 2, ap: 2, breakPower: 10, vfx: 'slash', status: { id: 'poison', chance: 0.3 }, desc: 'Toxic bite (30% poison).' }),
+  spark_storm: S({ id: 'spark_storm', name: 'Spark Storm', element: 'storm', kind: 'attack', target: 'allEnemies', power: 14, hits: 2, ap: 4, breakPower: 9, vfx: 'burst', status: { id: 'paralyze', chance: 0.15 }, desc: 'Sparks rain on all foes (15% paralysis).' }),
+
+  // ── Burst ultimates (one per element; unleashed with a full Burst gauge) ──
+  ult_fire: S({ id: 'ult_fire', name: 'Supernova Fang', element: 'fire', kind: 'attack', target: 'allEnemies', power: 26, hits: 5, ap: 0, breakPower: 22, vfx: 'burst', ultimate: true, status: { id: 'burn', chance: 0.4 }, desc: 'A sun detonates in the jaws of your Mystic.' }),
+  ult_water: S({ id: 'ult_water', name: 'Leviathan Tide', element: 'water', kind: 'attack', target: 'allEnemies', power: 25, hits: 5, ap: 0, breakPower: 22, vfx: 'beam', ultimate: true, desc: 'The sea itself answers the call.' }),
+  ult_nature: S({ id: 'ult_nature', name: 'World-Tree Bloom', element: 'nature', kind: 'attack', target: 'allEnemies', power: 23, hits: 5, ap: 0, breakPower: 26, vfx: 'quake', ultimate: true, status: { id: 'sleep', chance: 0.25 }, desc: 'Ancient roots erupt in a storm of petals.' }),
+  ult_earth: S({ id: 'ult_earth', name: 'Continental Drift', element: 'earth', kind: 'attack', target: 'allEnemies', power: 27, hits: 5, ap: 0, breakPower: 30, vfx: 'quake', ultimate: true, desc: 'The ground folds like paper.' }),
+  ult_storm: S({ id: 'ult_storm', name: 'Heaven’s Verdict', element: 'storm', kind: 'attack', target: 'allEnemies', power: 25, hits: 5, ap: 0, breakPower: 22, vfx: 'beam', ultimate: true, status: { id: 'paralyze', chance: 0.35 }, desc: 'Five bolts, perfectly on the beat.' }),
+  ult_wind: S({ id: 'ult_wind', name: 'Thousand Feathers', element: 'wind', kind: 'attack', target: 'allEnemies', power: 22, hits: 6, ap: 0, breakPower: 18, vfx: 'projectile', ultimate: true, desc: 'A hurricane of razor plumes.' }),
+  ult_void: S({ id: 'ult_void', name: 'Eclipse Requiem', element: 'void', kind: 'attack', target: 'allEnemies', power: 26, hits: 5, ap: 0, breakPower: 24, vfx: 'beam', ultimate: true, status: { id: 'confuse', chance: 0.35 }, desc: 'Light forgets how to shine.' }),
+
+  // ── Guardian techniques with gold (jump) shockwaves ───────
+  earthshaker: S({ id: 'earthshaker', name: 'Earthshaker', element: 'earth', kind: 'attack', target: 'allEnemies', power: 18, hits: 3, ap: 0, breakPower: 0, vfx: 'quake', desc: 'Shockwaves ripple outward — jump them!', pattern: [{ t: 0, jump: true }, { t: 650, jump: true }, { t: 1500 }] }),
+  tidal_crash: S({ id: 'tidal_crash', name: 'Tidal Crash', element: 'water', kind: 'attack', target: 'allEnemies', power: 17, hits: 3, ap: 0, breakPower: 0, vfx: 'beam', desc: 'A wave, a feint, a wall of water.', pattern: [{ t: 0 }, { t: 900, jump: true }, { t: 1250, unblockable: true }] }),
+  root_quake: S({ id: 'root_quake', name: 'Root Quake', element: 'nature', kind: 'attack', target: 'allEnemies', power: 16, hits: 3, ap: 0, breakPower: 0, vfx: 'quake', desc: 'Roots burst from below.', pattern: [{ t: 0, jump: true }, { t: 480 }, { t: 1200, jump: true }] }),
+  sandstorm_fury: S({ id: 'sandstorm_fury', name: 'Sandstorm Fury', element: 'earth', kind: 'attack', target: 'allEnemies', power: 15, hits: 4, ap: 0, breakPower: 0, vfx: 'burst', desc: 'Scouring sand and a crushing stomp.', pattern: [{ t: 0 }, { t: 300 }, { t: 600 }, { t: 1500, jump: true }] }),
+  bog_breath: S({ id: 'bog_breath', name: 'Bog Breath', element: 'void', kind: 'attack', target: 'allEnemies', power: 14, hits: 2, ap: 0, breakPower: 0, vfx: 'burst', status: { id: 'poison', chance: 0.35 }, desc: 'A choking cloud of marsh gas.', pattern: [{ t: 0 }, { t: 1100, unblockable: true }] }),
 
   // ── Void / boss ─────────────────────────────────────────
   void_rend: S({ id: 'void_rend', name: 'Void Rend', element: 'void', kind: 'attack', target: 'enemy', power: 16, hits: 3, ap: 0, breakPower: 0, vfx: 'slash', desc: 'A rhythmic triple rend.', pattern: [{ t: 0 }, { t: 380 }, { t: 1000 }] }),

@@ -4,3 +4,7 @@ dist
 *.log
 .shots
 .asset-scout
+
+# generated
+docs/manual.html
+android/local.properties

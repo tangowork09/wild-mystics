@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-plugin/types"]
+  },
+  "include": ["./**/*.ts", "../src/**/*.ts"],
+  // client/ imports the game's DOM-typed src/net code; that code is type-checked from the repo root.
+  "exclude": ["./client/**"]
+}

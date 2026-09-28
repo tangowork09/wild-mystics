@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { clone as skeletonClone } from 'three/examples/jsm/utils/SkeletonUtils.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { SPECIES } from '../data/species';
 import { buildCreature, buildPlayer, type AnimName, type Rig } from './placeholders';
 
@@ -16,6 +17,8 @@ export interface ModelEntry {
   rotY?: number;
   /** Map our animation names to clip names in the GLB (prefixes like "Armature|" are ignored). */
   anims?: Partial<Record<AnimName, string>>;
+  /** Borrow animation clips from another GLB with the same skeleton (bone names must match). */
+  animSource?: string;
 }
 
 type Many = ModelEntry | ModelEntry[];
@@ -23,7 +26,7 @@ type Many = ModelEntry | ModelEntry[];
 export interface Manifest {
   player?: ModelEntry;
   npcs?: ModelEntry[];
-  creatures?: Record<string, ModelEntry & { portrait?: string }>;
+  creatures?: Record<string, ModelEntry & { portrait?: string; portraitShiny?: string; tint?: string }>;
   /** Each key may list several variants; props pick randomly between them. */
   environment?: Record<string, Many>;
   buildings?: Record<string, Many>;
@@ -35,55 +38,80 @@ export interface Manifest {
 
 let manifest: Manifest = {};
 const gltfs = new Map<string, GLTF>();
+const pending = new Map<string, Promise<void>>();
 const loader = new GLTFLoader();
+loader.setMeshoptDecoder(MeshoptDecoder);
 const asList = (e: Many | null | undefined) => (e ? (Array.isArray(e) ? e : [e]) : []);
 
-export async function loadManifest(onProgress?: (msg: string, frac: number) => void) {
+/** Fetch the manifest only. Models stream in on demand via ensureModels(). */
+export async function loadManifest() {
   try {
     const res = await fetch('assets/manifest.json', { cache: 'no-cache' });
     if (res.ok) manifest = await res.json();
   } catch { manifest = {}; }
   if (new URLSearchParams(location.search).has('placeholders')) manifest = {};
+}
 
-  const entries: ModelEntry[] = [
+function loadOne(model: string): Promise<void> {
+  if (gltfs.has(model)) return Promise.resolve();
+  let p = pending.get(model);
+  if (p) return p;
+  p = loader.loadAsync(`assets/${model}`).then((g) => {
+    g.scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; }
+    });
+    gltfs.set(model, g);
+  }).catch((err) => { console.warn(`[assets] ${model} failed, using placeholder`, err); });
+  pending.set(model, p);
+  return p;
+}
+
+/** Load a set of model paths with bounded concurrency. */
+export async function ensureModels(models: string[], onProgress?: (done: number, total: number) => void, concurrency = 6) {
+  const todo = [...new Set(models.filter((m) => m && !gltfs.has(m)))];
+  let done = 0;
+  const queue = [...todo];
+  const worker = async () => {
+    for (let m = queue.shift(); m; m = queue.shift()) {
+      await loadOne(m);
+      done++;
+      onProgress?.(done, todo.length);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, todo.length) }, worker));
+}
+
+export const creatureModel = (id: string) => manifest.creatures?.[id]?.model ?? '';
+export const hasCreatureModel = (id: string) => gltfs.has(creatureModel(id));
+export async function ensureCreatures(ids: string[]) { await ensureModels(ids.map(creatureModel)); }
+
+/** Everything the overworld needs before the first frame (environment, town, people). */
+export function essentialModels(): string[] {
+  return [
     ...asList(manifest.player),
     ...(manifest.npcs ?? []),
-    ...Object.values(manifest.creatures ?? {}),
+    ...(manifest.npcs ?? []).filter((n) => n.animSource).map((n) => ({ model: n.animSource! })),
     ...Object.values(manifest.environment ?? {}).flatMap(asList),
     ...Object.values(manifest.buildings ?? {}).flatMap(asList),
     ...Object.values(manifest.decor ?? {}).flatMap(asList),
-  ].filter((e) => e && e.model);
-  const unique = [...new Map(entries.map((e) => [e.model, e])).values()];
+  ].filter((e) => e && e.model).map((e) => e.model);
+}
 
-  let done = 0;
-  const queue = [...unique];
-  const worker = async () => {
-    for (let e = queue.shift(); e; e = queue.shift()) {
-      try {
-        const g = await loader.loadAsync(`assets/${e.model}`);
-        g.scene.traverse((o) => {
-          const m = o as THREE.Mesh;
-          if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; }
-        });
-        gltfs.set(e.model, g);
-      } catch (err) {
-        console.warn(`[assets] ${e.model} failed, using placeholder`, err);
-      }
-      done++;
-      onProgress?.(`Loading models ${done}/${unique.length}`, done / Math.max(1, unique.length));
-    }
-  };
-  await Promise.all(Array.from({ length: 6 }, worker));
+/** Stream every remaining creature model at low priority after boot. */
+export function streamRemainingCreatures() {
+  const all = Object.values(manifest.creatures ?? {}).map((e) => e.model).filter((m) => m && !gltfs.has(m));
+  void ensureModels(all, undefined, 2);
 }
 
 export function getManifest() { return manifest; }
 export const hasModel = (m?: string) => !!m && gltfs.has(m);
 
-function findClip(g: GLTF, want: string): THREE.AnimationClip | undefined {
+function findClip(clips: THREE.AnimationClip[], want: string): THREE.AnimationClip | undefined {
   const lw = want.toLowerCase();
-  return g.animations.find((c) => c.name === want)
-    ?? g.animations.find((c) => c.name.split('|').pop() === want)
-    ?? g.animations.find((c) => (c.name.split('|').pop() ?? '').toLowerCase() === lw);
+  return clips.find((c) => c.name === want)
+    ?? clips.find((c) => c.name.split('|').pop() === want)
+    ?? clips.find((c) => (c.name.split('|').pop() ?? '').toLowerCase() === lw);
 }
 
 /** Bounding box that respects skinning (bone matrices must be current before measuring). */
@@ -117,9 +145,10 @@ function rigFromGltf(entry: ModelEntry, fallbackHeight: number): Rig | null {
 
   const mixer = new THREE.AnimationMixer(model);
   const actions = new Map<AnimName, THREE.AnimationAction | null>();
+  const clips = entry.animSource ? gltfs.get(entry.animSource)?.animations ?? g.animations : g.animations;
   const get = (name: AnimName): THREE.AnimationAction | null => {
     if (actions.has(name)) return actions.get(name)!;
-    const clip = findClip(g, entry.anims?.[name] ?? name);
+    const clip = findClip(clips, entry.anims?.[name] ?? name);
     const a = clip ? mixer.clipAction(clip) : null;
     actions.set(name, a);
     return a;
@@ -192,9 +221,37 @@ export function makeCreatureRig(speciesId: string, shiny = false): Rig {
   const entry = manifest.creatures?.[speciesId];
   if (entry) {
     const r = rigFromGltf(entry, sp.height);
-    if (r) { if (shiny) tintShiny(r); return r; }
+    if (r) {
+      if (sp.tint) tintVariant(r, sp.tint, sp.tintGlow);
+      if (shiny) tintShiny(r);
+      return r;
+    }
+    void loadOne(entry.model);
   }
   return buildCreature(sp.look, shiny);
+}
+
+/** Regional/elemental variant: hue-shift toward `tint`, optional emissive glow. */
+function tintVariant(r: Rig, tint: string, glow?: string) {
+  const target = new THREE.Color(tint);
+  const hsl = { h: 0, s: 0, l: 0 };
+  target.getHSL(hsl);
+  r.root.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (!m.isMesh) return;
+    const mats = (Array.isArray(m.material) ? m.material : [m.material]).map((mt) => {
+      const c = (mt as THREE.MeshStandardMaterial).clone();
+      if (c.color) {
+        const own = { h: 0, s: 0, l: 0 };
+        c.color.getHSL(own);
+        // keep very dark/light details (eyes, teeth) but pull saturated body colours to the tint hue
+        if (own.s > 0.12 && own.l > 0.08 && own.l < 0.92) c.color.setHSL(hsl.h, Math.min(1, (own.s + hsl.s) / 2 + 0.05), own.l * 0.85 + hsl.l * 0.15);
+      }
+      if (glow && 'emissive' in c) { c.emissive = new THREE.Color(glow); c.emissiveIntensity = 0.18; }
+      return c;
+    });
+    m.material = Array.isArray(m.material) ? mats : mats[0];
+  });
 }
 
 export function makePlayerRig(): Rig {
@@ -275,15 +332,21 @@ const portraitCache = new Map<string, string>();
 let pr: { renderer: THREE.WebGLRenderer; scene: THREE.Scene; cam: THREE.PerspectiveCamera } | null = null;
 
 export function portrait(speciesId: string, shiny = false): string {
-  const custom = manifest.creatures?.[speciesId]?.portrait;
-  if (custom) return `assets/${custom}`;
-  const key = speciesId + (shiny ? '*' : '');
+  const e = manifest.creatures?.[speciesId];
+  const baked = shiny ? e?.portraitShiny ?? e?.portrait : e?.portrait;
+  if (baked) return `assets/${baked}`;
+  return renderPortrait(speciesId, shiny);
+}
+
+/** Render a portrait from the live rig (used by the bake tool, and as a fallback). */
+export function renderPortrait(speciesId: string, shiny = false, size = 192): string {
+  const key = speciesId + (shiny ? '*' : '') + size;
   const hit = portraitCache.get(key);
   if (hit) return hit;
   try {
     if (!pr) {
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
-      renderer.setSize(192, 192, false);
+      renderer.setSize(size, size, false);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.AgXToneMapping;
       renderer.toneMappingExposure = 1.25;
@@ -299,10 +362,10 @@ export function portrait(speciesId: string, shiny = false): string {
     rig.root.rotation.y = -0.45;
     pr.scene.add(rig.root);
     const box = measure(rig.root);
-    const size = box.getSize(new THREE.Vector3());
+    const bsz = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
-    const dist = Math.max(size.y, size.x * 0.9) / (2 * Math.tan(THREE.MathUtils.degToRad(14))) * 1.08;
-    pr.cam.position.set(center.x, center.y + size.y * 0.05, center.z + dist);
+    const dist = Math.max(bsz.y, bsz.x * 0.9) / (2 * Math.tan(THREE.MathUtils.degToRad(14))) * 1.08;
+    pr.cam.position.set(center.x, center.y + bsz.y * 0.05, center.z + dist);
     pr.cam.lookAt(center);
     pr.renderer.render(pr.scene, pr.cam);
     const url = pr.renderer.domElement.toDataURL('image/png');

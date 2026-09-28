@@ -1,0 +1,50 @@
+// Tiny typed event bus. Gameplay emits; quests, achievements, stats and UI listen.
+import type { Element } from '../data/elements';
+
+export interface GameEvents {
+  battle_win: { kind: 'wild' | 'boss' | 'tamer'; zone: string };
+  battle_lose: { zone: string };
+  catch: { species: string; shiny: boolean; zone: string; how: string; element: Element; night: boolean };
+  defeat: { species: string; zone: string; element: Element };
+  perfect: Record<string, never>;
+  parry: Record<string, never>;
+  dodge: Record<string, never>;
+  jump_dodge: Record<string, never>;
+  break: Record<string, never>;
+  burst: Record<string, never>;
+  gather: { material: string; n: number };
+  search: { zone: string };
+  grass: { zone: string };
+  hatch: { species: string; shiny: boolean };
+  evolve: { from: string; to: string };
+  breed: Record<string, never>;
+  infuse: Record<string, never>;
+  enhance: Record<string, never>;
+  discover: { id: string };
+  travel: { id: string };
+  summon: { rarity: string; count: number };
+  build: { type: string };
+  boss_win: { zone: string };
+  tamer_win: { id: string };
+  rank_up: { level: number };
+  step: { meters: number };
+}
+
+type Handler<K extends keyof GameEvents> = (e: GameEvents[K]) => void;
+const handlers = new Map<keyof GameEvents, Set<Handler<keyof GameEvents>>>();
+
+export function on<K extends keyof GameEvents>(k: K, h: Handler<K>) {
+  let set = handlers.get(k);
+  if (!set) { set = new Set(); handlers.set(k, set); }
+  set.add(h as Handler<keyof GameEvents>);
+  return () => set!.delete(h as Handler<keyof GameEvents>);
+}
+
+export function emit<K extends keyof GameEvents>(k: K, e: GameEvents[K]) {
+  handlers.get(k)?.forEach((h) => { try { (h as Handler<K>)(e); } catch (err) { console.error(err); } });
+  anyHandlers.forEach((h) => h(k, e));
+}
+
+type AnyHandler = (k: keyof GameEvents, e: unknown) => void;
+const anyHandlers = new Set<AnyHandler>();
+export function onAny(h: AnyHandler) { anyHandlers.add(h); }

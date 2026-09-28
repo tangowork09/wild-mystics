@@ -11,16 +11,22 @@
       "cast": "Spellcast_Shoot",
       "faint": "Death_A",
       "victory": "Cheer",
-      "interact": "Interact"
+      "interact": "PickUp",
+      "jump": "Jump_Full_Short",
+      "fall": "Jump_Idle",
+      "land": "Jump_Land",
+      "gather": "Interact"
     }
   },
   "npcs": [
     {
       "model": "models/characters/npc_barbarian.glb",
       "height": 1.7,
+      "animSource": "models/characters/player.glb",
       "anims": {
         "idle": "Idle",
         "run": "Walking_A",
+        "walk": "Walking_A",
         "cast": "Interact",
         "victory": "Cheer"
       }
@@ -28,9 +34,11 @@
     {
       "model": "models/characters/npc_knight.glb",
       "height": 1.7,
+      "animSource": "models/characters/player.glb",
       "anims": {
         "idle": "Idle",
         "run": "Walking_A",
+        "walk": "Walking_A",
         "cast": "Interact",
         "victory": "Cheer"
       }
@@ -38,9 +46,11 @@
     {
       "model": "models/characters/npc_rogue.glb",
       "height": 1.7,
+      "animSource": "models/characters/player.glb",
       "anims": {
         "idle": "Idle",
         "run": "Walking_A",
+        "walk": "Walking_A",
         "cast": "Interact",
         "victory": "Cheer"
       }
@@ -48,9 +58,11 @@
     {
       "model": "models/characters/npc_rogue_hooded.glb",
       "height": 1.7,
+      "animSource": "models/characters/player.glb",
       "anims": {
         "idle": "Idle",
         "run": "Walking_A",
+        "walk": "Walking_A",
         "cast": "Interact",
         "victory": "Cheer"
       }
@@ -58,7 +70,7 @@
   ],
   "creatures": {
     "emberling": {
-      "model": "models/creatures/emberling.glb",
+      "model": "models/creatures/dragon.glb",
       "height": 1.1,
       "rig": "flyer",
       "anims": {
@@ -69,10 +81,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/emberling.webp",
+      "portraitShiny": "portraits/emberling_shiny.webp"
     },
     "pyrowyrm": {
-      "model": "models/creatures/pyrowyrm.glb",
+      "model": "models/creatures/dragon_evolved.glb",
       "height": 2.2,
       "rig": "flyer",
       "anims": {
@@ -83,10 +97,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/pyrowyrm.webp",
+      "portraitShiny": "portraits/pyrowyrm_shiny.webp"
     },
     "finnik": {
-      "model": "models/creatures/finnik.glb",
+      "model": "models/creatures/fish_small.glb",
       "height": 1.1,
       "rig": "ground",
       "anims": {
@@ -97,10 +113,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/finnik.webp",
+      "portraitShiny": "portraits/finnik_shiny.webp"
     },
     "tidecaller": {
-      "model": "models/creatures/tidecaller.glb",
+      "model": "models/creatures/fish_elite.glb",
       "height": 2,
       "rig": "biped",
       "anims": {
@@ -111,10 +129,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/tidecaller.webp",
+      "portraitShiny": "portraits/tidecaller_shiny.webp"
     },
     "sporelet": {
-      "model": "models/creatures/sporelet.glb",
+      "model": "models/creatures/mushnub.glb",
       "height": 1,
       "rig": "ground",
       "anims": {
@@ -125,10 +145,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/sporelet.webp",
+      "portraitShiny": "portraits/sporelet_shiny.webp"
     },
     "mycobloom": {
-      "model": "models/creatures/mycobloom.glb",
+      "model": "models/creatures/mushnub_evolved.glb",
       "height": 1.4,
       "rig": "ground",
       "anims": {
@@ -139,10 +161,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/mycobloom.webp",
+      "portraitShiny": "portraits/mycobloom_shiny.webp"
     },
     "sporeking": {
-      "model": "models/creatures/sporeking.glb",
+      "model": "models/creatures/mushroom_king.glb",
       "height": 2.1,
       "rig": "biped",
       "anims": {
@@ -153,10 +177,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/sporeking.webp",
+      "portraitShiny": "portraits/sporeking_shiny.webp"
     },
     "gloop": {
-      "model": "models/creatures/gloop.glb",
+      "model": "models/creatures/green_blob.glb",
       "height": 0.9,
       "rig": "ground",
       "anims": {
@@ -167,10 +193,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/gloop.webp",
+      "portraitShiny": "portraits/gloop_shiny.webp"
     },
     "spikegloop": {
-      "model": "models/creatures/spikegloop.glb",
+      "model": "models/creatures/green_spiky_blob.glb",
       "height": 1.3,
       "rig": "ground",
       "anims": {
@@ -181,10 +209,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/spikegloop.webp",
+      "portraitShiny": "portraits/spikegloop_shiny.webp"
     },
     "chirpling": {
-      "model": "models/creatures/chirpling.glb",
+      "model": "models/creatures/birb.glb",
       "height": 0.9,
       "rig": "ground",
       "anims": {
@@ -195,10 +225,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/chirpling.webp",
+      "portraitShiny": "portraits/chirpling_shiny.webp"
     },
     "pecklet": {
-      "model": "models/creatures/pecklet.glb",
+      "model": "models/creatures/chicken.glb",
       "height": 0.9,
       "rig": "ground",
       "anims": {
@@ -209,10 +241,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/pecklet.webp",
+      "portraitShiny": "portraits/pecklet_shiny.webp"
     },
     "hopscotch": {
-      "model": "models/creatures/hopscotch.glb",
+      "model": "models/creatures/bunny.glb",
       "height": 1.4,
       "rig": "biped",
       "anims": {
@@ -223,10 +257,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/hopscotch.webp",
+      "portraitShiny": "portraits/hopscotch_shiny.webp"
     },
     "pricklet": {
-      "model": "models/creatures/pricklet.glb",
+      "model": "models/creatures/cactoro_small.glb",
       "height": 0.9,
       "rig": "ground",
       "anims": {
@@ -237,10 +273,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/pricklet.webp",
+      "portraitShiny": "portraits/pricklet_shiny.webp"
     },
     "saguardian": {
-      "model": "models/creatures/saguardian.glb",
+      "model": "models/creatures/cactoro_elite.glb",
       "height": 1.9,
       "rig": "biped",
       "anims": {
@@ -251,10 +289,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/saguardian.webp",
+      "portraitShiny": "portraits/saguardian_shiny.webp"
     },
     "voltcat": {
-      "model": "models/creatures/voltcat.glb",
+      "model": "models/creatures/cat.glb",
       "height": 0.9,
       "rig": "ground",
       "anims": {
@@ -265,7 +305,9 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/voltcat.webp",
+      "portraitShiny": "portraits/voltcat_shiny.webp"
     },
     "monkroose": {
       "model": "models/creatures/monkroose.glb",
@@ -279,10 +321,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/monkroose.webp",
+      "portraitShiny": "portraits/monkroose_shiny.webp"
     },
     "impling": {
-      "model": "models/creatures/impling.glb",
+      "model": "models/creatures/demon_small.glb",
       "height": 1,
       "rig": "flyer",
       "anims": {
@@ -293,10 +337,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/impling.webp",
+      "portraitShiny": "portraits/impling_shiny.webp"
     },
     "hellion": {
-      "model": "models/creatures/hellion.glb",
+      "model": "models/creatures/demon_elite.glb",
       "height": 1.9,
       "rig": "biped",
       "anims": {
@@ -307,10 +353,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/hellion.webp",
+      "portraitShiny": "portraits/hellion_shiny.webp"
     },
     "gloomling": {
-      "model": "models/creatures/gloomling.glb",
+      "model": "models/creatures/goleling.glb",
       "height": 1,
       "rig": "flyer",
       "anims": {
@@ -321,10 +369,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/gloomling.webp",
+      "portraitShiny": "portraits/gloomling_shiny.webp"
     },
     "gloomlord": {
-      "model": "models/creatures/gloomlord.glb",
+      "model": "models/creatures/goleling_evolved.glb",
       "height": 1.7,
       "rig": "flyer",
       "anims": {
@@ -335,10 +385,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/gloomlord.webp",
+      "portraitShiny": "portraits/gloomlord_shiny.webp"
     },
     "grunt": {
-      "model": "models/creatures/grunt.glb",
+      "model": "models/creatures/orc_enemy.glb",
       "height": 1,
       "rig": "ground",
       "anims": {
@@ -349,10 +401,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/grunt.webp",
+      "portraitShiny": "portraits/grunt_shiny.webp"
     },
     "warlord": {
-      "model": "models/creatures/warlord.glb",
+      "model": "models/creatures/orc.glb",
       "height": 2,
       "rig": "biped",
       "anims": {
@@ -363,10 +417,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/warlord.webp",
+      "portraitShiny": "portraits/warlord_shiny.webp"
     },
     "cinderquid": {
-      "model": "models/creatures/cinderquid.glb",
+      "model": "models/creatures/squidle.glb",
       "height": 1.2,
       "rig": "flyer",
       "anims": {
@@ -377,7 +433,9 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/cinderquid.webp",
+      "portraitShiny": "portraits/cinderquid_shiny.webp"
     },
     "glub": {
       "model": "models/creatures/glub.glb",
@@ -391,10 +449,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/glub.webp",
+      "portraitShiny": "portraits/glub_shiny.webp"
     },
     "glubbernaut": {
-      "model": "models/creatures/glubbernaut.glb",
+      "model": "models/creatures/glub_evolved.glb",
       "height": 1.7,
       "rig": "flyer",
       "anims": {
@@ -405,10 +465,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/glubbernaut.webp",
+      "portraitShiny": "portraits/glubbernaut_shiny.webp"
     },
     "croakus": {
-      "model": "models/creatures/croakus.glb",
+      "model": "models/creatures/frog.glb",
       "height": 1.4,
       "rig": "biped",
       "anims": {
@@ -419,10 +481,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/croakus.webp",
+      "portraitShiny": "portraits/croakus_shiny.webp"
     },
     "bubblin": {
-      "model": "models/creatures/bubblin.glb",
+      "model": "models/creatures/pink_slime.glb",
       "height": 0.8,
       "rig": "ground",
       "anims": {
@@ -433,10 +497,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/bubblin.webp",
+      "portraitShiny": "portraits/bubblin_shiny.webp"
     },
     "alpuff": {
-      "model": "models/creatures/alpuff.glb",
+      "model": "models/creatures/alpaking.glb",
       "height": 1.1,
       "rig": "flyer",
       "anims": {
@@ -447,10 +513,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/alpuff.webp",
+      "portraitShiny": "portraits/alpuff_shiny.webp"
     },
     "alpaqueen": {
-      "model": "models/creatures/alpaqueen.glb",
+      "model": "models/creatures/alpaking_evolved.glb",
       "height": 1.8,
       "rig": "flyer",
       "anims": {
@@ -461,10 +529,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/alpaqueen.webp",
+      "portraitShiny": "portraits/alpaqueen_shiny.webp"
     },
     "whirlie": {
-      "model": "models/creatures/whirlie.glb",
+      "model": "models/creatures/hywirl.glb",
       "height": 1.2,
       "rig": "flyer",
       "anims": {
@@ -475,10 +545,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/whirlie.webp",
+      "portraitShiny": "portraits/whirlie_shiny.webp"
     },
     "zapbee": {
-      "model": "models/creatures/zapbee.glb",
+      "model": "models/creatures/armabee.glb",
       "height": 0.9,
       "rig": "flyer",
       "anims": {
@@ -489,10 +561,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/zapbee.webp",
+      "portraitShiny": "portraits/zapbee_shiny.webp"
     },
     "voltarmor": {
-      "model": "models/creatures/voltarmor.glb",
+      "model": "models/creatures/armabee_evolved.glb",
       "height": 1.6,
       "rig": "flyer",
       "anims": {
@@ -503,10 +577,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/voltarmor.webp",
+      "portraitShiny": "portraits/voltarmor_shiny.webp"
     },
     "zorp": {
-      "model": "models/creatures/zorp.glb",
+      "model": "models/creatures/alien_small.glb",
       "height": 1,
       "rig": "ground",
       "anims": {
@@ -517,10 +593,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/zorp.webp",
+      "portraitShiny": "portraits/zorp_shiny.webp"
     },
     "xenobolt": {
-      "model": "models/creatures/xenobolt.glb",
+      "model": "models/creatures/alien_elite.glb",
       "height": 1.9,
       "rig": "biped",
       "anims": {
@@ -531,10 +609,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/xenobolt.webp",
+      "portraitShiny": "portraits/xenobolt_shiny.webp"
     },
     "frostling": {
-      "model": "models/creatures/frostling.glb",
+      "model": "models/creatures/yeti_small.glb",
       "height": 1,
       "rig": "ground",
       "anims": {
@@ -545,10 +625,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/frostling.webp",
+      "portraitShiny": "portraits/frostling_shiny.webp"
     },
     "glaciator": {
-      "model": "models/creatures/glaciator.glb",
+      "model": "models/creatures/yeti_elite.glb",
       "height": 2.1,
       "rig": "biped",
       "anims": {
@@ -559,10 +641,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/glaciator.webp",
+      "portraitShiny": "portraits/glaciator_shiny.webp"
     },
     "shadekin": {
-      "model": "models/creatures/shadekin.glb",
+      "model": "models/creatures/ninja_small.glb",
       "height": 1,
       "rig": "ground",
       "anims": {
@@ -573,10 +657,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/shadekin.webp",
+      "portraitShiny": "portraits/shadekin_shiny.webp"
     },
     "shinobi": {
-      "model": "models/creatures/shinobi.glb",
+      "model": "models/creatures/ninja_elite.glb",
       "height": 1.8,
       "rig": "biped",
       "anims": {
@@ -587,10 +673,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/shinobi.webp",
+      "portraitShiny": "portraits/shinobi_shiny.webp"
     },
     "sparkmage": {
-      "model": "models/creatures/sparkmage.glb",
+      "model": "models/creatures/wizard.glb",
       "height": 1,
       "rig": "ground",
       "anims": {
@@ -601,10 +689,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Dance"
-      }
+      },
+      "portrait": "portraits/sparkmage.webp",
+      "portraitShiny": "portraits/sparkmage_shiny.webp"
     },
     "wisp": {
-      "model": "models/creatures/wisp.glb",
+      "model": "models/creatures/ghost.glb",
       "height": 1.1,
       "rig": "flyer",
       "anims": {
@@ -615,10 +705,1377 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/wisp.webp",
+      "portraitShiny": "portraits/wisp_shiny.webp"
+    },
+    "magmallow": {
+      "model": "models/creatures/pink_slime.glb",
+      "height": 1.1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/magmallow.webp",
+      "portraitShiny": "portraits/magmallow_shiny.webp"
+    },
+    "mosslime": {
+      "model": "models/creatures/pink_slime.glb",
+      "height": 1.1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/mosslime.webp",
+      "portraitShiny": "portraits/mosslime_shiny.webp"
+    },
+    "zapjelly": {
+      "model": "models/creatures/pink_slime.glb",
+      "height": 1.1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/zapjelly.webp",
+      "portraitShiny": "portraits/zapjelly_shiny.webp"
+    },
+    "umbrajelly": {
+      "model": "models/creatures/pink_slime.glb",
+      "height": 1.1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/umbrajelly.webp",
+      "portraitShiny": "portraits/umbrajelly_shiny.webp"
+    },
+    "sandgloop": {
+      "model": "models/creatures/green_blob.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/sandgloop.webp",
+      "portraitShiny": "portraits/sandgloop_shiny.webp"
+    },
+    "frostpeck": {
+      "model": "models/creatures/chicken.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/frostpeck.webp",
+      "portraitShiny": "portraits/frostpeck_shiny.webp"
+    },
+    "ashwing": {
+      "model": "models/creatures/birb.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/ashwing.webp",
+      "portraitShiny": "portraits/ashwing_shiny.webp"
+    },
+    "moonhop": {
+      "model": "models/creatures/bunny.glb",
+      "height": 1.4,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/moonhop.webp",
+      "portraitShiny": "portraits/moonhop_shiny.webp"
+    },
+    "mirecroak": {
+      "model": "models/creatures/frog.glb",
+      "height": 1.4,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/mirecroak.webp",
+      "portraitShiny": "portraits/mirecroak_shiny.webp"
+    },
+    "dunecat": {
+      "model": "models/creatures/cat.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/dunecat.webp",
+      "portraitShiny": "portraits/dunecat_shiny.webp"
+    },
+    "magmaglub": {
+      "model": "models/creatures/glub.glb",
+      "height": 1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      },
+      "portrait": "portraits/magmaglub.webp",
+      "portraitShiny": "portraits/magmaglub_shiny.webp"
+    },
+    "sunbee": {
+      "model": "models/creatures/armabee.glb",
+      "height": 0.9,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      },
+      "portrait": "portraits/sunbee.webp",
+      "portraitShiny": "portraits/sunbee_shiny.webp"
+    },
+    "dustwhirl": {
+      "model": "models/creatures/hywirl.glb",
+      "height": 1.2,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      },
+      "portrait": "portraits/dustwhirl.webp",
+      "portraitShiny": "portraits/dustwhirl_shiny.webp"
+    },
+    "frostwisp": {
+      "model": "models/creatures/ghost.glb",
+      "height": 1.1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      },
+      "portrait": "portraits/frostwisp.webp",
+      "portraitShiny": "portraits/frostwisp_shiny.webp"
+    },
+    "glowcap": {
+      "model": "models/creatures/mushnub.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      },
+      "portrait": "portraits/glowcap.webp",
+      "portraitShiny": "portraits/glowcap_shiny.webp"
+    },
+    "emberjaw": {
+      "model": "models/creatures/monkroose.glb",
+      "height": 1.5,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/emberjaw.webp",
+      "portraitShiny": "portraits/emberjaw_shiny.webp"
+    },
+    "trotlet": {
+      "model": "models/creatures/r2_horse_30b503df.glb",
+      "height": 1.2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Jump",
+        "faint": "Death",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/trotlet.webp",
+      "portraitShiny": "portraits/trotlet_shiny.webp"
+    },
+    "loamstrider": {
+      "model": "models/creatures/r2_horse_d37dbc87.glb",
+      "height": 2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/loamstrider.webp",
+      "portraitShiny": "portraits/loamstrider_shiny.webp"
+    },
+    "skymane": {
+      "model": "models/creatures/r2_white_horse_3edc2bd9.glb",
+      "height": 2.1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/skymane.webp",
+      "portraitShiny": "portraits/skymane_shiny.webp"
+    },
+    "moolet": {
+      "model": "models/creatures/r2_cow_48c5f4af.glb",
+      "height": 1.1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Jump",
+        "faint": "Death",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/moolet.webp",
+      "portraitShiny": "portraits/moolet_shiny.webp"
+    },
+    "bullwark": {
+      "model": "models/creatures/r2_bull_5704ef69.glb",
+      "height": 1.9,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/bullwark.webp",
+      "portraitShiny": "portraits/bullwark_shiny.webp"
+    },
+    "pyrox": {
+      "model": "models/creatures/r2_bull_5704ef69.glb",
+      "height": 2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/pyrox.webp",
+      "portraitShiny": "portraits/pyrox_shiny.webp"
+    },
+    "truffly": {
+      "model": "models/creatures/r2_pig_665ee586.glb",
+      "height": 0.8,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Hop",
+        "walk": "Hop",
+        "attack": "Jump",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/truffly.webp",
+      "portraitShiny": "portraits/truffly_shiny.webp"
+    },
+    "dozewool": {
+      "model": "models/creatures/r2_sheep_a4bd2c4e.glb",
+      "height": 1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Hop",
+        "walk": "Hop",
+        "attack": "Jump",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/dozewool.webp",
+      "portraitShiny": "portraits/dozewool_shiny.webp"
+    },
+    "snubbit": {
+      "model": "models/creatures/r2_pug_094335c0.glb",
+      "height": 0.8,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Hop",
+        "walk": "Hop",
+        "attack": "Jump",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/snubbit.webp",
+      "portraitShiny": "portraits/snubbit_shiny.webp"
+    },
+    "gustail": {
+      "model": "models/creatures/r2_shiba_inu_ba6d0ee3.glb",
+      "height": 1.2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/gustail.webp",
+      "portraitShiny": "portraits/gustail_shiny.webp"
+    },
+    "blizzarf": {
+      "model": "models/creatures/r2_husky_611d25c7.glb",
+      "height": 1.7,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/blizzarf.webp",
+      "portraitShiny": "portraits/blizzarf_shiny.webp"
+    },
+    "honeybuzz": {
+      "model": "models/creatures/r2_bee_enemy_19203489.glb",
+      "height": 0.9,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying",
+        "walk": "Flying",
+        "run": "Flying",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death"
+      },
+      "portrait": "portraits/honeybuzz.webp",
+      "portraitShiny": "portraits/honeybuzz_shiny.webp"
+    },
+    "thornet": {
+      "model": "models/creatures/r2_wasp_71cadefd.glb",
+      "height": 1.3,
+      "rotY": -1.5707963267948966,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Wasp_Flying",
+        "walk": "Wasp_Flying",
+        "run": "Wasp_Flying",
+        "attack": "Wasp_Attack",
+        "faint": "Wasp_Death"
+      },
+      "portrait": "portraits/thornet.webp",
+      "portraitShiny": "portraits/thornet_shiny.webp"
+    },
+    "nibblet": {
+      "model": "models/creatures/r2_rat_64cb7150.glb",
+      "height": 0.7,
+      "rig": "ground",
+      "anims": {
+        "idle": "Rat_Idle",
+        "walk": "Rat_Walk",
+        "run": "Rat_Run",
+        "attack": "Rat_Attack",
+        "faint": "Rat_Death",
+        "cast": "Rat_Jump",
+        "victory": "Rat_Jump",
+        "jump": "Rat_Jump"
+      },
+      "portrait": "portraits/nibblet.webp",
+      "portraitShiny": "portraits/nibblet_shiny.webp"
+    },
+    "tuftumble": {
+      "model": "models/creatures/r2_llama_73641d10.glb",
+      "height": 1.3,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Hop",
+        "walk": "Hop",
+        "attack": "Jump",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/tuftumble.webp",
+      "portraitShiny": "portraits/tuftumble_shiny.webp"
+    },
+    "peakfleece": {
+      "model": "models/creatures/r2_alpaca_444228bb.glb",
+      "height": 2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/peakfleece.webp",
+      "portraitShiny": "portraits/peakfleece_shiny.webp"
+    },
+    "rimehorn": {
+      "model": "models/creatures/r2_cow_382b3d4a.glb",
+      "height": 1.9,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/rimehorn.webp",
+      "portraitShiny": "portraits/rimehorn_shiny.webp"
+    },
+    "tinkertot": {
+      "model": "models/creatures/r2_animated_robot_7d95dbce.glb",
+      "height": 1.2,
+      "rig": "biped",
+      "anims": {
+        "idle": "Robot_Idle",
+        "walk": "Robot_Walking",
+        "run": "Robot_Running",
+        "attack": "Robot_Punch",
+        "hit": "Robot_No",
+        "faint": "Robot_Death",
+        "cast": "Robot_Yes",
+        "victory": "Robot_Dance",
+        "jump": "Robot_Jump"
+      },
+      "portrait": "portraits/tinkertot.webp",
+      "portraitShiny": "portraits/tinkertot_shiny.webp"
+    },
+    "cogling": {
+      "model": "models/creatures/r2_robot_enemy_9c45ab2b.glb",
+      "height": 1,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Attack",
+        "faint": "Death",
+        "cast": "Shoot",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/cogling.webp",
+      "portraitShiny": "portraits/cogling_shiny.webp"
+    },
+    "gearbrute": {
+      "model": "models/creatures/r2_robot_enemy_large_86da7c34.glb",
+      "height": 1.7,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Attack",
+        "faint": "Death",
+        "cast": "Shoot",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/gearbrute.webp",
+      "portraitShiny": "portraits/gearbrute_shiny.webp"
+    },
+    "arcannon": {
+      "model": "models/creatures/r2_robot_enemy_large_gun_78e23275.glb",
+      "height": 2.2,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Attack",
+        "faint": "Death",
+        "cast": "Shoot",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/arcannon.webp",
+      "portraitShiny": "portraits/arcannon_shiny.webp"
+    },
+    "stiltshot": {
+      "model": "models/creatures/r2_robot_enemy_legs_gun_c320ce4a.glb",
+      "height": 1.6,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Attack",
+        "faint": "Death",
+        "cast": "Shoot",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/stiltshot.webp",
+      "portraitShiny": "portraits/stiltshot_shiny.webp"
+    },
+    "whirrbit": {
+      "model": "models/creatures/r2_robot_enemy_flying_abb31ff6.glb",
+      "height": 1,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Attack",
+        "faint": "Dead",
+        "cast": "Shoot"
+      },
+      "portrait": "portraits/whirrbit.webp",
+      "portraitShiny": "portraits/whirrbit_shiny.webp"
+    },
+    "galegunner": {
+      "model": "models/creatures/r2_robot_enemy_flying_gun_6d0889f1.glb",
+      "height": 1.5,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Attack",
+        "faint": "Dead",
+        "cast": "Shoot"
+      },
+      "portrait": "portraits/galegunner.webp",
+      "portraitShiny": "portraits/galegunner_shiny.webp"
+    },
+    "dustclaw": {
+      "model": "models/creatures/r2_velociraptor_c1f0c4cb.glb",
+      "height": 1.3,
+      "rig": "biped",
+      "anims": {
+        "idle": "Velociraptor_Idle",
+        "walk": "Velociraptor_Walk",
+        "run": "Velociraptor_Run",
+        "attack": "Velociraptor_Attack",
+        "faint": "Velociraptor_Death",
+        "cast": "Velociraptor_Jump",
+        "victory": "Velociraptor_Jump",
+        "jump": "Velociraptor_Jump"
+      },
+      "portrait": "portraits/dustclaw.webp",
+      "portraitShiny": "portraits/dustclaw_shiny.webp"
+    },
+    "quakemaw": {
+      "model": "models/creatures/r2_t_rex_34eed102.glb",
+      "height": 2.5,
+      "rig": "biped",
+      "anims": {
+        "idle": "TRex_Idle",
+        "walk": "TRex_Walk",
+        "run": "TRex_Run",
+        "attack": "TRex_Attack",
+        "faint": "TRex_Death",
+        "cast": "TRex_Jump",
+        "victory": "TRex_Jump",
+        "jump": "TRex_Jump"
+      },
+      "portrait": "portraits/quakemaw.webp",
+      "portraitShiny": "portraits/quakemaw_shiny.webp"
+    },
+    "scorchclaw": {
+      "model": "models/creatures/r2_velociraptor_c1f0c4cb.glb",
+      "height": 1.3,
+      "rig": "biped",
+      "anims": {
+        "idle": "Velociraptor_Idle",
+        "walk": "Velociraptor_Walk",
+        "run": "Velociraptor_Run",
+        "attack": "Velociraptor_Attack",
+        "faint": "Velociraptor_Death",
+        "cast": "Velociraptor_Jump",
+        "victory": "Velociraptor_Jump",
+        "jump": "Velociraptor_Jump"
+      },
+      "portrait": "portraits/scorchclaw.webp",
+      "portraitShiny": "portraits/scorchclaw_shiny.webp"
+    },
+    "hornwall": {
+      "model": "models/creatures/r2_triceratops_6aa1f3ff.glb",
+      "height": 1.8,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Triceratops_Idle",
+        "walk": "Triceratops_Walk",
+        "run": "Triceratops_Run",
+        "attack": "Triceratops_Attack",
+        "faint": "Triceratops_Death",
+        "cast": "Triceratops_Jump",
+        "victory": "Triceratops_Jump",
+        "jump": "Triceratops_Jump"
+      },
+      "portrait": "portraits/hornwall.webp",
+      "portraitShiny": "portraits/hornwall_shiny.webp"
+    },
+    "kilnback": {
+      "model": "models/creatures/r2_stegosaurus_6f8f4ac6.glb",
+      "height": 2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Stegosaurus_Idle",
+        "walk": "Stegosaurus_Walk",
+        "run": "Stegosaurus_Run",
+        "attack": "Stegosaurus_Attack",
+        "faint": "Stegosaurus_Death",
+        "cast": "Stegosaurus_Jump",
+        "victory": "Stegosaurus_Jump",
+        "jump": "Stegosaurus_Jump"
+      },
+      "portrait": "portraits/kilnback.webp",
+      "portraitShiny": "portraits/kilnback_shiny.webp"
+    },
+    "thrumcrest": {
+      "model": "models/creatures/r2_parasaurolophus_47b9d0bd.glb",
+      "height": 1.8,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Parasaurolophus_Idle",
+        "walk": "Parasaurolophus_Walk",
+        "run": "Parasaurolophus_Run",
+        "attack": "Parasaurolophus_Attack",
+        "faint": "Parasaurolophus_Death",
+        "cast": "Parasaurolophus_Jump",
+        "victory": "Parasaurolophus_Jump",
+        "jump": "Parasaurolophus_Jump"
+      },
+      "portrait": "portraits/thrumcrest.webp",
+      "portraitShiny": "portraits/thrumcrest_shiny.webp"
+    },
+    "thunderneck": {
+      "model": "models/creatures/r2_apatosaurus_7b873860.glb",
+      "height": 2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Apatosaurus_Idle",
+        "walk": "Apatosaurus_Walk",
+        "run": "Apatosaurus_Run",
+        "attack": "Apatosaurus_Attack",
+        "faint": "Stegosaurus_Death",
+        "cast": "Apatosaurus_Jump",
+        "victory": "Apatosaurus_Jump",
+        "jump": "Apatosaurus_Jump"
+      },
+      "portrait": "portraits/thunderneck.webp",
+      "portraitShiny": "portraits/thunderneck_shiny.webp"
+    },
+    "duneplod": {
+      "model": "models/creatures/r2_donkey_ca29f94e.glb",
+      "height": 1.7,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/duneplod.webp",
+      "portraitShiny": "portraits/duneplod_shiny.webp"
+    },
+    "boltstripe": {
+      "model": "models/creatures/r2_zebra_ff99ce31.glb",
+      "height": 1.9,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "attack": "Jump",
+        "faint": "Death",
+        "cast": "Jump",
+        "victory": "Jump",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/boltstripe.webp",
+      "portraitShiny": "portraits/boltstripe_shiny.webp"
+    },
+    "bonelet": {
+      "model": "models/creatures/r2_kaykit_skeleton_minion.glb",
+      "height": 1.1,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walking_A",
+        "run": "Running_A",
+        "attack": "Unarmed_Melee_Attack_Punch_A",
+        "hit": "Hit_A",
+        "faint": "Death_A",
+        "cast": "Spellcast_Shoot",
+        "victory": "Cheer",
+        "jump": "Jump_Full_Short"
+      },
+      "portrait": "portraits/bonelet.webp",
+      "portraitShiny": "portraits/bonelet_shiny.webp"
+    },
+    "bonewarden": {
+      "model": "models/creatures/r2_kaykit_skeleton_warrior.glb",
+      "height": 1.8,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walking_A",
+        "run": "Running_A",
+        "attack": "Unarmed_Melee_Attack_Punch_A",
+        "hit": "Hit_A",
+        "faint": "Death_A",
+        "cast": "Spellcast_Shoot",
+        "victory": "Cheer",
+        "jump": "Jump_Full_Short"
+      },
+      "portrait": "portraits/bonewarden.webp",
+      "portraitShiny": "portraits/bonewarden_shiny.webp"
+    },
+    "hexbones": {
+      "model": "models/creatures/r2_kaykit_skeleton_mage.glb",
+      "height": 1.7,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walking_A",
+        "run": "Running_A",
+        "attack": "Unarmed_Melee_Attack_Punch_A",
+        "hit": "Hit_A",
+        "faint": "Death_A",
+        "cast": "Spellcast_Shoot",
+        "victory": "Cheer",
+        "jump": "Jump_Full_Short"
+      },
+      "portrait": "portraits/hexbones.webp",
+      "portraitShiny": "portraits/hexbones_shiny.webp"
+    },
+    "rattlecloak": {
+      "model": "models/creatures/r2_kaykit_skeleton_rogue.glb",
+      "height": 1.6,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walking_A",
+        "run": "Running_A",
+        "attack": "Unarmed_Melee_Attack_Punch_A",
+        "hit": "Hit_A",
+        "faint": "Death_A",
+        "cast": "Spellcast_Shoot",
+        "victory": "Cheer",
+        "jump": "Jump_Full_Short"
+      },
+      "portrait": "portraits/rattlecloak.webp",
+      "portraitShiny": "portraits/rattlecloak_shiny.webp"
+    },
+    "squeakwing": {
+      "model": "models/creatures/r2_bat_4ae13ae9.glb",
+      "height": 1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Bat_Flying",
+        "walk": "Bat_Flying",
+        "run": "Bat_Flying",
+        "attack": "Bat_Attack",
+        "hit": "Bat_Hit",
+        "faint": "Bat_Death",
+        "cast": "Bat_Attack2"
+      },
+      "portrait": "portraits/squeakwing.webp",
+      "portraitShiny": "portraits/squeakwing_shiny.webp"
+    },
+    "hissling": {
+      "model": "models/creatures/r2_snake_0f3a551e.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Snake_Idle",
+        "walk": "Snake_Walk",
+        "run": "Snake_Walk",
+        "attack": "Snake_Attack",
+        "cast": "Snake_Jump",
+        "victory": "Snake_Jump",
+        "jump": "Snake_Jump"
+      },
+      "portrait": "portraits/hissling.webp",
+      "portraitShiny": "portraits/hissling_shiny.webp"
+    },
+    "weblin": {
+      "model": "models/creatures/r2_spider_4259fbdb.glb",
+      "height": 0.7,
+      "rig": "ground",
+      "anims": {
+        "idle": "Spider_Idle",
+        "walk": "Spider_Walk",
+        "run": "Spider_Walk",
+        "attack": "Spider_Attack",
+        "faint": "Spider_Death",
+        "cast": "Spider_Jump",
+        "victory": "Spider_Jump",
+        "jump": "Spider_Jump"
+      },
+      "portrait": "portraits/weblin.webp",
+      "portraitShiny": "portraits/weblin_shiny.webp"
+    },
+    "skullbop": {
+      "model": "models/creatures/r2_skull_enemy_9d87fc71.glb",
+      "height": 0.8,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/skullbop.webp",
+      "portraitShiny": "portraits/skullbop_shiny.webp"
+    },
+    "blorp": {
+      "model": "models/creatures/r2_slime_195565b4.glb",
+      "height": 0.8,
+      "rig": "ground",
+      "anims": {
+        "idle": "Slime_Idle",
+        "walk": "Slime_Walk",
+        "run": "Slime_Walk",
+        "attack": "Slime_Attack",
+        "faint": "Slime_Death"
+      },
+      "portrait": "portraits/blorp.webp",
+      "portraitShiny": "portraits/blorp_shiny.webp"
+    },
+    "gobblorp": {
+      "model": "models/creatures/r2_slime_enemy_93e6c3e3.glb",
+      "height": 1.4,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/gobblorp.webp",
+      "portraitShiny": "portraits/gobblorp_shiny.webp"
+    },
+    "glenhart": {
+      "model": "models/creatures/r2_stag_a9c69fbc.glb",
+      "height": 2.2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/glenhart.webp",
+      "portraitShiny": "portraits/glenhart_shiny.webp"
+    },
+    "aurorhart": {
+      "model": "models/creatures/r2_stag_a9c69fbc.glb",
+      "height": 2.4,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      },
+      "portrait": "portraits/aurorhart.webp",
+      "portraitShiny": "portraits/aurorhart_shiny.webp"
+    },
+    "clacker": {
+      "model": "models/creatures/r2_crab_enemy_b9bbf6bd.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/clacker.webp",
+      "portraitShiny": "portraits/clacker_shiny.webp"
+    },
+    "sandclack": {
+      "model": "models/creatures/r2_crab_enemy_b9bbf6bd.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance",
+        "jump": "Jump"
+      },
+      "portrait": "portraits/sandclack.webp",
+      "portraitShiny": "portraits/sandclack_shiny.webp"
+    },
+    "gildfin": {
+      "model": "models/creatures/r2_goldfish_221c59b8.glb",
+      "height": 0.8,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/gildfin.webp",
+      "portraitShiny": "portraits/gildfin_shiny.webp"
+    },
+    "mirrorscale": {
+      "model": "models/creatures/r2_koi_d2ba96af.glb",
+      "height": 1.4,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/mirrorscale.webp",
+      "portraitShiny": "portraits/mirrorscale_shiny.webp"
+    },
+    "magmascale": {
+      "model": "models/creatures/r2_koi_d2ba96af.glb",
+      "height": 1.4,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/magmascale.webp",
+      "portraitShiny": "portraits/magmascale_shiny.webp"
+    },
+    "quillpuff": {
+      "model": "models/creatures/r2_puffer_2b8ee3e9.glb",
+      "height": 0.8,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/quillpuff.webp",
+      "portraitShiny": "portraits/quillpuff_shiny.webp"
+    },
+    "sunbasker": {
+      "model": "models/creatures/r2_sunfish_b8176c6b.glb",
+      "height": 1.8,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/sunbasker.webp",
+      "portraitShiny": "portraits/sunbasker_shiny.webp"
+    },
+    "chompsy": {
+      "model": "models/creatures/r2_piranha_400a5d85.glb",
+      "height": 0.7,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/chompsy.webp",
+      "portraitShiny": "portraits/chompsy_shiny.webp"
+    },
+    "grinfin": {
+      "model": "models/creatures/r2_shark_fdcb48e0.glb",
+      "height": 1.6,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/grinfin.webp",
+      "portraitShiny": "portraits/grinfin_shiny.webp"
+    },
+    "lanterngulp": {
+      "model": "models/creatures/r2_anglerfish_0c4802f0.glb",
+      "height": 1.3,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/lanterngulp.webp",
+      "portraitShiny": "portraits/lanterngulp_shiny.webp"
+    },
+    "hobsnap": {
+      "model": "models/creatures/r2_goblin_shark_35cd5001.glb",
+      "height": 1.2,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/hobsnap.webp",
+      "portraitShiny": "portraits/hobsnap_shiny.webp"
+    },
+    "bellowdeep": {
+      "model": "models/creatures/r2_whale_7300e697.glb",
+      "height": 1.5,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swim",
+        "walk": "Swim",
+        "run": "Swim"
+      },
+      "portrait": "portraits/bellowdeep.webp",
+      "portraitShiny": "portraits/bellowdeep_shiny.webp"
+    },
+    "barbelmail": {
+      "model": "models/creatures/r2_armored_catfish_d42c2675.glb",
+      "height": 0.9,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/barbelmail.webp",
+      "portraitShiny": "portraits/barbelmail_shiny.webp"
+    },
+    "emberspine": {
+      "model": "models/creatures/r2_lionfish_1d592042.glb",
+      "height": 1.2,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      },
+      "portrait": "portraits/emberspine.webp",
+      "portraitShiny": "portraits/emberspine_shiny.webp"
+    },
+    "skysail": {
+      "model": "models/creatures/r2_manta_ray_32b4e08e.glb",
+      "height": 0.6,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swim",
+        "walk": "Swim",
+        "run": "Swim"
+      },
+      "portrait": "portraits/skysail.webp",
+      "portraitShiny": "portraits/skysail_shiny.webp"
+    },
+    "verdant_rex": {
+      "model": "models/creatures/dino.glb",
+      "height": 2.3,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/verdant_rex.webp",
+      "portraitShiny": "portraits/verdant_rex_shiny.webp"
+    },
+    "ember_totem": {
+      "model": "models/creatures/tribal.glb",
+      "height": 1.9,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      },
+      "portrait": "portraits/ember_totem.webp",
+      "portraitShiny": "portraits/ember_totem_shiny.webp"
+    },
+    "deepcaller": {
+      "model": "models/creatures/blue_demon.glb",
+      "height": 2.2,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/deepcaller.webp",
+      "portraitShiny": "portraits/deepcaller_shiny.webp"
+    },
+    "mire_prince": {
+      "model": "models/creatures/frog.glb",
+      "height": 1.8,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/mire_prince.webp",
+      "portraitShiny": "portraits/mire_prince_shiny.webp"
+    },
+    "dune_titan": {
+      "model": "models/creatures/orc.glb",
+      "height": 2.3,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/dune_titan.webp",
+      "portraitShiny": "portraits/dune_titan_shiny.webp"
+    },
+    "storm_seraph": {
+      "model": "models/creatures/ghost_skull.glb",
+      "height": 2.2,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      },
+      "portrait": "portraits/storm_seraph.webp",
+      "portraitShiny": "portraits/storm_seraph_shiny.webp"
     },
     "thornjaw": {
-      "model": "models/creatures/thornjaw.glb",
+      "model": "models/creatures/dino.glb",
       "height": 6.5,
       "rig": "biped",
       "anims": {
@@ -629,10 +2086,12 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/thornjaw.webp",
+      "portraitShiny": "portraits/thornjaw_shiny.webp"
     },
     "ashen_totem": {
-      "model": "models/creatures/ashen_totem.glb",
+      "model": "models/creatures/tribal.glb",
       "height": 6.8,
       "rig": "flyer",
       "anims": {
@@ -643,10 +2102,12 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/ashen_totem.webp",
+      "portraitShiny": "portraits/ashen_totem_shiny.webp"
     },
     "abyssal_tyrant": {
-      "model": "models/creatures/abyssal_tyrant.glb",
+      "model": "models/creatures/blue_demon.glb",
       "height": 6.8,
       "rig": "biped",
       "anims": {
@@ -657,10 +2118,45 @@
         "faint": "Death",
         "cast": "Weapon",
         "victory": "Wave"
-      }
+      },
+      "portrait": "portraits/abyssal_tyrant.webp",
+      "portraitShiny": "portraits/abyssal_tyrant_shiny.webp"
+    },
+    "bog_sovereign": {
+      "model": "models/creatures/frog.glb",
+      "height": 6.6,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "Punch",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Weapon",
+        "victory": "Wave"
+      },
+      "portrait": "portraits/bog_sovereign.webp",
+      "portraitShiny": "portraits/bog_sovereign_shiny.webp"
+    },
+    "sandjaw": {
+      "model": "models/creatures/r2_t_rex_34eed102.glb",
+      "height": 7,
+      "rig": "biped",
+      "anims": {
+        "idle": "TRex_Idle",
+        "walk": "TRex_Walk",
+        "run": "TRex_Run",
+        "attack": "TRex_Attack",
+        "faint": "TRex_Death",
+        "cast": "TRex_Jump",
+        "victory": "TRex_Jump",
+        "jump": "TRex_Jump"
+      },
+      "portrait": "portraits/sandjaw.webp",
+      "portraitShiny": "portraits/sandjaw_shiny.webp"
     },
     "stormcrown": {
-      "model": "models/creatures/stormcrown.glb",
+      "model": "models/creatures/ghost_skull.glb",
       "height": 7.5,
       "rig": "flyer",
       "anims": {
@@ -671,7 +2167,9 @@
         "faint": "Death",
         "cast": "Yes",
         "victory": "Yes"
-      }
+      },
+      "portrait": "portraits/stormcrown.webp",
+      "portraitShiny": "portraits/stormcrown_shiny.webp"
     }
   },
   "environment": {
@@ -817,6 +2315,20 @@
         "height": 0.25
       }
     ],
+    "reeds": [
+      {
+        "model": "models/nature/Grass_Wispy_Tall.glb",
+        "height": 1.3
+      },
+      {
+        "model": "models/nature/Grass_Common_Tall.glb",
+        "height": 1.3
+      },
+      {
+        "model": "models/nature/Plant_7_Big.glb",
+        "height": 1.3
+      }
+    ],
     "pathstone": [
       {
         "model": "models/nature/RockPath_Round_Small_1.glb",
@@ -956,6 +2468,11 @@
     "town": "audio/music_town.mp3",
     "overworld": "audio/music_overworld.mp3",
     "battle": "audio/music_battle.mp3",
-    "boss": "audio/music_boss.mp3"
+    "boss": "audio/music_boss.mp3",
+    "dunes": "audio/music_dunes.mp3",
+    "marsh": "audio/music_marsh.mp3",
+    "night": "audio/music_night.mp3",
+    "summon": "audio/music_summon.mp3",
+    "homestead": "audio/music_homestead.mp3"
   }
 }

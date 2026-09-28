@@ -1,0 +1,27 @@
+{
+  "name": "wild-mystics-api",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Wild Mystics account + cloud-save API (Cloudflare Worker + D1)",
+  "scripts": {
+    "dev": "wrangler dev --local --port 8787",
+    "db:migrate:local": "wrangler d1 migrations apply wild-mystics --local",
+    "db:migrate:remote": "wrangler d1 migrations apply wild-mystics --remote",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p test/tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "smoke": "bash scripts/smoke.sh"
+  },
+  "dependencies": {
+    "hono": "^4.13.9"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.3.0",
+    "@cloudflare/workers-types": "^5.20260927.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.142.0"
+  }
+}

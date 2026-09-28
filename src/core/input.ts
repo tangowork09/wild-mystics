@@ -16,6 +16,8 @@ class Input {
 
   init(canvas: HTMLElement, joyEl: HTMLElement, knobEl: HTMLElement) {
     addEventListener('keydown', (e) => {
+      const tgt = e.target as HTMLElement | null;
+      if (tgt && /^(INPUT|TEXTAREA|SELECT)$/.test(tgt.tagName)) return;
       const k = e.key.toLowerCase();
       if (!this.keys.has(k)) this.pressed.add(k);
       this.keys.add(k);

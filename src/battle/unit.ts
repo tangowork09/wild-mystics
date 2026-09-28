@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 import type { Rig } from '../assets/placeholders';
-import { statsOf, speciesOf, displayName, type Creature } from '../game/creature';
+import { statsOf, speciesOf, displayName, hasRelicEffect, type Creature } from '../game/creature';
 import type { Stat } from '../data/skills';
+import type { StatusId } from '../data/traits';
 
 export interface Buff { stat: Stat; amount: number; turns: number }
+export interface Status { id: StatusId; turns: number; stack: number }
 
 export class Unit {
   ap = 2;
@@ -12,31 +14,47 @@ export class Unit {
   broken = false;
   av = 0;
   buffs: Buff[] = [];
+  status: Status | null = null;
+  shield = 0;
   enraged = false;
   participated = true;
   captured = false;
   gone = false;
   bossPatternIdx = 0;
+  sturdyUsed = false;
+  secondWindUsed = false;
+  momentumUsed = false;
+  rage = 0;
+  turnsTaken = 0;
   home = new THREE.Vector3();
   face = 0;
+  hover = 0;
 
   constructor(public side: 'party' | 'enemy', public c: Creature, public rig: Rig, public slot: number, public boss = false) {
     this.brkMax = boss ? 260 : 100;
+    if (speciesOf(c).swim) this.hover = 0.6;
   }
 
   get alive() { return this.c.hp > 0 && !this.captured && !this.gone; }
   get name() { return displayName(this.c); }
   get sp() { return speciesOf(this.c); }
+  get ability() { return this.c.ability; }
   get maxHp() { return statsOf(this.c).maxHp; }
   get height() { return this.rig.height; }
   get radius() { return Math.max(0.6, this.rig.height * 0.35); }
+  relic(effect: string) { return hasRelicEffect(this.c, effect); }
+  get statusImmune() { return this.ability === 'aegis' || this.relic('status_immune'); }
 
   stat(s: Stat): number {
     const base = statsOf(this.c)[s];
     let m = 0;
     for (const b of this.buffs) if (b.stat === s) m += b.amount;
     if (this.enraged && s === 'atk') m += 0.3;
-    return base * THREE.MathUtils.clamp(1 + m, 0.4, 2.2);
+    if (s === 'atk') m += this.rage * 0.1;
+    if (s === 'spd' && this.ability === 'swift') m += 0.1;
+    if (s === 'spd' && this.status?.id === 'paralyze') m -= 0.3;
+    if (s === 'atk' && this.status?.id === 'burn') m -= 0.2;
+    return base * THREE.MathUtils.clamp(1 + m, 0.35, 2.4);
   }
 
   /** Base action-value increment: lower = acts more often. */

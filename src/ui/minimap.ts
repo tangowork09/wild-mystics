@@ -1,10 +1,13 @@
-import { ZONES, WORLD_SIZE, WATER_LEVEL } from '../data/zones';
+import { ZONES, WORLD_SIZE, WATER_LEVEL, HOMESTEAD } from '../data/zones';
 import { ELEMENTS } from '../data/elements';
 import { SPECIES } from '../data/species';
 import { state } from '../game/state';
 import type { Overworld } from '../world/world';
+import { icon } from './icons';
 
 // Pre-rendered relief map (colour map + water + hillshade), then markers drawn per frame.
+
+export interface TravelPoint { id: string; label: string; kind: 'town' | 'camp' | 'waystone' | 'homestead'; x: number; z: number; zone: string }
 
 export class Minimap {
   private base: HTMLCanvasElement;
@@ -12,7 +15,7 @@ export class Minimap {
   private ctx: CanvasRenderingContext2D;
   private S = 512;
 
-  constructor(private world: Overworld, host: HTMLElement) {
+  constructor(readonly world: Overworld, host: HTMLElement) {
     const S = this.S;
     this.base = document.createElement('canvas');
     this.base.width = this.base.height = S;
@@ -30,7 +33,7 @@ export class Minimap {
         const o = (y * S + x) * 4;
         let r = img.data[o] * shade, gg = img.data[o + 1] * shade, b = img.data[o + 2] * shade;
         if (h < WATER_LEVEL) {
-          const lava = world.data.zoneW[((Math.round((y / (S - 1)) * 511)) * 512 + Math.round((x / (S - 1)) * 511)) * 4 + 1] > 0.5;
+          const lava = world.data.lavaAt(wx, wz) > 0.5;
           const d = Math.min(1, (WATER_LEVEL - h) / 4);
           if (lava) { r = 240 - d * 60; gg = 100 - d * 50; b = 30; }
           else { r = 70 - d * 40; gg = 150 - d * 60; b = 190 - d * 40; }
@@ -46,8 +49,23 @@ export class Minimap {
     this.ctx = this.mini.getContext('2d')!;
   }
 
+  travelPoints(): TravelPoint[] {
+    const out: TravelPoint[] = [];
+    for (const z of ZONES) {
+      if (state.waypoints.includes(`${z.id}-town`)) out.push({ id: `${z.id}-town`, label: z.town.name, kind: 'town', x: z.town.pos[0], z: z.town.pos[1], zone: z.id });
+      if (state.waypoints.includes(`${z.id}-camp`)) out.push({ id: `${z.id}-camp`, label: `${z.name} Flag`, kind: 'camp', x: z.camp[0], z: z.camp[1], zone: z.id });
+    }
+    for (const w of this.world.landmarks.waystones) {
+      if (state.waypoints.includes(w.id)) out.push({ id: w.id, label: `Waystone · ${w.zone.name}`, kind: 'waystone', x: w.pos.x, z: w.pos.z, zone: w.zone.id });
+    }
+    out.push({ id: 'homestead', label: 'Your Homestead', kind: 'homestead', x: HOMESTEAD.center[0] - HOMESTEAD.radius - 3, z: HOMESTEAD.center[1], zone: 'vale' });
+    return out;
+  }
+
   draw() {
-    const c = this.ctx, W = 200, view = 150; // metres across
+    const c = this.ctx, W = 200;
+    const tower = state.base.structures.some((s) => s.type === 'watchtower');
+    const view = tower ? 190 : 150;
     const p = this.world.playerPos;
     const scale = this.S / WORLD_SIZE;
     const sx = (p.x + WORLD_SIZE / 2) * scale - (view * scale) / 2;
@@ -60,22 +78,27 @@ export class Minimap {
     c.fillStyle = '#1a1620';
     c.fillRect(0, 0, W, W);
     c.drawImage(this.base, sx, sy, view * scale, view * scale, 0, 0, W, W);
+    if (this.world.atmo.night > 0.3) { c.fillStyle = `rgba(10,14,40,${this.world.atmo.night * 0.35})`; c.fillRect(0, 0, W, W); }
     const k = W / view;
     const P = (x: number, z: number) => [(x - p.x) * k + W / 2, (z - p.z) * k + W / 2];
-    // wilds
     for (const w of this.world.wilds.list) {
+      if (w.fade < 0.5) continue;
       const [x, y] = P(w.pos.x, w.pos.z);
       if (x < -5 || y < -5 || x > W + 5 || y > W + 5) continue;
-      c.fillStyle = ELEMENTS[SPECIES[w.species].element].color;
-      c.beginPath(); c.arc(x, y, 3, 0, Math.PI * 2); c.fill();
+      const sp = SPECIES[w.species];
+      c.fillStyle = ELEMENTS[sp.element].color;
+      c.beginPath(); c.arc(x, y, sp.rarity === 'common' ? 2.6 : 3.6, 0, Math.PI * 2); c.fill();
+      if (w.shiny) { c.strokeStyle = '#dff8ff'; c.lineWidth = 1.5; c.stroke(); }
     }
     for (const z of ZONES) {
       this.icon(c, P(z.town.pos[0], z.town.pos[1]), '⌂', '#ffe8a8', 16);
       this.icon(c, P(z.camp[0], z.camp[1]), '⚑', '#ffd0a0', 13);
       if (!state.bosses.includes(z.id)) this.icon(c, P(z.boss.pos[0], z.boss.pos[1]), '♛', '#ff8ad8', 16);
     }
+    for (const w of this.world.landmarks.waystones) this.icon(c, P(w.pos.x, w.pos.z), '◆', state.waypoints.includes(w.id) ? '#9fe8ff' : '#6a6478', 12);
+    for (const t of this.world.landmarks.tamers) if (state.tamers[t.id] !== new Date().toISOString().slice(0, 10)) this.icon(c, P(t.pos.x, t.pos.z), '!', '#ffd76a', 13);
+    this.icon(c, P(HOMESTEAD.center[0], HOMESTEAD.center[1]), '✦', '#9fe8b0', 14);
     c.restore();
-    // player arrow (camera-relative heading)
     const yaw = this.world.player.root.rotation.y;
     c.save();
     c.translate(W / 2, W / 2);
@@ -86,7 +109,6 @@ export class Minimap {
     c.beginPath(); c.moveTo(0, -9); c.lineTo(6, 7); c.lineTo(0, 3); c.lineTo(-6, 7); c.closePath();
     c.stroke(); c.fill();
     c.restore();
-    // view cone
     c.save();
     c.translate(W / 2, W / 2);
     c.rotate(-this.world.camYaw);
@@ -110,32 +132,45 @@ export class Minimap {
     c.fillText(ch, x, y);
   }
 
-  /** Full world map image for the Map screen. */
-  fullMap(host: HTMLElement) {
+  /** Full world map with clickable fast-travel points. */
+  fullMap(host: HTMLElement, onTravel?: (p: TravelPoint) => void) {
+    const S = 760;
+    const wrap = document.createElement('div');
+    wrap.className = 'fullmap';
     const cv = document.createElement('canvas');
-    cv.width = cv.height = 720;
+    cv.width = cv.height = S;
     const c = cv.getContext('2d')!;
-    c.drawImage(this.base, 0, 0, 720, 720);
-    const k = 720 / WORLD_SIZE;
+    c.drawImage(this.base, 0, 0, S, S);
+    const k = S / WORLD_SIZE;
     const P = (x: number, z: number) => [(x + WORLD_SIZE / 2) * k, (z + WORLD_SIZE / 2) * k];
     c.textAlign = 'center';
     for (const z of ZONES) {
       const [zx, zy] = P(z.center[0], z.center[1]);
-      c.font = '600 22px Cinzel, serif';
+      c.font = '600 24px Cinzel, serif';
       c.lineWidth = 5; c.strokeStyle = 'rgba(10,8,14,0.75)'; c.fillStyle = '#f4e6c4';
-      c.strokeText(z.name, zx, zy - 40); c.fillText(z.name, zx, zy - 40);
-      c.font = 'italic 15px "Cormorant Garamond", serif';
-      c.strokeText(`Lv ${z.levels[0]}–${z.levels[1]}`, zx, zy - 18); c.fillText(`Lv ${z.levels[0]}–${z.levels[1]}`, zx, zy - 18);
-      this.icon(c, P(z.town.pos[0], z.town.pos[1]), '⌂', '#ffe8a8', 26);
-      const [tx, ty] = P(z.town.pos[0], z.town.pos[1]);
-      c.font = '600 14px Cinzel, serif'; c.lineWidth = 4;
-      c.strokeText(z.town.name, tx, ty + 22); c.fillStyle = '#ffe8a8'; c.fillText(z.town.name, tx, ty + 22);
-      this.icon(c, P(z.camp[0], z.camp[1]), '⚑', '#ffd0a0', 20);
+      c.strokeText(z.name, zx, zy - 46); c.fillText(z.name, zx, zy - 46);
+      c.font = 'italic 16px "Cormorant Garamond", serif';
+      c.strokeText(`Lv ${z.levels[0]}–${z.levels[1]}`, zx, zy - 24); c.fillText(`Lv ${z.levels[0]}–${z.levels[1]}`, zx, zy - 24);
       this.icon(c, P(z.boss.pos[0], z.boss.pos[1]), state.bosses.includes(z.id) ? '✓' : '♛', state.bosses.includes(z.id) ? '#9aff9a' : '#ff8ad8', 26);
     }
-    const [px, py] = P(this.world.playerPos.x, this.world.playerPos.z);
-    c.fillStyle = '#ffffff'; c.strokeStyle = '#000'; c.lineWidth = 3;
-    c.beginPath(); c.arc(px, py, 7, 0, Math.PI * 2); c.stroke(); c.fill();
-    host.appendChild(cv);
+    wrap.appendChild(cv);
+    const pts = this.travelPoints();
+    const pct = (v: number) => `${((v + WORLD_SIZE / 2) / WORLD_SIZE) * 100}%`;
+    for (const t of pts) {
+      const b = document.createElement('button');
+      b.className = `tp tp-${t.kind}`;
+      b.style.left = pct(t.x);
+      b.style.top = pct(t.z);
+      b.innerHTML = `${icon(t.kind === 'town' ? 'house_base' : t.kind === 'camp' ? 'flag' : t.kind === 'homestead' ? 'hammer_build' : 'waypoint_obelisk')}<span>${t.label}</span>`;
+      b.title = onTravel ? `Travel to ${t.label}` : t.label;
+      if (onTravel) b.addEventListener('click', () => onTravel(t));
+      wrap.appendChild(b);
+    }
+    const me = document.createElement('div');
+    me.className = 'tp-me';
+    me.style.left = pct(this.world.playerPos.x);
+    me.style.top = pct(this.world.playerPos.z);
+    wrap.appendChild(me);
+    host.appendChild(wrap);
   }
 }

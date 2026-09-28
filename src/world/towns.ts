@@ -5,7 +5,7 @@ import { buildPlayer, type Rig } from '../assets/placeholders';
 import { PATHS, type TerrainData } from './terrain';
 import type { Props } from './props';
 
-export type Service = 'healer' | 'shop' | 'hatchery' | 'shrine' | 'tutor' | 'storage';
+export type Service = 'healer' | 'shop' | 'hatchery' | 'shrine' | 'tutor' | 'storage' | 'summon' | 'quests';
 
 export const SERVICES: Record<Service, { name: string; icon: string; roof: string; desc: string }> = {
   healer: { name: 'Healer', icon: '✚', roof: '#d0506a', desc: 'Restore your whole team' },
@@ -14,17 +14,24 @@ export const SERVICES: Record<Service, { name: string; icon: string; roof: strin
   shrine: { name: 'Elementum Shrine', icon: '✦', roof: '#8a4ad0', desc: 'Infuse elemental power' },
   tutor: { name: 'Move Master', icon: '⚔', roof: '#c03a2a', desc: 'Enhance skills' },
   storage: { name: 'Keeper', icon: '▣', roof: '#6a5a3a', desc: 'Swap team & storage' },
+  summon: { name: 'Wishing Spire', icon: '✧', roof: '#5a4ad0', desc: 'Summon Mystics & relics with Aether' },
+  quests: { name: 'Quest Board', icon: '❖', roof: '#a0702a', desc: 'Requests from the townsfolk' },
 };
+
+/** Safe arrival point per town: on a road gap facing the fountain, camera behind along the road. */
+export const TOWN_SPAWN: Record<string, { x: number; z: number; yaw: number }> = {};
 
 export interface Interactable {
   pos: THREE.Vector3;
   radius: number;
   label: string;
-  kind: 'service' | 'camp' | 'boss' | 'search';
+  kind: 'service' | 'camp' | 'boss' | 'search' | 'waystone' | 'gather' | 'tamer' | 'homestead' | 'npc';
   service?: Service;
   zone: Zone;
   id: string;
   enabled: () => boolean;
+  /** Extra payload for the handler (e.g. tamer id, node type). */
+  data?: string;
 }
 
 const M = (color: string, o: Partial<THREE.MeshStandardMaterialParameters> = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...o });
@@ -147,6 +154,41 @@ function signpost(svc: Service): THREE.Group {
   return g;
 }
 
+function wishingSpire(): THREE.Group {
+  const g = new THREE.Group();
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 2.2, 0.6, 8), stone);
+  base.position.y = 0.3; base.castShadow = base.receiveShadow = true; g.add(base);
+  const col = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.55, 5.5, 8), M('#e8e0f4', { roughness: 0.4, metalness: 0.3 }));
+  col.position.y = 3.2; col.castShadow = true; g.add(col);
+  const crystal = new THREE.Mesh(new THREE.OctahedronGeometry(0.9, 0).scale(0.8, 1.9, 0.8), new THREE.MeshPhysicalMaterial({ color: '#8a7aff', emissive: '#6a4aff', emissiveIntensity: 1.6, roughness: 0.08, clearcoat: 1, transmission: 0 }));
+  crystal.position.y = 7.2; crystal.name = 'spin3'; g.add(crystal);
+  for (let i = 0; i < 3; i++) {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.3 + i * 0.35, 0.04, 6, 48), new THREE.MeshStandardMaterial({ color: '#ffe8a8', emissive: '#ffd76a', emissiveIntensity: 1.4 }));
+    ring.position.y = 7.2; ring.rotation.x = Math.PI / 2 + i * 0.6; ring.name = 'orbit'; g.add(ring);
+  }
+  return g;
+}
+
+function questBoard(): THREE.Group {
+  const g = new THREE.Group();
+  for (const sx of [-1, 1]) {
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 2.6, 8), timber);
+    post.position.set(sx * 1.05, 1.3, 0); post.castShadow = true; g.add(post);
+  }
+  const board = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.5, 0.12), M('#8a6a44'));
+  board.position.y = 1.85; board.castShadow = true; g.add(board);
+  const roof = roofPrism(2.2, 0.5, 0.45, M('#a0702a', { flatShading: true }));
+  roof.position.y = 2.6; roof.rotation.y = Math.PI / 2; g.add(roof);
+  const papers = ['#f4ead2', '#efe0c0', '#f8f0dc', '#e8d8b8'];
+  for (let i = 0; i < 5; i++) {
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.52), M(papers[i % 4], { side: THREE.DoubleSide }));
+    p.position.set(-0.8 + i * 0.4, 1.8 + (i % 2) * 0.18, 0.07); p.rotation.z = (i - 2) * 0.06; g.add(p);
+  }
+  const mark = new THREE.Mesh(new THREE.OctahedronGeometry(0.2, 0), new THREE.MeshStandardMaterial({ color: '#ffd76a', emissive: '#ffb03a', emissiveIntensity: 2 }));
+  mark.position.y = 3.25; mark.name = 'spin2'; g.add(mark);
+  return g;
+}
+
 function lamp(): THREE.Group {
   const g = new THREE.Group();
   const post = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.12, 3.4, 8), timber);
@@ -253,7 +295,7 @@ export class Structures {
       this.buildCamp(zone);
       this.buildArena(zone);
     }
-    this.group.traverse((o) => { if (['spin', 'spin2', 'bob', 'flicker', 'cloth'].includes(o.name)) this.animated.push(o); });
+    this.group.traverse((o) => { if (['spin', 'spin2', 'spin3', 'orbit', 'bob', 'flicker', 'cloth'].includes(o.name)) this.animated.push(o); });
   }
 
   private place(obj: THREE.Object3D, x: number, z: number, faceX: number, faceZ: number) {
@@ -267,19 +309,34 @@ export class Structures {
     const f = fountain(zone);
     this.place(f, cx, cz, cx, cz + 1);
     this.props.addCollider({ x: cx, z: cz, r: 3.6 });
-    const services: Service[] = ['healer', 'shop', 'hatchery', 'shrine', 'tutor', 'storage'];
+    const services: Service[] = zone.town.kind === 'town' ? ['healer', 'shop', 'hatchery', 'shrine', 'tutor', 'storage'] : ['healer', 'shop', 'storage'];
+    const isHub = zone.id === 'vale';
     // leave gaps where roads enter the plaza
     const roadAngles = this.roadAnglesAt(cx, cz);
     const slots: number[] = [];
-    for (let i = 0; i < 16 && slots.length < 6; i++) {
+    const R0 = zone.town.kind === 'town' ? 19 : 14;
+    for (let i = 0; i < 16 && slots.length < services.length; i++) {
       const a = (i / 16) * Math.PI * 2;
       if (roadAngles.some((ra) => Math.abs(Math.atan2(Math.sin(a - ra), Math.cos(a - ra))) < 0.42)) continue;
-      if (slots.some((s) => Math.abs(Math.atan2(Math.sin(a - s), Math.cos(a - s))) < 0.8)) continue;
+      if (slots.some((s) => Math.abs(Math.atan2(Math.sin(a - s), Math.cos(a - s))) < (services.length > 3 ? 0.8 : 1.4))) continue;
       slots.push(a);
+    }
+    {
+      // arrival point: middle of the widest gap between plaza buildings/landmarks, facing the fountain
+      const used = services.map((_, i) => slots[i % slots.length] + (i >= slots.length ? 0.4 : 0));
+      if (isHub) used.push(-Math.PI / 4, -2.3); else used.push(2.4);
+      const angs = used.map((a) => ((a % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)).sort((p, q) => p - q);
+      let best = -Math.PI / 2, gap = 0;
+      angs.forEach((a, i) => {
+        const next = i + 1 < angs.length ? angs[i + 1] : angs[0] + Math.PI * 2;
+        if (next - a > gap) { gap = next - a; best = a + (next - a) / 2; }
+      });
+      const R = zone.town.kind === 'town' ? 6.5 : 5;
+      TOWN_SPAWN[zone.id] = { x: cx + Math.cos(best) * R, z: cz + Math.sin(best) * R, yaw: Math.atan2(Math.cos(best), Math.sin(best)) };
     }
     services.forEach((svc, i) => {
       const a = slots[i % slots.length] + (i >= slots.length ? 0.4 : 0);
-      const R = 19;
+      const R = R0;
       const x = cx + Math.cos(a) * R, z = cz + Math.sin(a) * R;
       const b = serviceBuilding(svc);
       this.place(b, x, z, cx, cz);
@@ -311,11 +368,27 @@ export class Structures {
         d.rotation.y += k * 1.3;
       }
     });
+    // hub landmarks: Wishing Spire (gacha) and the quest board sit on the plaza
+    if (isHub) {
+      const spire = wishingSpire();
+      const sx = cx + 7.5, sz = cz - 7.5;
+      this.place(spire, sx, sz, cx, cz);
+      this.props.addCollider({ x: sx, z: sz, r: 1.8 });
+      this.interactables.push({ pos: new THREE.Vector3(sx, this.data.heightAt(sx, sz), sz), radius: 4, label: 'Wishing Spire — Summon', kind: 'service', service: 'summon', zone, id: `${zone.id}-summon`, enabled: () => true });
+    }
+    {
+      const qa = isHub ? -2.3 : 2.4;
+      const qx = cx + Math.cos(qa) * 8.5, qz = cz + Math.sin(qa) * 8.5;
+      const board = questBoard();
+      this.place(board, qx, qz, cx, cz);
+      this.interactables.push({ pos: new THREE.Vector3(qx, this.data.heightAt(qx, qz), qz), radius: 3, label: 'Quest Board', kind: 'service', service: 'quests', zone, id: `${zone.id}-quests`, enabled: () => true });
+    }
     // decorative houses on the outer ring
-    for (let i = 0; i < 7; i++) {
-      const a = (i / 7) * Math.PI * 2 + 0.25;
+    const houses = zone.town.kind === 'town' ? 7 : 4;
+    for (let i = 0; i < houses; i++) {
+      const a = (i / houses) * Math.PI * 2 + 0.25;
       if (roadAngles.some((ra) => Math.abs(Math.atan2(Math.sin(a - ra), Math.cos(a - ra))) < 0.35)) continue;
-      const R = 31 + (i % 2) * 3;
+      const R = (zone.town.kind === 'town' ? 31 : 21) + (i % 2) * 3;
       const x = cx + Math.cos(a) * R, z = cz + Math.sin(a) * R;
       const custom = envModel('buildings', 'house', i);
       const h = custom ?? house(['#8a3a2a', '#3a5a8a', '#5a7a3a', '#7a5a8a'][i % 4], 5 + (i % 3), 4.5, 2.8 + (i % 2));
@@ -329,7 +402,7 @@ export class Structures {
       this.place(lamp(), x, z, cx, cz);
     }
     // wandering villagers
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < (zone.town.kind === 'town' ? 5 : 2); i++) {
       const v = makeNpcRig(i + 2) ?? buildPlayer();
       const p = new THREE.Vector3(cx + (Math.random() - 0.5) * 16, 0, cz + (Math.random() - 0.5) * 16);
       p.y = this.data.heightAt(p.x, p.z);
@@ -413,11 +486,16 @@ export class Structures {
     this.beams.set(zone.id, b);
   }
 
+  /** Windows and lamps brighten at night. */
+  setNight(n: number) { glowWarm.emissiveIntensity = 1.0 + n * 3.2; }
+
   update(dt: number, t: number) {
     for (const o of this.animated) {
       if (o.name === 'spin') { o.rotation.y = t * 0.8; o.position.y = 2.6 + Math.sin(t * 1.5) * 0.25; }
       if (o.name === 'bob') o.position.y += Math.sin(t * 2) * 0.004;
       if (o.name === 'spin2') o.rotation.y = t * 1.5;
+      if (o.name === 'spin3') { o.rotation.y = t * 0.6; o.position.y = 7.2 + Math.sin(t * 1.2) * 0.25; }
+      if (o.name === 'orbit') { o.rotation.z = t * (0.4 + (o.id % 3) * 0.2); }
       if (o.name === 'flicker') { o.scale.set(1 + Math.sin(t * 17 + o.id) * 0.12, 1 + Math.sin(t * 13 + o.id) * 0.25, 1 + Math.sin(t * 11 + o.id) * 0.12); }
       if (o.name === 'cloth') o.rotation.y = Math.sin(t * 1.7) * 0.3;
     }

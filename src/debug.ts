@@ -8,9 +8,8 @@ import type { Overworld } from './world/world';
 import type { Hud } from './ui/hud';
 import type { Battle } from './battle/battle';
 import { el, uiRoot } from './ui/dom';
-import { teamMenu, dexMenu, bagMenu, mapMenu } from './ui/menus';
-import { openService } from './ui/services';
 import type { Service } from './world/towns';
+import type { JournalTab } from './ui/journal';
 
 // URL-driven shortcuts used for automated screenshots and quick testing, e.g.
 //   ?auto=world&pos=0,100&yaw=180     ?auto=battle&sp=gloop&lv=4     ?auto=boss&zone=vale
@@ -20,9 +19,11 @@ interface Api {
   startBattle: (list: { species: string; level: number; shiny: boolean }[], adv: 'player' | 'enemy' | null, wild: null) => Promise<void>;
   startBoss: (z: Zone) => Promise<void>;
   begin: (fresh: boolean, starter?: string) => Promise<void>;
+  journal: (tab: JournalTab) => Promise<void>;
+  service: (svc: Service) => Promise<void>;
 }
 
-type G = { world: Overworld; hud: Hud; battle: Battle | null; busy: boolean; started: boolean };
+type G = { world: Overworld; hud: Hud; battle: Battle | null; busy: boolean; started: boolean; builder: { enter(): void; openOverview(): Promise<void> } };
 
 export async function runDebug(game: G, api: Api): Promise<boolean> {
   const q = new URLSearchParams(location.search);
@@ -40,6 +41,18 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
   const view = q.get('view');
   if (!auto && !view) return false;
 
+  if (view === 'portraits') {
+    const m = await import('./assets/manifest');
+    await m.ensureModels(Object.keys(SPECIES).map(m.creatureModel));
+    const out: Record<string, string> = {};
+    for (const id of Object.keys(SPECIES)) {
+      out[id] = m.renderPortrait(id, false, 256);
+      out[`${id}*`] = m.renderPortrait(id, true, 256);
+    }
+    w.__portraits = out;
+    w.__ready = true;
+    return true;
+  }
   if (view === 'gallery') {
     const g = el('div', 'gallery');
     g.innerHTML = Object.values(SPECIES).map((s) => `<div class="gal" style="--el:${ELEMENTS[s.element].color}"><img src="${portrait(s.id)}" alt=""><b>${s.name}</b><small>${ELEMENTS[s.element].glyph} ${s.id}${s.boss ? ' · boss' : ''}</small></div>`).join('');
@@ -100,14 +113,19 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
   }
   const ui = q.get('ui');
   if (ui) {
-    game.busy = true;
-    const hooks = { evolve: async () => {} };
-    if (ui === 'team') void teamMenu(hooks);
-    if (ui === 'box') void teamMenu(hooks, true);
-    if (ui === 'dex') void dexMenu();
-    if (ui === 'bag') void bagMenu();
-    if (ui === 'map') void mapMenu(game.hud.minimap);
-    if (ui.startsWith('service:')) void openService(ui.split(':')[1] as Service, game.world.zone, hooks);
+    const legacy: Record<string, JournalTab> = { box: 'team' };
+    if (ui.startsWith('service:')) void api.service(ui.split(':')[1] as Service);
+    else if (ui === 'build') game.builder.enter();
+    else if (ui === 'homestead') void game.builder.openOverview();
+    else if (ui.startsWith('screen:')) {
+      const s = w.__screens as typeof import('./ui/screens');
+      const which = ui.split(':')[1];
+      if (which === 'starter') void s.chooseStarter();
+      if (which === 'fishing') void s.fishing();
+      if (which === 'daily') void s.dailyLogin();
+      if (which === 'guide') void s.guide(false);
+      if (which === 'dialog') void s.dialog({ name: 'Marigold', title: 'Meadow Botanist', face: 'sporelet', lines: ['Every Mystic in this meadow is a flower that learned to walk.'], choices: ['Battle!', 'Not now'] });
+    } else void api.journal(legacy[ui] ?? (ui as JournalTab));
   }
   return true;
 }

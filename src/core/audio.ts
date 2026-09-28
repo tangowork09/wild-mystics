@@ -6,17 +6,19 @@ import { getManifest } from '../assets/manifest';
 
 export type Sfx =
   | 'hit' | 'hit2' | 'slash' | 'quake' | 'perfect' | 'parry' | 'dodge' | 'miss' | 'select' | 'back' | 'open' | 'error'
-  | 'capture' | 'captured' | 'orb' | 'break' | 'heal' | 'levelup' | 'encounter' | 'faint' | 'coin' | 'step';
+  | 'capture' | 'captured' | 'orb' | 'break' | 'heal' | 'levelup' | 'encounter' | 'faint' | 'coin' | 'step'
+  | 'quest' | 'evolve' | 'rare' | 'defeat' | 'fanfare' | 'card' | 'flip' | 'chips' | 'pack' | 'click';
 
 let ctx: AudioContext | null = null;
 const buffers = new Map<string, AudioBuffer | null>();
 let sfxGain: GainNode | null = null;
+let sfxVol = 0.7;
 
 function ac() {
   if (!ctx) {
     ctx = new AudioContext();
     sfxGain = ctx.createGain();
-    sfxGain.gain.value = 0.7;
+    sfxGain.gain.value = sfxVol;
     sfxGain.connect(ctx.destination);
   }
   if (ctx.state === 'suspended') void ctx.resume();
@@ -37,7 +39,7 @@ async function loadBuf(name: string): Promise<AudioBuffer | null> {
 
 /** Warm the SFX cache after the first user gesture. */
 export function preloadSfx() {
-  const names: Sfx[] = ['hit', 'hit2', 'slash', 'quake', 'perfect', 'parry', 'dodge', 'miss', 'select', 'back', 'open', 'error', 'capture', 'captured', 'orb', 'break', 'heal', 'levelup', 'encounter', 'faint', 'coin'];
+  const names: Sfx[] = ['hit', 'hit2', 'slash', 'quake', 'perfect', 'parry', 'dodge', 'miss', 'select', 'back', 'open', 'error', 'capture', 'captured', 'orb', 'break', 'heal', 'levelup', 'encounter', 'faint', 'coin', 'quest', 'evolve', 'rare', 'defeat', 'fanfare', 'card', 'flip', 'chips', 'pack', 'click'];
   names.forEach((n) => void loadBuf(n));
 }
 
@@ -113,6 +115,10 @@ export function sfx(name: Sfx, vol = 1) {
       case 'faint': tone(300, 0.6, 'triangle', 0.1, -250); break;
       case 'coin': tone(988, 0.08, 'square', 0.06); tone(1318, 0.2, 'square', 0.06, 0, 0.08); break;
       case 'step': noise(0.05, 0.05); break;
+      case 'quest': case 'rare': case 'evolve': case 'fanfare': [523, 659, 784, 1046, 1318].forEach((f, i) => tone(f, 0.28, 'triangle', 0.1, 0, i * 0.09)); break;
+      case 'defeat': [392, 330, 262].forEach((f, i) => tone(f, 0.35, 'triangle', 0.1, 0, i * 0.16)); break;
+      case 'card': case 'flip': case 'pack': noise(0.07, 0.12); break;
+      case 'chips': case 'click': tone(1200, 0.04, 'square', 0.05); break;
     }
   } catch { /* audio unavailable */ }
 }
@@ -137,7 +143,7 @@ function fade(el: HTMLAudioElement, to: number, ms: number, done?: () => void) {
 export function music(name: string | null) {
   if (name === 'victory') {
     if (current) { const old = current; fade(old.el, 0, 500, () => old.el.pause()); current = null; }
-    if (!muted) sfx('captured');
+    if (!muted) sfx('fanfare');
     return;
   }
   if (current?.name === name) return;
@@ -154,3 +160,5 @@ export function music(name: string | null) {
 }
 
 export function setMusicVolume(v: number) { musicVol = v; if (current) current.el.volume = v; }
+export function setSfxVolume(v: number) { sfxVol = v; if (sfxGain) sfxGain.gain.value = v; }
+export const hasTrack = (name: string) => !!getManifest().music?.[name];

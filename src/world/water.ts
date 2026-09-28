@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { WORLD_SIZE, WATER_LEVEL, ZONES } from '../data/zones';
+import { WORLD_SIZE, WATER_LEVEL } from '../data/zones';
 import type { TerrainData } from './terrain';
 
 // One water sheet for the whole world. Colour, foam and lava are resolved per-pixel from
@@ -13,13 +13,11 @@ export class Water {
     const geo = new THREE.PlaneGeometry(WORLD_SIZE, WORLD_SIZE, 1, 1).rotateX(-Math.PI / 2);
     this.uniforms = {
       uField: { value: data.fieldTex },
-      uZone: { value: data.zoneTex },
+      uShallowTex: { value: data.shallowTex },
+      uDeepTex: { value: data.deepTex },
       uHalf: { value: WORLD_SIZE / 2 },
       uTime: { value: 0 },
       uLevel: { value: WATER_LEVEL },
-      uShallow: { value: ZONES.map((z) => new THREE.Color(z.water.shallow)) },
-      uDeep: { value: ZONES.map((z) => new THREE.Color(z.water.deep)) },
-      uLava: { value: ZONES.map((z) => (z.water.lava ? 1 : 0)) },
     };
     const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.06, metalness: 0.0, transparent: true, depthWrite: false, envMapIntensity: 1.3 });
     const noise = `
@@ -35,9 +33,8 @@ export class Water {
         .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
-          uniform sampler2D uField; uniform sampler2D uZone;
+          uniform sampler2D uField; uniform sampler2D uShallowTex; uniform sampler2D uDeepTex;
           uniform float uHalf; uniform float uTime; uniform float uLevel;
-          uniform vec3 uShallow[4]; uniform vec3 uDeep[4]; uniform float uLava[4];
           varying vec3 vWPos;
           float gDepth; float gLava; float gFoam;
           ${noise}`)
@@ -46,11 +43,10 @@ export class Water {
           float terrainH = texture2D(uField, fuv).r;
           gDepth = uLevel - terrainH;
           if (gDepth < -0.05) discard;
-          vec4 zw = texture2D(uZone, fuv);
-          float zs = max(zw.r + zw.g + zw.b + zw.a, 0.001);
-          vec3 sh = (uShallow[0]*zw.r + uShallow[1]*zw.g + uShallow[2]*zw.b + uShallow[3]*zw.a) / zs;
-          vec3 dp = (uDeep[0]*zw.r + uDeep[1]*zw.g + uDeep[2]*zw.b + uDeep[3]*zw.a) / zs;
-          gLava = (uLava[0]*zw.r + uLava[1]*zw.g + uLava[2]*zw.b + uLava[3]*zw.a) / zs;
+          vec4 shA = texture2D(uShallowTex, fuv);
+          vec3 sh = shA.rgb;
+          vec3 dp = texture2D(uDeepTex, fuv).rgb;
+          gLava = smoothstep(0.35, 0.8, shA.a);
           float dk = smoothstep(0.0, 3.5, gDepth);
           vec3 col = mix(sh, dp, dk);
           float fn = wf(vWPos.xz * 0.9 + vec2(uTime * 0.25, -uTime * 0.18));

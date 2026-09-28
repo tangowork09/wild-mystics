@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Q } from '../core/renderer';
-import { WORLD_SIZE, ZONES } from '../data/zones';
+import { WORLD_SIZE } from '../data/zones';
 import type { TerrainData } from './terrain';
 
 // World-anchored GPU grass. A fixed pool of clumps wraps around the player (mod trick), every
@@ -60,17 +60,16 @@ export class Grass {
     geo.instanceCount = count;
     geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1e6);
 
-    const zoneGrass = ZONES.map((z) => new THREE.Color(z.grass));
     this.uniforms = {
       uField: { value: data.fieldTex },
-      uZone: { value: data.zoneTex },
+      uGrassCol: { value: data.grassTex },
+      uTallCol: { value: data.tallTex },
       uCenter: { value: new THREE.Vector2() },
       uPlayer: { value: new THREE.Vector2() },
       uRadius: { value: R },
       uHalf: { value: WORLD_SIZE / 2 },
       uTime: { value: 0 },
       uWind: { value: 0.35 },
-      uZoneGrass: { value: zoneGrass },
       uClear: { value: new THREE.Vector3(0, 0, 0) },
     };
     const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0, side: THREE.DoubleSide });
@@ -120,15 +119,15 @@ export class Grass {
         `);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>
-          uniform sampler2D uZone; uniform vec3 uZoneGrass[4];
+          uniform sampler2D uGrassCol; uniform sampler2D uTallCol;
           varying float vT; varying float vTall; varying vec2 vFUV; varying float vFlower; varying float vVar;`)
         .replace('#include <color_fragment>', `
-          vec4 zw = texture2D(uZone, vFUV);
-          vec3 g = uZoneGrass[0] * zw.r + uZoneGrass[1] * zw.g + uZoneGrass[2] * zw.b + uZoneGrass[3] * zw.a;
-          g /= max(zw.r + zw.g + zw.b + zw.a, 0.001);
-          vec3 base = g * mix(0.32, 0.5, vTall);
+          vec3 g = texture2D(uGrassCol, vFUV).rgb;
+          vec3 tg = texture2D(uTallCol, vFUV).rgb;
+          g = mix(g, tg, vTall);
+          vec3 base = g * mix(0.32, 0.46, vTall);
           vec3 tip = mix(g * 1.25, vec3(0.95, 0.92, 0.55), 0.18 + vVar * 0.08);
-          tip = mix(tip, g * vec3(0.8, 1.05, 0.7), vTall * 0.55);
+          tip = mix(tip, g * 1.08, vTall * 0.55);
           vec3 col = mix(base, tip, smoothstep(0.0, 1.0, vT));
           if (vFlower > 0.5 && vT > 0.82) {
             float h = fract(vVar * 7.31 + 0.5);

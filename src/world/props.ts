@@ -1,18 +1,19 @@
 import * as THREE from 'three';
 import { Q } from '../core/renderer';
 import { makeNoise2D, fbm, randRange } from '../core/noise';
-import { ZONES, WORLD_SIZE, WATER_LEVEL, zoneWeights } from '../data/zones';
+import { ZONES, WORLD_SIZE, WATER_LEVEL, zoneWeights, type FloraKey } from '../data/zones';
 import { envVariants } from '../assets/manifest';
 import { FEATURES, type TerrainData } from './terrain';
 
 // Instanced environment props. Each kind has 1..n prototype variants (GLB from the manifest,
 // otherwise a stylised procedural stand-in); every mesh of a variant becomes one InstancedMesh.
 
-export type PropKey = 'tree_round' | 'tree_pine' | 'tree_dead' | 'tree_twisted' | 'tree_crystal' | 'rock' | 'boulder' | 'bush' | 'mushroom' | 'log' | 'fern' | 'flowers' | 'pebbles' | 'pathstone';
+export type PropKey = FloraKey | 'pathstone';
 
 interface Def {
   key: PropKey;
-  perZone: [number, number, number, number]; // vale, scar, lakes, peaks
+  /** Counts per zone come from each Zone's `flora` table (pathstones use a fixed road density). */
+  perZone?: number;
   scale: [number, number];
   maxSlope: number;
   collider: number; // collider radius per unit scale (0 = walk-through)
@@ -20,27 +21,31 @@ interface Def {
   sway: number;
   /** Only on roads / town plazas instead of avoiding them. */
   onPath?: boolean;
+  /** Only along shorelines (reeds). */
+  nearWater?: boolean;
 }
 
 const DEFS: Def[] = [
-  { key: 'tree_round', perZone: [430, 0, 120, 0], scale: [0.8, 1.35], maxSlope: 0.7, collider: 0.5, clump: 0.8, sway: 1 },
-  { key: 'tree_pine', perZone: [80, 0, 380, 220], scale: [0.75, 1.4], maxSlope: 0.9, collider: 0.45, clump: 0.8, sway: 0.5 },
-  { key: 'tree_dead', perZone: [10, 260, 20, 30], scale: [0.8, 1.35], maxSlope: 0.9, collider: 0.45, clump: 0.4, sway: 0 },
-  { key: 'tree_twisted', perZone: [60, 70, 40, 40], scale: [0.8, 1.3], maxSlope: 0.8, collider: 0.5, clump: 0.5, sway: 0.7 },
-  { key: 'tree_crystal', perZone: [0, 30, 10, 220], scale: [0.7, 1.6], maxSlope: 1.2, collider: 0.6, clump: 0.5, sway: 0 },
-  { key: 'rock', perZone: [140, 220, 140, 260], scale: [0.6, 1.8], maxSlope: 2, collider: 0.6, clump: 0.2, sway: 0 },
-  { key: 'boulder', perZone: [30, 80, 30, 100], scale: [0.8, 1.6], maxSlope: 2, collider: 1.0, clump: 0.1, sway: 0 },
-  { key: 'bush', perZone: [420, 60, 300, 70], scale: [0.7, 1.4], maxSlope: 0.8, collider: 0, clump: 0.5, sway: 1 },
-  { key: 'fern', perZone: [360, 0, 300, 40], scale: [0.7, 1.3], maxSlope: 0.8, collider: 0, clump: 0.7, sway: 1.2 },
-  { key: 'mushroom', perZone: [130, 20, 130, 20], scale: [0.7, 1.4], maxSlope: 0.7, collider: 0, clump: 0.9, sway: 0 },
-  { key: 'flowers', perZone: [520, 0, 260, 60], scale: [0.8, 1.4], maxSlope: 0.6, collider: 0, clump: 0.8, sway: 1.4 },
-  { key: 'pebbles', perZone: [150, 220, 150, 220], scale: [0.8, 1.6], maxSlope: 1.5, collider: 0, clump: 0.3, sway: 0 },
-  { key: 'log', perZone: [40, 30, 50, 10], scale: [0.8, 1.3], maxSlope: 0.5, collider: 0.6, clump: 0.3, sway: 0 },
-  { key: 'pathstone', perZone: [900, 500, 500, 500], scale: [0.7, 1.6], maxSlope: 2, collider: 0, clump: 0, sway: 0, onPath: true },
+  { key: 'tree_round', scale: [0.8, 1.35], maxSlope: 0.7, collider: 0.5, clump: 0.8, sway: 1 },
+  { key: 'tree_pine', scale: [0.75, 1.4], maxSlope: 0.9, collider: 0.45, clump: 0.8, sway: 0.5 },
+  { key: 'tree_dead', scale: [0.8, 1.35], maxSlope: 0.9, collider: 0.45, clump: 0.4, sway: 0 },
+  { key: 'tree_twisted', scale: [0.8, 1.3], maxSlope: 0.8, collider: 0.5, clump: 0.5, sway: 0.7 },
+  { key: 'tree_crystal', scale: [0.7, 1.6], maxSlope: 1.2, collider: 0.6, clump: 0.5, sway: 0 },
+  { key: 'cactus', scale: [0.7, 1.5], maxSlope: 0.7, collider: 0.4, clump: 0.3, sway: 0 },
+  { key: 'rock', scale: [0.6, 1.8], maxSlope: 2, collider: 0.6, clump: 0.2, sway: 0 },
+  { key: 'boulder', scale: [0.8, 1.6], maxSlope: 2, collider: 1.0, clump: 0.1, sway: 0 },
+  { key: 'bush', scale: [0.7, 1.4], maxSlope: 0.8, collider: 0, clump: 0.5, sway: 1 },
+  { key: 'fern', scale: [0.7, 1.3], maxSlope: 0.8, collider: 0, clump: 0.7, sway: 1.2 },
+  { key: 'reeds', scale: [0.8, 1.5], maxSlope: 0.6, collider: 0, clump: 0.8, sway: 1.6, nearWater: true },
+  { key: 'mushroom', scale: [0.7, 1.4], maxSlope: 0.7, collider: 0, clump: 0.9, sway: 0 },
+  { key: 'flowers', scale: [0.8, 1.4], maxSlope: 0.6, collider: 0, clump: 0.8, sway: 1.4 },
+  { key: 'pebbles', scale: [0.8, 1.6], maxSlope: 1.5, collider: 0, clump: 0.3, sway: 0 },
+  { key: 'log', scale: [0.8, 1.3], maxSlope: 0.5, collider: 0.6, clump: 0.3, sway: 0 },
+  { key: 'pathstone', perZone: 700, scale: [0.7, 1.6], maxSlope: 2, collider: 0, clump: 0, sway: 0, onPath: true },
 ];
 
 const CHUNK = 130;
-const NO_SHADOW: PropKey[] = ['fern', 'mushroom', 'flowers', 'pebbles', 'pathstone'];
+const NO_SHADOW: PropKey[] = ['fern', 'mushroom', 'flowers', 'pebbles', 'pathstone', 'reeds'];
 
 export interface Collider { x: number; z: number; r: number }
 
@@ -181,6 +186,28 @@ function placeholder(key: PropKey, variant: number): THREE.Object3D {
       for (let i = 0; i < 4; i++) add(lumpy(0.12 + i * 0.03, 0, 0.2, variant * 5 + i), m, [Math.cos(i * 1.7) * 0.3, 0.05, Math.sin(i * 1.7) * 0.3]);
       break;
     }
+    case 'cactus': {
+      const skin = stdMat(['#5a8a3a', '#4f7a34', '#6a9a44'][variant % 3], { roughness: 0.7 });
+      const trunkH = 2.2 + variant * 0.5;
+      add(new THREE.CapsuleGeometry(0.32, trunkH, 6, 12).translate(0, trunkH / 2 + 0.3, 0), skin, [0, 0, 0]);
+      for (const [side, hgt] of [[-1, 1.2], [1, 1.7]] as [number, number][]) {
+        if (variant === 2 && side > 0) continue;
+        add(new THREE.CapsuleGeometry(0.2, 0.6, 5, 10).rotateZ(Math.PI / 2).translate(side * 0.55, hgt, 0), skin, [0, 0, 0]);
+        add(new THREE.CapsuleGeometry(0.2, 0.9, 5, 10).translate(side * 0.95, hgt + 0.55, 0), skin, [0, 0, 0]);
+      }
+      if (variant === 1) add(new THREE.SphereGeometry(0.16, 8, 6), new THREE.MeshStandardMaterial({ color: '#ff6a8a', roughness: 0.5 }), [0, trunkH + 0.65, 0]);
+      break;
+    }
+    case 'reeds': {
+      const leaf = tagFoliage(stdMat(['#6a8a3a', '#7a9a4a', '#5a7a3a'][variant % 3], { side: THREE.DoubleSide, roughness: 0.8 }));
+      const tip = stdMat('#6a4a2a');
+      for (let i = 0; i < 9; i++) {
+        const a = i * 2.4, r = 0.15 + (i % 3) * 0.12, hgt = 1.2 + (i % 4) * 0.25;
+        add(new THREE.CylinderGeometry(0.015, 0.025, hgt, 4).translate(0, hgt / 2, 0), leaf, [Math.cos(a) * r, 0, Math.sin(a) * r], [1, 1, 1], [Math.cos(a) * 0.12, 0, Math.sin(a) * 0.12]);
+        if (i % 3 === 0) add(new THREE.CapsuleGeometry(0.04, 0.22, 4, 6).translate(0, hgt, 0), tip, [Math.cos(a) * r, 0, Math.sin(a) * r]);
+      }
+      break;
+    }
     case 'log': {
       add(new THREE.CylinderGeometry(0.35, 0.4, 3, 10).rotateZ(Math.PI / 2), bark, [0, 0.35, 0]);
       add(new THREE.CircleGeometry(0.34, 10).rotateY(Math.PI / 2), stdMat('#c8a070'), [1.51, 0.35, 0]);
@@ -212,17 +239,20 @@ export class Props {
       if (!protos) continue;
       const buckets: THREE.Matrix4[][] = protos.map(() => []);
       ZONES.forEach((zone, zi) => {
-        const want = Math.round(def.perZone[zi] * Q.trees);
+        const base = def.perZone ?? zone.flora[def.key as FloraKey] ?? 0;
+        const want = Math.round(base * (def.onPath ? 1 : Q.trees));
+        if (want <= 0) return;
         let placed = 0, tries = 0;
         while (placed < want && tries < want * 25) {
           tries++;
-          const x = zone.center[0] + randRange(-150, 150);
-          const z = zone.center[1] + randRange(-150, 150);
+          const x = zone.center[0] + randRange(-175, 175);
+          const z = zone.center[1] + randRange(-175, 175);
           if (Math.abs(x) > HALF - 6 || Math.abs(z) > HALF - 6) continue;
           const w = zoneWeights(x, z);
           if (w[zi] < 0.55) continue;
           const h = this.data.heightAt(x, z);
-          if (h < WATER_LEVEL + 0.5) continue;
+          if (def.nearWater) { if (h < WATER_LEVEL - 0.3 || h > WATER_LEVEL + 1.2) continue; }
+          else if (h < WATER_LEVEL + 0.5) continue;
           if (this.data.slopeAt(x, z) > def.maxSlope) continue;
           if (def.onPath) {
             const onRoad = this.data.pathAt(x, z) > 0.55;

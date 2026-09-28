@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#0d0b12" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Expedition Wilds</title>
-    <link rel="icon" href="data:," />
+    <title>Wild Mystics</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Wild Mystics — an open-world creature-collecting expedition with timed, turn-based battles." />
   </head>
   <body>
     <div id="app"></div>
@@ -17,6 +22,7 @@
     </div>
     <div id="joy"><div id="knob"></div></div>
     <div id="flash"></div>
+    <div id="rotate"><div class="rt-phone"></div><b>Turn your device sideways</b><small>Wild Mystics plays best in landscape.</small><button type="button">Play in portrait anyway</button></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
