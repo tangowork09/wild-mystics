@@ -86,7 +86,7 @@ export class Overworld {
     this.grass = new Grass(this.data);
     this.scene.add(this.grass.mesh);
     this.props = new Props(this.data);
-    this.props.build();
+    await this.props.build((f) => progress('Growing forests…', f)); // v3:look — async (loads flora, bakes impostors)
     this.scene.add(this.props.group);
     progress('Raising towns…');
     await tick();
@@ -347,7 +347,7 @@ export class Overworld {
     this.structures.setNight(this.atmo.night);
     this.grass.update(t, this.titleMode ? focus : this.playerPos);
     this.water.update(t);
-    this.props.update(t);
+    this.props.update(t, this.camera); // v3:look — streams vegetation around the camera
     this.structures.update(dt, t);
     this.landmarks.update(dt, t, this.playerPos, this.atmo.night);
     this.homestead.update(dt, t, this.playerPos);
