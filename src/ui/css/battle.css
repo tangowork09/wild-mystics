@@ -7,10 +7,10 @@
 
 /* Turn order: a chain of capsules */
 .b-timeline { position: absolute; left: calc(var(--hud-pad) + var(--safe-l)); top: calc(var(--hud-pad) + var(--safe-t)); display: flex; align-items: center; gap: 5px; padding: 5px 8px 5px 5px; border-radius: 28px; background: rgba(12, 16, 22, 0.78); box-shadow: 0 0 0 2px var(--edge), 0 0 0 3.5px rgba(6, 8, 12, 0.5); }
-.tl { position: relative; width: 36px; height: 36px; flex: none; border-radius: 50%; border: var(--ol) solid var(--ink-0); background: linear-gradient(180deg, color-mix(in srgb, var(--el) 70%, white) 0%, var(--el) 50%, var(--ink-3) 51%); overflow: hidden; transition: width var(--t) var(--ease), height var(--t) var(--ease); }
+.tl { position: relative; width: 36px; height: 36px; flex: none; border-radius: 50%; border: var(--ol) solid var(--ink-0); background: linear-gradient(180deg, color-mix(in srgb, var(--el) 70%, white) 0%, var(--el) 50%, var(--ink-3) 51%); overflow: hidden; transition: transform var(--t) var(--ease); }
 .tl img { position: absolute; inset: 4%; width: 92%; height: 92%; object-fit: contain; }
 .tl.enemy { box-shadow: 0 0 0 2px var(--bad); }
-.tl.now { width: 48px; height: 48px; box-shadow: 0 0 0 2.5px var(--edge), 0 0 0 5px var(--magenta); margin: 0 4px 0 2px; }
+.tl.now { transform: scale(1.3); box-shadow: 0 0 0 2px var(--edge), 0 0 0 4px var(--magenta); margin: 0 7px 0 5px; z-index: 1; }
 .tl:nth-child(n+8) { display: none; }
 
 /* Foe cards */
@@ -264,7 +264,6 @@ html.touch .def-btn.parry { width: 112px; height: 112px; }
 @media (max-height: 520px) {
   .b-timeline { padding: 3px 6px 3px 3px; gap: 3px; }
   .tl { width: 28px; height: 28px; }
-  .tl.now { width: 36px; height: 36px; }
   .tl:nth-child(n+6) { display: none; }
   .b-enemies { width: 232px; gap: 6px; }
   .e-card { padding: 6px 10px; border-radius: 13px; }

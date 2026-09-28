@@ -174,6 +174,6 @@ export function popover<T extends string>(anchor: HTMLElement, items: PopItem<T>
     addEventListener('keydown', key, true);
     pop.addEventListener('pop-close', () => finish(null));
     pop.querySelectorAll<HTMLElement>('.pop-i').forEach((b) => b.addEventListener('click', () => finish(items[Number(b.dataset.i)].value)));
-    requestAnimationFrame(() => (pop.querySelector('.pop-i.on:not(:disabled)') ?? btns()[0])?.focus({ preventScroll: true }));
+    requestAnimationFrame(() => (pop.querySelector<HTMLButtonElement>('.pop-i.on:not(:disabled)') ?? btns()[0])?.focus({ preventScroll: true }));
   });
 }
