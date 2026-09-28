@@ -1,6 +1,7 @@
 // Full-screen flows: loading, sign-in, title, starter choice, dialog, cinematics (evolve / hatch),
 // fishing, daily capsules, field guide, pause, rewards and level-up. All fit every target size.
 import { portrait } from '../assets/manifest';
+import logoUrl from '../assets/brand/logo.webp';
 import { sfx } from '../core/audio';
 import { haptic } from '../core/haptics';
 import { settings } from '../core/settings';
@@ -34,7 +35,7 @@ const TIPS = [
   'Double jump by jumping again in mid-air.',
 ];
 
-export const logoHTML = (cls = '') => `<div class="logo ${cls}" role="img" aria-label="Wild Mystics"><span class="lg-wild">Wild</span><span class="lg-mystics">Mystics</span></div>`;
+export const logoHTML = (cls = '') => `<div class="logo ${cls}" role="img" aria-label="Wild Mystics"><img src="${logoUrl}" alt="" decoding="async" draggable="false"></div>`;
 
 // ── Loading ─────────────────────────────────────────────────────────────────
 export function loading(msg: string, frac?: number) {

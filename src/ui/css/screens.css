@@ -1,15 +1,20 @@
 /* Full-screen flows. Same capsule-station grammar at a bigger scale. */
 .screen { position: fixed; inset: 0; z-index: var(--z-screen); }
 
-/* ── Logo: a die-cut sticker wordmark with a holo-foil "Mystics" ───────── */
-.logo { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 0.9; padding: 12px 22px 14px 20px; border-radius: 26px; background: var(--ink-2); box-shadow: 0 0 0 3px var(--edge), 0 0 0 5.5px rgba(6, 8, 12, 0.6), var(--lift-3); transform: rotate(-2deg); }
-.lg-wild { font: 400 var(--fs-2xl)/1 var(--font-display); color: var(--magenta); letter-spacing: 0.04em; margin-left: 2px; }
-.lg-mystics { font: 400 var(--fs-hero)/0.95 var(--font-display); letter-spacing: 0.01em; background: var(--holo-lin); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: foil 6s linear infinite; }
-@keyframes foil { to { background-position: -220% 0; } }
-.logo.big .lg-mystics { font-size: calc(var(--fs-hero) * 1.15); }
+/* ── Logo: the painted Wild Mystics crest (src/assets/brand/logo.webp) ── */
+.logo { display: inline-flex; line-height: 0; }
+.logo img { display: block; width: clamp(200px, 30vw, 440px); height: auto; filter: drop-shadow(0 10px 28px rgba(8, 4, 20, 0.65)); user-select: none; -webkit-user-drag: none; }
+.logo.big img { width: clamp(240px, 38vw, 560px); }
+.auth-side .logo img { width: clamp(220px, 30vw, 460px); }
+.mm-col .logo img { width: clamp(220px, 30vw, 440px); }
+@media (prefers-reduced-motion: no-preference) { .logo.big img { animation: logo-breathe 6s ease-in-out infinite; } }
+@keyframes logo-breathe { 50% { filter: drop-shadow(0 12px 34px rgba(120, 60, 255, 0.45)); transform: translateY(-2px); } }
 
 /* ── Loading ─────────────────────────────────────────────────────────── */
 .ls-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 55% at 50% 40%, rgba(255, 61, 139, 0.14), transparent 70%), radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1.4px) 0 0 / 7px 7px, var(--ink-1); }
+.loading-screen .ls-bg { background: linear-gradient(180deg, rgba(10, 6, 24, 0.15) 0%, rgba(10, 6, 24, 0) 30%, rgba(10, 6, 24, 0.55) 72%, rgba(10, 6, 24, 0.9) 100%), url(../../assets/brand/keyart.webp) center 38% / cover no-repeat, var(--ink-1); }
+@media (orientation: portrait) { .loading-screen .ls-bg { background: linear-gradient(180deg, rgba(10, 6, 24, 0) 40%, rgba(10, 6, 24, 0.85) 100%), url(../../assets/brand/keyart-portrait.webp) center / cover no-repeat, var(--ink-1); } }
+.auth-screen .ls-bg { background: linear-gradient(90deg, rgba(10, 6, 24, 0.2) 0%, rgba(10, 6, 24, 0.35) 50%, rgba(10, 6, 24, 0.82) 72%, rgba(10, 6, 24, 0.92) 100%), url(../../assets/brand/banner.webp) 38% center / cover no-repeat, var(--ink-1); }
 .loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8vh; padding: 24px; transition: opacity 0.6s var(--ease); }
 .loading-screen.out { opacity: 0; pointer-events: none; }
 .ls-mark { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; animation: rise 0.7s var(--ease) both; }
@@ -22,7 +27,7 @@
 .ls-tip { display: flex; align-items: center; gap: 8px; max-width: 100%; font: 600 var(--fs-xs)/1.4 var(--font-ui); color: var(--muted); text-align: left; min-height: 34px; }
 .ls-tip.in { animation: fade-in 0.5s var(--ease); }
 .ls-tip-ic { color: var(--coin); flex: none; font-size: 16px; display: grid; }
-@media (max-height: 520px) { .loading-screen { gap: 5vh; } .logo.big .lg-mystics { font-size: var(--fs-hero); } }
+@media (max-height: 520px) { .loading-screen { gap: 5vh; } .logo.big img { width: clamp(200px, 34vw, 380px); } .auth-side .logo img, .mm-col .logo img { width: clamp(180px, 28vw, 300px); } }
 
 /* ── Auth ────────────────────────────────────────────────────────────── */
 .auth-screen { z-index: calc(var(--z-screen) + 5); display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 440px); align-items: center; gap: 5vw; padding: calc(24px + var(--safe-t)) calc(6vw + var(--safe-r)) calc(24px + var(--safe-b)) calc(6vw + var(--safe-l)); opacity: 0; transition: opacity 0.4s var(--ease); }
@@ -58,7 +63,7 @@
 @media (max-height: 520px) {
   .auth-screen { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 20px; padding: calc(10px + var(--safe-t)) calc(16px + var(--safe-r)) calc(10px + var(--safe-b)) calc(16px + var(--safe-l)); }
   .auth-side { gap: 10px; align-items: center; }
-  .auth-side .logo .lg-mystics { font-size: 34px; }
+  
   .auth-side .ls-tag { font-size: var(--fs-xs); }
   .auth-trio .cap { --sz: 52px !important; }
   .auth-card { gap: 8px; padding: 12px 14px; border-radius: var(--r-l); }
@@ -67,7 +72,7 @@
   .auth-fine { display: none; }
   .auth-status { font-size: var(--fs-2xs); }
 }
-@media (max-height: 380px) { .auth-trio { display: none; } .auth-side .logo .lg-mystics { font-size: 30px; } .auth-profiles { display: none; } }
+@media (max-height: 380px) { .auth-trio { display: none; }  .auth-profiles { display: none; } }
 
 /* ── Title / main menu ───────────────────────────────────────────────── */
 .main-menu { z-index: calc(var(--z-journal) - 1); display: flex; flex-direction: column; justify-content: center; padding: calc(28px + var(--safe-t)) calc(28px + var(--safe-r)) calc(18px + var(--safe-b)) calc(6vw + var(--safe-l)); opacity: 0; transition: opacity 0.5s var(--ease); }
@@ -94,9 +99,9 @@
 @media (max-height: 520px) {
   .main-menu { padding-left: calc(24px + var(--safe-l)); padding-top: calc(12px + var(--safe-t)); padding-bottom: calc(36px + var(--safe-b)); }
   .mm-col { gap: 14px; }
-  .mm-col .logo { padding: 8px 16px 10px 14px; }
-  .mm-col .logo .lg-mystics { font-size: 38px; }
-  .mm-col .logo .lg-wild { font-size: var(--fs-l); }
+  
+  
+  
   .mm-menu { gap: 8px; width: min(360px, 52vw); }
   .mm-continue { padding: 6px 14px 6px 6px; }
   .mm-continue .cap { --sz: 42px !important; }
@@ -344,3 +349,9 @@ html.touch .dg-skip { height: 40px; top: -20px; }
   .pz-grid { gap: 8px; }
   .modal .row-end { margin-top: 0; }
 }
+
+/* Brand art screens: keep the crest in the sky above the key art's hero, text legible over paint */
+.loading-screen { justify-content: space-between; padding-top: calc(4vh + var(--safe-t)); padding-bottom: calc(5vh + var(--safe-b)); }
+.loading-screen .ls-tag, .auth-side .ls-tag { text-shadow: 0 2px 6px rgba(6, 3, 16, 0.95), 0 0 18px rgba(6, 3, 16, 0.7); color: var(--paper); }
+.loading-screen .ls-tip { color: var(--paper-2); text-shadow: 0 1px 4px rgba(6, 3, 16, 0.95); }
+.loading-screen .ls-msg { text-shadow: 0 1px 4px rgba(6, 3, 16, 0.95); }
