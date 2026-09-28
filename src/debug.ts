@@ -53,6 +53,11 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
     w.__ready = true;
     return true;
   }
+  if (view === 'dgkit') { // v3:dungeons — kit contact sheet (dev)
+    const { kitView } = await import('./world/dungeon/kitview');
+    await kitView((q.get('kit') ?? 'kaykit') as 'kaykit', (q.get('theme') ?? 'burrow') as 'burrow', q.get('filter') ?? undefined);
+    return true;
+  }
   if (view === 'gallery') {
     const g = el('div', 'gallery');
     g.innerHTML = Object.values(SPECIES).map((s) => `<div class="gal" style="--el:${ELEMENTS[s.element].color}"><img src="${portrait(s.id)}" alt=""><b>${s.name}</b><small>${ELEMENTS[s.element].glyph} ${s.id}${s.boss ? ' · boss' : ''}</small></div>`).join('');

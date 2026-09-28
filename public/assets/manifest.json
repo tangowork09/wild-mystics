@@ -2474,5 +2474,23 @@
     "night": "audio/music_night.mp3",
     "summon": "audio/music_summon.mp3",
     "homestead": "audio/music_homestead.mp3"
+  },
+  "dungeon": {
+    "kaykit": {
+      "model": "models/dungeon/kaykit.glb",
+      "pieces": 115
+    },
+    "halloween": {
+      "model": "models/dungeon/halloween.glb",
+      "pieces": 39
+    },
+    "kenney": {
+      "model": "models/dungeon/kenney.glb",
+      "pieces": 13
+    },
+    "quaternius": {
+      "model": "models/dungeon/quaternius.glb",
+      "pieces": 9
+    }
   }
 }
