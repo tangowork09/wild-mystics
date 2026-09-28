@@ -8,7 +8,7 @@
   "display": "fullscreen",
   "display_override": ["fullscreen", "standalone"],
   "orientation": "landscape",
-  "background_color": "#0d0b12",
+  "background_color": "#1a0f33",
   "theme_color": "#0d0b12",
   "categories": ["games", "entertainment"],
   "icons": [
