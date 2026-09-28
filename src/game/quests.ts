@@ -316,7 +316,7 @@ function completeStep(q: QuestState, d: QuestDef, depth = 0) {
   say(s.done);
   const next = (q.step ?? 0) + 1;
   if (next < d.steps.length) {
-    if (!isDaily(d)) notify(`${d.title}: <b>${fill(d.steps[next].text)}</b>`, 'quest');
+    if (!isDaily(d) && d.id !== 'pro_empty_handed') notify(`${d.title}: <b>${fill(d.steps[next].text)}</b>`, 'quest');
     enterStep(q, d, next, depth);
   } else stepsFinished(q, d);
 }

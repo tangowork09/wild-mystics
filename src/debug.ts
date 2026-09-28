@@ -14,6 +14,8 @@ import type { JournalTab } from './ui/journal';
 // URL-driven shortcuts used for automated screenshots and quick testing, e.g.
 //   ?auto=world&pos=0,100&yaw=180     ?auto=battle&sp=gloop&lv=4     ?auto=boss&zone=vale
 //   ?view=gallery                      ?auto=world&ui=service:hatchery   &autoplay (bot plays battles)
+//   v3:content — ?auto=onboarding (new game + prologue)   &story=tutorial|ch1|tier2|tier3|crown
+//                &shop=<shopId> (open a shop)   &talk=<npcId> (talk to an NPC)
 
 interface Api {
   startBattle: (list: { species: string; level: number; shiny: boolean }[], adv: 'player' | 'enemy' | null, wild: null) => Promise<void>;
@@ -21,6 +23,7 @@ interface Api {
   begin: (fresh: boolean, starter?: string) => Promise<void>;
   journal: (tab: JournalTab) => Promise<void>;
   service: (svc: Service) => Promise<void>;
+  openShop: (id: string) => Promise<void>; // v3:content
 }
 
 type G = { world: Overworld; hud: Hud; battle: Battle | null; busy: boolean; started: boolean; builder: { enter(): void; openOverview(): Promise<void> } };
@@ -37,9 +40,14 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
   w.__autoplay = q.has('autoplay');
   w.__autoCapture = q.has('autocap');
   w.__noDefend = q.has('nodefend');
+  // v3:content — handles for scripted screenshots / tests
+  w.__story = await import('./game/story');
+  w.__quests = await import('./game/quests');
+  w.__api = (await import('./game/contracts')).api;
   const auto = q.get('auto');
   const view = q.get('view');
   if (!auto && !view) return false;
+  if (auto === 'onboarding') { w.__ready = true; void api.begin(true); return true; } // v3:content
 
   if (view === 'portraits') {
     const m = await import('./assets/manifest');
@@ -88,7 +96,14 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
   const dist = q.get('dist');
   if (dist) game.world.camDist = Number(dist);
   game.world.snapCamera();
+  // v3:content — story fast-forward, shops and NPC talk for screenshots
+  const storyArg = q.get('story');
+  if (storyArg) (w.__story as typeof import('./game/story')).debugStory(storyArg);
   w.__ready = true;
+  const shopArg = q.get('shop');
+  if (shopArg) void api.openShop(shopArg);
+  const talkArg = q.get('talk');
+  if (talkArg) void (w.__story as typeof import('./game/story')).talk(talkArg);
 
   if (auto === 'battle') {
     const sp = (q.get('sp') ?? 'gloop').split(',');

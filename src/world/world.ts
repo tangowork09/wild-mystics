@@ -18,6 +18,7 @@ import { Structures, type Interactable } from './towns';
 import { Wilds, shinyRoll, type Wild } from './wilds';
 import { Landmarks } from './landmarks';
 import { Homestead } from './homestead';
+import { ContentWorld } from './npcs'; // v3:content
 
 export type WorldEvent =
   | { type: 'wild'; wild: Wild; advantage: boolean }
@@ -40,6 +41,8 @@ export class Overworld {
   structures!: Structures;
   landmarks!: Landmarks;
   homestead!: Homestead;
+  /** v3:content — named NPCs, Warden Gates, quest/fog ticks, cutscene camera. */
+  content!: ContentWorld;
   wilds!: Wilds;
   player!: Rig;
   playerPos = new THREE.Vector3();
@@ -99,6 +102,9 @@ export class Overworld {
     this.homestead = new Homestead(this.data, this.props);
     this.homestead.sync();
     this.scene.add(this.homestead.group);
+    this.content = new ContentWorld(this); // v3:content
+    this.content.build();
+    this.scene.add(this.content.group);
     progress('Waking the wild Mystics…');
     await tick();
     this.wilds = new Wilds(this.data, this.props);
@@ -114,7 +120,7 @@ export class Overworld {
 
   /** Every interactable in the world, merged from towns, landmarks and the homestead. */
   get interactables(): Interactable[] {
-    return [...this.structures.interactables, ...this.landmarks.interactables, ...this.homestead.interactables, ...this.bossInteractables];
+    return [...this.structures.interactables, ...this.landmarks.interactables, ...this.homestead.interactables, ...this.bossInteractables, ...(this.content?.interactables ?? [])]; // v3:content
   }
   private bossInteractables: Interactable[] = ZONES.map((z) => ({
     pos: new THREE.Vector3(z.boss.pos[0], 0, z.boss.pos[1]), radius: 11,
@@ -351,6 +357,7 @@ export class Overworld {
     this.landmarks.update(dt, t, this.playerPos, this.atmo.night);
     this.homestead.update(dt, t, this.playerPos);
     this.updateBosses(dt);
+    this.content.update(dt, t); // v3:content
 
     const touched = this.battleMode ? null : this.wilds.update(dt, t, this.playerPos, this.camera, paused || this.titleMode || this.buildMode, this.atmo.night);
     if (paused || this.titleMode || this.battleMode || this.buildMode) return null;

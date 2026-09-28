@@ -19,7 +19,9 @@ import {
   accept, beginConversation, claim, endConversation, fillBeats, hasPendingBeats, isDone,
   startQuest, syncQuests, takePendingBeats, talkOptions, fill,
 } from './quests';
-import { gateById, gateOpen, sealText } from './gates';
+import { gateById, gateOpen, sealText, initGates } from './gates';
+import { initExplore } from './explore';
+import { initShops } from './shop';
 import { cloakWorn, wardActive } from './items';
 
 // ── host ──────────────────────────────────────────────────────────────────────
@@ -41,6 +43,8 @@ export interface CineHooks {
   end(): void;
   placePlayer(x: number, z: number, faceBearing: number): void;
   playerPos(): [number, number];
+  /** A dry, open spot near (x, z) big enough for a small scene (the south gate in the v3 map). */
+  stageNear(x: number, z: number): [number, number];
   /** Camera: frame these actors ('player', an NPC id or a mystic key), eased. */
   frame(subjects: string[], opts?: { side?: number; height?: number; dist?: number }): void;
   spawnNpc(id: string, x: number, z: number, faceBearing?: number): void;
@@ -131,8 +135,9 @@ const PRO = {
   ] as Beat[],
 };
 
-/** Where things happen at the south gate. The player stands at START_POS facing north. */
-const at = (dx: number, dz: number): [number, number] => [START_POS[0] + dx, START_POS[1] + dz];
+/** Where things happen at the south gate. The player stands on the stage facing north. */
+let stage: [number, number] = [...START_POS];
+const at = (dx: number, dz: number): [number, number] => [stage[0] + dx, stage[1] + dz];
 
 // ── new game / resume ─────────────────────────────────────────────────────────
 /** A new journey: empty-handed at Hearthwick's south gate with 100 gold. */
@@ -157,6 +162,8 @@ export async function newGame(h: StoryHost) {
   newGameState();
   await runPrologue(h);
 }
+/** The prologue cutscenes on their own (after `newGameState()`). */
+export const playPrologue = (h: StoryHost) => runPrologue(h);
 
 /** Continue a save that stopped mid-prologue (after the starter pick). */
 export async function resumeStory(h: StoryHost) {
@@ -179,16 +186,16 @@ async function runPrologue(h: StoryHost) {
   h.setBusy(true);
   c.begin();
   try {
+    stage = state.story.prologue === 'arrive' ? c.stageNear(START_POS[0], START_POS[1]) : c.playerPos();
     if (state.story.prologue === 'arrive') {
-      const [px, pz] = START_POS;
-      c.placePlayer(px, pz, 0);
-      c.spawnNpc('warden_brisa', ...at(-2, -30), 180);
-      c.frame(['player', 'warden_brisa'], { side: 0.35, height: 3.4, dist: 11 });
+      c.placePlayer(stage[0], stage[1], 0);
+      c.spawnNpc('warden_brisa', ...at(-1.5, -19), 180);
+      c.frame(['player', 'warden_brisa'], { side: 0.3, height: 2.2, dist: 6 });
       h.titleCard('Hearthwick', 'Where every journey begins', 3000);
-      await c.wait(1400);
+      await c.wait(1200);
       const walk = c.walkNpc('warden_brisa', ...at(0.4, -3.2));
-      await c.wait(1600);
-      c.frame(['player', 'warden_brisa'], { side: 1, height: 2.2, dist: 7 });
+      await c.wait(2600);
+      c.frame(['player', 'warden_brisa'], { side: 1.05, height: 1.9, dist: 5.8 });
       await walk;
       c.faceNpc('warden_brisa', 'player');
       await c.wait(250);
@@ -199,10 +206,10 @@ async function runPrologue(h: StoryHost) {
     }
     if (state.story.prologue === 'starter') {
       c.faceNpc('warden_brisa', 'player');
-      const spots: [number, number][] = [at(2.2, -3.9), at(3.5, -3.1), at(4.8, -2.3)];
-      c.frame(['player', 'warden_brisa', ...STARTERS], { side: 0.8, height: 2.6, dist: 9 });
+      const spots: [number, number][] = [at(1.9, -3.3), at(3.2, -3.05), at(4.5, -2.8)];
+      c.frame(['player', 'warden_brisa', ...STARTERS], { side: -0.75, height: 1.9, dist: 6.5 });
       for (let i = 0; i < STARTERS.length; i++) {
-        await c.showMystic(STARTERS[i], STARTERS[i], spots[i][0], spots[i][1], 200);
+        await c.showMystic(STARTERS[i], STARTERS[i], spots[i][0], spots[i][1], 190);
         await c.wait(160);
       }
       c.gesture('warden_brisa', 'cast');
@@ -216,7 +223,7 @@ async function runPrologue(h: StoryHost) {
       emit('starter', { species });
       await c.moveMystic(species, ...at(1, -0.9));
       for (const s of STARTERS) if (s !== species && s !== state.story.rival) c.hideMystic(s);
-      c.frame(['player', 'warden_brisa', species], { side: 0.9, height: 2.2, dist: 7 });
+      c.frame(['player', 'warden_brisa', species], { side: 0.9, height: 1.9, dist: 6 });
       await play(h, PRO.picked);
       state.story.prologue = 'rival';
       save();
@@ -238,8 +245,8 @@ async function rivalScene(h: StoryHost) {
   c.faceNpc('warden_brisa', 'player');
   await c.showMystic(mine, mine, px + 1, pz - 0.9, 200);
   await c.showMystic(rival, rival, px + 3.5, pz - 3.1, 200);
-  c.spawnNpc('rival_kai', px + 7, pz - 32, 180);
-  c.frame(['player', 'rival_kai'], { side: -0.6, height: 3, dist: 12 });
+  c.spawnNpc('rival_kai', px + 6, pz - 22, 180);
+  c.frame(['player', 'rival_kai'], { side: -0.5, height: 2.2, dist: 6 });
   const run = c.walkNpc('rival_kai', px + 2.6, pz - 2.4, true);
   await c.wait(900);
   c.frame(['player', 'warden_brisa', 'rival_kai'], { side: -0.9, height: 2.3, dist: 8 });
@@ -449,7 +456,40 @@ export function setCinematic(on: boolean) { cineOn = on; }
 /** Features a UI can use to hide surfaces until the story introduces them. */
 export const featureUnlocked = (id: string) => state.story.features.includes(id);
 
+// ── debug: jump the story forward for screenshots and testing (`?story=`) ──────
+/** tutorial | ch1 | tier2 | tier3 | crown — applied to the current save after the prologue. */
+export function debugStory(stage: string) {
+  if (state.story.prologue !== 'done') skipPrologue(state.team[0]?.species ?? 'emberling');
+  const finish = (id: string) => {
+    state.quests.active = state.quests.active.filter((q) => q.id !== id);
+    if (!isDone(id)) state.quests.done.push(id);
+  };
+  const beat = (...zones: string[]) => { for (const z of zones) if (!state.bosses.includes(z)) { state.bosses.push(z); emit('boss_win', { zone: z }); } };
+  if (stage === 'tutorial') { syncQuests(); save(); return; }
+  finish('ch1_first_steps');
+  for (const f of ['board', 'merchant']) if (!state.story.features.includes(f)) state.story.features.push(f);
+  if (stage === 'ch1') { syncQuests(); save(); return; }
+  finish('ch1_first_bond');
+  if (!state.story.features.includes('bounties')) state.story.features.push('bounties');
+  beat('vale');
+  if (stage === 'tier3' || stage === 'crown') { finish('ch2_lakes'); finish('ch3_coast'); beat('lakes', 'coast'); }
+  if (stage === 'crown') {
+    for (const id of ['ch4_marsh', 'ch5_scar', 'ch6_elder', 'ch7_dunes', 'ch8_peaks', 'ch9_hollows']) finish(id);
+    beat('marsh', 'scar', 'elder', 'dunes', 'peaks', 'hollows');
+  }
+  syncQuests();
+  save();
+}
+
 // ── wiring ────────────────────────────────────────────────────────────────────
+/** Registers every content system (quests are registered by initProgress). */
+export function initContent(h: StoryHost) {
+  initGates();
+  initExplore();
+  initShops();
+  initStory(h);
+}
+
 let wired = false;
 export function initStory(h: StoryHost) {
   setStoryHost(h);

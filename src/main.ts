@@ -41,6 +41,11 @@ import { icon } from './ui/icons';
 import { restoreSession, listLocalProfiles, cloudAvailable, logout, playAsGuest, AuthError, type Account } from './net/auth';
 import { pullSave, pushSave, saveKeyFor } from './net/cloudsave';
 import { runDebug } from './debug';
+// v3:content — story director, NPC talk, shops, gates, exploration
+import * as story from './game/story';
+import { shopForService, setActiveShop, tradeCount, shopById } from './game/shop';
+import { setWarpHandler, useBait } from './game/items';
+import { zoneAt } from './data/zones';
 
 export const game = {
   world: null as unknown as Overworld,
@@ -53,7 +58,9 @@ export const game = {
 };
 
 /** Legendary Guardian Spirit hatched from the egg each Guardian leaves behind. */
-const SPIRITS: Record<string, string> = { vale: 'verdant_rex', lakes: 'deepcaller', scar: 'ember_totem', marsh: 'mire_prince', dunes: 'dune_titan', peaks: 'storm_seraph' };
+// v3:content — the new lands' spirits (bellwyrm/tidesinger, elder_stag/sylvan_hart, geode_colossus/prism_wyrm;
+// aether_sovereign is the Crown's final Guardian). Eggs only hatch when SPECIES has the id (checked below).
+const SPIRITS: Record<string, string> = { vale: 'verdant_rex', lakes: 'deepcaller', coast: 'tidesinger', scar: 'ember_totem', marsh: 'mire_prince', elder: 'sylvan_hart', dunes: 'dune_titan', peaks: 'storm_seraph', hollows: 'prism_wyrm' };
 const today = () => new Date().toISOString().slice(0, 10);
 const params = new URLSearchParams(location.search);
 const automated = params.has('auto') || params.has('view') || params.has('guest');
@@ -142,6 +149,54 @@ const serviceHooks: ServiceHooks = {
   restUntil: (t) => { if (t < state.time) state.day++; state.time = t; },
 };
 
+// ── v3:content — the story layer's window into UI, battles and the world ──────
+const storyHost: story.StoryHost = {
+  dialog: (d) => screens.dialog(d),
+  chooseStarter: () => screens.chooseStarter(),
+  battleTamer: (b) => storyBattle(b),
+  openShop: (id) => openShopById(id),
+  toast: (text, kind, ms) => toast(text, kind ?? '', ms),
+  titleCard: (title, sub, ms) => titleCard(title, sub, ms),
+  setBusy: (b) => { game.busy = b; },
+  isFree: () => game.started && !game.busy && !game.battle && !game.builder.active && !journalOpen() && !modalOpen() && !document.querySelector('.dialog-box, .starter-screen, .cine, .fishing, .summon-fx'),
+  get cine() { return game.world.content.cine; },
+};
+
+/** Story tamer fights (Kai, the Hollow Veil) through the normal tamer battle flow. */
+async function storyBattle(b: story.TamerBattle): Promise<story.BattleResult> {
+  const w = game.world;
+  const prevBusy = game.busy;
+  const enemies = b.team.filter((m) => SPECIES[m.species]).map((m) => createCreature(m.species, m.level, m.weak ? { genes: { hp: 0, atk: 0, def: 0, spd: 0 } } : {}));
+  if (!enemies.length) return 'win';
+  const dir = new THREE.Vector3(-Math.sin(w.camYaw), 0, -Math.cos(w.camYaw));
+  if (dir.lengthSq() < 0.01) dir.set(0, 0, -1);
+  dir.normalize();
+  const gold = state.inv.gold;
+  const zone = ZONES.find((z) => z.id === b.zone) ?? w.zone;
+  const out = await runBattle({ kind: 'tamer', enemies, zone, center: safeCenter(w.playerPos.clone(), dir, 5), forward: dir, advantage: null, tamer: { name: b.name, title: b.title, intro: b.intro } });
+  if (b.forgiving && out === 'lose') state.inv.gold = gold;
+  game.busy = prevBusy;
+  return out;
+}
+
+/** Open a shop by id. Until the UI renders ShopApi, the Outfitter screen stands in (it reads activeShop()). */
+async function openShopById(id: string) {
+  const shop = shopById(id);
+  const zone = ZONES.find((z) => z.id === (shop?.kind === 'merchant' ? game.world.zone.id : shop?.region)) ?? game.world.zone;
+  const trades = tradeCount();
+  const gold = state.inv.gold;
+  setActiveShop(id);
+  const prevBusy = game.busy;
+  game.busy = true;
+  sfx('open');
+  await openService('shop', zone, serviceHooks);
+  game.busy = prevBusy;
+  setActiveShop(null);
+  // purchases made through the legacy Outfitter screen still count for quests
+  if (tradeCount() === trades && state.inv.gold < gold) emit('buy', { shop: id, item: 'goods', qty: 1, cost: gold - state.inv.gold });
+  save();
+}
+
 // ── Boot ────────────────────────────────────────────────────────────────────
 async function boot() {
   document.getElementById('app')!.appendChild(renderer.domElement);
@@ -171,6 +226,13 @@ async function boot() {
   await Promise.race([reconcileCloud(), new Promise((r) => setTimeout(r, 6000))]);
   setNotifier((text, kind) => { toast(text, kind ?? 'quest', 3600); if (kind === 'rank') { sfx('levelup'); haptic('success'); } else if (kind === 'quest') sfx('quest'); });
   initProgress();
+  story.initContent(storyHost); // v3:content
+  setWarpHandler(async () => { // v3:content — Escape Shard: home to the last town you rested in
+    if (game.battle || !game.started) return false;
+    const [x, z] = state.respawn;
+    await fastTravel({ id: 'escape', label: 'Escape Shard', kind: 'town', x, z, zone: zoneAt(x, z).id });
+    return true;
+  });
 
   // assets (only what the first frame needs; the rest streams afterwards)
   await ensureModels(essentialModels(), (d, t) => screens.loading('Gathering supplies…', 0.06 + (d / Math.max(1, t)) * 0.46));
@@ -206,7 +268,7 @@ async function boot() {
   screens.hideLoading();
   requestAnimationFrame(frame);
 
-  if (await runDebug(game, { startBattle: startWildBattle, startBoss: startBossBattle, begin, journal, service: (svc) => openService(svc, game.world.zone, serviceHooks) })) return;
+  if (await runDebug(game, { startBattle: startWildBattle, startBoss: startBossBattle, begin, journal, service: (svc) => openService(svc, game.world.zone, serviceHooks), openShop: (id) => openShopById(id) })) return;
 
   for (;;) {
     const hasSave = state.started && state.team.length > 0;
@@ -238,6 +300,21 @@ function settingsModal() {
 
 async function begin(fresh: boolean, starterOverride?: string) {
   const w = game.world;
+  if (fresh && !starterOverride) { // v3:content — a new journey starts empty-handed with the onboarding director
+    story.newGameState();
+    lastSteps = 0;
+    w.refreshBosses();
+    w.homestead.sync();
+    w.titleMode = false;
+    game.started = true;
+    updateMusic();
+    await story.playPrologue(storyHost);
+    lastSteps = state.steps;
+    game.hud.show(true);
+    if (!automated) { game.busy = true; await screens.dailyLogin(); game.busy = false; }
+    streamRemainingCreatures();
+    return;
+  }
   if (fresh) {
     resetSave();
     lastSteps = 0;
@@ -246,6 +323,7 @@ async function begin(fresh: boolean, starterOverride?: string) {
     state.profile.name = pickRes.name;
     addCreature(c);
     state.started = true;
+    story.skipPrologue(pickRes.starter); // v3:content — tests/debug skip the onboarding
     const sp = TOWN_SPAWN.vale;
     state.pos = sp ? [sp.x, sp.z] : [...START_POS];
     state.respawn = [...state.pos];
@@ -273,6 +351,7 @@ async function begin(fresh: boolean, starterOverride?: string) {
     toast(input.isTouch ? 'Tip: walk through <b>tall grass</b> or tap <b>Strike</b> near a wild Mystic.' : 'Tip: walk through <b>tall grass</b> or press <kbd>F</kbd> near a wild Mystic.', '', 5200);
   }
   if (!automated) { game.busy = true; await screens.dailyLogin(); game.busy = false; }
+  if (!fresh) await story.resumeStory(storyHost); // v3:content — a save that stopped mid-prologue
   streamRemainingCreatures();
 }
 
@@ -312,7 +391,7 @@ function frame(now: number) {
   game.battle?.update(dt);
   const ev = w.update(dt, t, paused);
   if (game.builder.active) game.builder.update();
-  const hudOn = game.started && !game.battle && !game.builder.active;
+  const hudOn = game.started && !game.battle && !game.builder.active && !story.cinematicActive(); // v3:content
   if (hudOn === game.hud.root.classList.contains('hidden')) game.hud.show(hudOn);
   if (ev && !paused) void handleEvent(ev);
 
@@ -359,6 +438,7 @@ function updateMusic() {
 async function journal(tab: JournalTab) {
   if (game.battle) return;
   lastTab = tab;
+  emit('ui_open', { tab }); // v3:content
   await openJournal(tab, journalHooks);
   save();
 }
@@ -423,9 +503,11 @@ async function fastTravel(p: TravelPoint) {
 // ── World events ────────────────────────────────────────────────────────────
 async function handleEvent(ev: WorldEvent) {
   if (ev.type === 'wild') {
+    if (!story.encountersAllowed(ev.advantage ? 'strike' : 'wild')) return; // v3:content
     const wd = ev.wild;
     await startWildBattle([{ species: wd.species, level: wd.level, shiny: wd.shiny }], ev.advantage ? 'player' : wd.state === 'chase' ? 'enemy' : null, wd);
   } else if (ev.type === 'grass') {
+    if (!story.encountersAllowed('grass')) return; // v3:content
     const pool = spawnsBy(ev.zone, game.world.isNight ? ['grass', 'night'] : ['grass']);
     const extra = ev.zone.id !== 'vale' && pool.length && Math.random() < 0.22 ? [{ species: weighted(pool).species, level: randInt(ev.zone.levels[0], ev.zone.levels[1]), shiny: shinyRoll() }] : [];
     toast(`${icon('plant')} Something rustles in the grass…`, '', 1200);
@@ -441,6 +523,8 @@ async function interact(it: Interactable) {
   switch (it.kind) {
     case 'service':
       if (!it.service) return;
+      emit('use_service', { service: it.service, zone: it.zone.id }); // v3:content
+      if (it.service === 'shop') { await openShopById(shopForService(it.zone.id)); return; } // v3:content
       game.busy = true;
       sfx('open');
       await openService(it.service, it.zone, serviceHooks);
@@ -481,6 +565,7 @@ async function interact(it: Interactable) {
       game.busy = false;
       return;
     case 'npc':
+      if (it.data && (await story.talk(it.data))) return; // v3:content — named NPCs + gate wardens
       game.busy = true;
       await screens.dialog({ name: it.label, lines: [pick(NPC_LINES)] });
       game.busy = false;
@@ -548,7 +633,8 @@ async function fish(it: Interactable) {
   game.busy = false;
   if (!ok) return;
   const pool = spawnsBy(zone, ['fish']);
-  if (pool.length && Math.random() < 0.65) {
+  const bait = useBait(); // v3:content — bait + Tide Charm
+  if (pool.length && Math.random() < 0.65 + bait) {
     toast('Something big is on the line!', '', 1500);
     await startWildBattle([{ species: weighted(pool).species, level: randInt(zone.levels[0], zone.levels[1] + 1), shiny: shinyRoll() }], 'player', null, 'fish');
     return;

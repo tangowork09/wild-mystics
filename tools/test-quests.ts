@@ -49,7 +49,7 @@ const host: StoryHost = {
   setBusy: () => {},
   isFree: () => true,
   cine: {
-    begin() {}, end() {}, placePlayer(x, z) { playerAt = [x, z]; }, playerPos: () => playerAt, frame() {},
+    begin() {}, end() {}, placePlayer(x, z) { playerAt = [x, z]; }, playerPos: () => playerAt, stageNear: (x, z) => [x, z], frame() {},
     spawnNpc() {}, walkNpc: async () => {}, faceNpc() {}, gesture() {}, releaseNpc() {},
     showMystic: async () => {}, moveMystic: async () => {}, hideMystic() {}, wait: async () => {},
   },
