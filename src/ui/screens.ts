@@ -4,6 +4,7 @@ import { portrait } from '../assets/manifest';
 import { sfx } from '../core/audio';
 import { haptic } from '../core/haptics';
 import { settings } from '../core/settings';
+import { isTouch } from '../core/device';
 import { ELEMENTS } from '../data/elements';
 import { LOGIN_REWARDS } from '../data/progression';
 import { SPECIES, STARTERS } from '../data/species';
@@ -126,7 +127,8 @@ export function authScreen(opts: { cloud: boolean; profiles: Account[]; mode?: '
         setTimeout(() => s.remove(), 600);
         resolve(null);
       });
-      (form.querySelector('input') as HTMLInputElement | null)?.focus({ preventScroll: true });
+      // desktop only: on phones an autofocus pops the soft keyboard over the whole screen
+      if (!isTouch) (form.querySelector('input') as HTMLInputElement | null)?.focus({ preventScroll: true });
     };
     draw();
     requestAnimationFrame(() => s.classList.add('in'));
@@ -320,7 +322,7 @@ export function fishing(): Promise<boolean> {
     const o = el('div', 'fishing', `<div class="fs-panel"><div class="fs-title">${icon('fish')} <b>Fishing</b><small>Wait for the bite…</small></div>
       <div class="fs-water"><div class="fs-bobber"></div><div class="fs-bang">!</div></div>
       <div class="fs-reel"><div class="fs-track"><div class="fs-zone"></div><div class="fs-fish">${icon('fish')}</div></div><div class="fs-prog"><i></i></div></div>
-      <p class="fs-hint">${matchMedia('(pointer: coarse)').matches ? 'Tap when the bobber dips!' : 'Press <kbd>Space</kbd> when the bobber dips!'}</p>
+      <p class="fs-hint">${isTouch ? 'Tap when the bobber dips!' : 'Press <kbd>Space</kbd> when the bobber dips!'}</p>
       <button class="btn ghost small fs-quit">Reel in</button></div>`);
     uiRoot().appendChild(o);
     requestAnimationFrame(() => o.classList.add('in'));
@@ -352,7 +354,7 @@ export function fishing(): Promise<boolean> {
       o.classList.remove('bite');
       o.classList.add('reel');
       sub.textContent = 'Keep the fish in the glow!';
-      hint.innerHTML = matchMedia('(pointer: coarse)').matches ? 'Hold to raise the reel zone.' : 'Hold <kbd>Space</kbd> (or the mouse) to raise the reel zone.';
+      hint.innerHTML = isTouch ? 'Hold to raise the reel zone.' : 'Hold <kbd>Space</kbd> (or the mouse) to raise the reel zone.';
       sfx('orb');
       last = performance.now();
       raf = requestAnimationFrame(tick);

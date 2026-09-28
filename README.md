@@ -54,14 +54,15 @@ npm run build        # type-check + production bundle in dist/ (PWA: manifest + 
 ## Native apps (Capacitor)
 
 ```bash
-npm run build && npx cap sync            # copy dist/ into android/ and ios/
+npm run build && npx cap sync            # copy dist/ into android/ and ios/ (runs pod install for iOS)
 # Android debug APK (needs JDK 21 + Android SDK):
 cd android && JAVA_HOME=/opt/homebrew/opt/openjdk@21 ./gradlew assembleDebug   # → app/build/outputs/apk/debug/app-debug.apk
-# iOS: open in Xcode (sign with your team) or build for the simulator:
+# iOS (CocoaPods): open in Xcode and sign with your team, or build for the simulator:
 npx cap open ios
+cd ios/App && xcodebuild -workspace App.xcworkspace -scheme App -sdk iphonesimulator -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
 ```
 
-App ID `com.tangowork09.wildmystics`, landscape-locked, status bar hidden. Haptics are wired in, and the Android back button acts as Esc. Icons and splash screens come from `resources/` (`node tools/make-icons.mjs`, then `npx @capacitor/assets generate`).
+App ID `com.tangowork09.wildmystics`, landscape-locked, status bar hidden. Both shells have been verified: the Android emulator and the iOS Simulator each run through to the 3D world. Haptics are wired in, and the Android back button acts as Esc. Icons and splash screens come from `resources/` (`node tools/make-icons.mjs`, then `npx @capacitor/assets generate`).
 
 ## Accounts backend
 

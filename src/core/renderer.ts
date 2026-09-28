@@ -8,7 +8,8 @@ import { settings, onSettings } from './settings';
 
 export type QualityTier = 'low' | 'medium' | 'high' | 'ultra';
 
-export const isTouch = matchMedia('(pointer: coarse)').matches;
+import { isTouch } from './device';
+export { isTouch };
 export const isNative = !!(window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.();
 
 function detectTier(): QualityTier {

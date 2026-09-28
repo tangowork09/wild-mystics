@@ -1,3 +1,4 @@
+import { isTouch as isTouchDevice } from './device';
 // Keyboard + mouse-drag camera + mobile virtual joystick / look pad.
 
 class Input {
@@ -11,7 +12,7 @@ class Input {
   private joy = { active: false, id: -1, ox: 0, oy: 0, x: 0, y: 0 };
   private lookTouch = { id: -1, x: 0, y: 0 };
   private dragging = false;
-  isTouch = matchMedia('(pointer: coarse)').matches;
+  isTouch = isTouchDevice;
   enabled = true;
 
   init(canvas: HTMLElement, joyEl: HTMLElement, knobEl: HTMLElement) {

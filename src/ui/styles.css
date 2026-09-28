@@ -1058,13 +1058,12 @@ table.rates td:last-child { text-align: right; font-variant-numeric: tabular-num
 .def-btn.jump { display: none; border-color: #ffd76a; color: #ffd76a; }
 .b-defense.with-jump .def-btn.jump { display: flex; }
 .def-btn.pressed { transform: scale(0.9); }
-@media (pointer: fine) {
-  .b-defense { inset: auto 0 calc(22px + var(--safe-b)) 0; justify-content: center; gap: 10px; }
-  .def-btn { width: auto; height: auto; border-radius: 4px; flex-direction: row; gap: 10px; padding: 8px 16px; background: rgba(14, 12, 20, 0.85); }
-  .def-btn > svg { font-size: 18px; }
-  .def-btn b { font-size: 14px; }
-  .def-btn small { font-size: 11px; color: var(--paper); }
-}
+/* mouse & keyboard */
+  html:not(.touch) .b-defense { inset: auto 0 calc(22px + var(--safe-b)) 0; justify-content: center; gap: 10px; }
+  html:not(.touch) .def-btn { width: auto; height: auto; border-radius: 4px; flex-direction: row; gap: 10px; padding: 8px 16px; background: rgba(14, 12, 20, 0.85); }
+  html:not(.touch) .def-btn > svg { font-size: 18px; }
+  html:not(.touch) .def-btn b { font-size: 14px; }
+  html:not(.touch) .def-btn small { font-size: 11px; color: var(--paper); }
 .b-banner { position: absolute; left: 0; right: 0; top: 30%; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .bn { font-family: var(--display); font-size: clamp(26px, 4vw, 46px); letter-spacing: 0.18em; text-transform: uppercase; color: var(--paper); text-shadow: 0 2px 24px rgba(0, 0, 0, 0.9), 0 0 2px #000; animation: bn-in 0.45s cubic-bezier(.16, 1, .3, 1); transition: opacity 0.5s, transform 0.5s; text-align: center; padding: 0 16px; }
 .bn small { display: block; font-family: var(--flavor); font-style: italic; text-transform: none; letter-spacing: 0.04em; font-size: 0.5em; color: var(--gold-hi); }
@@ -1129,28 +1128,27 @@ table.rates td:last-child { text-align: right; font-variant-numeric: tabular-num
 .gal small { color: var(--muted); font-size: 11px; }
 
 /* ── Touch controls ────────────────────────────────────────── */
-@media (pointer: coarse) {
-  .hud-touch { display: grid; position: absolute; right: calc(18px + var(--safe-r)); bottom: calc(84px + var(--safe-b)); grid-template-columns: repeat(2, auto); gap: 12px; align-items: end; transform: scale(var(--touch-scale)); transform-origin: bottom right; opacity: var(--touch-opacity); }
-  .hud.lefty .hud-touch { right: auto; left: calc(18px + var(--safe-l)); transform-origin: bottom left; }
-  .t-btn { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: radial-gradient(circle at 50% 35%, rgba(40, 33, 52, 0.85), rgba(14, 12, 20, 0.75)); border: 1px solid var(--line); pointer-events: auto; }
-  .t-btn svg { font-size: 24px; color: var(--gold-hi); }
-  .t-btn small { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-  .t-btn:active { transform: scale(0.92); }
-  .t-jump { width: 84px; height: 84px; grid-column: 2; grid-row: 2; }
-  .t-strike { grid-column: 1; grid-row: 2; }
-  .t-sprint { grid-column: 2; grid-row: 1; justify-self: center; width: 58px; height: 58px; }
-  .t-mount { grid-column: 1; grid-row: 1; justify-self: center; width: 58px; height: 58px; }
-  .t-mount.hide { visibility: hidden; }
-  .t-strike.ready { border-color: var(--gold-hi); box-shadow: 0 0 20px rgba(244, 220, 156, 0.45); }
-  .t-sprint.on { border-color: #9fe8ff; box-shadow: 0 0 14px rgba(159, 232, 255, 0.4); }
-  .hud-buttons kbd, .act kbd, .skill kbd, .def-btn small, .b-hint small, .st-key, .jr-x kbd, .bu-hint kbd, .dg-choices kbd { display: none; }
-  .act { padding-left: 12px; }
-  .skill { grid-template-columns: 22px 1fr auto; }
-  .skill .glyph { grid-column: 1; }
-  .skill .sn, .skill .sd { grid-column: 2; }
-  .skill .cost { grid-column: 3; }
-  .hud-prompt { bottom: calc(24px + var(--safe-b)); }
-}
+/* touch devices (html.touch set by src/core/device.ts) */
+  html.touch .hud-touch { display: grid; position: absolute; right: calc(18px + var(--safe-r)); bottom: calc(84px + var(--safe-b)); grid-template-columns: repeat(2, auto); gap: 12px; align-items: end; transform: scale(var(--touch-scale)); transform-origin: bottom right; opacity: var(--touch-opacity); }
+  html.touch .hud.lefty .hud-touch { right: auto; left: calc(18px + var(--safe-l)); transform-origin: bottom left; }
+  html.touch .t-btn { width: 70px; height: 70px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: radial-gradient(circle at 50% 35%, rgba(40, 33, 52, 0.85), rgba(14, 12, 20, 0.75)); border: 1px solid var(--line); pointer-events: auto; }
+  html.touch .t-btn svg { font-size: 24px; color: var(--gold-hi); }
+  html.touch .t-btn small { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  html.touch .t-btn:active { transform: scale(0.92); }
+  html.touch .t-jump { width: 84px; height: 84px; grid-column: 2; grid-row: 2; }
+  html.touch .t-strike { grid-column: 1; grid-row: 2; }
+  html.touch .t-sprint { grid-column: 2; grid-row: 1; justify-self: center; width: 58px; height: 58px; }
+  html.touch .t-mount { grid-column: 1; grid-row: 1; justify-self: center; width: 58px; height: 58px; }
+  html.touch .t-mount.hide { visibility: hidden; }
+  html.touch .t-strike.ready { border-color: var(--gold-hi); box-shadow: 0 0 20px rgba(244, 220, 156, 0.45); }
+  html.touch .t-sprint.on { border-color: #9fe8ff; box-shadow: 0 0 14px rgba(159, 232, 255, 0.4); }
+  html.touch .hud-buttons kbd, html.touch .act kbd, html.touch .skill kbd, html.touch .def-btn small, html.touch .b-hint small, html.touch .st-key, html.touch .jr-x kbd, html.touch .bu-hint kbd, html.touch .dg-choices kbd { display: none; }
+  html.touch .act { padding-left: 12px; }
+  html.touch .skill { grid-template-columns: 22px 1fr auto; }
+  html.touch .skill .glyph { grid-column: 1; }
+  html.touch .skill .sn, html.touch .skill .sd { grid-column: 2; }
+  html.touch .skill .cost { grid-column: 3; }
+  html.touch .hud-prompt { bottom: calc(24px + var(--safe-b)); }
 
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 1100px) {
@@ -1282,13 +1280,13 @@ table.rates td:last-child { text-align: right; font-variant-numeric: tabular-num
   .login-cal { grid-template-columns: repeat(4, 1fr); }
 }
 #rotate { display: none; }
-@media (pointer: coarse) and (orientation: portrait) {
-  #rotate:not(.dismissed) { position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; background: radial-gradient(ellipse at 50% 40%, #2a2036, var(--ink) 75%); }
-  #rotate b { font-family: var(--display); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-hi); }
-  #rotate small { font-size: 14px; color: var(--muted); }
-  #rotate button { margin-top: 10px; font-size: 13px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
-  .rt-phone { width: 46px; height: 80px; border: 3px solid var(--gold-hi); border-radius: 9px; animation: rt-turn 2.4s var(--ease) infinite; }
-  @keyframes rt-turn { 0%, 25% { transform: rotate(0); } 55%, 100% { transform: rotate(-90deg); } }
+@media (orientation: portrait) {
+  html.touch #rotate:not(.dismissed) { position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; background: radial-gradient(ellipse at 50% 40%, #2a2036, var(--ink) 75%); }
+  html.touch #rotate b { font-family: var(--display); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-hi); }
+  html.touch #rotate small { font-size: 14px; color: var(--muted); }
+  html.touch #rotate button { margin-top: 10px; font-size: 13px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  html.touch .rt-phone { width: 46px; height: 80px; border: 3px solid var(--gold-hi); border-radius: 9px; animation: rt-turn 2.4s var(--ease) infinite; }
+@keyframes rt-turn { 0%, 25% { transform: rotate(0); } 55%, 100% { transform: rotate(-90deg); } }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
