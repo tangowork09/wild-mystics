@@ -2931,5 +2931,62 @@
     "night": "audio/music_night.mp3",
     "summon": "audio/music_summon.mp3",
     "homestead": "audio/music_homestead.mp3"
+  },
+  "characters": {
+    "maple": {
+      "height": 1.68,
+      "model": "models/characters/char_maple.glb",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "walk": "Walk",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "victory": "Wave",
+        "cast": "Interact",
+        "interact": "Interact"
+      }
+    },
+    "vesper": {
+      "height": 1.74,
+      "model": "models/characters/char_vesper.glb",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "walk": "Walk",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "victory": "Wave",
+        "cast": "Interact",
+        "interact": "Interact"
+      }
+    },
+    "farmer": {
+      "height": 1.72,
+      "model": "models/characters/char_farmer.glb",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "walk": "Walk",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "victory": "Wave",
+        "cast": "Interact",
+        "interact": "Interact"
+      }
+    },
+    "steve": {
+      "height": 1.7,
+      "model": "models/characters/char_steve.glb",
+      "anims": {
+        "idle": "Idle",
+        "run": "Run",
+        "walk": "Walk",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Wave"
+      }
+    }
   }
 }

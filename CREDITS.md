@@ -35,6 +35,17 @@ Engine libraries: three.js (MIT), postprocessing (Zlib), N8AO (CC0 / ISC), glTF-
 | Animated Robot, Bat, Slime (standalone models) | Quaternius | CC0 | https://poly.pizza/m/QCm7qe9uNJ, https://poly.pizza/m/hNO9XvjlKa, https://poly.pizza/m/LyjSUKHKnh |
 | Character Pack: Skeletons 1.0 (minion, warrior, mage, rogue) | Kay Lousberg (KayKit) | CC0 | https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Skeletons-1.0 |
 
+## Story characters (v3)
+
+Named NPC rigs imported with `tools/add-asset.mjs character …` (see `manifest.characters`).
+
+| Asset | Used for | Author | License | Source |
+|---|---|---|---|---|
+| "Witch" | Elder Maple | Quaternius | **CC BY 3.0** — “Witch” by Quaternius, licensed CC-BY 3.0 | https://poly.pizza/m/QBEOV9ZUT8 |
+| "Hoodie Character" | Magister Vesper | Quaternius | CC0 | https://poly.pizza/m/gKLBoRsyKe |
+| "Farmer" | villagers, merchants | Quaternius | CC0 | https://poly.pizza/m/7pn3R6hPvE |
+| "Steve" | villagers | Quaternius | CC0 | https://poly.pizza/m/OF8rWAO1gC |
+
 ## UI icons
 
 | Asset | Author | License | Source |
