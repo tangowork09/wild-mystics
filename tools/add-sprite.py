@@ -34,6 +34,17 @@ def cut(path: Path) -> Image.Image:
     lab, _ = ndi.label(cand)
     edge_labels = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     back = np.isin(lab, list(edge_labels))
+    # enclosed pockets of studio grey (between a tail and a wing, under an arm…): the flood fill can't
+    # reach them, so take any sizeable, perfectly flat patch of the background colour as well
+    tight = dist < 12
+    lab_t, nt = ndi.label(tight & ~back)
+    if nt:
+        idx = np.arange(1, nt + 1)
+        sizes = ndi.sum(np.ones_like(lab_t), lab_t, index=idx)
+        spread = np.max([ndi.standard_deviation(rgb[..., c], lab_t, index=idx) for c in range(3)], axis=0)
+        pocket = np.zeros(nt + 1, bool)
+        pocket[1:] = (sizes >= max(120, h * w * 0.0002)) & (spread < 4.5)
+        back |= pocket[lab_t]
     # soft edge: a 3 px band around the background gets alpha from colour distance
     band = ndi.binary_dilation(back, iterations=3) & ~back
     t = np.clip((dist - 14) / (46 - 14), 0, 1)
