@@ -156,17 +156,21 @@ export function mainMenu(info: { account: Account; hasSave: boolean }): Promise<
   return new Promise((resolve) => {
     const caught = Object.values(state.dex).filter((d) => d.caught > 0).length;
     const lead = state.team[0];
+    const chev = '<svg class="mm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const swap = '<svg class="mm-swap" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-4-4M20 16H7l4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const m = el('div', 'main-menu screen', `
+      <div class="mm-bg"></div>
       <div class="mm-scrim"></div>
       <div class="mm-col">
         ${logoHTML('big')}
         <div class="mm-menu">
-          ${info.hasSave ? `<button class="mm-continue" data-a="continue">${lead ? mysticFace(lead.species, lead.shiny, 56) : ''}<span class="mm-cb"><b>Continue journey</b><small>${esc(state.profile.name)} · Rank ${state.rank.level} · ${caught} Mystics · Day ${state.day}</small></span><kbd>Enter</kbd></button>` : ''}
-          <button class="btn ${info.hasSave ? 'light' : 'primary'} big" data-a="new">${icon('compass')} ${info.hasSave ? 'New journey' : 'Begin your journey'}${info.hasSave ? '' : ' <kbd>Enter</kbd>'}</button>
-          <div class="mm-row"><button class="btn ghost" data-a="guide">${icon('book')} Field guide</button><button class="btn ghost" data-a="settings">${icon('gear_settings')} Settings</button></div>
+          ${info.hasSave ? `<button class="mm-btn mm-ruby" data-a="continue"><i class="mm-gem l"></i><span class="mm-medal">${lead ? mysticFace(lead.species, lead.shiny, 64) : icon('compass')}</span><span class="mm-txt"><b>Continue Journey</b><small>${esc(state.profile.name)} · Rank ${state.rank.level} · ${caught} Mystics · Day ${state.day}</small></span>${chev}<i class="mm-gem r"></i></button>` : ''}
+          <button class="mm-btn ${info.hasSave ? 'mm-parch' : 'mm-ruby'}" data-a="new">${info.hasSave ? '' : '<i class="mm-gem l"></i>'}<span class="mm-medal mm-rose">${icon('compass')}</span><span class="mm-txt"><b>${info.hasSave ? 'New Journey' : 'Begin Your Journey'}</b>${info.hasSave ? '' : '<small>A new Wayfarer arrives in Hearthwick</small>'}</span>${chev}${info.hasSave ? '' : '<i class="mm-gem r"></i>'}</button>
+          <div class="mm-row"><button class="mm-btn mm-slate" data-a="guide">${icon('book')}<span>Field Guide</span></button><button class="mm-btn mm-slate" data-a="settings">${icon('gear_settings')}<span>Settings</span></button></div>
+          <button class="mm-acct" data-a="switch"><span class="mm-av">${icon(info.account.mode === 'cloud' ? 'cloud' : 'user_profile')}</span><span class="mm-txt"><b>${esc(info.account.username)}</b><small>Switch account</small></span>${swap}</button>
         </div>
       </div>
-      <div class="mm-foot"><span class="mm-acct">${icon(info.account.mode === 'cloud' ? 'cloud' : info.account.mode === 'local' ? 'lock' : 'user_profile')} ${esc(info.account.username)} <button class="linkish" data-a="switch">Switch account</button></span><span class="mm-credits">v3 · Art: Quaternius, KayKit, Kenney, Poly Haven · Icons: game-icons.net</span></div>`);
+      <div class="mm-foot"><span class="mm-credits">v3 · Art: Quaternius, KayKit, Kenney, Poly Haven · Icons: game-icons.net</span></div>`);
     uiRoot().appendChild(m);
     requestAnimationFrame(() => m.classList.add('in'));
     let closed = false;

@@ -355,3 +355,50 @@ html.touch .dg-skip { height: 40px; top: -20px; }
 .loading-screen .ls-tag, .auth-side .ls-tag { text-shadow: 0 2px 6px rgba(6, 3, 16, 0.95), 0 0 18px rgba(6, 3, 16, 0.7); color: var(--paper); }
 .loading-screen .ls-tip { color: var(--paper-2); text-shadow: 0 1px 4px rgba(6, 3, 16, 0.95); }
 .loading-screen .ls-msg { text-shadow: 0 1px 4px rgba(6, 3, 16, 0.95); }
+
+/* ── Title menu: painted vista + gilded pills (v3 art direction, per the user's mockup) ───────── */
+.main-menu { --font-fantasy: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif; --gold: #f0cd78; --gold-hi: #fff1c4; --gold-lo: #9c6a1c; justify-content: flex-start; padding-top: calc(3vh + var(--safe-t)); }
+.mm-bg { position: absolute; inset: 0; background: url(../../assets/brand/keyart-portrait.webp) center 30% / cover no-repeat, #1a0f33; }
+.main-menu .mm-scrim { background: linear-gradient(90deg, rgba(14, 8, 24, 0.82) 0%, rgba(14, 8, 24, 0.55) 30%, rgba(14, 8, 24, 0.12) 52%, rgba(14, 8, 24, 0) 64%), linear-gradient(0deg, rgba(14, 8, 24, 0.5), rgba(14, 8, 24, 0) 22%); }
+.main-menu .mm-col { gap: 1.6vh; }
+.main-menu .mm-menu { width: min(560px, 44vw); gap: 1.6vh; }
+.mm-btn { position: relative; display: flex; align-items: center; gap: 16px; width: 100%; padding: 9px 26px 9px 10px; border-radius: 999px; font-family: var(--font-fantasy); text-align: left; cursor: pointer;
+  border: 2px solid var(--gold); box-shadow: inset 0 0 0 2px rgba(255, 238, 180, 0.28), 0 0 0 1.5px rgba(70, 36, 6, 0.85), 0 10px 26px rgba(0, 0, 0, 0.45); transition: transform 0.15s var(--ease), filter 0.15s var(--ease); }
+@media (hover: hover) { .mm-btn:hover { transform: translateY(-2px); filter: brightness(1.07); } }
+.mm-btn:active { transform: translateY(1px); }
+.mm-btn:focus-visible { outline: 3px solid var(--gold-hi); outline-offset: 3px; }
+.mm-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.mm-txt b { font: 700 clamp(22px, 2.4vw, 34px)/1.05 var(--font-fantasy); letter-spacing: 0.005em; }
+.mm-txt small { font: 600 clamp(14px, 1.25vw, 18px)/1.2 var(--font-fantasy); letter-spacing: 0.01em; }
+.mm-chev { width: 30px; height: 30px; flex: none; margin-left: auto; }
+.mm-ruby { color: #fff; background: linear-gradient(180deg, #ff6aa8 0%, #e02a74 52%, #a3124f 100%); text-shadow: 0 2px 3px rgba(80, 0, 30, 0.55); }
+.mm-ruby .mm-txt small { color: #ffe7c2; }
+.mm-ruby .mm-chev { color: var(--gold-hi); filter: drop-shadow(0 1px 1px rgba(80, 0, 30, 0.6)); }
+.mm-parch { color: #3a230f; background: linear-gradient(180deg, #fffaf0 0%, #f5e6c4 58%, #e9d19f 100%); }
+.mm-parch .mm-chev { color: #a8731f; }
+.mm-medal { position: relative; flex: none; width: 66px; height: 66px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; border: 3px solid var(--gold); box-shadow: 0 0 0 1.5px rgba(70, 36, 6, 0.9), inset 0 0 12px rgba(0, 0, 0, 0.45); background: radial-gradient(circle at 50% 35%, #2e6f86, #123344 75%); }
+.mm-medal .cap, .mm-medal img { width: 100% !important; height: 100% !important; box-shadow: none !important; }
+.mm-medal.mm-rose { background: radial-gradient(circle, #fff8e6, #ecd8ae); color: #6b4414; font-size: 38px; }
+.mm-ruby .mm-medal.mm-rose { background: radial-gradient(circle, #ffe6c0, #f0c07a); }
+.mm-gem { position: absolute; top: 50%; width: 20px; height: 20px; transform: translateY(-50%) rotate(45deg); background: linear-gradient(135deg, var(--gold-hi), #e3aa45 55%, var(--gold-lo)); border: 1.5px solid #5e3a0c; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5); pointer-events: none; }
+.mm-gem.l { left: -12px; } .mm-gem.r { right: -12px; }
+.mm-row { display: flex; gap: 14px; }
+.mm-slate { justify-content: center; gap: 12px; padding: 12px 20px; color: #f7ecd4; background: linear-gradient(180deg, rgba(40, 30, 52, 0.86), rgba(20, 14, 30, 0.9)); border: 1.5px solid rgba(240, 205, 120, 0.6); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); font: 700 clamp(17px, 1.6vw, 23px)/1 var(--font-fantasy); }
+.mm-slate svg { color: var(--gold); font-size: 1.25em; }
+.mm-acct { display: flex; align-items: center; gap: 14px; width: min(420px, 78%); padding: 9px 18px 9px 9px; border-radius: 22px; color: #f7ecd4; text-align: left; cursor: pointer; background: rgba(18, 12, 26, 0.78); border: 1px solid rgba(240, 205, 120, 0.35); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); }
+.mm-acct .mm-txt b { font-size: clamp(17px, 1.5vw, 21px); }
+.mm-acct .mm-txt small { color: #cdbfa6; }
+.mm-av { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; font-size: 26px; color: #e8dcc4; background: rgba(255, 255, 255, 0.06); border: 1.5px solid rgba(232, 220, 196, 0.45); flex: none; }
+.mm-swap { width: 26px; height: 26px; margin-left: auto; color: #e8dcc4; flex: none; }
+.main-menu .mm-foot { justify-content: flex-end; }
+@media (max-height: 520px) {
+  .main-menu .mm-menu { width: min(430px, 50vw); gap: 8px; }
+  .mm-btn { padding: 6px 18px 6px 7px; gap: 11px; }
+  .mm-medal { width: 46px; height: 46px; }
+  .mm-medal.mm-rose { font-size: 26px; }
+  .mm-slate { padding: 8px 14px; }
+  .mm-acct { padding: 6px 12px 6px 6px; }
+  .mm-av { width: 38px; height: 38px; font-size: 20px; }
+  .mm-chev { width: 22px; height: 22px; }
+  .mm-gem { width: 14px; height: 14px; } .mm-gem.l { left: -8px; } .mm-gem.r { right: -8px; }
+}

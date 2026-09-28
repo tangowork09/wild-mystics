@@ -3,6 +3,8 @@ import '@fontsource/dela-gothic-one/latin-400.css';
 import '@fontsource/m-plus-rounded-1c/latin-500.css';
 import '@fontsource/m-plus-rounded-1c/latin-700.css';
 import '@fontsource/m-plus-rounded-1c/latin-800.css';
+import '@fontsource/cormorant-garamond/latin-600.css';
+import '@fontsource/cormorant-garamond/latin-700.css';
 import './ui/styles.css';
 import './ui/mock'; // v3:ui — `?mock=quests,shops,world` registers fake view-model APIs for design work
 import * as THREE from 'three';
@@ -373,7 +375,7 @@ function frame(now: number) {
   if (settings.fpsCap && elapsed < 1000 / settings.fpsCap - 1.5) return;
   lastT = now;
   // Full-screen menus hide the world: keep the last frame on screen and skip simulation + rendering (battery/GPU).
-  const covered = !game.battle && game.started && (journalOpen() || modalOpen() || !!document.querySelector('.cine, .summon-fx'));
+  const covered = (!game.battle && game.started && (journalOpen() || modalOpen() || !!document.querySelector('.cine, .summon-fx'))) || (!game.started && !!document.querySelector('.main-menu.in')); // v3: the title menu is fully painted
   frozenFor = covered ? frozenFor + 1 : 0;
   if (frozenFor > 2) { input.endFrame(); return; }
   governor.update(elapsed);
