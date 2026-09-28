@@ -82,7 +82,7 @@ export class Overworld {
     progress('Painting terrain…');
     await tick();
     this.scene.add(buildTerrainMesh(this.data, { grass: manifestTexture('textures', 'ground_detail') ?? undefined, rock: manifestTexture('textures', 'rock_detail') ?? undefined }));
-    this.atmo = new Atmosphere(this.scene);
+    this.atmo = new Atmosphere(this.scene, this.camera); // v3:look
     this.water = new Water(this.data);
     this.scene.add(this.water.mesh);
     progress('Growing meadows…');
@@ -90,7 +90,7 @@ export class Overworld {
     this.grass = new Grass(this.data);
     this.scene.add(this.grass.mesh);
     this.props = new Props(this.data);
-    this.props.build();
+    await this.props.build((f) => progress('Growing forests…', f)); // v3:look — async (loads flora, bakes impostors)
     this.scene.add(this.props.group);
     progress('Raising towns…');
     await tick();
@@ -116,6 +116,7 @@ export class Overworld {
     this.teleport(state.pos[0], state.pos[1]);
     await this.wilds.populateZone(this.zone);
     this.pipeline = makePipeline(this.scene, this.camera);
+    this.atmo.attach(this.pipeline, this.camera); // v3:look — grade + DOF follow the sky
     this.atmo.update(0.016, 0, this.playerPos, this.playerPos.y, state.time);
     this.atmo.refreshEnv();
   }
@@ -354,7 +355,7 @@ export class Overworld {
     this.structures.setNight(this.atmo.night);
     this.grass.update(t, this.titleMode ? focus : this.playerPos);
     this.water.update(t);
-    this.props.update(t);
+    this.props.update(t, this.camera); // v3:look — streams vegetation around the camera
     this.structures.update(dt, t);
     this.landmarks.update(dt, t, this.playerPos, this.atmo.night);
     this.homestead.update(dt, t, this.playerPos);
