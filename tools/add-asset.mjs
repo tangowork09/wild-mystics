@@ -8,6 +8,8 @@
 //   node tools/add-asset.mjs env       tree_round ~/Downloads/oak.glb   (adds a variant)
 //   node tools/add-asset.mjs decor     barrel     ~/Downloads/barrel.glb
 //   node tools/add-asset.mjs portrait  emberling  ~/Downloads/emberling.png
+//   node tools/add-asset.mjs character maple      ~/Downloads/witch.glb   (a unique named NPC rig,
+//                                         kept out of the shared villager pool; see src/world/npcs.ts)
 //
 // Accepts .glb / .gltf (+ .fbx if you convert first). Optimises (dedup, weld, WebP textures ≤2k),
 // auto-maps animation clips to the game's names, and updates public/assets/manifest.json.
@@ -15,7 +17,8 @@
 
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { prune, dedup, textureCompress, weld, resample } from '@gltf-transform/functions';
+import { prune, dedup, textureCompress, weld, resample, quantize, meshopt } from '@gltf-transform/functions';
+import { MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,7 +29,7 @@ const MANIFEST = path.join(OUT, 'manifest.json');
 
 const [kind, key, src, ...rest] = process.argv.slice(2);
 if (!kind || !src) {
-  console.log('usage: node tools/add-asset.mjs <creature|player|npc|building|env|decor|portrait> <key|-> <file> [--height N] [--rot DEG]');
+  console.log('usage: node tools/add-asset.mjs <creature|player|npc|character|building|env|decor|portrait> <key|-> <file> [--height N] [--rot DEG]');
   process.exit(1);
 }
 const flag = (n) => { const i = rest.indexOf(n); return i >= 0 ? Number(rest[i + 1]) : undefined; };
@@ -45,9 +48,20 @@ if (kind === 'portrait') {
   process.exit(0);
 }
 
-const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
+const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.encoder': MeshoptEncoder });
 const doc = await io.read(src);
+// Named characters only keep the clips NPC actors use, and ship meshopt-compressed.
+const CHAR_CLIPS = /^(idle|walk|run|interact|wave|yes|no|death|hitrecieve|hitreact)$/i;
+if (kind === 'character') {
+  for (const a of doc.getRoot().listAnimations()) {
+    if (CHAR_CLIPS.test(a.getName().split('|').pop())) continue;
+    for (const sm of a.listSamplers()) sm.dispose();
+    for (const ch of a.listChannels()) ch.dispose();
+    a.dispose();
+  }
+}
 await doc.transform(dedup(), weld(), resample(), prune(), textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [2048, 2048] }));
+if (kind === 'character') await doc.transform(quantize(), meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
 
 // ── animation auto-mapping ─────────────────────────────────────────────────
 const clips = doc.getRoot().listAnimations().map((a) => a.getName());
@@ -70,9 +84,16 @@ for (const [ours, pats] of Object.entries(RULES)) {
   }
 }
 
-const dirs = { creature: 'models/creatures', player: 'models/characters', npc: 'models/characters', building: 'models/buildings', env: 'models/nature', decor: 'models/buildings' };
+if (kind === 'character') {
+  // NPC actors use: idle / walk / run, `cast` + `interact` for talking, `victory` for a wave.
+  const byName = (n) => clips.map(base).find((c) => c.toLowerCase() === n);
+  if (byName('interact')) { anims.cast = byName('interact'); anims.interact = byName('interact'); }
+  if (byName('wave')) anims.victory = byName('wave');
+  if (byName('walk')) anims.walk = byName('walk');
+}
+const dirs = { creature: 'models/creatures', player: 'models/characters', npc: 'models/characters', character: 'models/characters', building: 'models/buildings', env: 'models/nature', decor: 'models/buildings' };
 if (!dirs[kind]) { console.error(`unknown kind ${kind}`); process.exit(1); }
-const name = kind === 'player' ? 'player' : kind === 'npc' ? `npc_${path.basename(src).replace(/\.\w+$/, '')}` : `${key}${kind === 'env' ? '_' + Date.now().toString(36) : ''}`;
+const name = kind === 'player' ? 'player' : kind === 'npc' ? `npc_${path.basename(src).replace(/\.\w+$/, '')}` : kind === 'character' ? `char_${key}` : `${key}${kind === 'env' ? '_' + Date.now().toString(36) : ''}`;
 const rel = `${dirs[kind]}/${name}.glb`;
 fs.mkdirSync(path.join(OUT, dirs[kind]), { recursive: true });
 await io.write(path.join(OUT, rel), doc);
@@ -81,6 +102,7 @@ const entry = { model: rel, ...(height ? { height } : {}), ...(rotDeg ? { rotY: 
 if (kind === 'creature') { manifest.creatures ??= {}; manifest.creatures[key] = { ...(manifest.creatures[key] ?? {}), ...entry, height: height ?? manifest.creatures[key]?.height }; }
 if (kind === 'player') manifest.player = { height: 1.75, ...entry };
 if (kind === 'npc') { manifest.npcs ??= []; manifest.npcs.push({ height: 1.7, ...entry }); }
+if (kind === 'character') { manifest.characters ??= {}; manifest.characters[key] = { height: 1.7, ...entry }; }
 if (kind === 'building') { manifest.buildings ??= {}; manifest.buildings[key] = entry; }
 if (kind === 'decor') { manifest.decor ??= {}; manifest.decor[key] = entry; }
 if (kind === 'env') {
