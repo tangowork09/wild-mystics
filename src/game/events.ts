@@ -28,6 +28,25 @@ export interface GameEvents {
   tamer_win: { id: string };
   rank_up: { level: number };
   step: { meters: number };
+  // v3:content — quests, NPCs, shops, gates and exploration. (The towns workstream adds
+  // `open_chest`; the creatures workstream adds `alpha_defeat` / `alpha_catch`.)
+  talk: { npc: string };
+  starter: { species: string };
+  story_battle: { id: string; result: 'win' | 'lose' | 'fled' | 'captured' };
+  enter_region: { region: string };
+  reach: { id: string };
+  enter_dungeon: { id: string };
+  dungeon_clear: { id: string };
+  dungeon_found: { id: string; how: string };
+  gate_open: { id: string };
+  buy: { shop: string; item: string; qty: number; cost: number };
+  sell: { shop: string; item: string; qty: number; gain: number };
+  item_get: { item: string; n: number };
+  use_service: { service: string; zone: string };
+  ui_open: { tab: string };
+  quest_start: { id: string };
+  quest_step: { id: string; step: number };
+  quest_done: { id: string; kind: string };
 }
 
 type Handler<K extends keyof GameEvents> = (e: GameEvents[K]) => void;
@@ -47,4 +66,7 @@ export function emit<K extends keyof GameEvents>(k: K, e: GameEvents[K]) {
 
 type AnyHandler = (k: keyof GameEvents, e: unknown) => void;
 const anyHandlers = new Set<AnyHandler>();
-export function onAny(h: AnyHandler) { anyHandlers.add(h); }
+export function onAny(h: AnyHandler) { anyHandlers.add(h); return () => anyHandlers.delete(h); }
+
+/** Emit an event another workstream defines (e.g. `alpha_defeat`) without a compile-time dependency. */
+export function emitLoose(k: string, e: unknown) { emit(k as keyof GameEvents, e as never); }
