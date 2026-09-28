@@ -11,6 +11,7 @@ import { state } from '../game/state';
 import { icon } from '../ui/icons';
 import { FEATURES, type TerrainData } from './terrain';
 import type { Props } from './props';
+import { tickStageLights } from '../battle/stage';
 
 export interface Wild {
   id: number;
@@ -151,6 +152,7 @@ export class Wilds {
 
   /** Returns a wild that touched the player this frame (encounter), if any. */
   update(dt: number, t: number, player: THREE.Vector3, camera: THREE.Camera, paused: boolean, night: number): Wild | null {
+    tickStageLights(false);
     const now = performance.now();
     // stream nearby lands in
     for (const z of ZONES) {

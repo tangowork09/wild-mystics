@@ -28,6 +28,11 @@ export interface GameEvents {
   tamer_win: { id: string };
   rank_up: { level: number };
   step: { meters: number };
+  // v3:creatures — Alphas (elite ~1.6× wild Mystics with a crown aura)
+  alpha_defeat: { species: string; zone: string; level: number };
+  alpha_catch: { species: string; zone: string; level: number; shiny: boolean };
+  /** An Alpha appeared near the player (bounty boards / map pins can listen). */
+  alpha_spawn: { species: string; zone: string; level: number; x: number; z: number; den?: string };
 }
 
 type Handler<K extends keyof GameEvents> = (e: GameEvents[K]) => void;

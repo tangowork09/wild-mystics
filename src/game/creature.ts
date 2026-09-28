@@ -31,6 +31,8 @@ export interface Creature {
   /** Parents' species (for breeding lineage display). */
   parents?: [string, string];
   favorite?: boolean;
+  /** v3:creatures — caught (or fought) as an Alpha: elite, oversized, crowned. Optional, save-compatible. */
+  alpha?: boolean;
 }
 
 export interface Stats { maxHp: number; atk: number; def: number; spd: number }

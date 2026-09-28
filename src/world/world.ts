@@ -18,6 +18,7 @@ import { Structures, type Interactable } from './towns';
 import { Wilds, shinyRoll, type Wild } from './wilds';
 import { Landmarks } from './landmarks';
 import { Homestead } from './homestead';
+import { installStageLights } from '../battle/stage'; // v3:creatures
 
 export type WorldEvent =
   | { type: 'wild'; wild: Wild; advantage: boolean }
@@ -103,6 +104,7 @@ export class Overworld {
     await tick();
     this.wilds = new Wilds(this.data, this.props);
     this.scene.add(this.wilds.group);
+    installStageLights(this.scene); // v3:creatures — battle key/rim/flash lights, pre-compiled once
     this.player = makePlayerRig();
     this.scene.add(this.player.root);
     this.teleport(state.pos[0], state.pos[1]);

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { makeCreatureRig, ensureCreatures } from '../assets/manifest';
+import { LOOK } from '../assets/stylize';
 import { sfx, music } from '../core/audio';
 import { haptic } from '../core/haptics';
 import { settings } from '../core/settings';
@@ -7,12 +8,12 @@ import { tweens, ease, wait, nextFrame } from '../core/tween';
 import { clamp, pick } from '../core/noise';
 import { ELEMENTS, effectiveness, type Element } from '../data/elements';
 import { SKILLS, strikePattern, type Skill } from '../data/skills';
-import { ORBS, type OrbId, type ItemId } from '../data/items';
+import { ORBS, STONE_ELEMENT, type OrbId, type ItemId } from '../data/items';
 import { RELICS } from '../data/relics';
 import { STATUS, PINCH, type StatusId } from '../data/traits';
 import { WATER_LEVEL, type Zone } from '../data/zones';
 import {
-  canEvolve, grantXp, rankedAp, rankedPower, skillList, statsOf, displayName, type Creature,
+  canEvolve, grantXp, rankedAp, rankedPower, skillList, statsOf, displayName, speciesOf, type Creature,
 } from '../game/creature';
 import { state, addCreature, markSeen, BATTLE_SLOTS, addItem } from '../game/state';
 import { emit } from '../game/events';
@@ -20,6 +21,7 @@ import type { Overworld } from '../world/world';
 import { BattleUI, type Action } from './battleUI';
 import { Unit } from './unit';
 import { VFX } from './vfx';
+import { BattleStage, stageCenter } from './stage';
 
 export interface BattleSetup {
   kind: 'wild' | 'boss' | 'tamer';
@@ -40,6 +42,7 @@ export interface BattleOutcome {
 }
 
 const UP = new THREE.Vector3(0, 1, 0);
+const SPECIES_EL = (c: Creature) => speciesOf(c).element;
 const PARRY_EARLY = 150, PARRY_LATE = 60, DODGE_EARLY = 270, DODGE_LATE = 80, WHIFF_LOCK = 450;
 const auto = () => !!(window as unknown as { __autoplay?: boolean }).__autoplay;
 
@@ -71,10 +74,20 @@ export class Battle {
   private orbMesh: THREE.Mesh | null = null;
   private selectRing: THREE.Mesh;
   private drops: string[] = [];
+  // v3:creatures — staging, lens and hit-stop
+  stage!: BattleStage;
+  private fov = 55;
+  private fovGoal = 55;
+  private fovKick = 0;
+  private baseFov = 55;
+  private hitStop = 0;
+  private stopScale = 1;
 
   constructor(private world: Overworld, private setup: BattleSetup) {
-    this.C = setup.center.clone();
     this.F = setup.forward.clone().setY(0).normalize();
+    if (this.F.lengthSq() < 0.01) this.F.set(0, 0, 1);
+    // never fight among houses, barrels or in the lake: move to the nearest clean, flat stage
+    this.C = stageCenter(world, setup.center, this.F, setup.kind);
     this.R = new THREE.Vector3().crossVectors(this.F, UP).normalize();
     this.ui = new BattleUI((u, y) => this.project(u, y));
     this.ui.onDefense = (k, t) => this.press(k, t);
@@ -144,12 +157,26 @@ export class Battle {
     });
     const isBossFight = this.setup.kind === 'boss';
     this.setup.enemies.forEach((c, j) => {
-      const u = new Unit('enemy', c, makeCreatureRig(c.species, c.shiny), j, isBossFight && j === 0);
+      if (c.alpha) {
+        // Alphas: elite genes, full health, a sturdier Break gauge
+        c.genes = { hp: Math.max(c.genes.hp, 11), atk: Math.max(c.genes.atk, 11), def: Math.max(c.genes.def, 11), spd: Math.max(c.genes.spd, 10) };
+        c.hp = statsOf(c).maxHp;
+      }
+      const u = new Unit('enemy', c, makeCreatureRig(c.species, c.shiny, { alpha: !!c.alpha }), j, isBossFight && j === 0);
+      if (c.alpha) u.brkMax = 170;
       this.place(u, this.enemySlot(j, this.setup.enemies.length, isBossFight, j === 0));
+      u.rig.look?.setFade(0);
       this.world.scene.add(u.rig.root);
       this.units.push(u);
       markSeen(c.species, this.setup.zone.id);
     });
+    // v3:creatures — the arena: cleared ring, rune decal, framed backdrop, stage lights
+    const lead = this.setup.enemies[0];
+    const accent = isBossFight && lead ? ELEMENTS[SPECIES_EL(lead)].color : this.setup.enemies.some((c) => c.alpha) ? '#ff8a4a' : undefined;
+    this.stage = new BattleStage(this.world, this.setup.kind, this.setup.zone, this.C, this.F, accent);
+    this.world.props.setClear(this.C.x, this.C.z, this.stage.radius + 1.5);
+    this.world.grass.setClear(this.C.x, this.C.z, this.stage.radius + 0.5);
+    LOOK.uRimBoost.value = 1.3;
     for (const u of this.units) {
       u.av = u.avStep * (0.3 + Math.random() * 0.25);
       if (u.relic('first_speed')) u.av *= 0.35;
@@ -223,11 +250,54 @@ export class Battle {
     const { pos, look } = this.shoulder(u, t.home, t.height);
     this.shot(pos, look, 4);
   }
+  private sideSign = 1;
   private shotSide() {
     const boss = this.setup.kind === 'boss' ? 1.45 : 1;
-    this.shot(this.C.clone().addScaledVector(this.R, -12.5 * boss).addScaledVector(this.F, -2.5).addScaledVector(UP, 4.2 * boss), this.C.clone().addScaledVector(this.F, 0.5).addScaledVector(UP, 1.4 * boss), 3);
+    this.shot(this.C.clone().addScaledVector(this.R, 12.5 * boss).addScaledVector(this.F, -2.5).addScaledVector(UP, 3.4 * boss), this.C.clone().addScaledVector(this.F, 0.5).addScaledVector(UP, 1.4 * boss), 3);
+  }
+  /** Side-on action two-shot of an exchange (keeps to the overview's side of the line). */
+  private shotAction(from: THREE.Vector3, fromH: number, t: Unit, speed = 4) {
+    const dir = t.home.clone().sub(from).setY(0);
+    if (dir.lengthSq() < 0.01) dir.copy(this.F);
+    dir.normalize();
+    let side = new THREE.Vector3().crossVectors(dir, UP).normalize();
+    if (side.dot(this.R) < 0) side.negate();
+    const hh = Math.max(t.height, fromH);
+    const gap = from.distanceTo(t.home);
+    // ranged shots frame the receiving end; melee frames both fighters
+    const focus = gap > 5 ? t.home.clone().addScaledVector(dir, -Math.min(3.2, gap * 0.3)) : from.clone().lerp(t.home, 0.55);
+    const span = Math.min(gap, 6) + hh;
+    const dist = Math.max(4, span * 0.9 + 2);
+    const cam = (sd: THREE.Vector3) => focus.clone().addScaledVector(sd, dist).addScaledVector(dir, -dist * 0.32).addScaledVector(UP, 0.9 + hh * 0.45);
+    // stay on the overview's side unless another Mystic would block the lens
+    const clear = (p: THREE.Vector3) => Math.min(...this.units.filter((u) => u.alive && u !== t).map((u) => Math.hypot(u.home.x - p.x, u.home.z - p.z) - u.radius));
+    let pos = cam(side);
+    if (clear(pos) < 2.2) { const alt = cam(side.clone().negate()); if (clear(alt) > clear(pos)) pos = alt; }
+    this.shot(pos, focus.clone().addScaledVector(UP, hh * 0.45), speed);
+  }
+  /** Wide three-quarter view of one side (area attacks). */
+  private shotGroup(side: 'party' | 'enemy', speed = 3) {
+    const c = this.center(side);
+    const hh = Math.max(1, ...this.alive(side).map((u) => u.height));
+    const toward = side === 'enemy' ? this.F.clone().negate() : this.F.clone();
+    this.shot(c.clone().addScaledVector(toward, 6.5 + hh * 1.6).addScaledVector(this.R, 4.5 + hh * 0.8).addScaledVector(UP, 2 + hh * 0.6), c.clone().addScaledVector(UP, hh * 0.45), speed);
+  }
+  /** Defender's-eye view of an incoming attack: behind the target's shoulder, the attacker framed. */
+  private shotDefend(target: Unit, attacker: Unit) {
+    const dir = attacker.home.clone().sub(target.home).setY(0);
+    if (dir.lengthSq() < 0.01) dir.copy(this.F);
+    dir.normalize();
+    const right = new THREE.Vector3().crossVectors(dir, UP).normalize();
+    const h = target.height, ah = attacker.height, big = Math.max(0, ah - 2);
+    const pos = target.home.clone().addScaledVector(dir, -(2.8 + h * 1.25 + big * 0.8)).addScaledVector(right, -(1.2 + h * 0.6)).addScaledVector(UP, 0.9 + h * 0.75 + big * 0.35);
+    const look = target.home.clone().lerp(attacker.home, 0.68).addScaledVector(UP, Math.min(ah * 0.5, 3.6) + 0.25);
+    this.shot(pos, look, 3.4);
   }
   shake(a: number) { this.shakeAmt = Math.max(this.shakeAmt, a * settings.screenShake); }
+  /** Zoom punch: the lens narrows for a moment (crits, parries, roars). */
+  private kick(deg: number) { this.fovKick = Math.min(this.fovKick + deg, 16); }
+  /** Hit-stop: freeze the picture (rigs + particles) for a few frames; the game clock keeps running. */
+  private freeze(ms: number, scale = 0.04) { this.hitStop = Math.max(this.hitStop, ms / 1000); this.stopScale = scale; }
 
   update(dt: number) {
     const k = 1 - Math.exp(-dt * this.camLerp);
@@ -242,7 +312,14 @@ export class Battle {
       this.shakeAmt *= Math.exp(-dt * 9);
     }
     cam.lookAt(this.camLook);
-    const gdt = dt * tweens.timeScale * this.speed;
+    // lens: slow FOV moves + decaying zoom punches
+    this.fovKick *= Math.exp(-dt * 7);
+    this.fov += (this.fovGoal - this.fov) * (1 - Math.exp(-dt * 3.5));
+    const fv = this.fov - this.fovKick;
+    if (Math.abs(cam.fov - fv) > 0.01) { cam.fov = fv; cam.updateProjectionMatrix(); }
+    const stop = this.hitStop > 0 ? this.stopScale : 1;
+    this.hitStop = Math.max(0, this.hitStop - dt);
+    const gdt = dt * tweens.timeScale * this.speed * stop;
     const t = performance.now() / 1000;
     for (const u of this.units) {
       if (u.hover > 0 && !this.moving.get(u)) u.rig.root.position.y = u.home.y + Math.sin(t * 2 + u.slot) * 0.12;
@@ -250,6 +327,7 @@ export class Battle {
     }
     this.world.player.update(gdt, 0);
     this.vfx.update(gdt);
+    this.stage?.update(dt, cam);
     if (this.orbMesh) this.orbMesh.rotation.y += dt * 4;
     if (this.selectRing.visible) (this.selectRing.material as THREE.MeshBasicMaterial).opacity = 0.6 + Math.sin(performance.now() / 150) * 0.3;
   }
@@ -286,46 +364,140 @@ export class Battle {
     return outcome;
   }
 
+  private async fadeIn(u: Unit, dur: number) {
+    await tweens.tween(dur, (k) => u.rig.look?.setFade(k), ease.out);
+    u.rig.look?.setFade(1);
+  }
+
   private async intro() {
     this.ui.hideHud(true);
     const wc = this.world.camera;
+    this.baseFov = wc.fov;
+    this.fov = wc.fov;
+    this.fovGoal = wc.fov;
     this.camPos.copy(wc.position);
     this.camLook.copy(wc.position.clone().add(wc.getWorldDirection(new THREE.Vector3()).multiplyScalar(10)));
+    const boss = this.setup.kind === 'boss';
+    void this.stage.reveal(boss ? 1.7 : 1.0);
+    for (const u of this.enemies) {
+      void this.fadeIn(u, boss ? 0.9 : 0.5);
+      this.vfx.sprite('smoke_07', u.chest(), { color: '#ffffff', size: u.height * 0.8, size1: u.height * 1.8, life: 0.7, opacity: 0.35 });
+    }
+    if (boss) await this.introBoss();
+    else await this.introWild();
+    if (this.setup.advantage === 'player') this.ui.bannerText('First Strike!', 'good', 1000);
+    if (this.setup.advantage === 'enemy') this.ui.bannerText('Ambushed!', 'bad', 1000);
+    await this.partyEntrance();
+    this.fovGoal = this.baseFov;
+    this.ui.hideHud(false);
+  }
+
+  /** Low establishing sweep toward the foes; Alphas roar, shinies get a prismatic reveal. */
+  private async introWild() {
     const ec = this.center('enemy');
-    if (this.setup.kind === 'boss') {
-      const b = this.enemies[0];
-      this.shot(b.home.clone().addScaledVector(this.F, -9).addScaledVector(this.R, -4).addScaledVector(UP, 2.5), b.home.clone().addScaledVector(UP, b.height * 0.6), 1.6);
-      b.rig.play('victory');
-      await wait(500);
-      this.ui.bannerText(`<small>${this.setup.zone.name} Guardian</small>${b.name}`, 'boss', 2200);
-      this.shake(0.4);
-      await wait(2000);
-    } else if (this.setup.kind === 'tamer' && this.setup.tamer) {
-      this.shot(ec.clone().addScaledVector(this.F, -7).addScaledVector(this.R, -3).addScaledVector(UP, 2.2), ec.clone().addScaledVector(UP, 0.9), 2.4);
+    const eh = Math.max(1, ...this.enemies.map((e) => e.height));
+    const side = Math.random() < 0.5 ? -1 : 1;
+    const lookAt = ec.clone().addScaledVector(UP, eh * 0.55);
+    this.shot(this.C.clone().addScaledVector(this.F, -10.5).addScaledVector(this.R, side * 8.5).addScaledVector(UP, 1.3 + eh * 0.25), lookAt, 99, true);
+    this.fov = this.baseFov + 6;
+    this.fovGoal = this.baseFov - 5;
+    this.shot(ec.clone().addScaledVector(this.F, -5.2 - eh * 1.25).addScaledVector(this.R, side * (2.4 + eh * 0.55)).addScaledVector(UP, 0.9 + eh * 0.5), lookAt, 1.5);
+    await wait(420);
+    const alpha = this.enemies.find((u) => u.c.alpha);
+    const shinies = this.enemies.filter((u) => u.c.shiny);
+    const names = this.enemies.map((u) => u.name).join(' & ');
+    if (this.setup.kind === 'tamer' && this.setup.tamer) {
       this.ui.bannerText(`<small>${this.setup.tamer.title}</small>${this.setup.tamer.name} wants to battle!`, 'wild', 1600);
       this.enemies.forEach((u) => u.rig.play('victory'));
       await wait(1500);
-    } else {
-      this.shot(ec.clone().addScaledVector(this.F, -7).addScaledVector(this.R, -3).addScaledVector(UP, 2.2), ec.clone().addScaledVector(UP, 0.9), 2.4);
-      const names = this.enemies.map((u) => u.name).join(' & ');
-      const shiny = this.enemies.some((u) => u.c.shiny);
-      this.ui.bannerText(`${shiny ? '<small>✧ A shimmering ✧</small>' : ''}Wild ${names} appeared!`, shiny ? 'shiny' : 'wild', 1400);
-      if (shiny) { sfx('captured'); for (const u of this.enemies.filter((x) => x.c.shiny)) this.vfx.sparks(u.chest(), '#dff8ff', 40, 6); }
-      this.enemies.forEach((u) => u.rig.play('victory'));
-      await wait(1300);
+      return;
     }
-    if (this.setup.advantage === 'player') this.ui.bannerText('First Strike!', 'good', 1000);
-    if (this.setup.advantage === 'enemy') this.ui.bannerText('Ambushed!', 'bad', 1000);
+    if (alpha) {
+      // the Alpha rears up: low camera, roar, shockwave
+      this.shot(alpha.home.clone().addScaledVector(this.F, -(alpha.height * 1.3 + 3.2)).addScaledVector(this.R, side * 1.6).addScaledVector(UP, 0.5), alpha.home.clone().addScaledVector(UP, alpha.height * 0.7), 2.2);
+      alpha.rig.play('victory');
+      await wait(380);
+      sfx('quake');
+      haptic('heavy');
+      this.shake(0.5);
+      this.kick(9);
+      this.vfx.shockwave(alpha.home.clone(), '#ff8a4a', alpha.height * 4, 0.8);
+      this.vfx.sparks(alpha.chest(), '#ffb04a', 30, 9);
+      this.stage.flash(alpha.chest(), '#ff8a3a', 1.4);
+      this.ui.bannerText(`<small>An Alpha blocks your path</small>Alpha ${alpha.name}`, 'boss', 2000);
+      await wait(1500);
+    }
+    if (shinies.length) {
+      const u = shinies[0];
+      sfx('rare');
+      haptic('success');
+      for (const x of shinies) { this.vfx.shinyBurst(x.home.clone(), x.height); x.rig.look?.flash('#fff6ff', 0.85, 0.6); }
+      this.ui.bannerText(`<small>✧ A shimmering ✧</small>${alpha ? '' : `Wild ${names} appeared!`}`, 'shiny', 1900);
+      const c = u.chest();
+      const r = 2.2 + u.height * 1.5;
+      const a0 = Math.atan2(-this.F.x, -this.F.z) - 0.9 * side;
+      await tweens.tween(1.6, (k) => {
+        const a = a0 + k * 1.3 * side;
+        this.shot(c.clone().add(new THREE.Vector3(Math.sin(a) * r, 0.4 + u.height * 0.3 + k * 0.4, Math.cos(a) * r)), c, 30, true);
+      }, ease.inOut);
+      u.rig.play('victory');
+      await wait(300);
+      return;
+    }
+    if (!alpha) this.ui.bannerText(`Wild ${names} appeared!`, 'wild', 1400);
+    this.enemies.forEach((u) => u.rig.play('victory'));
+    await wait(1200);
+  }
+
+  /** Guardians: from the dust at its feet, looking up, as the arena's pillars rise. */
+  private async introBoss() {
+    const b = this.enemies[0];
+    const side = Math.random() < 0.5 ? -1 : 1;
+    const col = ELEMENTS[b.sp.element].color;
+    const look = b.home.clone().addScaledVector(UP, b.height * 0.72);
+    this.shot(b.home.clone().addScaledVector(this.F, -(b.height * 1.5 + 5)).addScaledVector(this.R, side * 3).addScaledVector(UP, 0.7), look, 99, true);
+    this.fov = this.baseFov + 10;
+    this.fovGoal = this.baseFov - 4;
+    this.shot(b.home.clone().addScaledVector(this.F, -(b.height * 1.05 + 4)).addScaledVector(this.R, side * 1.6).addScaledVector(UP, 1.1), look, 0.75);
+    await wait(900);
+    b.rig.play('victory');
+    await wait(380);
+    sfx('quake');
+    haptic('heavy');
+    this.shake(0.7);
+    this.kick(11);
+    this.stage.flash(b.chest(), col, 2);
+    this.vfx.shockwave(b.home.clone().sub(new THREE.Vector3(0, b.hover, 0)), col, 18, 1.0);
+    this.vfx.sparks(b.chest(), col, 40, 12);
+    this.ui.bannerText(`<small>${this.setup.zone.name} Guardian</small>${b.name}`, 'boss', 2600);
+    await wait(1700);
+    this.shot(this.C.clone().addScaledVector(this.F, -17).addScaledVector(this.R, side * 11).addScaledVector(UP, 8.5), this.C.clone().addScaledVector(this.F, 4).addScaledVector(UP, 3.2), 1.5);
+    this.fovGoal = this.baseFov;
+    await wait(900);
+  }
+
+  /** The Wayfarer throws an orb to each slot; each Mystic materialises in its element's light. */
+  private async partyEntrance() {
     this.shotOverview(2.4);
+    const ex = this.world.player;
+    ex.play('attack');
+    await wait(260);
+    const from = ex.root.position.clone().add(new THREE.Vector3(0, 1.5, 0));
     for (const u of this.party) {
+      const to = u.home.clone().add(new THREE.Vector3(0, 0.6, 0));
+      const col = ELEMENTS[u.sp.element].color;
       sfx('orb');
-      this.vfx.sprite('flare_01', u.chest(), { color: ELEMENTS[u.sp.element].color, size: 1, size1: 4, life: 0.4 });
-      this.vfx.groundDecal('symbol_01', u.home, { color: ELEMENTS[u.sp.element].color, size: 1, size1: 3.5, life: 0.9, rot: 3 });
-      void tweens.tween(0.35, (t) => u.rig.root.scale.setScalar(Math.max(0.001, ease.back(t))), ease.linear);
-      await wait(180);
+      void this.vfx.projectile(from, to, '#ffe8a8', 0.3, 1.8).then(() => {
+        this.vfx.sprite('flare_01', u.chest(), { color: col, size: 1, size1: 4.5, life: 0.4 });
+        this.vfx.groundDecal('symbol_01', u.home, { color: col, size: 1, size1: 3.5, life: 0.9, rot: 3 });
+        this.stage.flash(u.chest(), col, 0.6);
+        u.rig.look?.setDissolve(0.98, col);
+        void tweens.tween(0.35, (t) => u.rig.root.scale.setScalar(Math.max(0.001, ease.back(t))), ease.linear);
+        void tweens.tween(0.7, (t) => u.rig.look?.setDissolve(0.98 * (1 - t), col), ease.out).then(() => u.rig.look?.setDissolve(0));
+      });
+      await wait(170);
     }
-    await wait(500);
-    this.ui.hideHud(false);
+    await wait(700);
   }
 
   private predictOrder(n = 9): Unit[] {
@@ -614,7 +786,12 @@ export class Battle {
     const single = targets.length === 1;
     if (melee && single) {
       this.shotTarget(u, primary);
-      await this.dash(u, primary);
+      const dir = primary.home.clone().sub(u.home).setY(0).normalize();
+      const dest = primary.home.clone().addScaledVector(dir, -(primary.radius + u.radius + 0.6));
+      const go = this.dash(u, primary);
+      await wait(90);
+      this.shotAction(dest, u.height, primary, 5);
+      await go;
     } else {
       this.shotTarget(u, primary);
       u.rig.play('cast');
@@ -627,6 +804,8 @@ export class Battle {
       setTimeout(() => u.rig.play('attack'), Math.max(0, lead / this.speed - 260));
       if (!melee) {
         const from = u.chest();
+        // follow the shot to where it lands
+        if (h === 0) setTimeout(() => (single ? this.shotAction(u.home, u.height, primary, 3.4) : this.shotGroup('enemy', 3.2)), Math.max(0, (lead * 0.35) / this.speed));
         for (const t of targets) void this.vfx.projectile(from, t.chest(), color, Math.min(0.42, lead / 1000 - 0.05), skill.vfx === 'beam' ? 0.2 : 1.4);
         if (skill.vfx === 'beam') setTimeout(() => targets.forEach((t) => this.vfx.beam(u.chest(), t.chest(), color, 0.35)), lead / this.speed - 120);
       }
@@ -638,9 +817,10 @@ export class Battle {
       }
       const perfectMult = (u.ability === 'focus' ? 1.45 : 1.3) + (u.relic('perfect') ? 0.2 : 0);
       const mult = res === 'perfect' ? perfectMult : res === 'good' ? 1 : 0.7;
+      const heavy = res === 'perfect' || h === skill.hits - 1 || !!skill.ultimate || skill.breakPower >= 20;
       for (const t of targets) {
         if (!t.alive) continue;
-        this.impactFx(skill, t, color, h);
+        this.impactFx(skill, t, color, h, el, heavy);
         const r = this.damage(u, t, skill, rank, mult);
         this.applyDamage(t, r.amount, r.eff, r.crit, false, u, skill);
         if (skill.kind === 'debuff' && skill.effect && h === skill.hits - 1) this.addBuff(t, skill.effect.stat, skill.effect.amount, skill.effect.turns);
@@ -673,19 +853,27 @@ export class Battle {
     }, ease.inOut, true);
     this.vfx.aura(u.home, ELEMENTS[ult.element].color);
     this.vfx.burst(c, ELEMENTS[ult.element].color);
+    this.stage.flash(c, ELEMENTS[ult.element].color, 2.2);
+    u.rig.look?.flash(ELEMENTS[ult.element].color, 0.8, 0.5);
+    this.kick(8);
     this.ui.hideHud(false);
     await this.playerSkill(u, ult, 1, this.alive('enemy'));
   }
 
-  private impactFx(skill: Skill, t: Unit, color: string, h: number) {
+  private impactFx(skill: Skill, t: Unit, color: string, h: number, el: Element = skill.element, big = false) {
     const p = t.chest();
+    const groundY = t.home.y - t.hover;
     switch (skill.vfx) {
       case 'slash': this.vfx.slash(p, color, h); sfx(h % 2 ? 'hit2' : 'slash'); break;
       case 'quake': this.vfx.quake(t.home.clone().sub(new THREE.Vector3(0, t.hover, 0)), color); sfx('quake'); break;
       case 'burst': this.vfx.burst(p, color); sfx('hit'); break;
-      case 'beam': this.vfx.hit(p, color, true); sfx('hit'); break;
-      default: this.vfx.hit(p, color); sfx('hit');
+      case 'beam': sfx('hit'); break;
+      default: sfx('hit');
     }
+    this.vfx.impact(p, el, color, big, groundY);
+    t.rig.look?.flash('#ffffff', big ? 0.85 : 0.6, big ? 0.16 : 0.1);
+    this.stage.flash(p, color, big ? 1.1 : 0.55);
+    if (big) { this.freeze(70, 0.06); this.kick(2.5); }
   }
 
   private async dash(u: Unit, t: Unit) {
@@ -748,6 +936,15 @@ export class Battle {
     if (lethal && t.ability === 'sturdy' && !t.sturdyUsed && t.c.hp >= t.maxHp) { t.sturdyUsed = true; amount = t.c.hp - 1; this.floatAt(t, 'Sturdy!', 'buff'); }
     t.c.hp = Math.max(0, t.c.hp - amount);
     t.rig.play('hit');
+    if (crit) {
+      const cc = el ? ELEMENTS[el].color : '#ffffff';
+      this.vfx.crit(t.chest(), cc);
+      this.kick(6);
+      this.freeze(110, 0.03);
+      this.shake(0.35);
+      this.stage.flash(t.chest(), '#ffffff', 1.6);
+      haptic('heavy');
+    }
     const cls = `dmg ${party ? 'taken' : ''} ${crit ? 'crit' : ''} ${eff > 1.2 ? 'weak' : eff < 0.9 ? 'resist' : ''}`;
     this.floatAt(t, `${amount}${crit ? '!' : ''}`, cls);
     if (eff > 1.2 && !party) this.floatAt(t, 'WEAK', 'tag-weak');
@@ -768,7 +965,7 @@ export class Battle {
     this.ui.refresh(this.units);
     if (t.boss && !t.enraged && t.c.hp > 0 && t.c.hp < t.maxHp * 0.5) {
       t.enraged = true;
-      setTimeout(() => { this.ui.bannerText(`${t.name} is enraged!`, 'bad', 1300); this.shake(0.5); this.vfx.aura(t.home, '#ff3a3a'); }, 300);
+      setTimeout(() => { this.ui.bannerText(`${t.name} is enraged!`, 'bad', 1300); this.shake(0.5); this.kick(6); this.vfx.aura(t.home, '#ff3a3a'); t.rig.look?.flash('#ff3a2a', 0.7, 0.6); this.stage.flash(t.chest(), '#ff3a2a', 1.6); }, 300);
     }
   }
 
@@ -809,6 +1006,10 @@ export class Battle {
       this.vfx.breakShatter(t.chest(), '#ffd76a');
       this.ui.bannerText('BREAK!', 'break', 900);
       this.shake(0.5);
+      this.kick(8);
+      this.freeze(140, 0.03);
+      t.rig.look?.flash('#ffe8a0', 1, 0.3);
+      this.stage.flash(t.chest(), '#ffd76a', 2);
       t.av += t.avStep;
       this.addBurst(20, by);
       emit('break', {});
@@ -901,7 +1102,7 @@ export class Battle {
     const melee = (skill.vfx === 'slash' || skill.vfx === 'quake') && !aoe;
     const speed = (u.enraged ? 0.82 : 1) / Math.max(1, this.speed * 0.8);
     const pattern = strikePattern(skill);
-    this.shotSide();
+    if (aoe || u.boss) this.shotSide(); else this.shotDefend(primary, u);
     u.rig.play('cast');
     this.vfx.groundDecal('symbol_02', u.home, { color, size: u.radius * 3, size1: u.radius * 4, life: 1.0, rot: 2 });
     this.vfx.sprite('flare_01', u.chest(), { color, size: 1, size1: u.height * 1.2, life: 0.6, opacity: 0.8 });
@@ -950,9 +1151,11 @@ export class Battle {
         sfx('parry');
         haptic('medium');
         emit('parry', {});
-        for (const t of anchorUnits) { this.vfx.parry(t.chest()); t.ap = Math.min(9, t.ap + 1 + (t.relic('parry_ap') ? 1 : 0)); t.rig.play('attack'); }
+        for (const t of anchorUnits) { this.vfx.parry(t.chest()); t.ap = Math.min(9, t.ap + 1 + (t.relic('parry_ap') ? 1 : 0)); t.rig.play('attack'); t.rig.look?.flash('#fff2b0', 0.7, 0.18); }
         this.addBurst(12);
         this.shake(0.25);
+        this.kick(3.5);
+        this.stage.flash(primary.chest(), '#ffd76a', 1.2);
         tweens.timeScale = 0.35;
         setTimeout(() => (tweens.timeScale = 1), 140);
       } else if (res === 'dodge' || res === 'jump') {
@@ -970,7 +1173,7 @@ export class Battle {
         ring.judge('HIT', 'miss');
         for (const t of targets) {
           if (!t.alive) continue;
-          this.impactFx(skill, t, color, i);
+          this.impactFx(skill, t, color, i, skill.id === 'strike' ? u.sp.element : skill.element, i === impacts.length - 1);
           const r = this.damage(u, t, skill, rank, 1);
           this.applyDamage(t, r.amount, r.eff, r.crit, true, u, skill);
           this.onHitEffects(u, t, skill, melee);
@@ -1028,6 +1231,10 @@ export class Battle {
     await wait(160);
     const color = ELEMENTS[u.sp.element].color;
     this.vfx.slash(target.chest(), color, 2);
+    this.vfx.impact(target.chest(), u.sp.element, color, true, target.home.y - target.hover);
+    target.rig.look?.flash('#ffffff', 0.9, 0.2);
+    this.kick(7);
+    this.freeze(120, 0.03);
     sfx('hit2');
     haptic('heavy');
     const r = this.damage(u, target, SKILLS.strike, 1, 2.2 * (u.relic('counter') ? 1.6 : 1));
@@ -1060,7 +1267,11 @@ export class Battle {
   private async capture(t: Unit, orbId: OrbId) {
     const ex = this.world.player;
     const orbDef = ORBS[orbId];
-    this.shot(this.C.clone().addScaledVector(this.F, -6).addScaledVector(this.R, -5).addScaledVector(UP, 3.2), t.home.clone().addScaledVector(UP, t.height * 0.4), 2.5);
+    // over the Wayfarer's shoulder
+    const toT = t.home.clone().sub(ex.root.position).setY(0).normalize();
+    const exR = new THREE.Vector3().crossVectors(toT, UP).normalize();
+    this.shot(ex.root.position.clone().addScaledVector(toT, -3.2).addScaledVector(exR, 1.3).addScaledVector(UP, 2.3), t.home.clone().addScaledVector(UP, t.height * 0.45), 3.2);
+    this.fovGoal = this.baseFov - 4;
     ex.play('attack');
     this.ui.skill(orbDef.name, orbDef.color, 'Wayfarer');
     await wait(420);
@@ -1073,14 +1284,24 @@ export class Battle {
     const from = ex.root.position.clone().add(new THREE.Vector3(0, 1.6, 0));
     const to = t.chest();
     sfx('capture');
-    await tweens.tween(0.55, (k) => { orb.position.lerpVectors(from, to, k); orb.position.y += Math.sin(k * Math.PI) * 3; }, ease.inOut);
+    await tweens.tween(0.55, (k) => {
+      orb.position.lerpVectors(from, to, k);
+      orb.position.y += Math.sin(k * Math.PI) * 3;
+      this.goalLook.lerp(orb.position, 0.25); // the camera follows the throw
+    }, ease.inOut);
     this.vfx.sprite('flare_01', to, { color: '#ffffff', size: 2, size1: 6, life: 0.35 });
     this.vfx.burst(to, orbDef.color);
-    const s0 = t.rig.root.scale.x;
-    await tweens.tween(0.3, (k) => t.rig.root.scale.setScalar(Math.max(0.001, s0 * (1 - k))), ease.in);
+    this.stage.flash(to, orbDef.color, 1.2);
+    // the Mystic turns to light and streams into the orb
+    this.vfx.motes(t.home.clone().sub(new THREE.Vector3(0, t.hover, 0)), '#fff6e0', t.height, 34, to);
+    await tweens.tween(0.5, (k) => t.rig.look?.setDissolve(k, orbDef.band), ease.in);
     t.rig.root.visible = false;
     const groundP = this.ground(t.home.clone()).add(new THREE.Vector3(0, 0.28, 0));
     await tweens.tween(0.35, (k) => { orb.position.lerpVectors(to, groundP, k); }, ease.in);
+    // close on the orb as it rocks in the grass
+    const side = this.R.clone().multiplyScalar(this.sideSign);
+    this.shot(groundP.clone().addScaledVector(this.F, -2.6).addScaledVector(side, 1.1).addScaledVector(UP, 0.75), groundP.clone().addScaledVector(UP, 0.12), 3);
+    this.fovGoal = this.baseFov - 12;
     sfx('orb');
     let perfects = 0;
     if (orbId !== 'astral') {
@@ -1106,6 +1327,11 @@ export class Battle {
       haptic('success');
       this.vfx.sparks(orb.position, '#ffe8a8', 40, 8);
       this.vfx.sprite('star_07', orb.position, { color: '#fff6c8', size: 1, size1: 4, life: 0.6, rot: 2 });
+      this.vfx.shockwave(groundP.clone(), orbDef.band, 5, 0.6);
+      if (t.c.shiny) this.vfx.shinyBurst(groundP.clone(), 1.2);
+      this.stage.flash(orb.position, '#fff2c0', 1.4);
+      this.kick(5);
+      this.fovGoal = this.baseFov - 6;
       this.ui.bannerText(`Captured ${t.name}!`, t.c.shiny ? 'shiny' : 'good', 1400);
       t.captured = true;
       t.c.hp = Math.max(1, t.c.hp);
@@ -1113,15 +1339,23 @@ export class Battle {
       this.captured.push(t.c);
       ex.play('victory');
       emit('catch', { species: t.c.species, shiny: t.c.shiny, zone: this.setup.zone.id, how: this.setup.how ?? 'wild', element: t.sp.element, night: this.world.isNight });
+      if (t.c.alpha) emit('alpha_catch', { species: t.c.species, zone: this.setup.zone.id, level: t.c.level, shiny: t.c.shiny });
       await wait(1400);
     } else {
       sfx('break');
       this.vfx.burst(orb.position, '#ff8a6a');
+      this.stage.flash(orb.position, '#ff8a6a', 1.2);
+      this.shake(0.3);
       this.ui.bannerText('It broke free!', 'bad', 900);
       t.rig.root.visible = true;
-      await tweens.tween(0.25, (k) => t.rig.root.scale.setScalar(Math.max(0.001, s0 * k)), ease.back);
+      this.shot(t.home.clone().addScaledVector(this.F, -(t.height * 1.4 + 4)).addScaledVector(this.R, this.sideSign * 2.5).addScaledVector(UP, 1.2 + t.height * 0.4), t.chest(), 3);
+      this.fovGoal = this.baseFov;
+      t.rig.play('victory');
+      await tweens.tween(0.45, (k) => t.rig.look?.setDissolve(1 - k, '#ff8a6a'), ease.out);
+      t.rig.look?.setDissolve(0);
       await wait(600);
     }
+    this.fovGoal = this.baseFov;
     this.world.scene.remove(orb);
     this.orbMesh = null;
     this.ui.refresh(this.units);
@@ -1133,16 +1367,35 @@ export class Battle {
       if (u.c.hp > 0 || u.gone) continue;
       u.gone = true;
       sfx('faint');
-      u.rig.play('faint');
       this.floatAt(u, `${u.name} fainted`, 'info');
-      if (u.side === 'enemy') emit('defeat', { species: u.c.species, zone: this.setup.zone.id, element: u.sp.element });
-      await this.sleep(900);
+      const col = ELEMENTS[u.sp.element].color;
       if (u.side === 'enemy') {
-        const s0 = u.rig.root.scale.x;
-        this.vfx.sprite('smoke_07', u.chest(), { color: '#ffffff', size: u.height, size1: u.height * 1.8, life: 0.7, opacity: 0.5 });
-        await tweens.tween(0.4, (k) => u.rig.root.scale.setScalar(Math.max(0.001, s0 * (1 - k))), ease.in);
+        emit('defeat', { species: u.c.species, zone: this.setup.zone.id, element: u.sp.element });
+        if (u.c.alpha) emit('alpha_defeat', { species: u.c.species, zone: this.setup.zone.id, level: u.c.level });
+        const last = !this.units.some((x) => x.side === 'enemy' && x.alive);
+        if (last) {
+          // final blow: slow motion, the camera settles on the fallen
+          const side = this.R.clone().multiplyScalar(this.sideSign);
+          this.shot(u.home.clone().addScaledVector(this.F, -(u.height * 1.5 + 3.5)).addScaledVector(side, 2.2 + u.height * 0.5).addScaledVector(UP, 0.9 + u.height * 0.45), u.chest(), 2.6);
+          this.fovGoal = this.baseFov - 6;
+          this.kick(4);
+          tweens.timeScale = 0.35;
+          u.rig.play('faint');
+          await tweens.wait(850, true);
+          tweens.timeScale = 1;
+        } else {
+          u.rig.play('faint');
+          await this.sleep(700);
+        }
+        // dissolve into drifting motes of its element
+        this.vfx.motes(u.home.clone().sub(new THREE.Vector3(0, u.hover, 0)), col, u.height, u.boss ? 60 : 28);
+        await tweens.tween(u.boss ? 1.6 : 0.9, (k) => u.rig.look?.setDissolve(k, col), ease.in);
         u.rig.root.visible = false;
+        if (last) this.fovGoal = this.baseFov;
       } else {
+        u.rig.play('faint');
+        await this.sleep(900);
+        await tweens.tween(0.6, (k) => u.rig.look?.setDissolve(k * 0.98, '#9aa8c8'), ease.in);
         const next = this.reserves.find((c) => c.hp > 0);
         if (next) await this.swapIn(u, next, true);
       }
@@ -1167,7 +1420,12 @@ export class Battle {
     this.ui.replaceCard(out, u);
     this.ui.bannerText(`Go, ${u.name}!`, 'info', 800);
     sfx('orb');
-    this.vfx.groundDecal('symbol_01', u.home, { color: ELEMENTS[u.sp.element].color, size: 1, size1: 3.5, life: 0.9, rot: 3 });
+    const col = ELEMENTS[u.sp.element].color;
+    this.vfx.groundDecal('symbol_01', u.home, { color: col, size: 1, size1: 3.5, life: 0.9, rot: 3 });
+    this.vfx.sprite('flare_01', u.chest(), { color: col, size: 1, size1: 4, life: 0.4 });
+    this.stage.flash(u.chest(), col, 0.6);
+    u.rig.look?.setDissolve(0.98, col);
+    void tweens.tween(0.7, (k) => u.rig.look?.setDissolve(0.98 * (1 - k), col), ease.out).then(() => u.rig.look?.setDissolve(0));
     await tweens.tween(0.35, (k) => u.rig.root.scale.setScalar(Math.max(0.001, ease.back(k))), ease.linear);
     this.ui.refresh(this.units);
   }
@@ -1188,12 +1446,23 @@ export class Battle {
       const shards: Partial<Record<Element, number>> = {};
       const mult = this.setup.kind === 'tamer' ? 1.5 : 1;
       for (const e of defeated) {
-        const boss = e.boss ? 4 : 1;
+        const boss = e.boss ? 4 : e.c.alpha ? 2.5 : 1;
         xp += Math.round((14 + e.c.level * 7) * boss * mult);
-        gold += Math.round((6 + e.c.level * 3) * (e.boss ? 6 : 1) * mult);
-        shards[e.sp.element] = (shards[e.sp.element] ?? 0) + (e.boss ? 6 : 1 + (Math.random() < 0.35 ? 1 : 0));
+        gold += Math.round((6 + e.c.level * 3) * (e.boss ? 6 : e.c.alpha ? 3 : 1) * mult);
+        shards[e.sp.element] = (shards[e.sp.element] ?? 0) + (e.boss ? 6 : e.c.alpha ? 4 : 1 + (Math.random() < 0.35 ? 1 : 0));
       }
-      for (const e of this.enemies.filter((u) => u.captured)) xp += Math.round((14 + e.c.level * 7) * 0.5);
+      // Alpha spoils: a Mega Tonic, a Radiant Orb and a chance at its element's evolution stone
+      for (const e of this.enemies.filter((x) => x.c.alpha)) {
+        addItem('mega_tonic', 1);
+        this.drops.push('mega_tonic');
+        state.inv.orbs.radiant += 1;
+        this.drops.push('Radiant Orb');
+        if (Math.random() < 0.3) {
+          const stone = (Object.keys(STONE_ELEMENT) as ItemId[]).find((k) => STONE_ELEMENT[k] === e.sp.element);
+          if (stone) { addItem(stone, 1); this.drops.push(stone); }
+        }
+      }
+      for (const e of this.enemies.filter((u) => u.captured)) xp += Math.round((14 + e.c.level * 7) * (e.c.alpha ? 1.5 : 0.5));
       state.inv.gold += gold;
       for (const [el, n] of Object.entries(shards)) state.inv.elementum[el as Element] += n ?? 0;
       for (const u of this.alive('party')) {
@@ -1231,6 +1500,11 @@ export class Battle {
 
   private cleanup() {
     removeEventListener('keydown', this.keyListener);
+    this.stage?.dispose();
+    LOOK.uRimBoost.value = 1;
+    const cam = this.world.camera;
+    cam.fov = this.baseFov;
+    cam.updateProjectionMatrix();
     for (const u of this.units) this.world.scene.remove(u.rig.root);
     this.vfx.clear();
     this.world.scene.remove(this.vfx.group);
