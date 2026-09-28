@@ -22,7 +22,7 @@ const page = await browser.newPage();
 const errors = [];
 page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning' || m.type() === 'warn') errors.push(`[${m.type()}] ${m.text()}`); });
 page.on('pageerror', (e) => errors.push(`[pageerror] ${e.message}`));
-const url = `http://localhost:5180/?shot=1${query ? '&' + query : ''}`;
+const url = `http://localhost:${process.env.SHOT_PORT ?? 5180}/?shot=1${query ? '&' + query : ''}`;
 const t0 = Date.now();
 await page.goto(url, { waitUntil: 'domcontentloaded' });
 await page.waitForFunction(() => !document.getElementById('loading') || document.getElementById('loading').classList.contains('out') || !!document.querySelector('.auth-screen.in'), { timeout: 120000 }).catch(() => errors.push('loading timeout'));

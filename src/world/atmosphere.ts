@@ -17,6 +17,10 @@ const WEATHER: Record<Weather, WeatherParams> = {
   snow: { vx: 0.6, vy: -1.4, vz: 0.3, size: 4, alpha: 0.9, flicker: 0.3, spread: 1.5, height: 14 },
   spores: { vx: 0.1, vy: 0.35, vz: 0.15, size: 4, alpha: 0.9, flicker: 1.5, spread: 2.5, height: 7 },
   sand: { vx: 5.5, vy: 0.1, vz: 1.2, size: 3, alpha: 0.55, flicker: 0.4, spread: 0.6, height: 5 },
+  spray: { vx: 1.2, vy: 0.2, vz: 0.6, size: 3, alpha: 0.5, flicker: 0.6, spread: 2, height: 6 },
+  fireflies: { vx: 0.15, vy: 0.2, vz: 0.15, size: 3.5, alpha: 1, flicker: 3, spread: 2.5, height: 6 },
+  glimmer: { vx: 0.1, vy: 0.3, vz: 0.1, size: 3, alpha: 0.9, flicker: 2.5, spread: 2, height: 8 },
+  aether: { vx: 0.4, vy: 0.5, vz: 0.2, size: 3.5, alpha: 0.9, flicker: 1.5, spread: 2, height: 12 },
 };
 
 export class Atmosphere {
