@@ -53,7 +53,7 @@ export const game = {
 };
 
 /** Legendary Guardian Spirit hatched from the egg each Guardian leaves behind. */
-const SPIRITS: Record<string, string> = { vale: 'verdant_rex', lakes: 'deepcaller', scar: 'ember_totem', marsh: 'mire_prince', dunes: 'dune_titan', peaks: 'storm_seraph' };
+const SPIRITS: Record<string, string> = { vale: 'verdant_rex', lakes: 'deepcaller', scar: 'ember_totem', marsh: 'mire_prince', dunes: 'dune_titan', peaks: 'storm_seraph', coast: 'tidesinger', elder: 'sylvan_hart', hollows: 'prism_wyrm' }; // v3:creatures — new land spirits
 const today = () => new Date().toISOString().slice(0, 10);
 const params = new URLSearchParams(location.search);
 const automated = params.has('auto') || params.has('view') || params.has('guest');
@@ -424,7 +424,7 @@ async function fastTravel(p: TravelPoint) {
 async function handleEvent(ev: WorldEvent) {
   if (ev.type === 'wild') {
     const wd = ev.wild;
-    await startWildBattle([{ species: wd.species, level: wd.level, shiny: wd.shiny }], ev.advantage ? 'player' : wd.state === 'chase' ? 'enemy' : null, wd);
+    await startWildBattle(game.world.wilds.party(wd), ev.advantage ? 'player' : wd.state === 'chase' ? 'enemy' : null, wd); // v3:creatures — alphas + pack mates
   } else if (ev.type === 'grass') {
     const pool = spawnsBy(ev.zone, game.world.isNight ? ['grass', 'night'] : ['grass']);
     const extra = ev.zone.id !== 'vale' && pool.length && Math.random() < 0.22 ? [{ species: weighted(pool).species, level: randInt(ev.zone.levels[0], ev.zone.levels[1]), shiny: shinyRoll() }] : [];
@@ -624,7 +624,7 @@ function safeCenter(from: THREE.Vector3, dir: THREE.Vector3, dist: number) {
   return best;
 }
 
-async function startWildBattle(list: { species: string; level: number; shiny: boolean }[], advantage: BattleSetup['advantage'], wild: Wild | null, how = 'wild') {
+async function startWildBattle(list: { species: string; level: number; shiny: boolean; alpha?: boolean }[], advantage: BattleSetup['advantage'], wild: Wild | null, how = 'wild') {
   const w = game.world;
   w.dismount();
   const p = w.playerPos.clone();
@@ -634,7 +634,7 @@ async function startWildBattle(list: { species: string; level: number; shiny: bo
   if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
   dir.normalize();
   const center = safeCenter(p, dir, 5.5);
-  const enemies = list.filter((e) => SPECIES[e.species]).map((e) => createCreature(e.species, e.level, { shiny: e.shiny, caught: { how: how as NonNullable<Creature['caught']>['how'], zone: w.zone.id, at: Date.now() } }));
+  const enemies = list.filter((e) => SPECIES[e.species]).map((e) => createCreature(e.species, e.level, { shiny: e.shiny, ...(e.alpha ? { alpha: true } : {}), caught: { how: how as NonNullable<Creature['caught']>['how'], zone: w.zone.id, at: Date.now() } })); // v3:creatures — alpha flag
   if (!enemies.length) return;
   const out = await runBattle({ kind: 'wild', enemies, zone: w.zone, center, forward: dir, advantage, how });
   if (wild) {

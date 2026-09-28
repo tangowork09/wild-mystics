@@ -16,7 +16,7 @@ import type { JournalTab } from './ui/journal';
 //   ?view=gallery                      ?auto=world&ui=service:hatchery   &autoplay (bot plays battles)
 
 interface Api {
-  startBattle: (list: { species: string; level: number; shiny: boolean }[], adv: 'player' | 'enemy' | null, wild: null) => Promise<void>;
+  startBattle: (list: { species: string; level: number; shiny: boolean; alpha?: boolean }[], adv: 'player' | 'enemy' | null, wild: null) => Promise<void>;
   startBoss: (z: Zone) => Promise<void>;
   begin: (fresh: boolean, starter?: string) => Promise<void>;
   journal: (tab: JournalTab) => Promise<void>;
@@ -102,7 +102,8 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
 
   if (auto === 'battle') {
     const sp = (q.get('sp') ?? 'gloop').split(',');
-    void api.startBattle(sp.map((s) => ({ species: s, level: Number(q.get('lv') ?? 4), shiny: q.has('shiny') })), (q.get('adv') as 'player' | 'enemy' | null) ?? null, null);
+    // v3:creatures — `&alpha` makes the first foe an Alpha
+    void api.startBattle(sp.map((s, i) => ({ species: s, level: Number(q.get('lv') ?? 4), shiny: q.has('shiny'), alpha: q.has('alpha') && i === 0 })), (q.get('adv') as 'player' | 'enemy' | null) ?? null, null);
   }
   if (auto === 'boss') {
     const z = ZONES.find((zz) => zz.id === (q.get('zone') ?? 'vale'))!;
