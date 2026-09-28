@@ -88,6 +88,19 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
   const dist = q.get('dist');
   if (dist) game.world.camDist = Number(dist);
   game.world.snapCamera();
+  // v3:look — `time=0..1` (frozen clock), free camera `cam=x,y,z&look=x,y,z`, `nohud` for clean shots
+  const time = q.get('time');
+  if (time !== null) { state.time = Number(time); game.world.timeScale = 0; }
+  const cam = q.get('cam');
+  if (cam) {
+    const [cx, cy, cz] = cam.split(',').map(Number);
+    const [lx, ly, lz] = (q.get('look') ?? '0,0,0').split(',').map(Number);
+    game.world.teleport(lx, lz);
+    game.world.battleMode = true; // the world stops driving the camera
+    game.world.camera.position.set(cx, cy, cz);
+    game.world.camera.lookAt(lx, ly, lz);
+  }
+  if (q.has('nohud')) for (const id of ['ui', 'labels', 'joy']) { const e = document.getElementById(id); if (e) e.style.display = 'none'; }
   w.__ready = true;
 
   if (auto === 'battle') {

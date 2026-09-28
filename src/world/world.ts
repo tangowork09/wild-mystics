@@ -78,7 +78,7 @@ export class Overworld {
     progress('Painting terrain…');
     await tick();
     this.scene.add(buildTerrainMesh(this.data, { grass: manifestTexture('textures', 'ground_detail') ?? undefined, rock: manifestTexture('textures', 'rock_detail') ?? undefined }));
-    this.atmo = new Atmosphere(this.scene);
+    this.atmo = new Atmosphere(this.scene, this.camera); // v3:look
     this.water = new Water(this.data);
     this.scene.add(this.water.mesh);
     progress('Growing meadows…');
@@ -108,6 +108,7 @@ export class Overworld {
     this.teleport(state.pos[0], state.pos[1]);
     await this.wilds.populateZone(this.zone);
     this.pipeline = makePipeline(this.scene, this.camera);
+    this.atmo.attach(this.pipeline, this.camera); // v3:look — grade + DOF follow the sky
     this.atmo.update(0.016, 0, this.playerPos, this.playerPos.y, state.time);
     this.atmo.refreshEnv();
   }
