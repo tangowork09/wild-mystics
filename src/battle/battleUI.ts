@@ -8,7 +8,8 @@ import { rankedAp, skillList, xpToNext, displayName, geneGrade, type Creature } 
 import { state } from '../game/state';
 import { sfx } from '../core/audio';
 import { haptic } from '../core/haptics';
-import { icon } from '../ui/icons';
+import { icon, glyph } from '../ui/icons';
+import { mysticFace } from '../ui/kit';
 import type { Unit } from './unit';
 
 export type Action =
@@ -23,6 +24,7 @@ export type Action =
 export interface MenuCtx { canCapture: boolean; canFlee: boolean; canSwap: boolean; burstReady: boolean; isNight: boolean; zone: string }
 
 const auto = () => !!(window as unknown as { __autoplay?: boolean }).__autoplay;
+const isTouchUI = () => document.documentElement.classList.contains('touch');
 const BATTLE_ITEMS: ItemId[] = ['tonic', 'mega_tonic', 'elixir', 'ether', 'cleanse'];
 const speciesRarity = (c: Creature) => SPECIES[c.species]?.rarity ?? 'common';
 
@@ -64,9 +66,9 @@ export class BattleUI {
   constructor(private project: (u: Unit, yFrac?: number) => { x: number; y: number; visible: boolean }) {
     this.root.append(this.timeline, this.enemyBox, this.partyBox, this.burstEl, this.markers, this.actions, this.sub, this.hint, this.qteLayer, this.banner, this.skillTag, this.floaters, this.defense, this.toggles);
     this.defense.innerHTML = `
-      <button class="def-btn dodge" data-k="dodge">${icon('footprint')}<b>DODGE</b><small>Q / Shift</small></button>
-      <button class="def-btn jump" data-k="jump">${icon('lightning_speed')}<b>JUMP</b><small>W / ↑</small></button>
-      <button class="def-btn parry" data-k="parry">${icon('shield')}<b>PARRY</b><small>E / Space</small></button>`;
+      <button class="def-btn dodge" data-k="dodge">${icon('footprint')}<b>Dodge</b><kbd>Q</kbd></button>
+      <button class="def-btn jump" data-k="jump">${glyph('chevU')}<b>Jump</b><kbd>W</kbd></button>
+      <button class="def-btn parry" data-k="parry">${icon('shield')}<b>Parry</b><kbd>E</kbd></button>`;
     this.defense.querySelectorAll('button').forEach((b) => b.addEventListener('pointerdown', (ev) => {
       ev.preventDefault();
       this.onDefense?.((b as HTMLElement).dataset.k as 'parry' | 'dodge' | 'jump', performance.now());
@@ -74,8 +76,8 @@ export class BattleUI {
       b.classList.add('pressed');
       setTimeout(() => b.classList.remove('pressed'), 120);
     }));
-    this.burstEl.innerHTML = `<div class="bb-label">${icon('sparkle')}<span>BURST</span></div><div class="bb-bar"><i></i></div>`;
-    this.toggles.innerHTML = `<button class="tg auto" title="Auto battle (A)">${icon('crystal_ball')}<span>AUTO</span></button><button class="tg speed" title="Battle speed (X)">${icon('lightning_speed')}<span>1×</span></button>`;
+    this.burstEl.innerHTML = `<span class="bb-label">${icon('sparkles')}<span>Burst</span></span><span class="bb-bar"><i></i></span>`;
+    this.toggles.innerHTML = `<button class="tg auto" title="Auto battle (A)" aria-pressed="false">${icon('crystal_ball')}<span>Auto</span><kbd>A</kbd></button><button class="tg speed" title="Battle speed (X)">${icon('lightning_speed')}<span>1×</span><kbd>X</kbd></button>`;
     this.toggles.querySelector('.auto')!.addEventListener('click', () => this.toggleAuto());
     this.toggles.querySelector('.speed')!.addEventListener('click', () => this.cycleSpeed());
     addEventListener('keydown', this.globalKeys, true);
@@ -92,6 +94,7 @@ export class BattleUI {
   private toggleAuto() {
     this.autoOn = !this.autoOn;
     this.toggles.querySelector('.auto')!.classList.toggle('on', this.autoOn);
+    this.toggles.querySelector('.auto')!.setAttribute('aria-pressed', String(this.autoOn));
     this.onAuto?.(this.autoOn);
     sfx('select');
     if (this.autoOn && this.pendingMenu) this.pendingMenu({ type: 'auto' });
@@ -130,16 +133,16 @@ export class BattleUI {
       const c = h('div', `e-card${u.boss ? ' boss' : ''}${u.c.shiny ? ' shiny' : ''}`);
       c.style.setProperty('--el', el.color);
       c.style.setProperty('--rar', rar.color);
-      c.innerHTML = `<div class="e-top"><span class="glyph">${icon(u.sp.element)}</span><span class="nm">${u.c.shiny ? `<i class="shiny">${icon('sparkle')}</i>` : ''}${u.name}</span><span class="lv">Lv ${u.c.level}</span></div>
-        <div class="bar hp"><i></i><em></em></div><div class="bar brk"><i></i></div><div class="st"></div>`;
+      c.innerHTML = `<div class="e-top"><span class="glyph">${icon(u.sp.element)}</span><span class="nm">${u.c.shiny ? `<i class="shiny">${icon('sparkles')}</i>` : ''}${u.name}</span><span class="lv">Lv ${u.c.level}</span></div>
+        <div class="bbar hp"><i></i><em></em></div><div class="bbar brk" title="Break"><i></i></div><div class="st"></div>`;
       c.addEventListener('click', () => this.pickClick?.(u));
       this.enemyBox.appendChild(c);
       this.cards.set(u, c);
     } else {
       const c = h('div', 'p-card');
       c.style.setProperty('--el', el.color);
-      c.innerHTML = `<div class="pt-wrap"><img class="pt" src="${portrait(u.c.species, u.c.shiny)}" alt=""></div><div class="p-body"><div class="p-top"><span class="glyph">${icon(u.sp.element)}</span><span class="nm">${u.name}</span><span class="lv">Lv ${u.c.level}</span></div>
-        <div class="bar hp"><i></i><b class="sh"></b><em></em></div><div class="ap"></div><div class="st"></div></div>`;
+      c.innerHTML = `${mysticFace(u.c.species, u.c.shiny, 50, '', 'p-cap')}<div class="p-body"><div class="p-top"><span class="glyph">${icon(u.sp.element)}</span><span class="nm">${u.name}</span><span class="lv">Lv ${u.c.level}</span></div>
+        <div class="bbar hp"><i></i><b class="sh"></b><em></em></div><div class="p-foot"><div class="ap" aria-label="Action points"></div><div class="st"></div></div></div>`;
       c.addEventListener('click', () => this.pickClick?.(u));
       this.partyBox.appendChild(c);
       this.cards.set(u, c);
@@ -158,15 +161,16 @@ export class BattleUI {
       const c = this.cards.get(u);
       if (!c) continue;
       const hp = Math.max(0, u.c.hp), max = u.maxHp;
-      (c.querySelector('.bar.hp i') as HTMLElement).style.setProperty('--p', String(hp / max));
-      (c.querySelector('.bar.hp em') as HTMLElement).textContent = `${hp} / ${max}`;
-      const sh = c.querySelector('.bar.hp .sh') as HTMLElement | null;
+      (c.querySelector('.bbar.hp i') as HTMLElement).style.setProperty('--p', String(hp / max));
+      (c.querySelector('.bbar.hp em') as HTMLElement).textContent = `${hp}/${max}`;
+      c.querySelector('.bbar.hp')!.classList.toggle('mid', hp / max <= 0.5 && hp / max > 0.25);
+      const sh = c.querySelector('.bbar.hp .sh') as HTMLElement | null;
       if (sh) sh.style.setProperty('--p', String(Math.min(1, u.shield / max)));
       c.classList.toggle('low', hp / max < 0.3);
       c.classList.toggle('dead', !u.alive);
       c.classList.toggle('active', u === active);
       if (u.side === 'enemy') {
-        (c.querySelector('.bar.brk i') as HTMLElement).style.setProperty('--p', String(u.broken ? 1 : u.brk / u.brkMax));
+        (c.querySelector('.bbar.brk i') as HTMLElement).style.setProperty('--p', String(u.broken ? 1 : u.brk / u.brkMax));
         c.classList.toggle('broken', u.broken);
         c.style.display = u.gone || u.captured ? 'none' : '';
       } else {
@@ -176,9 +180,9 @@ export class BattleUI {
       const st = c.querySelector('.st') as HTMLElement;
       st.innerHTML = [
         u.status ? `<b class="tag status" style="--c:${STATUS[u.status.id].color}">${STATUS[u.status.id].short}</b>` : '',
-        u.broken ? '<b class="tag brk">BROKEN</b>' : '',
-        u.enraged ? '<b class="tag rage">ENRAGED</b>' : '',
-        ...u.buffs.map((b) => `<b class="tag ${b.amount > 0 ? 'up' : 'down'}">${b.stat.toUpperCase()} ${b.amount > 0 ? '▲' : '▼'}${b.turns}</b>`),
+        u.broken ? '<b class="tag brk">Broken</b>' : '',
+        u.enraged ? '<b class="tag rage">Enraged</b>' : '',
+        ...u.buffs.map((b) => `<b class="tag ${b.amount > 0 ? 'up' : 'down'}">${b.stat.toUpperCase()}${glyph(b.amount > 0 ? 'chevU' : 'chevD')}${b.turns}</b>`),
       ].join('');
     }
   }
@@ -211,8 +215,8 @@ export class BattleUI {
         resolve(a);
       };
       this.pendingMenu = done;
-      const subHeader = (title: string, extra = '') => `<div class="sub-title">${title}${extra ? ` <small>${extra}</small>` : ''}</div>`;
-      const backBtn = '<button class="back">Esc · Back</button>';
+      const subHeader = (title: string, extra = '') => `<div class="sub-title"><b>${title}</b>${extra ? `<small>${extra}</small>` : ''}</div>`;
+      const backBtn = `<button class="back">${glyph('back')} Back <kbd>Esc</kbd></button>`;
       const showMain = () => {
         this.sub.classList.remove('open');
         this.actions.classList.add('open');
@@ -220,15 +224,17 @@ export class BattleUI {
         const items = BATTLE_ITEMS.reduce((a, it) => a + (state.inv.items[it] ?? 0), 0);
         const orbs = Object.values(state.inv.orbs).reduce((a, b) => a + b, 0);
         this.actions.innerHTML = `
-          <div class="who"><span>${u.name}</span><small>${u.ap} AP</small></div>
-          ${ctx.burstReady ? `<button class="act burst" data-a="burst"><kbd>B</kbd>${icon('sparkle')}<b>BURST</b><small>Ultimate</small></button>` : ''}
-          <button class="act main atk" data-a="attack"><kbd>1</kbd>${icon('sword')}<b>Attack</b><small>+1 AP</small></button>
-          <button class="act main skl" data-a="skills"><kbd>2</kbd>${icon('sparkles')}<b>Skills</b><small>Spend AP</small></button>
-          <button class="act main cap ${ctx.canCapture && orbs ? '' : 'off'}" data-a="capture"><kbd>3</kbd>${icon('orb')}<b>Capture</b><small>${orbs} orbs</small></button>
-          <button class="act main itm ${items ? '' : 'off'}" data-a="items"><kbd>4</kbd>${icon('potion')}<b>Items</b><small>${items} left</small></button>
+          <div class="who"><span class="nm">${u.name}</span><span class="who-ap"><b class="tnum">${u.ap}</b> AP</span></div>
+          ${ctx.burstReady ? `<button class="act burst" data-a="burst"><kbd>B</kbd>${icon('sparkles')}<b>Burst</b><small>Ultimate</small></button>` : ''}
+          <div class="act-grid">
+            <button class="act main atk" data-a="attack"><kbd>1</kbd><span class="act-ic">${icon('sword')}</span><b>Attack</b><small>+1 AP</small></button>
+            <button class="act main skl" data-a="skills"><kbd>2</kbd><span class="act-ic">${icon('sparkles')}</span><b>Skills</b><small>Spend AP</small></button>
+            <button class="act main cap ${ctx.canCapture && orbs ? '' : 'off'}" data-a="capture"><kbd>3</kbd><span class="act-ic">${icon('orb')}</span><b>Capture</b><small class="tnum">${ctx.canCapture ? `${orbs} orbs` : 'Wild only'}</small></button>
+            <button class="act main itm ${items ? '' : 'off'}" data-a="items"><kbd>4</kbd><span class="act-ic">${icon('potion')}</span><b>Items</b><small class="tnum">${items} left</small></button>
+          </div>
           <div class="act-row">
-            <button class="act mini ${ctx.canSwap ? '' : 'off'}" data-a="swap"><kbd>5</kbd>Swap</button>
-            <button class="act mini ${ctx.canFlee ? '' : 'off'}" data-a="flee"><kbd>6</kbd>Flee</button>
+            <button class="act mini ${ctx.canSwap ? '' : 'off'}" data-a="swap"><kbd>5</kbd>${glyph('swap')}Swap</button>
+            <button class="act mini ${ctx.canFlee ? '' : 'off'}" data-a="flee"><kbd>6</kbd>${glyph('back')}Flee</button>
           </div>`;
         const go = (a: string) => {
           sfx('select');
@@ -255,7 +261,7 @@ export class BattleUI {
           const el = ELEMENTS[skill.element];
           const ok = u.ap >= cost;
           const tag = skill.status ? `<i class="stag" style="--c:${STATUS[skill.status.id].color}">${STATUS[skill.status.id].short} ${Math.round(skill.status.chance * 100)}%</i>` : '';
-          return `<button class="skill ${ok ? '' : 'off'}" data-i="${i}" style="--el:${el.color}"><kbd>${i + 1}</kbd><span class="glyph">${icon(skill.element)}</span><span class="sn">${skill.name}${rank > 1 ? ` <i class="rank">+${rank - 1}</i>` : ''}${tag}</span><span class="sd">${skill.desc}${skill.hits > 1 ? ` · ${skill.hits} hits` : ''}</span><span class="cost">${cost}<small>AP</small></span></button>`;
+          return `<button class="skill ${ok ? '' : 'off'}" data-i="${i}" style="--el:${el.color}"><kbd>${i + 1}</kbd><span class="glyph">${icon(skill.element)}</span><span class="sn">${skill.name}${rank > 1 ? ` <i class="rank">+${rank - 1}</i>` : ''}${tag}</span><span class="sd">${skill.desc}${skill.hits > 1 ? ` · ${skill.hits} hits` : ''}</span><span class="cost tnum">${cost}<small>AP</small></span></button>`;
         }).join('') + backBtn;
         const pickSkill = (i: number) => {
           const it = list[i];
@@ -279,7 +285,7 @@ export class BattleUI {
         this.sub.innerHTML = subHeader('Capture') + owned.map((o, i) => {
           const d = ORBS[o];
           const special = o === 'dusk' && (ctx.isNight || ctx.zone === 'marsh') ? ' · ×2.5 now!' : '';
-          return `<button class="skill orb" data-o="${o}" style="--el:${d.color}"><kbd>${i + 1}</kbd><span class="glyph orbdot" style="background:radial-gradient(circle at 35% 30%, #fff, ${d.color} 45%, #1a1020)"></span><span class="sn">${d.name}</span><span class="sd">${d.desc}${special}</span><span class="cost">${state.inv.orbs[o]}<small>left</small></span></button>`;
+          return `<button class="skill orb" data-o="${o}" style="--el:${d.color}"><kbd>${i + 1}</kbd><span class="orb-art" style="--c:${d.color};--b:${d.band}"></span><span class="sn">${d.name}</span><span class="sd">${d.desc}${special}</span><span class="cost tnum">${state.inv.orbs[o]}<small>left</small></span></button>`;
         }).join('') + backBtn;
         const pickOrb = (o: OrbId | undefined) => { if (!o) return; sfx('select'); done({ type: 'capture', orb: o }); };
         this.sub.querySelectorAll<HTMLElement>('button.orb').forEach((b) => b.addEventListener('click', () => pickOrb(b.dataset.o as OrbId)));
@@ -290,7 +296,7 @@ export class BattleUI {
         this.actions.classList.remove('open');
         this.sub.classList.add('open');
         const owned = BATTLE_ITEMS.filter((it) => (state.inv.items[it] ?? 0) > 0);
-        this.sub.innerHTML = subHeader('Items') + owned.map((it, i) => `<button class="skill" data-it="${it}"><kbd>${i + 1}</kbd><span class="glyph">${icon(ITEMS[it].icon)}</span><span class="sn">${ITEMS[it].name}</span><span class="sd">${ITEMS[it].desc}</span><span class="cost">${state.inv.items[it]}<small>left</small></span></button>`).join('') + backBtn;
+        this.sub.innerHTML = subHeader('Items') + owned.map((it, i) => `<button class="skill" data-it="${it}"><kbd>${i + 1}</kbd><span class="glyph">${icon(ITEMS[it].icon)}</span><span class="sn">${ITEMS[it].name}</span><span class="sd">${ITEMS[it].desc}</span><span class="cost tnum">${state.inv.items[it]}<small>left</small></span></button>`).join('') + backBtn;
         const pickItem = (it: ItemId | undefined) => { if (!it) return; sfx('select'); done({ type: 'item', item: it }); };
         this.sub.querySelectorAll<HTMLElement>('button.skill').forEach((b) => b.addEventListener('click', () => pickItem(b.dataset.it as ItemId)));
         this.sub.querySelector('.back')!.addEventListener('click', () => { sfx('back'); showMain(); });
@@ -316,8 +322,8 @@ export class BattleUI {
       this.hint.classList.add('open');
       const draw = () => {
         const u = cands[i];
-        this.hint.innerHTML = `<b>${title}</b> <span>${u.name}${detail ? ` · ${detail(u)}` : ''}</span><small>← → choose · Enter confirm${allowCancel ? ' · Esc back' : ''}</small>`;
-        this.markers.innerHTML = cands.map((_, j) => `<button class="mk ${j === i ? 'sel' : ''}" data-j="${j}"></button>`).join('');
+        this.hint.innerHTML = `<span class="h-ic">${glyph('target')}</span><b>${title}</b><span class="h-t">${u.name}${detail ? ` · ${detail(u)}` : ''}</span><small>${isTouchUI() ? 'Tap a marker to choose, tap again to confirm' : `<kbd>${glyph('chevL')}</kbd><kbd>${glyph('chevR')}</kbd> choose · <kbd>Enter</kbd> confirm${allowCancel ? ' · <kbd>Esc</kbd> back' : ''}`}</small>`;
+        this.markers.innerHTML = cands.map((_, j) => `<button class="mk ${j === i ? 'sel' : ''}" data-j="${j}" aria-label="Target ${j + 1}">${glyph('caret')}</button>`).join('');
         this.markers.querySelectorAll('.mk').forEach((b) => b.addEventListener('click', () => {
           const j = Number((b as HTMLElement).dataset.j);
           if (j === i) finish(cands[i]); else { i = j; sfx('select'); draw(); this.onTargetChange?.(cands[i]); }
@@ -422,18 +428,21 @@ export class BattleUI {
   results(o: { title: string; sub: string; xp: number; gold: number; shards: [string, number][]; team: { c: Creature; beforeLv: number; beforeXp: number; newSkills: string[] }[]; captured: Creature[]; drops: string[] }): Promise<void> {
     return new Promise((resolve) => {
       const wrap = h('div', 'b-results');
-      const shardHtml = o.shards.map(([el, n]) => `<span class="shard" style="color:${ELEMENTS[el as keyof typeof ELEMENTS].color}">${icon(el)} ×${n}</span>`).join('');
-      const dropHtml = o.drops.map((d) => `<span>${icon(ITEMS[d as ItemId]?.icon ?? 'gift')} ${ITEMS[d as ItemId]?.name ?? d}</span>`).join('');
-      wrap.innerHTML = `<div class="r-card"><div class="r-title">${o.title}</div><div class="r-sub">${o.sub}</div>
-        <div class="r-gains"><span>${icon('star')} ${o.xp} XP</span><span class="gold">${icon('coin')} ${o.gold}</span>${shardHtml}${dropHtml}</div>
-        ${o.captured.map((c) => `<div class="r-cap ${c.shiny ? 'shiny' : ''}" style="--rar:${RARITY[speciesRarity(c)].color}"><img src="${portrait(c.species, c.shiny)}" alt=""><div><b>${displayName(c)}</b> joined your journey!<small>${RARITY[speciesRarity(c)].name} · Lv ${c.level} · Genes ${geneGrade(c.genes)}${c.shiny ? ' · ✧ Shiny' : ''}</small></div></div>`).join('')}
+      const shardHtml = o.shards.map(([el, n]) => `<span class="rw"><span class="item-art" style="--c:${ELEMENTS[el as keyof typeof ELEMENTS].color}">${icon(el)}</span><span class="rw-t"><b class="tnum">${n}</b> ${ELEMENTS[el as keyof typeof ELEMENTS].name}</span></span>`).join('');
+      const dropHtml = o.drops.map((d) => `<span class="rw"><span class="item-art">${icon(ITEMS[d as ItemId]?.icon ?? 'gift')}</span><span class="rw-t">${ITEMS[d as ItemId]?.name ?? d}</span></span>`).join('');
+      wrap.innerHTML = `<div class="r-card stk">
+        <header class="r-head"><div class="r-title display">${o.title}</div><div class="r-sub">${o.sub}</div></header>
+        <div class="r-cols"><div class="r-left">
+          <div class="r-gains"><span class="rw"><span class="item-art" style="--c:var(--xp)">${glyph('star')}</span><span class="rw-t"><b class="tnum">${o.xp}</b> XP</span></span><span class="rw"><span class="item-art" style="--c:var(--coin)">${icon('coin')}</span><span class="rw-t"><b class="tnum">${o.gold}</b> Gold</span></span>${shardHtml}${dropHtml}</div>
+          ${o.captured.map((c) => `<div class="r-cap ${c.shiny ? 'shiny' : ''}" style="--rar:${RARITY[speciesRarity(c)].color}">${mysticFace(c.species, c.shiny, 52)}<div><b>${displayName(c)} joined your journey!</b><small>${RARITY[speciesRarity(c)].name} · Lv ${c.level} · Genes ${geneGrade(c.genes)}${c.shiny ? ' · Shiny' : ''}</small></div></div>`).join('')}
+        </div>
         <div class="r-team">${o.team.map((t) => {
           const lvUp = t.c.level > t.beforeLv;
-          return `<div class="r-mon ${lvUp ? 'up' : ''}"><img src="${portrait(t.c.species, t.c.shiny)}" alt=""><div class="r-info"><b>${displayName(t.c)}</b><span class="lv">Lv ${t.beforeLv}${lvUp ? ` → <em>${t.c.level}</em>` : ''}</span>
+          return `<div class="r-mon ${lvUp ? 'up' : ''}">${mysticFace(t.c.species, t.c.shiny, 40)}<div class="r-info"><div class="r-name"><b>${displayName(t.c)}</b><span class="lv tnum">Lv ${t.beforeLv}${lvUp ? ` ${glyph('chevR')} <em>${t.c.level}</em>` : ''}</span></div>
             <div class="bar xp"><i style="--p:${t.beforeXp / xpToNext(t.beforeLv)}" data-to="${t.c.xp / xpToNext(t.c.level)}"></i></div>
-            ${t.newSkills.map((s) => `<div class="learn">Learned <b>${s}</b>!</div>`).join('')}</div></div>`;
-        }).join('')}</div>
-        <button class="r-go">Continue <kbd>Enter</kbd></button></div>`;
+            ${t.newSkills.map((s) => `<div class="learn">${icon('sparkles')} Learned <b>${s}</b></div>`).join('')}</div>${lvUp ? '<span class="r-up">Level up</span>' : ''}</div>`;
+        }).join('')}</div></div>
+        <div class="r-foot"><button class="btn primary big r-go">Continue <kbd>Enter</kbd></button></div></div>`;
       this.root.appendChild(wrap);
       requestAnimationFrame(() => {
         wrap.classList.add('in');

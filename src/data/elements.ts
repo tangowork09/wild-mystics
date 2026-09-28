@@ -4,14 +4,15 @@
 
 export type Element = 'fire' | 'water' | 'nature' | 'earth' | 'storm' | 'wind' | 'void';
 
+// v3:ui — colours retuned to pop on the dark capsule-station UI (mirrored as --el-* tokens in ui/css/tokens.css).
 export const ELEMENTS: Record<Element, { name: string; color: string; glyph: string }> = {
-  fire: { name: 'Fire', color: '#ff6a3d', glyph: '🔥' },
-  water: { name: 'Water', color: '#3da5ff', glyph: '💧' },
-  nature: { name: 'Nature', color: '#5fd35a', glyph: '🌿' },
-  earth: { name: 'Earth', color: '#c9964f', glyph: '⛰️' },
-  storm: { name: 'Storm', color: '#f5d33d', glyph: '⚡' },
-  wind: { name: 'Wind', color: '#9fe8e0', glyph: '🌪️' },
-  void: { name: 'Void', color: '#b36bff', glyph: '✦' },
+  fire: { name: 'Fire', color: '#ff6f3c', glyph: '🔥' },
+  water: { name: 'Water', color: '#3aa8ff', glyph: '💧' },
+  nature: { name: 'Nature', color: '#5ed66b', glyph: '🌿' },
+  earth: { name: 'Earth', color: '#e0a45a', glyph: '⛰️' },
+  storm: { name: 'Storm', color: '#ffd23f', glyph: '⚡' },
+  wind: { name: 'Wind', color: '#6febd8', glyph: '🌪️' },
+  void: { name: 'Void', color: '#a983ff', glyph: '✦' },
 };
 
 const BEATS: Partial<Record<Element, Element>> = {

@@ -1,12 +1,10 @@
-import '@fontsource/cinzel/500.css';
-import '@fontsource/cinzel/700.css';
-import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/500-italic.css';
-import '@fontsource/cormorant-garamond/600-italic.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
+// v3:ui — Capsule Station type: Dela Gothic One (display) + M PLUS Rounded 1c (UI), latin subsets only.
+import '@fontsource/dela-gothic-one/latin-400.css';
+import '@fontsource/m-plus-rounded-1c/latin-500.css';
+import '@fontsource/m-plus-rounded-1c/latin-700.css';
+import '@fontsource/m-plus-rounded-1c/latin-800.css';
 import './ui/styles.css';
+import './ui/mock'; // v3:ui — `?mock=quests,shops,world` registers fake view-model APIs for design work
 import * as THREE from 'three';
 import { renderer, governor, isNative } from './core/renderer';
 import { input } from './core/input';
@@ -443,27 +441,14 @@ async function journal(tab: JournalTab) {
   save();
 }
 
-function pauseMenu() {
-  return modal('pause', (b, close) => {
-    b.innerHTML = `<h2>Paused</h2><p class="muted">${state.profile.name} · Rank ${state.rank.level} · Day ${state.day} · ${sync.status}</p>
-      <div class="pause-grid">
-        <button class="btn primary big" data-a="resume">Resume <kbd>Esc</kbd></button>
-        <button class="btn" data-a="journal">${icon('book')} Journal</button>
-        <button class="btn" data-a="settings">${icon('gear_settings')} Settings</button>
-        <button class="btn" data-a="guide">${icon('compass')} Field guide</button>
-        <button class="btn" data-a="profile">${icon('user_profile')} Profile</button>
-        <button class="btn ghost" data-a="title">Save &amp; quit to title</button>
-      </div>`;
-    b.querySelectorAll<HTMLElement>('[data-a]').forEach((x) => x.addEventListener('click', async () => {
-      const a = x.dataset.a;
-      close();
-      if (a === 'journal') await journal(lastTab);
-      if (a === 'settings') await journal('settings');
-      if (a === 'profile') await journal('profile');
-      if (a === 'guide') await screens.guide(input.isTouch);
-      if (a === 'title') { state.pos = [game.world.playerPos.x, game.world.playerPos.z]; save(); await flushSync(); location.reload(); }
-    }));
-  });
+// v3:ui — the pause screen lives in ui/screens; main.ts only acts on the choice.
+async function pauseMenu() {
+  const a = await screens.pause({ name: state.profile.name, rank: state.rank.level, day: state.day, sync: sync.status });
+  if (a === 'journal') await journal(lastTab);
+  if (a === 'settings') await journal('settings');
+  if (a === 'profile') await journal('profile');
+  if (a === 'guide') await screens.guide(input.isTouch);
+  if (a === 'title') { state.pos = [game.world.playerPos.x, game.world.playerPos.z]; save(); await flushSync(); location.reload(); }
 }
 
 function toggleMount(force = false) {

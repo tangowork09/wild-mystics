@@ -1,0 +1,151 @@
+/* Wild Mystics v3 — "Capsule Station" design tokens.
+   The UI is a gashapon machine at night: ink cabinet ground, two-tone capsules, die-cut sticker
+   edges, magenta for "go here" and primary actions, coin yellow for gold, holo foil for rares. */
+:root {
+  /* ── Cabinet ink (grounds, darkest → lightest) ─────────────────────────── */
+  --ink-0: #06080c;            /* outline ink, deepest shadow */
+  --ink-1: #0c1016;            /* scrim base, page ground */
+  --ink-2: #131821;            /* panels */
+  --ink-3: #1b212c;            /* cards on panels */
+  --ink-4: #252c39;            /* raised card / hover */
+  --ink-5: #323b4b;            /* pressed, quiet borders */
+  --ink-6: #4a5467;            /* disabled faces */
+
+  /* ── Text ─────────────────────────────────────────────────────────────── */
+  --paper: #f7f3ea;            /* primary text */
+  --paper-2: #dcd6cb;          /* secondary text */
+  --muted: #a4acba;            /* tertiary text (≥ 7:1 on --ink-2) */
+  --dim: #7a8394;              /* placeholders, decorative only */
+  --edge: #ece5d6;             /* die-cut sticker edge */
+  --edge-soft: rgba(236, 229, 214, 0.16);
+
+  /* ── Signal colours ───────────────────────────────────────────────────── */
+  --magenta: #ff3d8b;          /* objective, primary action, selection */
+  --magenta-hi: #ff79ae;
+  --magenta-lo: #b8175a;       /* key side-wall */
+  --magenta-ink: #2a0716;
+  --coin: #ffc83d;             /* gold currency, claimable rewards */
+  --coin-hi: #ffe08a;
+  --coin-lo: #b88408;
+  --good: #58e08a;
+  --good-lo: #1f8a4c;
+  --bad: #ff5b4f;
+  --bad-lo: #a8241c;
+  --warn: #ffb03a;
+  --info: #6cc6ff;
+  --hp: #58e08a;
+  --hp-mid: #ffd23f;
+  --hp-low: #ff5b4f;
+  --xp: #6cc6ff;
+  --ap: #ffc83d;
+  --shield: #b9ecff;
+
+  /* Holo foil: only for secret rares, shinies, Aether and the logo. */
+  --holo: conic-gradient(from 210deg at 50% 50%, #ffb6da, #c3b4ff, #a7e8ff, #b6ffe0, #fff2a8, #ffc7a8, #ffb6da);
+  --holo-lin: linear-gradient(115deg, #ffb6da 0%, #c3b4ff 22%, #a7e8ff 44%, #b6ffe0 62%, #fff2a8 80%, #ffc7a8 100%);
+
+  /* ── Element plastics (mirrors src/data/elements.ts) ─────────────────── */
+  --el-fire: #ff6f3c;
+  --el-water: #3aa8ff;
+  --el-nature: #5ed66b;
+  --el-earth: #e0a45a;
+  --el-storm: #ffd23f;
+  --el-wind: #6febd8;
+  --el-void: #a983ff;
+
+  /* ── Type ─────────────────────────────────────────────────────────────── */
+  --font-display: 'Dela Gothic One', 'M PLUS Rounded 1c', system-ui, sans-serif;
+  --font-ui: 'M PLUS Rounded 1c', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-2xs: 10.5px;
+  --fs-xs: 11.5px;
+  --fs-s: 12.5px;
+  --fs-m: 14px;
+  --fs-l: 16px;
+  --fs-xl: 19px;
+  --fs-2xl: 23px;
+  --fs-3xl: 28px;
+  --fs-4xl: 36px;
+  --fs-hero: 52px;
+
+  /* ── Space (4-pt rhythm) ──────────────────────────────────────────────── */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s8: 32px;
+
+  /* ── Shape ────────────────────────────────────────────────────────────── */
+  --r-s: 10px;
+  --r-m: 14px;
+  --r-l: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+  --ol: 2px;                   /* outline weight: one weight everywhere */
+
+  /* ── Lift: the one variable that encodes rank (flat → raised → popped) ── */
+  --lift-1: 0 3px 8px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --lift-2: 0 10px 24px rgba(0, 0, 0, 0.45), 0 3px 6px rgba(0, 0, 0, 0.35);
+  --lift-3: 0 22px 60px rgba(0, 0, 0, 0.55), 0 6px 16px rgba(0, 0, 0, 0.4);
+  --key-wall: 4px;             /* travel of a chunky key */
+
+  /* ── Motion ───────────────────────────────────────────────────────────── */
+  --t-fast: 130ms;
+  --t: 200ms;
+  --t-slow: 320ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);          /* exponential ease-out */
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-land: cubic-bezier(0.22, 1, 0.36, 1);    /* sticker slap: fast land, long settle */
+
+  /* ── Layers ───────────────────────────────────────────────────────────── */
+  --z-labels: 5;
+  --z-beacon: 8;
+  --z-hud: 10;
+  --z-toast: 30;
+  --z-journal: 40;
+  --z-modal: 50;
+  --z-flash: 60;
+  --z-screen: 70;
+  --z-top: 90;
+
+  /* ── Safe areas & HUD metrics ─────────────────────────────────────────── */
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --hud-pad: 16px;
+  --hit: 36px;                 /* minimum control size (44 on touch) */
+
+  color-scheme: dark;
+  accent-color: var(--magenta);
+}
+
+html.touch { --hit: 44px; }
+
+/* Phone landscape: one step down the scale, tighter HUD. */
+@media (max-height: 520px) {
+  :root {
+    --fs-2xs: 10px;
+    --fs-xs: 10.5px;
+    --fs-s: 11.5px;
+    --fs-m: 12.5px;
+    --fs-l: 14px;
+    --fs-xl: 16px;
+    --fs-2xl: 19px;
+    --fs-3xl: 23px;
+    --fs-4xl: 28px;
+    --fs-hero: 38px;
+    --hud-pad: 8px;
+    --r-l: 16px;
+    --r-xl: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 1ms;
+    --t: 1ms;
+    --t-slow: 1ms;
+  }
+}

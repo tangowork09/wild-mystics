@@ -155,20 +155,32 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
     });
     W.camYaw = 0; W.camPitch = 0.2; W.camDist = 12; W.snapCamera();
   }
+  // v3:ui — handle for tools/ui-check.mjs (opens every surface in one page load)
+  const { openShop } = await import('./ui/shop');
+  w.__ui = { journal: api.journal, service: api.service, openShop, screens: w.__screens, builder: game.builder, zone: () => game.world.zone };
   const ui = q.get('ui');
   if (ui) {
     const legacy: Record<string, JournalTab> = { box: 'team' };
     if (ui.startsWith('service:')) void api.service(ui.split(':')[1] as Service);
+    else if (ui.startsWith('shop:')) void openShop(ui.slice(5), { zone: game.world.zone }); // v3:ui
     else if (ui === 'build') game.builder.enter();
     else if (ui === 'homestead') void game.builder.openOverview();
     else if (ui.startsWith('screen:')) {
       const s = w.__screens as typeof import('./ui/screens');
       const which = ui.split(':')[1];
-      if (which === 'starter') void s.chooseStarter();
+      if (which === 'starter') void s.chooseStarter({ host: 'Elder Maple' });
       if (which === 'fishing') void s.fishing();
       if (which === 'daily') void s.dailyLogin();
       if (which === 'guide') void s.guide(false);
       if (which === 'dialog') void s.dialog({ name: 'Marigold', title: 'Meadow Botanist', face: 'sporelet', lines: ['Every Mystic in this meadow is a flower that learned to walk.'], choices: ['Battle!', 'Not now'] });
+      // v3:ui — more surfaces
+      if (which === 'npc') void s.dialog({ name: 'Warden Brisa', title: 'Hearthwick Guard', face: 'warden_brisa', lines: ['No Mystic? The wilds will eat you alive.', 'Come on. Elder Maple will know what to do with you.'], choices: ['Lead the way', 'I can manage'] });
+      if (which === 'pause') void s.pause({ name: state.profile.name, rank: state.rank.level, day: state.day, sync: 'Saved on this device' });
+      if (which === 'levelup') void s.levelUp({ kind: 'rank', level: 4, title: 'Trail Scout', sub: 'New title unlocked. Shops now stock Radiant Orbs.' });
+      if (which === 'rewards') void s.rewards({ title: 'Quest complete', sub: 'Herbs for the Healer', reward: { gold: 150, aether: 20, items: { mega_tonic: 1 }, orbs: { radiant: 2 } } });
+      if (which === 'evolution' && state.team[0]) void s.evolution(state.team[0], state.team[0].species, SPECIES[state.team[0].species]?.evolves[0]?.id ?? state.team[0].species);
+      if (which === 'hatch' && state.team[0]) void s.hatch(state.team[0]);
+      if (which === 'loading') s.loading('Gathering supplies…', 0.42);
     } else void api.journal(legacy[ui] ?? (ui as JournalTab));
   }
   return true;
