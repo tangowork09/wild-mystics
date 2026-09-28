@@ -16,7 +16,7 @@ import type { JournalTab } from './ui/journal';
 //   ?view=gallery                      ?auto=world&ui=service:hatchery   &autoplay (bot plays battles)
 
 interface Api {
-  startBattle: (list: { species: string; level: number; shiny: boolean }[], adv: 'player' | 'enemy' | null, wild: null) => Promise<void>;
+  startBattle: (list: { species: string; level: number; shiny: boolean; alpha?: boolean }[], adv: 'player' | 'enemy' | null, wild: null) => Promise<void>;
   startBoss: (z: Zone) => Promise<void>;
   begin: (fresh: boolean, starter?: string) => Promise<void>;
   journal: (tab: JournalTab) => Promise<void>;
@@ -43,9 +43,10 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
 
   if (view === 'portraits') {
     const m = await import('./assets/manifest');
-    await m.ensureModels(Object.keys(SPECIES).map(m.creatureModel));
+    const ids = q.get('only')?.split(',') ?? Object.keys(SPECIES); // v3:creatures — `&only=` subset
+    await m.ensureModels(ids.map(m.creatureModel));
     const out: Record<string, string> = {};
-    for (const id of Object.keys(SPECIES)) {
+    for (const id of ids) {
       out[id] = m.renderPortrait(id, false, 256);
       out[`${id}*`] = m.renderPortrait(id, true, 256);
     }
@@ -54,8 +55,17 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
     return true;
   }
   if (view === 'gallery') {
+    // v3:creatures — `&live` renders portraits from the rigs (new look), `&shiny`, `&only=a,b`, `&from=N&n=M` paging
+    const m = await import('./assets/manifest');
+    const only = q.get('only')?.split(',');
+    let list = Object.values(SPECIES).filter((s) => !only || only.includes(s.id));
+    const from = Number(q.get('from') ?? 0), n = Number(q.get('n') ?? 999);
+    list = list.slice(from, from + n);
+    const live = q.has('live');
+    if (live) await m.ensureModels(list.map((s) => m.creatureModel(s.id)));
+    const shiny = q.has('shiny');
     const g = el('div', 'gallery');
-    g.innerHTML = Object.values(SPECIES).map((s) => `<div class="gal" style="--el:${ELEMENTS[s.element].color}"><img src="${portrait(s.id)}" alt=""><b>${s.name}</b><small>${ELEMENTS[s.element].glyph} ${s.id}${s.boss ? ' · boss' : ''}</small></div>`).join('');
+    g.innerHTML = list.map((s) => `<div class="gal" style="--el:${ELEMENTS[s.element].color}"><img src="${live ? m.renderPortrait(s.id, shiny, 256) : portrait(s.id, shiny)}" alt=""><b>${s.name}</b><small>${ELEMENTS[s.element].glyph} ${s.id}${s.boss ? ' · boss' : ''}</small></div>`).join('');
     uiRoot().appendChild(g);
     w.__ready = true;
     return true;
@@ -92,7 +102,8 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
 
   if (auto === 'battle') {
     const sp = (q.get('sp') ?? 'gloop').split(',');
-    void api.startBattle(sp.map((s) => ({ species: s, level: Number(q.get('lv') ?? 4), shiny: q.has('shiny') })), (q.get('adv') as 'player' | 'enemy' | null) ?? null, null);
+    // v3:creatures — `&alpha` makes the first foe an Alpha
+    void api.startBattle(sp.map((s, i) => ({ species: s, level: Number(q.get('lv') ?? 4), shiny: q.has('shiny'), alpha: q.has('alpha') && i === 0 })), (q.get('adv') as 'player' | 'enemy' | null) ?? null, null);
   }
   if (auto === 'boss') {
     const z = ZONES.find((zz) => zz.id === (q.get('zone') ?? 'vale'))!;

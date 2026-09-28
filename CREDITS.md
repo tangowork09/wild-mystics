@@ -25,11 +25,11 @@ Engine libraries: three.js (MIT), postprocessing (Zlib), N8AO (CC0 / ISC), glTF-
 
 | Asset | Author | License | Source |
 |---|---|---|---|
-| Animated Animal Pack (horse, white horse, bull, cow, donkey, alpaca, husky, shiba inu, stag) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
+| Animated Animal Pack (horse, white horse, bull, cow, donkey, alpaca, husky, shiba inu, stag; v3: deer, fox, wolf) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
 | Farm Animal Pack (horse, cow, llama, pig, pug, sheep, zebra) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
 | Animated Dinosaur Bundle (velociraptor, T-rex, triceratops, stegosaurus, parasaurolophus, apatosaurus) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
-| Animated Fish Bundle, v2 + v1 (goldfish, koi, puffer, sunfish, piranha, shark, anglerfish, goblin shark, armored catfish, lionfish, whale, manta ray) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
-| Animated Enemies (rat, snake, spider, wasp) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
+| Animated Fish Bundle, v2 + v1 (goldfish, koi, puffer, sunfish, piranha, shark, anglerfish, goblin shark, armored catfish, lionfish, whale, manta ray; v3: clownfish, swordfish) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
+| Animated Enemies (rat, snake, spider, wasp; v3: frog) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
 | Enemies Pack (bee, crab, skull, slime) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
 | Cyberpunk Game Kit robots (robot enemy, large, large gun, legs gun, flying, flying gun) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
 | Animated Robot, Bat, Slime (standalone models) | Quaternius | CC0 | https://poly.pizza/m/QCm7qe9uNJ, https://poly.pizza/m/hNO9XvjlKa, https://poly.pizza/m/LyjSUKHKnh |
@@ -56,3 +56,20 @@ Engine libraries: three.js (MIT), postprocessing (Zlib), N8AO (CC0 / ISC), glTF-
 | "Victory Fanfare" | ARoachIFoundOnMyPillow | CC0 | https://opengameart.org/content/victory-fanfare |
 
 Native shells: Capacitor (MIT). App icon and splash are composed from the Emberling portrait by `tools/make-icons.mjs`.
+
+## v3 creatures
+
+Wild Mystics v3 adds 32 species and regional forms (Sapphire Coast, Elderwood, Glimmer Hollows, Aether Crown). Most reuse the CC0 packs above, recoloured in the shader and dressed with procedural accessories (crowns, crystals, antlers, shells, coral, bells, halos) built in code. New model files:
+
+| Asset | Author | License | Source |
+|---|---|---|---|
+| Deer, Fox, Wolf (Animated Animal Pack) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
+| Pigeon (Ultimate Monsters) | Quaternius | CC0 | https://quaternius.com/packs/ultimatemonsters.html |
+| Clownfish, Swordfish (Animated Fish Bundle) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
+| Frog (Animated Enemies) | Quaternius | CC0 | https://quaternius.com (via poly.pizza) |
+| "Jellyfish" (Tidesinger) | Poly by Google | **CC BY 3.0** (attribution required) | https://poly.pizza/m/dA5osnS0Rzj |
+| "Octopus" (Inkwhirl) | Poly by Google | **CC BY 3.0** (attribution required) | https://poly.pizza/m/9-b6-yqrwEe |
+| "Owl" (Hootsage) | Poly by Google | **CC BY 3.0** (attribution required) | https://poly.pizza/m/eoAo21aoZHJ |
+| "Golem" (Geode Colossus, Mosshulk) | joney_lol | **CC BY 3.0** (attribution required) | https://poly.pizza/m/aqrX9Hly1W |
+
+The four CC BY models are static meshes; the game animates them procedurally and recolours them in the shader. They are credited here as their licence requires.

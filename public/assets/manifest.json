@@ -990,6 +990,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1008,6 +1009,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1043,6 +1045,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1061,6 +1064,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1127,6 +1131,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1145,6 +1150,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1226,6 +1232,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1244,6 +1251,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1497,6 +1505,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1703,6 +1712,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1721,6 +1731,7 @@
         "idle": "Idle",
         "walk": "Walk",
         "run": "Gallop",
+        "graze": "Eating",
         "attack": "Attack_Headbutt",
         "hit": "Idle_HitReact_Left",
         "faint": "Death",
@@ -1978,6 +1989,401 @@
       "portrait": "portraits/skysail.webp",
       "portraitShiny": "portraits/skysail_shiny.webp"
     },
+    "skimgull": {
+      "model": "models/creatures/pigeon.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "saltfox": {
+      "model": "models/creatures/a_fox.glb",
+      "height": 1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "shellback": {
+      "model": "models/creatures/r2_frog_08416495.glb",
+      "height": 0.9,
+      "rig": "ground",
+      "anims": {
+        "idle": "Frog_Idle",
+        "run": "Hop",
+        "walk": "Hop",
+        "attack": "Frog_Attack",
+        "faint": "Frog_Death",
+        "cast": "Frog_Jump",
+        "victory": "Frog_Jump",
+        "jump": "Frog_Jump"
+      }
+    },
+    "reefwarden": {
+      "model": "models/creatures/r2_frog_08416495.glb",
+      "height": 1.8,
+      "rig": "ground",
+      "anims": {
+        "idle": "Frog_Idle",
+        "run": "Hop",
+        "walk": "Hop",
+        "attack": "Frog_Attack",
+        "faint": "Frog_Death",
+        "cast": "Frog_Jump",
+        "victory": "Frog_Jump",
+        "jump": "Frog_Jump"
+      }
+    },
+    "coralclack": {
+      "model": "models/creatures/r2_crab_enemy_b9bbf6bd.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance",
+        "jump": "Jump"
+      }
+    },
+    "jestfin": {
+      "model": "models/creatures/r2_clownfish_f28280ed.glb",
+      "height": 0.7,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      }
+    },
+    "lancefin": {
+      "model": "models/creatures/r2_swordfish_4400228c.glb",
+      "height": 1.5,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swimming_Normal",
+        "walk": "Swimming_Normal",
+        "run": "Swimming_Fast",
+        "attack": "Attack",
+        "hit": "Swimming_Impulse",
+        "faint": "Death",
+        "cast": "Swimming_Impulse",
+        "victory": "Out_Of_Water"
+      }
+    },
+    "inkwhirl": {
+      "model": "models/creatures/v3_octopus.glb",
+      "height": 1.3,
+      "rig": "ground",
+      "anims": {}
+    },
+    "fawnlet": {
+      "model": "models/creatures/a_deer.glb",
+      "height": 1.1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "mossbuck": {
+      "model": "models/creatures/a_deer.glb",
+      "height": 2.1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "bramblewolf": {
+      "model": "models/creatures/a_wolf.glb",
+      "height": 1.3,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "thornfang": {
+      "model": "models/creatures/a_wolf.glb",
+      "height": 1.9,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "lanternfox": {
+      "model": "models/creatures/a_fox.glb",
+      "height": 1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "hootsage": {
+      "model": "models/creatures/v3_owl.glb",
+      "height": 1.1,
+      "rig": "ground",
+      "anims": {}
+    },
+    "mosshulk": {
+      "model": "models/creatures/v3_golem.glb",
+      "height": 2,
+      "rig": "biped",
+      "anims": {}
+    },
+    "geodgloop": {
+      "model": "models/creatures/green_blob.glb",
+      "height": 1,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "glimfox": {
+      "model": "models/creatures/a_fox.glb",
+      "height": 1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "shardmaw": {
+      "model": "models/creatures/a_wolf.glb",
+      "height": 1.5,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "prismbat": {
+      "model": "models/creatures/r2_bat_4ae13ae9.glb",
+      "height": 1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Bat_Flying",
+        "walk": "Bat_Flying",
+        "run": "Bat_Flying",
+        "attack": "Bat_Attack",
+        "hit": "Bat_Hit",
+        "faint": "Bat_Death",
+        "cast": "Bat_Attack2"
+      }
+    },
+    "quartzback": {
+      "model": "models/creatures/r2_stegosaurus_6f8f4ac6.glb",
+      "height": 2.1,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Stegosaurus_Idle",
+        "walk": "Stegosaurus_Walk",
+        "run": "Stegosaurus_Run",
+        "attack": "Stegosaurus_Attack",
+        "faint": "Stegosaurus_Death",
+        "cast": "Stegosaurus_Jump",
+        "victory": "Stegosaurus_Jump",
+        "jump": "Stegosaurus_Jump"
+      }
+    },
+    "galeherald": {
+      "model": "models/creatures/pigeon.glb",
+      "height": 1.6,
+      "rig": "ground",
+      "anims": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "Bite_Front",
+        "hit": "HitRecieve",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Dance"
+      }
+    },
+    "stormhowl": {
+      "model": "models/creatures/a_wolf.glb",
+      "height": 1.6,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Gallop_Jump",
+        "victory": "Jump_ToIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "stormray": {
+      "model": "models/creatures/r2_manta_ray_32b4e08e.glb",
+      "height": 0.8,
+      "rig": "swimmer",
+      "anims": {
+        "idle": "Swim",
+        "walk": "Swim",
+        "run": "Swim"
+      }
+    },
+    "haloling": {
+      "model": "models/creatures/ghost.glb",
+      "height": 1.1,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
+    "wardenshade": {
+      "model": "models/creatures/r2_kaykit_skeleton_warrior.glb",
+      "height": 1.8,
+      "rig": "biped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walking_A",
+        "run": "Running_A",
+        "attack": "Unarmed_Melee_Attack_Punch_A",
+        "hit": "Hit_A",
+        "faint": "Death_A",
+        "cast": "Spellcast_Shoot",
+        "victory": "Cheer",
+        "jump": "Jump_Full_Short"
+      }
+    },
+    "tidesinger": {
+      "model": "models/creatures/v3_jellyfish.glb",
+      "height": 1.9,
+      "rig": "flyer",
+      "anims": {}
+    },
+    "sylvan_hart": {
+      "model": "models/creatures/a_deer.glb",
+      "height": 2.2,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "prism_wyrm": {
+      "model": "models/creatures/dragon.glb",
+      "height": 2,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
+    },
     "verdant_rex": {
       "model": "models/creatures/dino.glb",
       "height": 2.3,
@@ -2170,6 +2576,57 @@
       },
       "portrait": "portraits/stormcrown.webp",
       "portraitShiny": "portraits/stormcrown_shiny.webp"
+    },
+    "bellwyrm": {
+      "model": "models/creatures/r2_snake_0f3a551e.glb",
+      "height": 5.2,
+      "rig": "ground",
+      "anims": {
+        "idle": "Snake_Idle",
+        "walk": "Snake_Walk",
+        "run": "Snake_Walk",
+        "attack": "Snake_Attack",
+        "cast": "Snake_Jump",
+        "victory": "Snake_Jump",
+        "jump": "Snake_Jump"
+      }
+    },
+    "elder_stag": {
+      "model": "models/creatures/a_deer.glb",
+      "height": 6.8,
+      "rig": "quadruped",
+      "anims": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Gallop",
+        "graze": "Eating",
+        "attack": "Attack_Headbutt",
+        "hit": "Idle_HitReact_Left",
+        "faint": "Death",
+        "cast": "Attack_Kick",
+        "victory": "Jump_toIdle",
+        "jump": "Gallop_Jump"
+      }
+    },
+    "geode_colossus": {
+      "model": "models/creatures/v3_golem.glb",
+      "height": 7.4,
+      "rig": "biped",
+      "anims": {}
+    },
+    "aether_sovereign": {
+      "model": "models/creatures/dragon_evolved.glb",
+      "height": 9.5,
+      "rig": "flyer",
+      "anims": {
+        "idle": "Flying_Idle",
+        "run": "Fast_Flying",
+        "attack": "Headbutt",
+        "hit": "HitReact",
+        "faint": "Death",
+        "cast": "Yes",
+        "victory": "Yes"
+      }
     }
   },
   "environment": {

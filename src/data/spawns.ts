@@ -34,11 +34,11 @@ export const SPAWNS: Record<string, Spawn[]> = {
     S('grinfin', 1, 'fish'), S('skysail', 1.2, 'fish'), S('bellowdeep', 0.2, 'fish'), S('hobsnap', 0.2, 'fish'),
   ],
   coast: [
-    S('clacker', 3, 'roam'), S('chirpling', 2, 'roam'), S('hopscotch', 1.5, 'roam'), S('glub', 2, 'roam'),
-    S('whirlie', 2.5, 'grass'), S('sandclack', 1.5, 'grass'), S('snubbit', 2, 'grass'), S('finnik', 0.6, 'grass'),
-    S('sandgloop', 1, 'search'), S('magmaglub', 0.6, 'search'), S('glubbernaut', 0.4, 'search'),
-    S('squeakwing', 2, 'night'), S('moonhop', 0.4, 'night'),
-    S('quillpuff', 3, 'fish'), S('sunbasker', 2, 'fish'), S('grinfin', 1.5, 'fish'), S('skysail', 1.5, 'fish'), S('bellowdeep', 0.3, 'fish'),
+    S('clacker', 2.5, 'roam'), S('skimgull', 3, 'roam'), S('shellback', 2.5, 'roam'), S('saltfox', 1.2, 'roam'), S('coralclack', 1.2, 'roam'), S('hopscotch', 1, 'roam'), S('glub', 1.5, 'roam'),
+    S('whirlie', 2.5, 'grass'), S('sandclack', 1.5, 'grass'), S('snubbit', 2, 'grass'), S('finnik', 0.6, 'grass'), S('chirpling', 1.5, 'grass'),
+    S('sandgloop', 1, 'search'), S('magmaglub', 0.6, 'search'), S('glubbernaut', 0.4, 'search'), S('reefwarden', 0.4, 'search'), S('coralclack', 0.8, 'search'),
+    S('squeakwing', 2, 'night'), S('moonhop', 0.4, 'night'), S('inkwhirl', 1.4, 'night'),
+    S('jestfin', 3, 'fish'), S('quillpuff', 2.5, 'fish'), S('sunbasker', 1.5, 'fish'), S('lancefin', 1.2, 'fish'), S('grinfin', 1.2, 'fish'), S('skysail', 1.5, 'fish'), S('bellowdeep', 0.3, 'fish'),
   ],
   scar: [
     S('impling', 3, 'roam'), S('grunt', 3, 'roam'), S('cinderquid', 2, 'roam'),
@@ -62,10 +62,10 @@ export const SPAWNS: Record<string, Spawn[]> = {
     S('chompsy', 3, 'fish'), S('barbelmail', 2, 'fish'), S('lanterngulp', 0.25, 'fish'),
   ],
   elder: [
-    S('glenhart', 2, 'roam'), S('dozewool', 2, 'roam'), S('truffly', 2.5, 'roam'), S('honeybuzz', 2, 'roam'),
-    S('sporelet', 2, 'grass'), S('thornet', 2, 'grass'), S('hissling', 2, 'grass'), S('gustail', 1.5, 'grass'),
-    S('mycobloom', 0.8, 'search'), S('mosslime', 0.4, 'search'), S('sporeking', 0.15, 'search'),
-    S('glowcap', 1.5, 'night'), S('weblin', 2, 'night'), S('wisp', 2, 'night'), S('moonhop', 0.6, 'night'),
+    S('fawnlet', 3, 'roam'), S('bramblewolf', 1.6, 'roam'), S('mosshulk', 1, 'roam'), S('glenhart', 1.5, 'roam'), S('truffly', 2, 'roam'), S('honeybuzz', 1.5, 'roam'), S('mossbuck', 0.6, 'roam'),
+    S('sporelet', 2, 'grass'), S('thornet', 2, 'grass'), S('hissling', 2, 'grass'), S('gustail', 1.5, 'grass'), S('dozewool', 1.5, 'grass'),
+    S('mycobloom', 0.8, 'search'), S('mosslime', 0.4, 'search'), S('sporeking', 0.15, 'search'), S('thornfang', 0.4, 'search'), S('mossbuck', 0.6, 'search'),
+    S('lanternfox', 1.6, 'night'), S('hootsage', 1.4, 'night'), S('glowcap', 1.5, 'night'), S('weblin', 1.5, 'night'), S('wisp', 1.5, 'night'), S('moonhop', 0.6, 'night'),
     S('chompsy', 2, 'fish'), S('mirrorscale', 1, 'fish'),
   ],
   dunes: [
@@ -88,19 +88,57 @@ export const SPAWNS: Record<string, Spawn[]> = {
     S('aurorhart', 0.2, 'night'),
   ],
   hollows: [
-    S('cogling', 3, 'roam'), S('whirrbit', 2.5, 'roam'), S('boltstripe', 2, 'roam'), S('thrumcrest', 1.5, 'roam'),
-    S('voltcat', 2, 'grass'), S('zorp', 2, 'grass'), S('sparkmage', 1.5, 'grass'),
+    S('geodgloop', 2.5, 'roam'), S('glimfox', 1.6, 'roam'), S('shardmaw', 1.4, 'roam'), S('quartzback', 1.4, 'roam'), S('cogling', 2.5, 'roam'), S('whirrbit', 2, 'roam'), S('thrumcrest', 1.2, 'roam'),
+    S('voltcat', 2, 'grass'), S('zorp', 2, 'grass'), S('sparkmage', 1.5, 'grass'), S('boltstripe', 1.5, 'grass'),
     S('tinkertot', 1.2, 'search'), S('gearbrute', 1, 'search'), S('galegunner', 1, 'search'),
     S('stiltshot', 0.5, 'search'), S('arcannon', 0.4, 'search'), S('xenobolt', 0.3, 'search'), S('zapjelly', 0.4, 'search'),
-    S('frostwisp', 0.8, 'night'), S('glowcap', 1, 'night'),
+    S('prismbat', 2.2, 'night'), S('frostwisp', 0.8, 'night'), S('glowcap', 1, 'night'),
   ],
   summit: [
-    S('shinobi', 1.5, 'roam'), S('glaciator', 1.2, 'roam'), S('voltarmor', 1.2, 'roam'), S('alpaqueen', 1.2, 'roam'), S('skymane', 0.8, 'roam'),
+    S('stormhowl', 1.4, 'roam'), S('galeherald', 1.6, 'roam'), S('wardenshade', 1.2, 'roam'), S('stormray', 1, 'roam'), S('haloling', 1, 'roam'),
+    S('shinobi', 1.2, 'roam'), S('glaciator', 1, 'roam'), S('voltarmor', 1, 'roam'), S('alpaqueen', 1, 'roam'), S('skymane', 0.8, 'roam'),
     S('hellion', 1.2, 'grass'), S('gloomlord', 1.2, 'grass'), S('xenobolt', 1, 'grass'),
     S('umbrajelly', 0.4, 'search'), S('magmallow', 0.4, 'search'), S('zapjelly', 0.4, 'search'), S('mosslime', 0.4, 'search'),
-    S('aurorhart', 0.4, 'night'), S('frostwisp', 1, 'night'),
+    S('haloling', 1.4, 'night'), S('aurorhart', 0.4, 'night'), S('frostwisp', 1, 'night'),
   ],
 };
 
 /** How many roaming Mystics are kept alive around the player in each land. */
 export const WILD_COUNT: Record<string, number> = { vale: 18, lakes: 16, coast: 16, scar: 16, marsh: 16, elder: 16, dunes: 16, peaks: 16, hollows: 16, summit: 14 };
+
+// ── v3: overworld behaviour ────────────────────────────────────────────────
+// Wild Mystics stream in around the player (see world/wilds.ts). Each species gets an archetype;
+// unlisted species fall back to rig / rarity heuristics there.
+export type Archetype = 'grazer' | 'skittish' | 'curious' | 'territorial' | 'flyer' | 'swimmer';
+
+export const BEHAVIOR: Record<string, Archetype> = {
+  // curious little ones: come over, stare, hop, wander off
+  gloop: 'curious', sporelet: 'curious', bubblin: 'curious', blorp: 'curious', pecklet: 'curious', cogling: 'curious', tinkertot: 'curious',
+  truffly: 'curious', snubbit: 'curious', zorp: 'curious', skullbop: 'curious', clacker: 'curious', frostling: 'curious', nibblet: 'curious',
+  coralclack: 'curious', inkwhirl: 'curious', hootsage: 'curious', geodgloop: 'curious', skimgull: 'curious',
+  // skittish: bolt when you get close
+  hopscotch: 'skittish', voltcat: 'skittish', dunecat: 'skittish', gustail: 'skittish', moonhop: 'skittish', shadekin: 'skittish', glenhart: 'skittish',
+  aurorhart: 'skittish', pricklet: 'skittish', weblin: 'skittish', hissling: 'skittish', monkroose: 'skittish', fawnlet: 'skittish', saltfox: 'skittish',
+  glimfox: 'skittish', lanternfox: 'skittish', galeherald: 'skittish',
+  // territorial: chase you down
+  grunt: 'territorial', warlord: 'territorial', hellion: 'territorial', dustclaw: 'territorial', scorchclaw: 'territorial', quakemaw: 'territorial', bullwark: 'territorial',
+  pyrox: 'territorial', gearbrute: 'territorial', arcannon: 'territorial', stiltshot: 'territorial', bonewarden: 'territorial', hexbones: 'territorial', rattlecloak: 'territorial',
+  gobblorp: 'territorial', emberjaw: 'territorial', kilnback: 'territorial', glaciator: 'territorial', blizzarf: 'territorial', xenobolt: 'territorial',
+  bramblewolf: 'territorial', thornfang: 'territorial', stormhowl: 'territorial', shardmaw: 'territorial', mosshulk: 'territorial', wardenshade: 'territorial',
+  // grazers: wander, graze, keep their distance
+  moolet: 'grazer', trotlet: 'grazer', loamstrider: 'grazer', skymane: 'grazer', dozewool: 'grazer', tuftumble: 'grazer', peakfleece: 'grazer', rimehorn: 'grazer',
+  duneplod: 'grazer', boltstripe: 'grazer', hornwall: 'grazer', thrumcrest: 'grazer', thunderneck: 'grazer', mossbuck: 'grazer', shellback: 'grazer',
+  reefwarden: 'grazer', quartzback: 'grazer',
+  // flyers: circle overhead, swoop down to look at you
+  prismbat: 'flyer', squeakwing: 'flyer', haloling: 'flyer',
+};
+
+/** Species that roam in groups: [min, max] members (herds graze together, packs hunt together). */
+export const HERDS: Record<string, [number, number]> = {
+  moolet: [2, 4], bullwark: [2, 3], trotlet: [2, 3], loamstrider: [2, 3], dozewool: [3, 5], tuftumble: [2, 4], peakfleece: [2, 3], duneplod: [2, 3],
+  boltstripe: [3, 4], glenhart: [2, 3], rimehorn: [2, 3], hornwall: [2, 3], thrumcrest: [2, 3], dustclaw: [3, 4], scorchclaw: [2, 3],
+  chirpling: [2, 4], squeakwing: [3, 5], honeybuzz: [2, 4], zapbee: [2, 4], fawnlet: [2, 4], mossbuck: [2, 3], bramblewolf: [3, 4], stormhowl: [2, 3],
+  gildfin: [2, 3], chompsy: [2, 4], jestfin: [2, 4], skimgull: [3, 5], shellback: [2, 3], geodgloop: [2, 3], quartzback: [2, 3], galeherald: [2, 3],
+};
+/** Packs join a fight when one of them is attacked (one extra member, if close). */
+export const PACKS = new Set(['dustclaw', 'scorchclaw', 'bramblewolf', 'stormhowl', 'chompsy']);
