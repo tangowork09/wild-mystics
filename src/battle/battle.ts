@@ -22,6 +22,8 @@ import { BattleUI, type Action } from './battleUI';
 import { Unit } from './unit';
 import { VFX } from './vfx';
 import { BattleStage, stageCenter } from './stage';
+import { FlatStage, flatFrame, ARENA_Y, FLAT, type FlatFrame } from './flat';
+import { SPRITE_FLAT } from '../assets/sprite';
 
 export interface BattleSetup {
   kind: 'wild' | 'boss' | 'tamer';
@@ -80,7 +82,12 @@ export class Battle {
   private selectRing: THREE.Mesh;
   private drops: string[] = [];
   // v3:creatures — staging, lens and hit-stop
-  stage!: BattleStage;
+  stage!: BattleStage | FlatStage;
+  /** v3: 2D side-view battles (painted backdrop, stumps, fixed side camera). `?battle3d` = old arena. */
+  private flat = !new URLSearchParams(location.search).has('battle3d');
+  private frame!: FlatFrame;
+  private worldFov = 55;
+  private hiddenWorld: THREE.Object3D[] = [];
   private fov = 55;
   private fovGoal = 55;
   private fovKick = 0;
@@ -91,10 +98,18 @@ export class Battle {
   constructor(private world: Overworld, private setup: BattleSetup) {
     this.F = setup.forward.clone().setY(0).normalize();
     if (this.F.lengthSq() < 0.01) this.F.set(0, 0, 1);
-    // never fight among houses, barrels or in the lake: move to the nearest clean, flat stage
-    this.C = stageCenter(world, setup.center, this.F, setup.kind);
+    if (this.flat) {
+      // side view: the party stands on the left facing right, foes on the right facing left
+      this.F.set(1, 0, 0);
+      this.C = new THREE.Vector3(setup.center.x, ARENA_Y, setup.center.z);
+      this.frame = flatFrame(this.C, innerWidth / Math.max(1, innerHeight));
+    } else {
+      // never fight among houses, barrels or in the lake: move to the nearest clean, flat stage
+      this.C = stageCenter(world, setup.center, this.F, setup.kind);
+    }
     this.R = new THREE.Vector3().crossVectors(this.F, UP).normalize();
     this.ui = new BattleUI((u, y) => this.project(u, y));
+    if (this.flat) this.ui.root.classList.add('flat');
     this.ui.onDefense = (k, t) => this.press(k, t);
     this.ui.onQte = (t) => this.press('qte', t);
     this.ui.onAuto = (on) => { this.autoBattle = on; };
@@ -123,14 +138,17 @@ export class Battle {
 
   // ── Layout ─────────────────────────────────────────────────────────
   private ground(p: THREE.Vector3) {
+    if (this.flat) { p.y = this.C.y + FLAT.stumpTop; return p; }
     p.y = Math.max(this.world.data.heightAt(p.x, p.z), WATER_LEVEL + 0.05);
     return p;
   }
   private partySlot(i: number, n: number) {
+    if (this.flat) return this.ground(this.C.clone().addScaledVector(this.F, -this.frame.spread));
     const lat = (i - (n - 1) / 2) * 2.8;
     return this.ground(this.C.clone().addScaledVector(this.F, (n === 1 ? -2.1 : -3.6) - Math.abs(i - (n - 1) / 2) * 0.9).addScaledVector(this.R, lat));
   }
   private enemySlot(j: number, n: number, boss: boolean, isBoss: boolean) {
+    if (this.flat) return this.ground(this.C.clone().addScaledVector(this.F, this.frame.spread + (boss ? 0.35 : 0)));
     if (boss) {
       if (isBoss) return this.ground(this.C.clone().addScaledVector(this.F, 7));
       const side = j % 2 === 0 ? -1 : 1;
@@ -175,9 +193,21 @@ export class Battle {
     // v3:creatures — the arena: cleared ring, rune decal, framed backdrop, stage lights
     const lead = this.setup.enemies[0];
     const accent = isBossFight && lead ? ELEMENTS[SPECIES_EL(lead)].color : this.setup.enemies.some((c) => c.alpha) ? '#ff8a4a' : undefined;
-    this.stage = new BattleStage(this.world, this.setup.kind, this.setup.zone, this.C, this.F, accent);
-    this.world.props.setClear(this.C.x, this.C.z, this.stage.radius + 1.5);
-    this.world.grass.setClear(this.C.x, this.C.z, this.stage.radius + 0.5);
+    if (this.flat) {
+      // the island steps aside: only the painted stage, the Mystics, lights and effects stay drawn
+      const keep = new Set<THREE.Object3D>([this.vfx.group, this.selectRing, ...this.units.map((u) => u.rig.root)]);
+      for (const o of this.world.scene.children) if (o.visible && !(o as THREE.Light).isLight && !keep.has(o)) { o.visible = false; this.hiddenWorld.push(o); }
+      const flat = new FlatStage(this.world.scene, this.setup.zone, this.C, this.frame);
+      // painted look: sprites unlit, the grade mostly steps aside so the art reads as drawn
+      SPRITE_FLAT.on = true;
+      this.world.pipeline.grade.setOverride({ bypass: 0.8, saturation: 1, vibrance: 0.05, contrast: 1, exposure: 1 });
+      for (const u of this.units) flat.addPedestal(u.home.clone().setY(this.C.y + FLAT.stumpTop), 1, u.boss);
+      this.stage = flat;
+    } else {
+      this.stage = new BattleStage(this.world, this.setup.kind, this.setup.zone, this.C, this.F, accent);
+      this.world.props.setClear(this.C.x, this.C.z, this.stage.radius + 1.5);
+      this.world.grass.setClear(this.C.x, this.C.z, this.stage.radius + 0.5);
+    }
     LOOK.uRimBoost.value = 1.3;
     for (const u of this.units) {
       u.av = u.avStep * (0.3 + Math.random() * 0.25);
@@ -255,6 +285,13 @@ export class Battle {
 
   // ── Camera ─────────────────────────────────────────────────────────
   private shot(pos: THREE.Vector3, look: THREE.Vector3, speed = 3, cut = false) {
+    if (this.flat) {
+      const f = this.frame;
+      const pan = clamp(look.x - this.C.x, -f.spread, f.spread) * 0.16;
+      const lift = clamp(look.y - f.look.y, -0.6, 1.6) * 0.2;
+      pos = new THREE.Vector3(f.pos.x + pan, f.pos.y + lift, f.pos.z);
+      look = new THREE.Vector3(f.look.x + pan, f.look.y + lift, f.look.z);
+    }
     this.goalPos.copy(pos);
     this.goalLook.copy(look);
     this.camLerp = speed;
@@ -418,9 +455,10 @@ export class Battle {
   private async intro() {
     this.ui.hideHud(true);
     const wc = this.world.camera;
-    this.baseFov = wc.fov;
-    this.fov = wc.fov;
-    this.fovGoal = wc.fov;
+    this.worldFov = wc.fov;
+    this.baseFov = this.flat ? FLAT.fov : wc.fov;
+    this.fov = this.baseFov;
+    this.fovGoal = this.baseFov;
     this.camPos.copy(wc.position);
     this.camLook.copy(wc.position.clone().add(wc.getWorldDirection(new THREE.Vector3()).multiplyScalar(10)));
     const boss = this.setup.kind === 'boss';
@@ -660,7 +698,7 @@ export class Battle {
   private async partyTurn(u: Unit): Promise<BattleOutcome['result'] | null> {
     for (;;) {
       this.shotCommand(u);
-      this.selectRing.visible = true;
+      this.selectRing.visible = !this.flat; // the side view shows whose turn it is on the plates instead
       this.selectRing.position.copy(u.home).add(new THREE.Vector3(0, 0.1 - u.hover, 0));
       this.selectRing.scale.setScalar(u.radius * 1.6);
       if (this.autoBattle) {
@@ -1552,8 +1590,11 @@ export class Battle {
     this.stage?.dispose();
     LOOK.uRimBoost.value = 1;
     const cam = this.world.camera;
-    cam.fov = this.baseFov;
+    cam.fov = this.worldFov;
     cam.updateProjectionMatrix();
+    for (const o of this.hiddenWorld) o.visible = true;
+    this.hiddenWorld.length = 0;
+    if (this.flat) { SPRITE_FLAT.on = false; this.world.pipeline.grade.setOverride(null); }
     for (const u of this.units) this.world.scene.remove(u.rig.root);
     this.vfx.clear();
     this.world.scene.remove(this.vfx.group);

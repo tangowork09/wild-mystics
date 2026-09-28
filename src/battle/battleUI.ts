@@ -133,7 +133,7 @@ export class BattleUI {
       const c = h('div', `e-card${u.boss ? ' boss' : ''}${u.c.shiny ? ' shiny' : ''}`);
       c.style.setProperty('--el', el.color);
       c.style.setProperty('--rar', rar.color);
-      c.innerHTML = `<div class="e-top"><span class="glyph">${icon(u.sp.element)}</span><span class="nm">${u.c.shiny ? `<i class="shiny">${icon('sparkles')}</i>` : ''}${u.name}</span><span class="lv">Lv ${u.c.level}</span></div>
+      c.innerHTML = `${mysticFace(u.c.species, u.c.shiny, 50, '', 'e-cap')}<div class="e-top"><span class="glyph">${icon(u.sp.element)}</span><span class="nm">${u.c.shiny ? `<i class="shiny">${icon('sparkles')}</i>` : ''}${u.name}</span><span class="lv">Lv ${u.c.level}</span></div>
         <div class="bbar hp"><i></i><em></em></div><div class="bbar brk" title="Break"><i></i></div><div class="st"></div>`;
       c.addEventListener('click', () => this.pickClick?.(u));
       this.enemyBox.appendChild(c);
@@ -229,7 +229,7 @@ export class BattleUI {
           <div class="act-grid">
             <button class="act main atk" data-a="attack"><kbd>1</kbd><span class="act-ic">${icon('sword')}</span><b>Attack</b><small>+1 AP</small></button>
             <button class="act main skl" data-a="skills"><kbd>2</kbd><span class="act-ic">${icon('sparkles')}</span><b>Skills</b><small>Spend AP</small></button>
-            <button class="act main cap ${ctx.canCapture && orbs ? '' : 'off'}" data-a="capture"><kbd>3</kbd><span class="act-ic">${icon('orb')}</span><b>Capture</b><small class="tnum">${ctx.canCapture ? `${orbs} orbs` : 'Wild only'}</small></button>
+            <button class="act main capt ${ctx.canCapture && orbs ? '' : 'off'}" data-a="capture"><kbd>3</kbd><span class="act-ic">${icon('orb')}</span><b>Capture</b><small class="tnum">${ctx.canCapture ? `${orbs} orbs` : 'Wild only'}</small></button>
             <button class="act main itm ${items ? '' : 'off'}" data-a="items"><kbd>4</kbd><span class="act-ic">${icon('potion')}</span><b>Items</b><small class="tnum">${items} left</small></button>
           </div>
           <div class="act-row">

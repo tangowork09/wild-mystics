@@ -98,7 +98,7 @@ html.touch .tg { height: 40px; padding: 0 13px; }
 .act-ic { grid-row: 1 / span 2; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: var(--ink-0); background: var(--paper); border: 1.5px solid var(--ink-0); }
 .act.atk .act-ic { background: var(--el-fire); }
 .act.skl .act-ic { background: var(--magenta); }
-.act.cap .act-ic { background: var(--coin); }
+.act.capt .act-ic { background: var(--coin); }
 .act.itm .act-ic { background: var(--good); }
 .act b { font: 800 var(--fs-m)/1.1 var(--font-ui); }
 .act small { font: 700 var(--fs-2xs)/1.1 var(--font-ui); color: var(--muted); }

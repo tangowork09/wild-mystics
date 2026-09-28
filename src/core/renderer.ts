@@ -110,6 +110,7 @@ const GRADE_FRAG = /* glsl */ `
   uniform float contrast;
   uniform vec3 lift;
   uniform vec3 gain;
+  uniform float bypass; // v3: painted 2D battles keep the art's own colours (0 = full grade, 1 = none)
 
   vec3 agxContrast(vec3 x) {
     vec3 x2 = x * x;
@@ -152,7 +153,8 @@ const GRADE_FRAG = /* glsl */ `
     vec3 d = pow(c, vec3(1.0 / 2.2));
     d = (d - 0.5) * contrast + 0.5;
     d = d * gain + lift * (1.0 - d);
-    outputColor = vec4(pow(clamp(d, 0.0, 1.0), vec3(2.2)), inputColor.a);
+    vec3 graded = pow(clamp(d, 0.0, 1.0), vec3(2.2));
+    outputColor = vec4(mix(graded, clamp(inputColor.rgb, 0.0, 1.0), bypass), inputColor.a);
   }
 `;
 
@@ -169,11 +171,21 @@ export class GradeEffect extends Effect {
         ['saturation', new THREE.Uniform(1.1)], ['vibrance', new THREE.Uniform(0.2)],
         ['shadowTint', new THREE.Uniform(new THREE.Color(1, 1, 1))], ['highTint', new THREE.Uniform(new THREE.Color(1, 1, 1))],
         ['lookPower', new THREE.Uniform(1.2)], ['lookSat', new THREE.Uniform(1.15)], ['contrast', new THREE.Uniform(1.05)],
-        ['lift', new THREE.Uniform(new THREE.Color(0, 0, 0))], ['gain', new THREE.Uniform(new THREE.Color(1, 1, 1))],
+        ['lift', new THREE.Uniform(new THREE.Color(0, 0, 0))], ['gain', new THREE.Uniform(new THREE.Color(1, 1, 1))], ['bypass', new THREE.Uniform(0)],
       ]),
     });
   }
+  /** Values that win over whatever the sky asks for (2D battles), or null. */
+  override: Partial<GradeParams> & { bypass?: number } | null = null;
   set(p: Partial<GradeParams>) {
+    this.apply(p);
+    if (this.override) this.apply(this.override);
+  }
+  setOverride(o: Partial<GradeParams> & { bypass?: number } | null) {
+    this.override = o;
+    if (o) this.apply(o); else this.apply({ bypass: 0 } as Partial<GradeParams>);
+  }
+  private apply(p: Partial<GradeParams> & { bypass?: number }) {
     for (const [k, v] of Object.entries(p)) {
       const u = this.uniforms.get(k);
       if (!u) continue;

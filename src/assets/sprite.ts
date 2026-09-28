@@ -64,7 +64,11 @@ function blobTexture() {
 // ── scene light probe: tint unlit sprites like the world around them ──────
 const _c = new THREE.Color();
 const lightCache = new WeakMap<THREE.Object3D, { sun: THREE.DirectionalLight | null; hemi: THREE.HemisphereLight | null }>();
+/** v3: painted 2D battles light sprites flat (their painted shading is the lighting). */
+export const SPRITE_FLAT = { on: false };
+
 function sceneLight(scene: THREE.Scene, out: THREE.Color, rimOut: THREE.Color): number {
+  if (SPRITE_FLAT.on) { out.setRGB(1, 1, 1); rimOut.setRGB(0.4, 0.38, 0.34); return 1; }
   let l = lightCache.get(scene);
   if (!l || (l.sun && !l.sun.parent) || (l.hemi && !l.hemi.parent)) {
     let sun: THREE.DirectionalLight | null = null, hemi: THREE.HemisphereLight | null = null;
