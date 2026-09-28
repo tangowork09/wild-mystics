@@ -465,10 +465,11 @@ export function debugStory(stage: string) {
     if (!isDone(id)) state.quests.done.push(id);
   };
   const beat = (...zones: string[]) => { for (const z of zones) if (!state.bosses.includes(z)) { state.bosses.push(z); emit('boss_win', { zone: z }); } };
-  if (stage === 'tutorial') { syncQuests(); save(); return; }
+  const done = () => { syncQuests(); takePendingBeats(); save(); }; // debug jumps skip the queued story dialog
+  if (stage === 'tutorial') { done(); return; }
   finish('ch1_first_steps');
   for (const f of ['board', 'merchant']) if (!state.story.features.includes(f)) state.story.features.push(f);
-  if (stage === 'ch1') { syncQuests(); save(); return; }
+  if (stage === 'ch1') { done(); return; }
   finish('ch1_first_bond');
   if (!state.story.features.includes('bounties')) state.story.features.push('bounties');
   beat('vale');
@@ -477,8 +478,8 @@ export function debugStory(stage: string) {
     for (const id of ['ch4_marsh', 'ch5_scar', 'ch6_elder', 'ch7_dunes', 'ch8_peaks', 'ch9_hollows']) finish(id);
     beat('marsh', 'scar', 'elder', 'dunes', 'peaks', 'hollows');
   }
-  syncQuests();
-  save();
+  done();
+  moments.length = 0;
 }
 
 // ── wiring ────────────────────────────────────────────────────────────────────

@@ -30,12 +30,13 @@ void main(){
   float shimmer = 0.55 + 0.45 * sin(uTime * 2.3 + uv.x * 18.0 + uv.y * 6.0);
   float edge = smoothstep(0.0, 0.08, uv.x) * smoothstep(1.0, 0.92, uv.x);
   float top = smoothstep(1.0, 0.55, uv.y);
-  float a = (0.16 + glyph * 0.8 + bars) * shimmer * edge * top;
+  float base = 0.26 + 0.18 * smoothstep(0.35, 0.0, uv.y);
+  float a = (base + glyph * 0.9 + bars) * (0.75 + 0.25 * shimmer) * edge * top;
   // opening: dissolve from the ground up with a bright rim
   float cut = uOpen * 1.25 - uv.y;
   float rim = smoothstep(0.0, 0.06, cut) * smoothstep(0.16, 0.06, cut) * step(0.001, uOpen);
   a *= 1.0 - smoothstep(0.0, 0.05, cut);
-  vec3 col = uColor * (1.2 + glyph * 1.8) + vec3(1.0) * rim * 2.5;
+  vec3 col = uColor * (1.35 + glyph * 2.2) + vec3(1.0) * rim * 2.5;
   gl_FragColor = vec4(col, clamp(a + rim, 0.0, 1.0));
 }`;
 
@@ -119,7 +120,7 @@ export class GateBarriers {
     }
     // the rune curtain
     const mat = new THREE.ShaderMaterial({
-      vertexShader: CURTAIN_VERT, fragmentShader: CURTAIN_FRAG, transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+      vertexShader: CURTAIN_VERT, fragmentShader: CURTAIN_FRAG, transparent: true, depthWrite: false, side: THREE.DoubleSide,
       uniforms: { uColor: { value: color.clone() }, uTime: { value: 0 }, uOpen: { value: 0 } },
     });
     const curtain = new THREE.Mesh(new THREE.PlaneGeometry(width, 9, 1, 1), mat);
