@@ -170,7 +170,7 @@ const B: Record<AccKind, (o: AccSpec) => Parts> = {
     const parts: Parts = [];
     for (const s of [-1, 1]) {
       const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(s * 0.3, 0, 0), new THREE.Vector3(s * 0.62, 0.42, -0.12), new THREE.Vector3(s * 0.7, 0.9, -0.42), new THREE.Vector3(s * 0.5, 1.2, -0.62)]);
-      parts.push(gradient(taper(curve, 0.16, 0.012, 12, 7), c2, c));
+      parts.push(gradient(taper(curve, 0.22, 0.02, 12, 8), c2, c));
     }
     return parts;
   },
@@ -294,34 +294,51 @@ const B: Record<AccKind, (o: AccSpec) => Parts> = {
 const ANCHOR_BONES: Record<Anchor, RegExp[]> = {
   headTop: [/^head$/i, /^head\b/i, /head/i, /neck3|neck/i],
   head: [/^head$/i, /head/i, /neck/i],
-  back: [/^(torso|chest|spine2|spine3|back)$/i, /torso|chest|spine|back/i, /^body$/i, /body|hips/i],
+  back: [/^torso$/i, /^(chest|spine2|spine3|torso2)$/i, /^back$/i, /torso|chest|spine/i, /^body$/i, /body|hips/i],
   chest: [/^neck1$|^neck$/i, /neck/i, /^(torso|chest)$/i, /torso|chest/i],
-  tail: [/tail3|tail2|tail$/i, /tail/i],
+  tail: [/tail/i],
   root: [],
 };
+/** Bones that stick out of a region (ears, horns, limbs…) and would lift an anchor off the body. */
+const APPENDAGE = /ear|horn|antler|jaw|mouth|tongue|tail|leg|arm|wing|hand|finger|thumb|index|middle|pinky|foot|toe|shoulder|pole|ik|ff/i;
 
 interface Region { bone: THREE.Bone | null; top: THREE.Vector3; center: THREE.Vector3; size: THREE.Vector3 }
-const regionCache = new Map<string, Region | null>();
+/** Cached per model, in units of the rig's height (so every species sharing a model reuses it). */
+const regionCache = new Map<string, { top: THREE.Vector3; center: THREE.Vector3; size: THREE.Vector3 } | null>();
 
-function findBone(root: THREE.Object3D, pats: RegExp[]): THREE.Bone | null {
+function allBones(root: THREE.Object3D) {
   const bones: THREE.Bone[] = [];
   root.traverse((o) => { if ((o as THREE.Bone).isBone) bones.push(o as THREE.Bone); });
-  for (const p of pats) { const b = bones.find((x) => p.test(x.name)); if (b) return b; }
+  return bones;
+}
+function findBone(root: THREE.Object3D, anchor: Anchor): THREE.Bone | null {
+  const bones = allBones(root);
+  if (anchor === 'tail') {
+    // the tail tip: the deepest bone named like a tail
+    let best: THREE.Bone | null = null, bd = -1;
+    for (const b of bones) {
+      if (!/tail/i.test(b.name)) continue;
+      let d = 0; for (let p = b.parent; p; p = p.parent) d++;
+      if (d > bd) { bd = d; best = b; }
+    }
+    return best;
+  }
+  for (const p of ANCHOR_BONES[anchor]) { const b = bones.find((x) => p.test(x.name)); if (b) return b; }
   return null;
 }
 
-/** Bounding box (rig-root space) of the vertices a bone (and its children) drive, in the rest pose. */
-function boneRegion(rig: THREE.Object3D, bone: THREE.Bone): THREE.Box3 | null {
+/** Bounding box (rig-root space, rest pose) of the vertices a bone drives (its body, not its appendages). */
+function boneRegion(rig: THREE.Object3D, bone: THREE.Bone, anchor: Anchor): THREE.Box3 | null {
   const box = new THREE.Box3();
   const v = new THREE.Vector3();
   const inv = new THREE.Matrix4().copy(rig.matrixWorld).invert();
-  const sub = new Set<THREE.Object3D>();
-  bone.traverse((o) => sub.add(o));
+  const set = new Set<THREE.Object3D>([bone]);
+  if (anchor === 'headTop' || anchor === 'head') bone.traverse((o) => { if (o !== bone && !APPENDAGE.test(o.name)) set.add(o); });
   rig.traverse((o) => {
     const s = o as THREE.SkinnedMesh;
-    if (!s.isSkinnedMesh || s.userData.wmOutline) return;
+    if (!s.isSkinnedMesh || s.userData.wmOutline || s.userData.wmFx) return;
     const idx = new Set<number>();
-    s.skeleton.bones.forEach((b, i) => { if (sub.has(b)) idx.add(i); });
+    s.skeleton.bones.forEach((b, i) => { if (set.has(b)) idx.add(i); });
     if (!idx.size) return;
     const si = s.geometry.getAttribute('skinIndex'), sw = s.geometry.getAttribute('skinWeight');
     const n = s.geometry.getAttribute('position').count;
@@ -338,50 +355,61 @@ function boneRegion(rig: THREE.Object3D, bone: THREE.Bone): THREE.Box3 | null {
 }
 
 export function anchorOf(rig: THREE.Object3D, height: number, anchor: Anchor, cacheKey?: string): Region {
-  const key = cacheKey ? `${cacheKey}|${anchor}` : '';
   rig.updateMatrixWorld(true);
-  const all = new THREE.Box3();
-  rig.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && !m.userData.wmOutline && !m.userData.wmFx) all.union(new THREE.Box3().setFromObject(m)); });
-  const inv = new THREE.Matrix4().copy(rig.matrixWorld).invert();
-  all.applyMatrix4(inv);
+  const bone = anchor === 'root' ? null : findBone(rig, anchor);
+  const key = cacheKey ? `${cacheKey}|${anchor}` : '';
   const fallback = (): Region => {
-    const c = all.getCenter(new THREE.Vector3()), s = all.getSize(new THREE.Vector3());
-    const top = anchor === 'root' ? new THREE.Vector3(c.x, 0, c.z) : anchor === 'tail' ? new THREE.Vector3(c.x, c.y, all.min.z) : anchor === 'back' ? new THREE.Vector3(c.x, all.max.y * 0.92, c.z - s.z * 0.1) : new THREE.Vector3(c.x, all.max.y, c.z + s.z * (anchor === 'chest' ? 0.3 : 0.2));
-    return { bone: null, top, center: c, size: s };
+    const all = new THREE.Box3();
+    rig.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && !m.userData.wmOutline && !m.userData.wmFx) all.union(new THREE.Box3().setFromObject(m)); });
+    all.applyMatrix4(new THREE.Matrix4().copy(rig.matrixWorld).invert());
+    const c = all.getCenter(new THREE.Vector3()), sz = all.getSize(new THREE.Vector3());
+    const top = anchor === 'root' ? new THREE.Vector3(c.x, 0, c.z) : anchor === 'tail' ? new THREE.Vector3(c.x, c.y, all.min.z) : anchor === 'back' ? new THREE.Vector3(c.x, all.max.y * 0.9, c.z - sz.z * 0.12) : new THREE.Vector3(c.x, all.max.y, c.z + sz.z * (anchor === 'chest' ? 0.3 : 0.18));
+    return { bone: null, top, center: c, size: sz };
   };
-  if (anchor === 'root') return fallback();
-  const cached = key ? regionCache.get(key) : undefined;
-  const bone = findBone(rig, ANCHOR_BONES[anchor]);
   if (!bone) return fallback();
-  if (cached !== undefined) return cached ? { ...cached, bone } : fallback();
-  const box = boneRegion(rig, bone);
-  if (!box) { if (key) regionCache.set(key, null); return fallback(); }
-  const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
-  let top: THREE.Vector3;
-  if (anchor === 'headTop' || anchor === 'back') top = new THREE.Vector3(c.x, box.max.y, c.z);
-  else if (anchor === 'tail') top = new THREE.Vector3(c.x, c.y, box.min.z);
-  else if (anchor === 'chest') top = new THREE.Vector3(c.x, c.y - s.y * 0.25, box.max.z);
-  else top = c.clone();
-  const reg = { bone, top, center: c, size: s };
-  if (key) regionCache.set(key, { ...reg, bone: null });
-  void height;
-  return reg;
+  const hit = key ? regionCache.get(key) : undefined;
+  if (hit === null) return fallback();
+  if (hit) return { bone, top: hit.top.clone().multiplyScalar(height), center: hit.center.clone().multiplyScalar(height), size: hit.size.clone().multiplyScalar(height) };
+  let top: THREE.Vector3, center: THREE.Vector3, size: THREE.Vector3;
+  if (anchor === 'tail') {
+    center = bone.getWorldPosition(new THREE.Vector3()).applyMatrix4(new THREE.Matrix4().copy(rig.matrixWorld).invert());
+    top = center.clone();
+    size = new THREE.Vector3(0.1, 0.1, 0.1).multiplyScalar(height);
+  } else {
+    const box = boneRegion(rig, bone, anchor);
+    if (!box) { if (key) regionCache.set(key, null); return fallback(); }
+    center = box.getCenter(new THREE.Vector3());
+    size = box.getSize(new THREE.Vector3());
+    if (anchor === 'headTop' || anchor === 'back') top = new THREE.Vector3(center.x, box.max.y, center.z);
+    else if (anchor === 'chest') top = new THREE.Vector3(center.x, center.y - size.y * 0.25, box.max.z);
+    else top = center.clone();
+  }
+  if (key) regionCache.set(key, { top: top.clone().divideScalar(height), center: center.clone().divideScalar(height), size: size.clone().divideScalar(height) });
+  return { bone, top, center, size };
 }
 
 // ── FX pieces (additive, not toon) ──────────────────────────────────────────
 const FLAME_VERT = /* glsl */`
-uniform float uTime; varying vec2 vUv; varying float vH;
-void main(){ vUv = uv; vec3 p = position; float h = clamp(p.y, 0.0, 1.0); vH = h;
-  p.x += sin(uTime * 9.0 + p.y * 6.0) * 0.08 * h; p.z += cos(uTime * 7.0 + p.y * 5.0) * 0.08 * h;
-  p.xz *= 1.0 + sin(uTime * 13.0) * 0.05; gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }`;
+uniform float uTime; varying float vH; varying float vF;
+void main(){ vec3 p = position; float h = clamp(p.y, 0.0, 1.0); vH = h;
+  p.x += sin(uTime * 9.0 + p.y * 6.0) * 0.1 * h; p.z += cos(uTime * 7.0 + p.y * 5.0) * 0.1 * h;
+  p.xz *= 1.0 + sin(uTime * 13.0 + p.y * 3.0) * 0.08;
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
+  vec3 n = normalize(normalMatrix * normal);
+  vF = abs(dot(n, normalize(-mv.xyz)));
+  gl_Position = projectionMatrix * mv; }`;
 const FLAME_FRAG = /* glsl */`
-uniform float uTime; uniform vec3 uA; uniform vec3 uB; varying vec2 vUv; varying float vH;
-void main(){ float fl = 0.75 + 0.25 * sin(uTime * 17.0 + vUv.x * 20.0); float a = (1.0 - vH) * fl;
-  vec3 c = mix(uB, uA, vH) * (1.6 - vH); gl_FragColor = vec4(c * a * 2.2, a); }`;
+uniform float uTime; uniform vec3 uA; uniform vec3 uB; varying float vH; varying float vF;
+void main(){ float fl = 0.8 + 0.2 * sin(uTime * 17.0 + vH * 20.0);
+  float a = pow(vF, 1.6) * smoothstep(1.0, 0.55, vH) * smoothstep(0.0, 0.12, vH) * fl;
+  vec3 c = mix(uB, uA, vF * (1.0 - vH * 0.6)) * 2.6;
+  gl_FragColor = vec4(c * a, a); }`;
 
 function flameFx(o: AccSpec) {
-  const g = new THREE.ConeGeometry(0.35, 1, 10, 6, true);
-  g.translate(0, 0.5, 0);
+  // teardrop body; the shader fades its rim so it reads as fire, not a cone
+  const prof: THREE.Vector2[] = [];
+  for (let i = 0; i <= 12; i++) { const t = i / 12; prof.push(new THREE.Vector2(Math.sin(Math.pow(t, 0.7) * Math.PI) * 0.34 * (1 - t * 0.55) + 0.001, t)); }
+  const g = new THREE.LatheGeometry(prof, 14);
   const m = new THREE.ShaderMaterial({
     uniforms: { uTime: LOOK.uTime, uA: { value: new THREE.Color(o.c ?? '#ffcf5a') }, uB: { value: new THREE.Color(o.c2 ?? '#ff4a1a') } },
     vertexShader: FLAME_VERT, fragmentShader: FLAME_FRAG, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
@@ -401,6 +429,7 @@ function orbitFx(o: AccSpec, look: Look) {
   for (let i = 0; i < n; i++) {
     const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true }));
     m.userData.orbit = i / n;
+    m.userData.wmKeepColor = true;
     grp.add(m);
     look.adopt(m);
   }

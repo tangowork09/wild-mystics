@@ -48,7 +48,10 @@ export interface RigUniforms {
   /** Emissive strength of baked glow parts (eyes, lures, crystals). */
   uPartGlow: { value: number };
   uTintHSL: { value: THREE.Vector3 };
+  /** 0 off · 1 recolour saturated parts · 2 recolour greys too (stone / bone / white fur). */
   uTintAmt: { value: number };
+  /** How far lightness moves toward the tint (0.15 keeps the original shading, ~0.7 repaints). */
+  uTintL: { value: number };
   uHueShift: { value: number };
   uShiny: { value: number };
   uFlash: { value: number };
@@ -58,6 +61,9 @@ export interface RigUniforms {
   uFade: { value: number };
   uGloss: { value: number };
   uOutlineDark: { value: number };
+  /** Static meshes (jellyfish, octopus): tentacle sway amplitude (local units) and the local-Y band it fades over. */
+  uSway: { value: number };
+  uSwayY: { value: THREE.Vector2 };
 }
 
 export function makeRigUniforms(): RigUniforms {
@@ -71,6 +77,7 @@ export function makeRigUniforms(): RigUniforms {
     uPartGlow: { value: 1.6 },
     uTintHSL: { value: new THREE.Vector3() },
     uTintAmt: { value: 0 },
+    uTintL: { value: 0.15 },
     uHueShift: { value: 0 },
     uShiny: { value: 0 },
     uFlash: { value: 0 },
@@ -80,6 +87,8 @@ export function makeRigUniforms(): RigUniforms {
     uFade: { value: 1 },
     uGloss: { value: 0.45 },
     uOutlineDark: { value: 0.2 },
+    uSway: { value: 0 },
+    uSwayY: { value: new THREE.Vector2(1, -1) },
   };
 }
 
@@ -88,7 +97,18 @@ const GLSL_COMMON = /* glsl */`
 uniform float uTime;
 uniform vec3 uTintHSL;
 uniform float uTintAmt;
+uniform float uTintL;
 uniform float uHueShift;
+uniform float uSway;
+uniform vec2 uSwayY;
+vec3 wmSway(vec3 p) {
+  if (uSway <= 0.0) return p;
+  float k = clamp((uSwayY.x - p.y) / max(1e-3, uSwayY.x - uSwayY.y), 0.0, 1.0);
+  k *= k;
+  p.x += sin(uTime * 2.1 + p.y * 5.0 + p.z * 2.0) * uSway * k;
+  p.z += cos(uTime * 1.7 + p.y * 4.0 + p.x * 2.0) * uSway * k;
+  return p;
+}
 vec3 wmRgb2Hsl(vec3 c) {
   float mx = max(max(c.r, c.g), c.b), mn = min(min(c.r, c.g), c.b);
   float l = (mx + mn) * 0.5;
@@ -117,10 +137,14 @@ vec3 wmHsl2Rgb(vec3 hsl) {
 // Regional tint (pulls saturated body colours to a hue, keeps eyes/teeth) and the shiny hue shift.
 // Linear-space HSL, matching the v2 CPU recolour so existing variant tints read the same.
 vec3 wmStyle(vec3 c) {
+  #ifdef WM_NOTINT
+  return c;
+  #endif
   if (uTintAmt < 0.5 && abs(uHueShift) < 0.001) return c;
   vec3 hsl = wmRgb2Hsl(c);
-  if (uTintAmt > 0.5 && hsl.y > 0.12 && hsl.z > 0.08 && hsl.z < 0.92) {
-    hsl = vec3(uTintHSL.x, min(1.0, (hsl.y + uTintHSL.y) * 0.5 + 0.05), hsl.z * 0.85 + uTintHSL.z * 0.15);
+  bool tintable = uTintAmt > 1.5 ? (hsl.z > 0.012 && hsl.z < 0.97) : (uTintAmt > 0.5 && hsl.y > 0.12 && hsl.z > 0.025 && hsl.z < 0.92);
+  if (tintable) {
+    hsl = vec3(uTintHSL.x, min(1.0, (max(hsl.y, uTintAmt > 1.5 ? uTintHSL.y * 0.8 : 0.0) + uTintHSL.y) * 0.5 + 0.05), mix(hsl.z, uTintHSL.z, uTintL));
   }
   if (abs(uHueShift) > 0.001 && hsl.y > 0.08) { hsl.x = fract(hsl.x + uHueShift); hsl.y = min(1.0, hsl.y + 0.1); hsl.z = min(1.0, hsl.z * 1.06 + 0.01); }
   return wmHsl2Rgb(hsl);
@@ -238,7 +262,7 @@ function patchToon(sh: THREE.WebGLProgramParametersWithUniforms, U: RigUniforms)
   Object.assign(sh.uniforms, LOOK, U);
   sh.vertexShader = sh.vertexShader
     .replace('#include <common>', `#include <common>\nattribute vec4 aSmooth;\nvarying vec3 vObjPos;\nvarying float vGlow;\n${GLSL_COMMON}`)
-    .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObjPos = position;\nvGlow = max( aSmooth.w, 0.0 );')
+    .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObjPos = position;\nvGlow = max( aSmooth.w, 0.0 );\ntransformed = wmSway( transformed );')
     .replace('#include <color_vertex>', '#include <color_vertex>\n#if defined( USE_COLOR ) && !defined( USE_MAP )\nvColor.rgb = wmStyle( vColor.rgb );\n#endif');
   sh.fragmentShader = sh.fragmentShader
     .replace('#include <common>', `#include <common>\n${GLSL_COMMON}\n${FRAG_PARS}`)
@@ -249,10 +273,12 @@ function patchToon(sh: THREE.WebGLProgramParametersWithUniforms, U: RigUniforms)
 }
 
 /** One stylised material for a rig part; `U` is shared by every material of the same rig. */
-export function toonMaterial(U: RigUniforms, o: { map?: THREE.Texture | null; vertexColors?: boolean; color?: THREE.ColorRepresentation; side?: THREE.Side } = {}) {
+export function toonMaterial(U: RigUniforms, o: { map?: THREE.Texture | null; vertexColors?: boolean; color?: THREE.ColorRepresentation; side?: THREE.Side; noTint?: boolean } = {}) {
   const m = new THREE.MeshToonMaterial({ color: o.color ?? '#ffffff', map: o.map ?? null, vertexColors: !!o.vertexColors, side: o.side ?? THREE.FrontSide });
   m.onBeforeCompile = (sh) => patchToon(sh, U);
-  m.customProgramCacheKey = () => 'wm-toon-3';
+  // accessories keep their authored colours (a gold crown stays gold on a tinted or shiny Mystic)
+  if (o.noTint) m.defines = { WM_NOTINT: '' };
+  m.customProgramCacheKey = () => (o.noTint ? 'wm-toon-4nt' : 'wm-toon-4');
   m.userData.wmToon = true;
   return m;
 }
@@ -277,7 +303,7 @@ void main() {
   if ( dot( objectNormal, objectNormal ) < 0.01 ) objectNormal = normal;
   #include <skinbase_vertex>
   #include <skinnormal_vertex>
-  vec3 transformed = vec3( position );
+  vec3 transformed = wmSway( vec3( position ) );
   vObjPos = position;
   #include <skinning_vertex>
   vec4 mvPosition = modelViewMatrix * vec4( transformed, 1.0 );
@@ -313,9 +339,10 @@ void main() {
 }
 `;
 
-export function outlineMaterial(U: RigUniforms, ink: THREE.Color, vertexColors: boolean) {
+export function outlineMaterial(U: RigUniforms, ink: THREE.Color, vertexColors: boolean, noTint = false) {
   const m = new THREE.ShaderMaterial({
-    uniforms: { ...THREE.UniformsUtils.clone(THREE.UniformsLib.fog), ...LOOK, uTintHSL: U.uTintHSL, uTintAmt: U.uTintAmt, uHueShift: U.uHueShift, uFade: U.uFade, uDissolve: U.uDissolve, uOutlineDark: U.uOutlineDark, uInk: { value: ink } },
+    defines: noTint ? { WM_NOTINT: '' } : {},
+    uniforms: { ...THREE.UniformsUtils.clone(THREE.UniformsLib.fog), ...LOOK, uTintHSL: U.uTintHSL, uTintAmt: U.uTintAmt, uTintL: U.uTintL, uHueShift: U.uHueShift, uFade: U.uFade, uDissolve: U.uDissolve, uOutlineDark: U.uOutlineDark, uSway: U.uSway, uSwayY: U.uSwayY, uInk: { value: ink } },
     vertexShader: OUTLINE_VERT,
     fragmentShader: OUTLINE_FRAG,
     side: THREE.BackSide,
@@ -553,6 +580,9 @@ export interface LookOptions {
   element2?: Element;
   tint?: string;
   tintGlow?: string;
+  /** Recolour greys too (stone, bone, white fur), and how strongly lightness follows the tint. */
+  tintAll?: boolean;
+  tintL?: number;
   shiny?: boolean;
   /** Draw inverted-hull outlines (off on the low tier). */
   outline?: boolean;
@@ -595,7 +625,8 @@ export class Look {
       const h = { h: 0, s: 0, l: 0 };
       t.getHSL(h);
       U.uTintHSL.value.set(h.h, h.s, h.l);
-      U.uTintAmt.value = 1;
+      U.uTintAmt.value = opts.tintAll ? 2 : 1;
+      if (opts.tintL !== undefined) U.uTintL.value = opts.tintL;
     }
     if (opts.shiny) { U.uShiny.value = 1; U.uHueShift.value = 0.42; U.uRimAmt.value = 1.15; }
     if (opts.gloss !== undefined) U.uGloss.value = opts.gloss;
@@ -614,7 +645,8 @@ export class Look {
     const src = m.material as THREE.MeshStandardMaterial;
     const vertexColors = !!m.geometry.getAttribute('color') && (src.vertexColors ?? true);
     ensureSmooth(m.geometry);
-    const mat = toonMaterial(this.U, { map: src.map ?? null, vertexColors, color: vertexColors ? '#ffffff' : src.color ?? '#ffffff', side: src.side });
+    const noTint = !!m.userData.wmKeepColor;
+    const mat = toonMaterial(this.U, { map: src.map ?? null, vertexColors, color: vertexColors ? '#ffffff' : src.color ?? '#ffffff', side: src.side, noTint });
     if (!vertexColors && src.color && !m.userData.wmPrepared && !m.userData.wmKeepColor) normalizeColor(mat.color);
     if (!vertexColors && (src.emissiveIntensity ?? 0) > 0.5 && src.emissive && src.emissive.getHex() !== 0) { mat.emissive.copy(src.emissive).multiplyScalar(Math.min(2.5, src.emissiveIntensity)); }
     m.material = mat;
@@ -623,7 +655,7 @@ export class Look {
     const skinned = (m as THREE.SkinnedMesh).isSkinnedMesh === true;
     if (m.userData.wmDouble || src.side === THREE.DoubleSide || m.userData.wmNoOutline) return;
     ensureSmooth(m.geometry);
-    const om = outlineMaterial(this.U, ink, vertexColors);
+    const om = outlineMaterial(this.U, ink, vertexColors, noTint);
     let o: THREE.Mesh;
     if (skinned) {
       const sm = m as THREE.SkinnedMesh;

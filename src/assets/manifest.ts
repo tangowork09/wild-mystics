@@ -162,7 +162,10 @@ function rigFromGltf(entry: ModelEntry, fallbackHeight: number, heightMul = 1): 
   model.scale.setScalar(s);
   model.position.y = -box.min.y * s;
   model.rotation.y = entry.rotY ?? 0;
-  root.add(model);
+  // v3: a pivot between root and model carries procedural motion (static meshes, missing one-shot clips)
+  const pivot = new THREE.Group();
+  root.add(pivot);
+  pivot.add(model);
 
   const mixer = new THREE.AnimationMixer(model);
   const actions = new Map<AnimName, THREE.AnimationAction | null>();
@@ -183,6 +186,44 @@ function rigFromGltf(entry: ModelEntry, fallbackHeight: number, heightMul = 1): 
   let rest: AnimName = 'idle';
   let oneShot = false;
   let dead = false;
+  const isStatic = clips.length === 0;
+  const style = (entry as ModelEntry & { rig?: string }).rig ?? 'ground';
+  let pt = Math.random() * 10;
+  let act: { name: AnimName; t: number; dur: number } | null = null;
+  const H = targetH;
+  const procedural = (name: AnimName) => {
+    const dur = name === 'faint' ? 0.9 : name === 'attack' ? 0.42 : name === 'hit' ? 0.32 : name === 'victory' ? 0.7 : 0.55;
+    act = { name, t: 0, dur };
+  };
+  const tickProcedural = (dt: number, moving: number) => {
+    pt += dt;
+    let px = 0, py = 0, pz = 0, rx = 0, rz = 0, sx = 1, sy = 1;
+    if (isStatic) {
+      if (style === 'flyer') { py = Math.sin(pt * 1.6) * 0.05 * H; const pulse = Math.sin(pt * 2.4); sy = 1 + pulse * 0.06; sx = 1 - pulse * 0.04; }
+      else { const br = Math.sin(pt * 2.0); sy = 1 + br * 0.022; sx = 1 - br * 0.012; }
+      if (moving > 0.05) {
+        const ph = pt * (6 + moving * 6);
+        py += Math.abs(Math.sin(ph)) * 0.06 * H * Math.min(1, moving * 1.5);
+        rz = Math.sin(ph) * 0.08 * moving;
+        rx = 0.06 * moving;
+      }
+    }
+    if (act) {
+      act.t += dt;
+      const p = Math.min(1, act.t / act.dur), k = Math.sin(p * Math.PI);
+      switch (act.name) {
+        case 'attack': pz += k * 0.32 * H; rx += k * 0.22; sy *= 1 - k * 0.08; break;
+        case 'hit': pz -= k * 0.16 * H; rx -= k * 0.18; sx *= 1 + k * 0.1; sy *= 1 - k * 0.1; break;
+        case 'faint': rz = p * 1.35; py -= p * 0.1 * H; break;
+        default: py += Math.abs(Math.sin(p * Math.PI * (act.name === 'victory' ? 2 : 1))) * 0.2 * H; sx *= 1 + k * 0.05; sy *= 1 + k * 0.07;
+      }
+      if (p >= 1 && act.name !== 'faint') act = null;
+    }
+    pivot.position.set(0, py, pz);
+    pivot.position.x = px;
+    pivot.rotation.set(rx, 0, rz);
+    pivot.scale.set(sx, sy, sx);
+  };
 
   const fadeTo = (a: THREE.AnimationAction | null, once: boolean, fade = 0.18) => {
     if (!a) return false;
@@ -208,8 +249,9 @@ function rigFromGltf(entry: ModelEntry, fallbackHeight: number, heightMul = 1): 
     height: targetH,
     has: (name) => !!get(name),
     play(name) {
-      if (name === 'faint') { dead = true; fadeTo(get('faint'), true, 0.12); return; }
+      if (name === 'faint') { dead = true; if (!fadeTo(get('faint'), true, 0.12)) procedural('faint'); return; }
       if (name === 'idle' || name === 'graze') {
+        if (act?.name === 'faint') act = null;
         dead = false;
         rest = name === 'graze' && get('graze') ? 'graze' : 'idle';
         if (!oneShot && loop !== 'run' && loop !== 'walk') { loop = rest; fadeTo(get(rest), false, 0.35); }
@@ -221,9 +263,12 @@ function rigFromGltf(entry: ModelEntry, fallbackHeight: number, heightMul = 1): 
         if (!oneShot) fadeTo(get(name) ?? get('run'), false);
         return;
       }
-      if (!fadeTo(get(name), true, 0.1) && name === 'cast') fadeTo(get('attack'), true, 0.1);
+      if (!fadeTo(get(name), true, 0.1) && !(name === 'cast' && fadeTo(get('attack'), true, 0.1))) {
+        if (name === 'attack' || name === 'hit' || name === 'cast' || name === 'victory' || name === 'jump') procedural(name);
+      }
     },
     update(dt, moving) {
+      tickProcedural(dt, moving);
       if (!dead && !oneShot) {
         const want: AnimName = moving > 0.6 ? 'run' : moving > 0.05 ? (get('walk') ? 'walk' : 'run') : rest;
         if (want !== loop) { loop = want; fadeTo(get(want) ?? get('run') ?? get('idle'), false); }
@@ -281,7 +326,21 @@ function decorate(r: Rig, model: THREE.Object3D, sp: Species, shiny: boolean, o:
 }
 
 function lookFor(sp: Species, shiny: boolean, info?: PreparedInfo) {
-  return { kind: 'creature' as const, element: sp.element, element2: sp.element2, tint: sp.tint, tintGlow: sp.tintGlow, shiny, outline: OUTLINES, gloss: info?.gloss };
+  return { kind: 'creature' as const, element: sp.element, element2: sp.element2, tint: sp.tint, tintGlow: sp.tintGlow, tintAll: sp.tintAll, tintL: sp.tintL, shiny, outline: OUTLINES, gloss: info?.gloss };
+}
+
+/** Static meshes with tentacles sway in the vertex shader (amplitude as a fraction of the mesh height). */
+const SWAY: Record<string, number> = { 'models/creatures/v3_jellyfish.glb': 0.06, 'models/creatures/v3_octopus.glb': 0.035 };
+function applySway(rig: Rig, model: string) {
+  const amt = SWAY[model];
+  if (!amt || !rig.look) return;
+  const b = rig.look.bodies[0];
+  if (!b) return;
+  b.geometry.computeBoundingBox();
+  const bb = b.geometry.boundingBox!;
+  const h = bb.max.y - bb.min.y;
+  rig.look.U.uSway.value = amt * h;
+  rig.look.U.uSwayY.value.set(bb.max.y - h * 0.3, bb.min.y);
 }
 
 export function makeCreatureRig(speciesId: string, shiny = false, opts: CreatureRigOptions = {}): Rig {
@@ -292,6 +351,7 @@ export function makeCreatureRig(speciesId: string, shiny = false, opts: Creature
     const r = rigFromGltf(entry, sp.height, mul);
     if (r) {
       r.rig.look = new Look(r.rig.root, lookFor(sp, shiny, r.info));
+      applySway(r.rig, entry.model);
       decorate(r.rig, r.model, sp, shiny, opts, `${entry.model}`);
       return r.rig;
     }
@@ -432,10 +492,22 @@ export function renderPortrait(speciesId: string, shiny = false, size = 192): st
     rig.root.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && !m.userData.wmFx && !m.userData.wmOutline) { if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).computeBoundingBox(); box.union(new THREE.Box3().setFromObject(m)); } });
     const bsz = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
-    const fov = THREE.MathUtils.degToRad(13);
-    const dist = Math.max(bsz.y * 1.02, bsz.x * 0.92, bsz.z * 0.6) / (2 * Math.tan(fov)) * 1.1;
-    pr.cam.position.set(center.x + dist * 0.08, center.y - bsz.y * 0.04, center.z + dist);
-    pr.cam.lookAt(center.x, center.y + bsz.y * 0.02, center.z);
+    // flat creatures (rays, fish, octopi) are seen from above; everything else from a slightly heroic low angle
+    const flat = bsz.y < 0.5 * Math.max(bsz.x, bsz.z);
+    const dir = new THREE.Vector3(0.1, flat ? 0.62 : -0.05, 1).normalize();
+    const corners: THREE.Vector3[] = [];
+    for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) corners.push(new THREE.Vector3(x, y, z));
+    let D = Math.max(bsz.x, bsz.y, bsz.z) * 3;
+    for (let it = 0; it < 4; it++) {
+      pr.cam.position.copy(center).addScaledVector(dir, D);
+      pr.cam.lookAt(center);
+      pr.cam.updateMatrixWorld(true);
+      let m = 0;
+      for (const c of corners) { const q = c.clone().project(pr.cam); m = Math.max(m, Math.abs(q.x), Math.abs(q.y)); }
+      D *= m / 0.94;
+    }
+    pr.cam.position.copy(center).addScaledVector(dir, D);
+    pr.cam.lookAt(center);
     pr.cam.updateMatrixWorld(true);
     // rim from the upper right of the frame, cool and bright; outlines a touch heavier than in-world
     rimOverride.dir = new THREE.Vector3(0.75, 0.55, -0.35).normalize();

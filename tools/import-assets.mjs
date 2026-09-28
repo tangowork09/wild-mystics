@@ -4,6 +4,10 @@
 // (or add a mapping here) — anything listed in the manifest replaces the placeholder.
 //
 //   node tools/import-assets.mjs
+//   node tools/import-assets.mjs --only=creatures [--regraze] [--force=<file,...>]
+//     v3: creature models only — keeps every other asset and manifest section untouched, writes only
+//     models that are new (or forced). --regraze re-imports the animal-pack models with their Eating clip.
+//   SCOUT_DIR=/path/to/.asset-scout overrides where the CC0 packs live (worktrees share one scout).
 
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
@@ -15,7 +19,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const SCOUT = path.join(ROOT, '.asset-scout');
+const SCOUT = process.env.SCOUT_DIR ?? path.join(ROOT, '.asset-scout');
+const ARG = (k) => process.argv.find((a) => a.startsWith(`--${k}`));
+const ONLY = ARG('only=')?.split('=')[1] ?? null;
+const FORCE = new Set((ARG('force=')?.split('=')[1] ?? '').split(',').filter(Boolean));
+const REGRAZE = !!ARG('regraze');
 const X = path.join(SCOUT, '_x'); // extraction scratch
 const OUT = path.join(ROOT, 'public/assets');
 await MeshoptEncoder.ready;
@@ -88,6 +96,7 @@ const R2_RULES = {
   cast: [/^spellcast_shoot$/i, /spell/i, /(^|_)shoot$/i, /^attack_kick$/i, /attack_?2$/i, /(^|_)yes$/i, /^swimming_impulse$/i, /^[a-z]*_?jump$/i, /jump_?to_?idle/i],
   victory: [/cheer/i, /(^|_)dance$/i, /victory/i, /thumbs_?up/i, /(^|_)wave$/i, /(^|_)yes$/i, /jump_?to_?idle/i, /^[a-z]*_?jump$/i, /^out_of_water$/i],
   jump: [/^jump$/i, /^[a-z]+_jump$/i, /^jump_full_short$/i, /jump_?to_?idle/i],
+  graze: [/^eating$/i, /^idle_?headlow$/i, /^idle_2_headlow$/i],
 };
 const HOP = 'Hop'; // looping copy of a jump clip, for farm critters that ship without walk/run clips
 /** Models that don't face +Z like the rest (checked with a head-on render of every round-2 species). */
@@ -117,6 +126,8 @@ function mapR2Anims(clips) {
     anims.walk = anims.run = HOP; // hop around instead of sliding in idle
   }
   const loops = new Set([anims.idle, anims.walk, anims.run].filter(Boolean));
+  const graze = pick(R2_RULES.graze, loops);
+  if (graze) { anims.graze = graze; loops.add(graze); }
   for (const k of ['attack', 'hit', 'faint', 'cast', 'victory', 'jump']) {
     const c = pick(R2_RULES[k], loops);
     if (c) anims[k] = c;
@@ -160,10 +171,21 @@ function r2Info(file) {
   return meta;
 }
 
+// v3 sources: the Quaternius Animated Animal Pack leftovers ('A:Deer') and the v3 scout's static creatures ('V3:owl.glb').
+const ANIMALS = path.join(SCOUT, 'creatures/glb_animals');
+const V3 = path.join(SCOUT, 'v3/creatures');
+const SRC = {
+  A: (name) => ({ file: path.join(ANIMALS, `${name}.glb`), meta: { pack: 'Quaternius Animated Animal Pack', rig: 'quadruped' } }),
+  V3: (name) => ({ file: path.join(V3, name), meta: { pack: 'v3 scout (static)', rig: V3_RIG[name] ?? 'ground' } }),
+};
+/** Static v3 meshes: how they move (procedural) and which way they face. */
+const V3_RIG = { 'jellyfish.glb': 'flyer', 'owl.glb': 'ground', 'golem.glb': 'biped', 'octopus.glb': 'ground', 'turtle_character.glb': 'quadruped' };
+const V3_ROT_Y = {};
+
 /** Optimise one round-2 model into public/assets and return its manifest fields. */
-async function importR2(file, rel) {
-  const meta = r2Info(file);
-  const doc = await io.read(path.join(R2, 'creatures', file));
+async function importR2(file, rel, src = null) {
+  const meta = src ? src.meta : r2Info(file);
+  const doc = await io.read(src ? src.file : path.join(R2, 'creatures', file));
   // A skinned mesh node's own transform is ignored when rendering (glTF spec; three binds with identity),
   // but the runtime's Box3 height measure still applies it to the skinned bounds. The Triceratops node is
   // tilted, which doubled its measured height and floated it off the ground, so neutralise it everywhere.
@@ -177,7 +199,8 @@ async function importR2(file, rel) {
   if (hopFrom) cloneClip(doc, hopFrom, HOP); // after optimise: shares the already-resampled keyframes
   await io.write(path.join(OUT, rel), doc);
   const rig = /fish/i.test(meta.pack) ? 'swimmer' : meta.rig;
-  return { rig, anims, ...(R2_ROT_Y[file] ? { rotY: R2_ROT_Y[file] } : {}) };
+  const rotY = R2_ROT_Y[file] ?? V3_ROT_Y[file];
+  return { rig, anims, ...(rotY ? { rotY } : {}) };
 }
 
 // ── 1. Creatures ──────────────────────────────────────────────────────────
@@ -209,13 +232,23 @@ async function creatures() {
     flyer: { idle: 'Flying_Idle', run: 'Fast_Flying', attack: 'Headbutt', hit: 'HitReact', faint: 'Death', cast: 'Yes', victory: 'Yes' },
   };
   const written = new Map();
+  // --only=creatures: reuse what is already on disk (same model → same clips/rig), write only new or forced files
+  const prevByModel = new Map(Object.values(PREV.creatures ?? {}).filter((e) => e.model).map((e) => [e.model, e]));
+  const GRAZERS = /^(Alpaca|Bull|Cow__382b3d4a|Donkey|Horse__d37dbc87|Husky|Shiba_Inu|Stag|White_Horse)/;
+  const reuse = (rel, file) => ONLY && fs.existsSync(path.join(OUT, rel)) && prevByModel.has(rel) && !FORCE.has(file) && !(REGRAZE && GRAZERS.test(file));
   for (const m of src.matchAll(re)) {
     const [, id, , height, model] = m;
-    if (model.startsWith('R2:')) {
-      const file = model.slice(3);
-      const rel = `models/creatures/r2_${file.replace(/\.glb$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '_')}.glb`;
+    const pre = model.match(/^(R2|A|V3):(.+)$/);
+    if (pre) {
+      const [, kind, file] = pre;
+      const slug = file.replace(/\.glb$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '_');
+      const rel = `models/creatures/${kind === 'R2' ? 'r2' : kind === 'A' ? 'a' : 'v3'}_${slug}.glb`;
+      if (!written.has(rel) && reuse(rel, file)) {
+        const e = prevByModel.get(rel);
+        written.set(rel, { rig: e.rig, anims: e.anims ?? {}, ...(e.rotY ? { rotY: e.rotY } : {}) });
+      }
       if (!written.has(rel)) {
-        written.set(rel, await importR2(file, rel));
+        written.set(rel, await importR2(file, rel, kind === 'R2' ? null : SRC[kind](file)));
         const { rig, anims } = written.get(rel);
         log(`creature model ${path.basename(rel, '.glb').padEnd(34)} ${rig.padEnd(9)} ${kb(path.join(OUT, rel)).padStart(7)}  ${Object.entries(anims).map(([k, v]) => `${k}=${v}`).join(' ')}`);
       }
@@ -223,9 +256,14 @@ async function creatures() {
       manifest.creatures[id] = { model: rel, height: Number(height), ...(rotY ? { rotY } : {}), rig, anims: { ...anims } };
       continue;
     }
-    const pm = pickModel(model);
     const slug = model.toLowerCase().replace(/[^a-z0-9]+/g, '_');
     const rel = `models/creatures/${slug}.glb`;
+    if (ONLY && fs.existsSync(path.join(OUT, rel)) && prevByModel.has(rel) && !FORCE.has(model)) {
+      const e = prevByModel.get(rel);
+      manifest.creatures[id] = { model: rel, height: Number(height), rig: e.rig, anims: e.anims };
+      continue;
+    }
+    const pm = pickModel(model);
     if (!written.has(rel)) {
       const doc = await io.read(pm.file);
       await optimise(doc);
@@ -404,11 +442,17 @@ async function misc() {
   }
 }
 
+const PREV = (() => { try { return JSON.parse(fs.readFileSync(path.join(OUT, 'manifest.json'), 'utf8')); } catch { return {}; } })();
 await creatures();
-await characters();
-await nature();
-await town();
-await misc();
+if (ONLY === 'creatures') {
+  // keep every other section exactly as it was
+  for (const k of Object.keys(PREV)) if (k !== 'creatures') manifest[k] = PREV[k];
+} else {
+  await characters();
+  await nature();
+  await town();
+  await misc();
+}
 // keep baked portraits (tools/bake-portraits.mjs) across re-imports
 try {
   const prev = JSON.parse(fs.readFileSync(path.join(OUT, 'manifest.json'), 'utf8'));

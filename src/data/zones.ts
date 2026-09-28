@@ -82,7 +82,7 @@ const DEFS: ZoneDef[] = [
     terrain: { base: 0.65, ridges: 0, mesas: 0.2, lakes: 0.25, dunes: 0.3, pools: 0 },
     flora: { tree_round: 300, tree_pine: 250, rock: 600, boulder: 160, bush: 600, fern: 300, flowers: 700, pebbles: 500, log: 120, reeds: 200 },
     grass: '#86c25a', tallGrass: '#62a044', particles: '#e8fbff', weather: 'spray', music: 'overworld',
-    boss: { species: 'deepcaller', level: 14, pos: [617, 555], adds: ['clacker', 'whirlie'] }, camp: [585, 538],
+    boss: { species: 'bellwyrm', level: 14, pos: [617, 555], adds: ['clacker', 'whirlie'] }, camp: [585, 538],
     town: { id: 'tidewatch', name: 'Tidewatch', pos: [386, 460], kind: 'town' }, water: { shallow: '#5fe0e8', deep: '#0f4f86' },
   },
   {
@@ -115,7 +115,7 @@ const DEFS: ZoneDef[] = [
     terrain: { base: 1.1, ridges: 0.2, mesas: 0, lakes: 0.2, dunes: 0, pools: 0.2 },
     flora: { tree_round: 1500, tree_twisted: 600, tree_pine: 300, mushroom: 900, fern: 1400, bush: 900, flowers: 600, log: 300, rock: 250 },
     grass: '#5ea84a', tallGrass: '#3f8a3a', particles: '#fff6a0', weather: 'fireflies', music: 'overworld',
-    boss: { species: 'verdant_rex', level: 24, pos: [-639, -464], adds: ['glenhart', 'thornet'] }, camp: [-610, -440],
+    boss: { species: 'elder_stag', level: 24, pos: [-639, -464], adds: ['glenhart', 'thornet'] }, camp: [-610, -440],
     town: { id: 'elderhollow', name: 'Elderhollow', pos: [-485, -280], kind: 'outpost' }, water: { shallow: '#62c8a8', deep: '#16504a' },
   },
   {
@@ -148,7 +148,7 @@ const DEFS: ZoneDef[] = [
     terrain: { base: 1.7, ridges: 0.6, mesas: 0.6, lakes: 0.15, dunes: 0, pools: 0 },
     flora: { tree_crystal: 700, tree_pine: 250, rock: 800, boulder: 300, pebbles: 600, bush: 120 },
     grass: '#9ab0c8', tallGrass: '#7a88b8', particles: '#c8f4ff', weather: 'glimmer', music: 'overworld',
-    boss: { species: 'dune_titan', level: 29, pos: [194, -776], adds: ['cogling', 'gearbrute'] }, camp: [185, -745],
+    boss: { species: 'geode_colossus', level: 29, pos: [194, -776], adds: ['cogling', 'gearbrute'] }, camp: [185, -745],
     town: { id: 'glimmerhold', name: 'Glimmerhold', pos: [195, -536], kind: 'town' }, water: { shallow: '#9ff0ff', deep: '#2a3a8a' },
   },
   {
@@ -159,7 +159,7 @@ const DEFS: ZoneDef[] = [
     terrain: { base: 2.6, ridges: 1.2, mesas: 0, lakes: 0, dunes: 0, pools: 0 },
     flora: { tree_pine: 500, tree_crystal: 250, rock: 800, boulder: 300, pebbles: 400 },
     grass: '#98a8b8', tallGrass: '#7888a0', particles: '#e8f4ff', weather: 'aether', music: 'overworld',
-    boss: { species: 'storm_seraph', level: 35, pos: [0, -60], adds: ['shinobi', 'voltarmor'] }, camp: [0, 150],
+    boss: { species: 'aether_sovereign', level: 35, pos: [0, -60], adds: ['shinobi', 'voltarmor'] }, camp: [0, 150],
     town: { id: 'crowncamp', name: 'Crownfall Camp', pos: [0, 210], kind: 'outpost' }, water: { shallow: '#b8e8ff', deep: '#3a5a9a' },
   },
 ];
