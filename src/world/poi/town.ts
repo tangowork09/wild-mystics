@@ -25,6 +25,8 @@ export class TownCtx {
   readonly clear: Footprint[] = [];
   readonly animated: { obj: THREE.Object3D; tick: (o: THREE.Object3D, t: number, dt: number) => void }[] = [];
   readonly extras = new THREE.Group();
+  /** Ambient townsfolk: behaviour + a world-space path (first point = start). */
+  readonly villagers: { act: 'sweep' | 'chat' | 'fish' | 'stroll' | 'work'; path: P2[]; yaw?: number; scale?: number }[] = [];
   readonly rnd: Rng;
   /** Terrain height at the plaza centre (the local frame's y = 0). */
   readonly base: number;
@@ -112,6 +114,11 @@ export class TownCtx {
       pos: new THREE.Vector3(x, this.data.heightAt(x, z), z), radius, label, kind: 'service', service: svc, zone: this.zone,
       id: `${this.zone.id}-${idSuffix ?? svc}`, data, enabled: () => true,
     });
+  }
+
+  /** Add an ambient villager walking a local path (or standing at its first point). */
+  villager(act: 'sweep' | 'chat' | 'fish' | 'stroll' | 'work', pts: P2[], localYaw = 0, scale?: number) {
+    this.villagers.push({ act, path: pts.map(([x, z]) => this.w(x, z)), yaw: this.yaw(localYaw), scale });
   }
 
   /** Register a lamp (for the look workstream's night point-lights). Local coords, y local. */

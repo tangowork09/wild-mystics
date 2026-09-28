@@ -81,7 +81,8 @@ export function rotunda(ctx: TownCtx, x: number, z: number, rot: number, o: { st
   b.cyl('shine', 0, 0.9, 0, 0.55, 0.06, o.crystal ?? '#c68bff', { sides: 8 });
   b.pop();
   const [wx, wz] = ctx.w(x, z);
-  const cr = new THREE.Mesh(new THREE.OctahedronGeometry(0.55, 0).scale(1, 1.9, 1), sm(`shrine${o.crystal ?? ''}`, () => new THREE.MeshPhysicalMaterial({ color: C(o.crystal ?? '#c68bff'), emissive: C(o.crystal ?? '#9a4aff'), emissiveIntensity: 1.3, roughness: 0.1, clearcoat: 1, flatShading: true })));
+  const cc = typeof o.crystal === 'string' ? o.crystal : '#c68bff';
+  const cr = new THREE.Mesh(new THREE.OctahedronGeometry(0.55, 0).scale(1, 1.9, 1), sm(`shrine${cc}`, () => new THREE.MeshPhysicalMaterial({ color: C(cc), emissive: C(cc), emissiveIntensity: 1.3, roughness: 0.1, clearcoat: 1, flatShading: true })));
   cr.position.set(wx, floor + ctx.base + 2.2, wz);
   ctx.extras.add(cr);
   ctx.animated.push({ obj: cr, tick: (m, t) => { m.rotation.y = t * 0.8; m.position.y = floor + ctx.base + 2.2 + Math.sin(t * 1.5) * 0.18; } });
