@@ -14,7 +14,7 @@ import { Grass } from './grass';
 import { Water } from './water';
 import { Atmosphere } from './atmosphere';
 import { Props } from './props';
-import { Structures, type Interactable } from './towns';
+import { Structures, inTown, type Interactable } from './towns';
 import { Wilds, shinyRoll, type Wild } from './wilds';
 import { Landmarks } from './landmarks';
 import { Homestead } from './homestead';
@@ -96,6 +96,7 @@ export class Overworld {
     await tick();
     this.structures = new Structures(this.data, this.props);
     this.structures.build();
+    this.structures.lastCam = this.camera.position; // v3:towns — animation/villager culling
     this.scene.add(this.structures.group);
     this.landmarks = new Landmarks(this.data, this.props);
     this.landmarks.build();
@@ -115,6 +116,9 @@ export class Overworld {
     this.scene.add(this.player.root);
     this.teleport(state.pos[0], state.pos[1]);
     await this.wilds.populateZone(this.zone);
+    // v3:towns — every town/camp lantern becomes a candidate night light (look's Atmosphere.addLamp)
+    const atmoLamps = this.atmo as unknown as { addLamp?: (p: THREE.Vector3) => void };
+    for (const p of this.structures.lampSpots) atmoLamps.addLamp?.(p);
     this.pipeline = makePipeline(this.scene, this.camera);
     this.atmo.attach(this.pipeline, this.camera); // v3:look — grade + DOF follow the sky
     this.atmo.update(0.016, 0, this.playerPos, this.playerPos.y, state.time);
@@ -284,10 +288,11 @@ export class Overworld {
         const lim = WORLD_SIZE / 2 - 14;
         nx = THREE.MathUtils.clamp(nx, -lim, lim);
         nz = THREE.MathUtils.clamp(nz, -lim, lim);
-        const nh = this.data.heightAt(nx, nz);
-        const deep = nh < WATER_LEVEL - 0.7;
-        const lava = this.data.lavaAt(nx, nz) > 0.5 && nh < WATER_LEVEL + 0.1;
-        const steep = this.data.slopeAt(nx, nz) > 1.35 && nh > this.playerPos.y + 0.3 && !this.airborne;
+        const deck = this.structures.deckAt(nx, nz); // v3:towns — piers & boardwalks are walkable
+        const nh = deck ?? this.data.heightAt(nx, nz);
+        const deep = deck === null && nh < WATER_LEVEL - 0.7;
+        const lava = deck === null && this.data.lavaAt(nx, nz) > 0.5 && nh < WATER_LEVEL + 0.1;
+        const steep = deck === null && this.data.slopeAt(nx, nz) > 1.35 && nh > this.playerPos.y + 0.3 && !this.airborne;
         if (!deep && !steep && !lava) {
           const moved = Math.hypot(nx - this.playerPos.x, nz - this.playerPos.z);
           this.playerPos.x = nx; this.playerPos.z = nz;
@@ -299,7 +304,7 @@ export class Overworld {
         moving = Math.min(1, speed / 7);
       }
       // vertical
-      const ground = this.data.heightAt(this.playerPos.x, this.playerPos.z);
+      const ground = this.structures.deckAt(this.playerPos.x, this.playerPos.z) ?? this.data.heightAt(this.playerPos.x, this.playerPos.z); // v3:towns
       if (this.airborne) {
         this.vy -= GRAVITY * dt;
         this.playerPos.y += this.vy * dt;
@@ -391,16 +396,18 @@ export class Overworld {
     }
     if (this.nearInteract && input.hit('e', 'enter')) event = { type: 'interact', target: this.nearInteract };
 
+    // v3:towns — no wild battles inside (or right at the edge of) a town
+    const safe = inTown(this.playerPos.x, this.playerPos.z, 6);
     // ── strike first
-    if (!event && input.hit('f')) {
+    if (!event && !safe && input.hit('f')) {
       const w = this.wilds.nearestTo(this.playerPos, 3.4);
       if (w && w.cooldown <= 0) { this.player.play('attack'); event = { type: 'wild', wild: w, advantage: true }; }
     }
-    if (!event && touched && !this.mount) event = { type: 'wild', wild: touched, advantage: false };
+    if (!event && touched && !this.mount && !safe) event = { type: 'wild', wild: touched, advantage: false };
 
     // ── tall grass (per-land table; night adds night-only Mystics)
     this.grassGrace = Math.max(0, this.grassGrace - dt);
-    if (!event && this.grassMeter >= 1 && !this.mount) {
+    if (!event && this.grassMeter >= 1 && !this.mount && !safe) {
       this.grassMeter -= 1;
       const lure = (state.buffs.lure ?? 0) > Date.now() ? 2 : 1;
       if (this.grassGrace <= 0 && Math.random() < 0.07 * lure) {

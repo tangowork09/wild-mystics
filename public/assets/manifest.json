@@ -2882,7 +2882,127 @@
       "model": "models/buildings/flag_red.glb",
       "height": 3.2
     },
-    "cart": null
+    "cart": null,
+    "town_barrel": {
+      "model": "models/town/barrel.glb",
+      "height": 0.95
+    },
+    "town_bucket": {
+      "model": "models/town/bucket.glb",
+      "height": 0.42
+    },
+    "town_bucket_empty": {
+      "model": "models/town/bucket_empty.glb",
+      "height": 0.42
+    },
+    "town_crate": {
+      "model": "models/town/crate.glb",
+      "height": 0.9
+    },
+    "town_crate_small": {
+      "model": "models/town/crate_small.glb",
+      "height": 0.55
+    },
+    "town_crate_b": {
+      "model": "models/town/crate_b.glb",
+      "height": 0.9
+    },
+    "town_crate_long": {
+      "model": "models/town/crate_long.glb",
+      "height": 0.62
+    },
+    "town_crate_long_b": {
+      "model": "models/town/crate_long_b.glb",
+      "height": 0.62
+    },
+    "town_crate_open": {
+      "model": "models/town/crate_open.glb",
+      "height": 0.62
+    },
+    "town_sack": {
+      "model": "models/town/sack.glb",
+      "height": 0.62
+    },
+    "town_ladder": {
+      "model": "models/town/ladder.glb",
+      "height": 3
+    },
+    "town_pallet": {
+      "model": "models/town/pallet.glb",
+      "height": 0.22
+    },
+    "town_lumber": {
+      "model": "models/town/lumber.glb",
+      "height": 0.9
+    },
+    "town_stonepile": {
+      "model": "models/town/stonepile.glb",
+      "height": 0.8
+    },
+    "town_target": {
+      "model": "models/town/target.glb",
+      "height": 1.7
+    },
+    "town_weaponrack": {
+      "model": "models/town/weaponrack.glb",
+      "height": 1.6
+    },
+    "town_wheelbarrow": {
+      "model": "models/town/wheelbarrow.glb",
+      "height": 0.75
+    },
+    "town_lily": {
+      "model": "models/town/lily.glb",
+      "height": 0.12
+    },
+    "town_lily_b": {
+      "model": "models/town/lily_b.glb",
+      "height": 0.12
+    },
+    "town_waterplant": {
+      "model": "models/town/waterplant.glb",
+      "height": 0.9
+    },
+    "town_waterplant_b": {
+      "model": "models/town/waterplant_b.glb",
+      "height": 0.9
+    },
+    "town_tent": {
+      "model": "models/town/tent.glb",
+      "height": 2.3
+    },
+    "town_cart": {
+      "model": "models/town/cart.glb",
+      "height": 1.25
+    },
+    "town_cart_high": {
+      "model": "models/town/cart_high.glb",
+      "height": 1.95
+    },
+    "town_stall": {
+      "model": "models/town/stall.glb",
+      "height": 0.95
+    },
+    "town_stall_red": {
+      "model": "models/town/stall_red.glb",
+      "height": 2.55
+    },
+    "town_stall_green": {
+      "model": "models/town/stall_green.glb",
+      "height": 2.55
+    },
+    "town_stool": {
+      "model": "models/town/stool.glb",
+      "height": 0.48
+    },
+    "town_stall_bench": {
+      "model": "models/town/stall_bench.glb",
+      "height": 0.48
+    },
+    "town_lighthouse": {
+      "model": "models/town/lighthouse.glb",
+      "height": 17
+    }
   },
   "textures": {
     "ground_detail": "textures/ground_detail.webp",
