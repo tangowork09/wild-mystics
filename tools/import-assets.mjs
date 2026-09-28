@@ -8,10 +8,12 @@
 //     v3: creature models only — keeps every other asset and manifest section untouched, writes only
 //     models that are new (or forced). --regraze re-imports the animal-pack models with their Eating clip.
 //   SCOUT_DIR=/path/to/.asset-scout overrides where the CC0 packs live (worktrees share one scout).
+//   node tools/import-assets.mjs --only dungeon   (v3:dungeons — re-import just the dungeon kits, keep the rest of manifest.json)
+//   ASSET_SCOUT=~/expedition-wilds/.asset-scout node tools/import-assets.mjs …   (read the packs from another checkout)
 
-import { NodeIO } from '@gltf-transform/core';
+import { NodeIO, Document } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { prune, dedup, textureCompress, resample, weld, quantize, meshopt } from '@gltf-transform/functions';
+import { prune, dedup, textureCompress, resample, weld, quantize, meshopt, mergeDocuments, unpartition } from '@gltf-transform/functions';
 import { MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
 import { execSync } from 'node:child_process';
@@ -19,9 +21,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const SCOUT = process.env.SCOUT_DIR ?? path.join(ROOT, '.asset-scout');
+const SCOUT = process.env.SCOUT_DIR ?? (process.env.ASSET_SCOUT ? path.resolve(process.env.ASSET_SCOUT) : path.join(ROOT, '.asset-scout'));
 const ARG = (k) => process.argv.find((a) => a.startsWith(`--${k}`));
-const ONLY = ARG('only=')?.split('=')[1] ?? null;
+const ONLY = ARG('only=')?.split('=')[1] ?? (process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1] : null);
 const FORCE = new Set((ARG('force=')?.split('=')[1] ?? '').split(',').filter(Boolean));
 const REGRAZE = !!ARG('regraze');
 const X = path.join(SCOUT, '_x'); // extraction scratch
@@ -442,7 +444,94 @@ async function misc() {
   }
 }
 
+// ── 6. Dungeon kits (v3:dungeons) ─────────────────────────────────────────
+// Four CC0 kits, each merged into ONE GLB (one shared atlas + material per kit) so a whole interior
+// instances from a handful of materials. Every piece is a named node under the scene root; animated
+// parts (chest lids, gate leaves) keep their child nodes. Loaded on demand when a dungeon is entered.
+const DUNGEON_KITS = {
+  kaykit: {
+    dir: 'v3/dungeon/kaykit-dungeon-remastered', ext: '.gltf.glb', tex: 256,
+    pieces: [
+      'wall', 'wall_arched', 'wall_cracked', 'wall_broken', 'wall_window_open', 'wall_window_closed', 'wall_archedwindow_gated', 'wall_archedwindow_open',
+      'wall_gated', 'wall_shelves', 'wall_pillar', 'wall_corner', 'wall_corner_small', 'wall_half', 'wall_endcap', 'wall_scaffold',
+      'wall_doorway_sides', 'wall_doorway_Tsplit', 'wall_half_endcap', 'wall_open_scaffold',
+      'floor_tile_large', 'floor_tile_large_rocks', 'floor_tile_small', 'floor_tile_small_broken_A', 'floor_tile_small_broken_B', 'floor_tile_small_decorated',
+      'floor_tile_small_weeds_A', 'floor_tile_small_weeds_B', 'floor_tile_big_grate', 'floor_tile_big_grate_open', 'floor_dirt_large', 'floor_dirt_large_rocky',
+      'floor_dirt_small_A', 'floor_dirt_small_weeds', 'floor_wood_large', 'floor_wood_large_dark', 'floor_foundation_allsides',
+      'stairs', 'stairs_wide', 'stairs_walled', 'pillar', 'pillar_decorated', 'column', 'barrier', 'barrier_column', 'barrier_half',
+      'torch', 'torch_lit', 'torch_mounted', 'barrel_large', 'barrel_large_decorated', 'barrel_small', 'barrel_small_stack',
+      'box_large', 'box_small', 'box_small_decorated', 'box_stacked', 'crates_stacked', 'trunk_large_A', 'trunk_large_B', 'trunk_large_C', 'trunk_medium_A', 'trunk_small_A',
+      'banner_patternA_red', 'banner_patternA_blue', 'banner_patternA_green', 'banner_patternA_yellow', 'banner_patternA_white', 'banner_patternA_brown',
+      'banner_shield_red', 'banner_shield_blue', 'banner_shield_green', 'banner_shield_yellow', 'banner_shield_white', 'banner_thin_red', 'banner_thin_blue', 'banner_thin_green',
+      'banner_thin_yellow', 'banner_thin_white', 'banner_triple_red', 'banner_triple_blue', 'banner_triple_green', 'banner_triple_yellow',
+      'candle', 'candle_lit', 'candle_triple', 'candle_melted', 'candle_thin_lit', 'rubble_large', 'rubble_half',
+      'table_long', 'table_long_decorated_A', 'table_long_broken', 'table_medium', 'table_medium_broken', 'table_small', 'chair', 'stool',
+      'shelves', 'shelf_large', 'shelf_small_candles', 'coin', 'coin_stack_large', 'coin_stack_medium', 'coin_stack_small', 'keg', 'keg_decorated',
+      'sword_shield', 'sword_shield_gold', 'sword_shield_broken', 'key', 'keyring_hanging', 'bottle_A_green', 'bottle_B_brown', 'plate_stack',
+    ],
+  },
+  halloween: {
+    dir: 'v3/dungeon/kaykit-halloween-bits', ext: '.gltf', tex: 256,
+    pieces: [
+      'crypt', 'arch', 'arch_gate', 'coffin', 'coffin_decorated', 'grave_A', 'grave_A_destroyed', 'grave_B', 'gravemarker_A', 'gravemarker_B', 'gravestone',
+      'skull', 'skull_candle', 'ribcage', 'bone_A', 'bone_B', 'bone_C', 'shrine', 'shrine_candles', 'lantern_hanging', 'lantern_standing', 'post_lantern', 'post_skull',
+      'pillar', 'plaque', 'plaque_candles', 'candle', 'candle_triple', 'candle_melted', 'tree_dead_large', 'tree_dead_medium', 'tree_dead_small',
+      'floor_dirt', 'floor_dirt_grave', 'fence', 'fence_gate', 'fence_pillar', 'bench', 'bench_decorated',
+    ],
+  },
+  kenney: {
+    dir: 'v3/dungeon/kenney-mini-dungeon/glb', ext: '.glb', tex: 256,
+    pieces: ['trap', 'gate', 'chest', 'key', 'rocks', 'stones', 'wood-support', 'wood-structure', 'column', 'pot', 'potion', 'banner', 'coin'],
+  },
+  quaternius: {
+    dir: 'v3/dungeon/quaternius-modular-dungeon', ext: '.glb', tex: 512,
+    pieces: ['trap_door', 'arch_door', 'cobweb', 'skull', 'coin_piles', 'coin_bag', 'sword_wall_mount', 'horse_statue', 'chest'],
+  },
+};
+
+async function dungeonKits() {
+  mk(path.join(OUT, 'models/dungeon'));
+  manifest.dungeon = {};
+  for (const [kit, def] of Object.entries(DUNGEON_KITS)) {
+    const doc = new Document();
+    doc.createBuffer();
+    const scene = doc.createScene(kit);
+    doc.getRoot().setDefaultScene(scene);
+    for (const piece of def.pieces) {
+      const src = await io.read(path.join(SCOUT, def.dir, piece + def.ext));
+      const srcScene = src.getRoot().getDefaultScene() ?? src.getRoot().listScenes()[0];
+      const map = mergeDocuments(doc, src);
+      const holder = doc.createNode(piece);
+      const merged = map.get(srcScene);
+      for (const child of merged.listChildren()) holder.addChild(child);
+      for (const s of doc.getRoot().listScenes()) if (s !== scene) s.dispose();
+      scene.addChild(holder);
+    }
+    await doc.transform(
+      unpartition(),
+      dedup(),
+      weld(),
+      prune({ keepLeaves: true }),
+      textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [def.tex, def.tex] }),
+      quantize(),
+      meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
+    );
+    const rel = `models/dungeon/${kit}.glb`;
+    await io.write(path.join(OUT, rel), doc);
+    manifest.dungeon[kit] = { model: rel, pieces: def.pieces.length };
+    log(`dungeon kit ${kit.padEnd(11)} ${String(def.pieces.length).padStart(3)} pieces  ${kb(path.join(OUT, rel))}`);
+  }
+}
+
 const PREV = (() => { try { return JSON.parse(fs.readFileSync(path.join(OUT, 'manifest.json'), 'utf8')); } catch { return {}; } })();
+if (ONLY === 'dungeon') {
+  // v3:dungeons — refresh just the dungeon kits and merge them into the existing manifest
+  Object.assign(manifest, PREV);
+  await dungeonKits();
+  fs.writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2));
+  log('manifest.json updated (dungeon kits)');
+  process.exit(0);
+}
 await creatures();
 if (ONLY === 'creatures') {
   // keep every other section exactly as it was
@@ -452,6 +541,7 @@ if (ONLY === 'creatures') {
   await nature();
   await town();
   await misc();
+  await dungeonKits(); // v3:dungeons
 }
 // keep baked portraits (tools/bake-portraits.mjs) across re-imports
 try {

@@ -62,6 +62,11 @@ export async function runDebug(game: G, api: Api): Promise<boolean> {
     w.__ready = true;
     return true;
   }
+  if (view === 'dgkit') { // v3:dungeons — kit contact sheet (dev)
+    const { kitView } = await import('./world/dungeon/kitview');
+    await kitView((q.get('kit') ?? 'kaykit') as 'kaykit', (q.get('theme') ?? 'burrow') as 'burrow', q.get('filter') ?? undefined);
+    return true;
+  }
   if (view === 'gallery') {
     // v3:creatures — `&live` renders portraits from the rigs (new look), `&shiny`, `&only=a,b`, `&from=N&n=M` paging
     const m = await import('./assets/manifest');
