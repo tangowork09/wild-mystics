@@ -380,7 +380,7 @@ export class Battle {
     const boss = this.setup.kind === 'boss';
     void this.stage.reveal(boss ? 1.7 : 1.0);
     for (const u of this.enemies) {
-      void this.fadeIn(u, boss ? 0.9 : 0.5);
+      void this.fadeIn(u, boss ? 0.6 : 0.45);
       this.vfx.sprite('smoke_07', u.chest(), { color: '#ffffff', size: u.height * 0.8, size1: u.height * 1.8, life: 0.7, opacity: 0.35 });
     }
     if (boss) await this.introBoss();

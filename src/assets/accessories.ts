@@ -360,7 +360,7 @@ export function anchorOf(rig: THREE.Object3D, height: number, anchor: Anchor, ca
   const key = cacheKey ? `${cacheKey}|${anchor}` : '';
   const fallback = (): Region => {
     const all = new THREE.Box3();
-    rig.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && !m.userData.wmOutline && !m.userData.wmFx) all.union(new THREE.Box3().setFromObject(m)); });
+    rig.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh && !m.userData.wmOutline && !m.userData.wmFx && !m.userData.wmAcc) all.union(new THREE.Box3().setFromObject(m)); });
     all.applyMatrix4(new THREE.Matrix4().copy(rig.matrixWorld).invert());
     const c = all.getCenter(new THREE.Vector3()), sz = all.getSize(new THREE.Vector3());
     const top = anchor === 'root' ? new THREE.Vector3(c.x, 0, c.z) : anchor === 'tail' ? new THREE.Vector3(c.x, c.y, all.min.z) : anchor === 'back' ? new THREE.Vector3(c.x, all.max.y * 0.9, c.z - sz.z * 0.12) : new THREE.Vector3(c.x, all.max.y, c.z + sz.z * (anchor === 'chest' ? 0.3 : 0.18));
@@ -484,6 +484,7 @@ export function dress(model: THREE.Object3D, rigRoot: THREE.Object3D, height: nu
     obj.scale.setScalar(size / Math.max(1e-5, ps.x));
     obj.userData.baseQuat = obj.quaternion.clone();
     obj.userData.size = size;
+    obj.traverse((o) => { o.userData.wmAcc = true; });
     parent.add(obj);
     if (obj instanceof THREE.Mesh && !obj.userData.wmFx) look.adopt(obj);
     out.objects.push(obj);
